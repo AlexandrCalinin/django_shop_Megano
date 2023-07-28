@@ -8,3 +8,7 @@
 
 # trello
     https://trello.com/b/6rt99RrV/pythondjangoteam29
+
+# rule for commit
+    origin/fixbugs/задача или номер задачи
+    origin/feature/задача или номер задачи
