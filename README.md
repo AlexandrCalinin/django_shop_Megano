@@ -6,6 +6,9 @@
 # desk for draw
     https://app.diagrams.net/
 
+# file for url
+    https://docs.google.com/spreadsheets/d/1ik2Ef-MiPBZU5R-QrMDTuIXscI4pdtK9NOXPPrgQtr8/edit?usp=sharing
+
 # trello
     https://trello.com/b/6rt99RrV/pythondjangoteam29
 
