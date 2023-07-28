@@ -5,3 +5,6 @@
 
 # desk for draw
     https://app.diagrams.net/
+
+# trello
+    https://trello.com/b/6rt99RrV/pythondjangoteam29
