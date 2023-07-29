@@ -6,3 +6,5 @@ exclude =
     fmt.py
     setup.cfg
     *urls.py
+
+max-line-length = 100
