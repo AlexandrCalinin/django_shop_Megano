@@ -1,3 +1,8 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def base_template_view(request):
+    """
+    Вьюшка для проверки базового шаблона
+    """
+    return render(request, 'core/base.html')
