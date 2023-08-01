@@ -21,7 +21,6 @@ from .import views
 
 
 urlpatterns = [
-    path('base_template/', views.base_template_view),
 ]
 
 
