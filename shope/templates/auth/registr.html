@@ -1,0 +1,31 @@
+{% extends 'app_shops/base.html' %}
+{% load i18n %}
+
+
+{% block content %}
+
+    <div class="header">
+        <h3 class="sign-in">Регистрация</h3>
+
+    </div>
+    <div class="clear"></div>
+    <form action="#">
+        <div>
+            <input class="user-input" type="text" name="name" id="name" placeholder="Имя" />
+        </div>
+        <div>
+            <input class="user-input" type="email" name="login" id="name" placeholder="E-mail" />
+        </div>
+        <div>
+
+            <input type="password" name="pass" id="name" placeholder="Пароль" />
+        </div>
+        <input type="submit" value="Зарегистрироваться" />
+
+
+        <a class="registr" href="login.html">
+            Вход
+        </a>
+        <div class="clear"></div>
+    </form>
+{% endblock content %}
