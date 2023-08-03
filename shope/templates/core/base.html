@@ -27,8 +27,8 @@
 <head>
     <title>
         {% block title %}
-            base title
-        {% endblock %}
+            {% comment %} base title {% endcomment %}
+        {% endblock title%}
     </title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
@@ -247,11 +247,11 @@
         </div>
     </header>
 
-    <div class="Middle">
-        {% block body %}
-            base body
-        {% endblock %}
-    </div>
+
+    {% block content_body %}
+        {% comment %} Описание блока body {% endcomment %}
+    {% endblock content_body %}
+
 
     <footer class="Footer">
         <div class="wrap">
