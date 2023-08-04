@@ -4,7 +4,7 @@
     pre-commit install(устанавливаем нашу настройку)
 
 # desk for draw
-    https://app.diagrams.net/
+    https://drive.google.com/file/d/1o4hx971-LXY4lLG7rHLLGDCOtVnwPLnE/view?usp=sharing
 
 # file for url
     https://docs.google.com/spreadsheets/d/1ik2Ef-MiPBZU5R-QrMDTuIXscI4pdtK9NOXPPrgQtr8/edit?usp=sharing
