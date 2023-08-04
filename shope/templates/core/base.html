@@ -25,11 +25,7 @@
 <!--<![endif]-->
 
 <head>
-    <title>
-        {% block title %}
-            base title
-        {% endblock %}
-    </title>
+    <title>Megano</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -247,11 +243,11 @@
         </div>
     </header>
 
-    <div class="Middle">
-        {% block body %}
-            base body
-        {% endblock %}
-    </div>
+
+    {% block content_body %}
+       
+    {% endblock content_body %}
+
 
     <footer class="Footer">
         <div class="wrap">
