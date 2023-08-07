@@ -28,7 +28,9 @@ urlpatterns = [
     path('profile/', include('profile_app.urls')),
 
 
-    path('auth_app/', include("auth_app.urls"))
+    path('auth_app/', include("auth_app.urls")),
+
+    path('catalog/', include('catalog_app.urls')),
 
 ]
 
