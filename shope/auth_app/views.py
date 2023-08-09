@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.views import PasswordResetView
+from django.contrib.auth.views import PasswordResetView, LogoutView
+from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
 
@@ -14,3 +15,7 @@ class RegisterView(CreateView):
 
 class EmailView(CreateView):
     template_name = "auth/e-mail"
+
+
+class WebLogoutView(LogoutView):
+    next_page = reverse_lazy('auth_app:login')
