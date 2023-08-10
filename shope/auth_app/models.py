@@ -7,7 +7,7 @@ class User(AbstractUser):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    username = models.CharField(unique=False, default="", max_length=48, null=False, blank=False)
+    username = models.CharField(unique=True, default="", max_length=48, null=False, blank=False)
     email = models.EmailField(unique=True, default="", null=False, blank=False)
     middle_name = models.CharField(default="", null=False, blank=False, max_length=48)
     activation_key = models.CharField(default="", null=False, blank=False, max_length=48)
