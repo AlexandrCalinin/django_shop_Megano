@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.views.generic import TemplateView
 
 
@@ -16,3 +15,7 @@ class TestProductView(TemplateView):
 
 class TestSaleView(TemplateView):
     template_name = 'catalog_app/sale.html'
+
+
+class CatalogFilterView(TemplateView):
+    template_name = 'catalog_app/filter_catalog.html'
