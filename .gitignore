@@ -1,1 +1,16 @@
-.idea
+# Jetbrains Intellij IDEA
+.idea/
+
+# HTML settings
+.editorconfig
+csscomb.json
+
+# Environments
+.env
+.venv
+env/
+my_venv/
+venv/
+ENV/
+env.bak/
+venv.bak/

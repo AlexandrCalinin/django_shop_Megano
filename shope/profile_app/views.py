@@ -1,14 +1,14 @@
 from django.shortcuts import render
-from django.views import View
+from django.views.generic import TemplateView
 
 
-class AccountView(View):
-    pass
+class AccountView(TemplateView):
+    template_name = 'profile_app/account.html'
 
 
-class ProfileView(View):
-    pass
+class ProfileView(TemplateView):
+    template_name = 'profile_app/profile.html'
 
 
-class ProfileAvatarView(View):
-    pass
+class ProfileAvatarView(TemplateView):
+    template_name = 'profile_app/profileAvatar.html'

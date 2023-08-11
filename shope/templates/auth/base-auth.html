@@ -52,8 +52,8 @@
                     </div>
                     <nav class="row-block">
                         <div class="row ControlPanel-rowSplit">
-                            <div class="row-block"><a class="ControlPanel-title" href="login.html">Вход</a>
-                                <a class="ControlPanel-title" href="registr.html">Регистрация</a>
+                            <div class="row-block"><a class="ControlPanel-title" href="{% url 'login' %}">Вход</a>
+                                <a class="ControlPanel-title" href="{% url 'register' %}">Регистрация</a>
                             </div>
                         </div>
                     </nav>
@@ -63,7 +63,7 @@
         </div>
         <div class="wrap">
             <div class="row Header-rowMain">
-                <div class="row-block Header-logo"><a class="logo" href="../core/base-template.html"><img class="logo-image" src="{% static 'assets/img/logo.png' %}" alt="logo.png" /></a>
+                <div class="row-block Header-logo"><a class="logo" href="{% url 'home' %}"><img class="logo-image" src="{% static 'assets/img/logo.png' %}" alt="logo.png" /></a>
                 </div>
             </div>
 
@@ -84,19 +84,19 @@
     <footer class="Footer">
         <div class="wrap">
             <div class="row Footer-main">
-                <div class="row-block"><a class="logo Footer-logo" href="../core/index.html"><img class="logo-image" src="{% static 'assets/img/logo_footer.png' %}" alt="logo_footer.png" /></a>
+                <div class="row-block"><a class="logo Footer-logo" href="{% url 'home' %}"><img class="logo-image" src="{% static 'assets/img/logo_footer.png' %}" alt="logo_footer.png" /></a>
                 </div>
                 <div class="row-block">
                     <strong class="Footer-title">Навигация
                     </strong>
                     <ul class="menu menu_vt Footer-menu">
-                        <li class="menu-item"><a class="menu-link" href="../core/base-template.html">Главная</a>
+                        <li class="menu-item"><a class="menu-link" href="{% url 'home' %}">Главная</a>
                         </li>
-                        <li class="menu-item"><a class="menu-link" href="../catalog/catalog.html">Каталог</a>
+                        <li class="menu-item"><a class="menu-link" href="{% url 'catalog' %}">Каталог</a>
                         </li>
-                        <li class="menu-item"><a class="menu-link" href="../catalog/comparison.html">Сравнение</a>
+                        <li class="menu-item"><a class="menu-link" href="{% url 'comparison' %}">Сравнение</a>
                         </li>
-                        <li class="menu-item"><a class="menu-link" href="../profile/account.html">Профиль</a>
+                        <li class="menu-item"><a class="menu-link" href="{% url 'account' %}">Профиль</a>
                         </li>
 
                     </ul>
