@@ -1,12 +1,35 @@
 # Jetbrains Intellij IDEA
 .idea/
 
+### Python template
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
 # HTML settings
 .editorconfig
 csscomb.json
 
 # Environments
-.env
+
 .venv
 env/
 my_venv/
