@@ -2,7 +2,7 @@
 {% load static %}
 
 
-<body class="Site">
+
     {% block content_body %}
         <div class="Middle Middle_top">
             <div class="Section">
@@ -175,7 +175,7 @@
                                                 <div class="Order-personal">
                                                     <div class="row">
                                                         <div class="row-block">
-                                                            <a class="Order-title" href="../order/oneorder.html">
+                                                            <a class="Order-title" href="{% url 'oneorder' %}">
                                                                 ДНС
                                                             </a>
                                                             <div class="ProductCard-cartElement" style="margin-top: 10px;">
@@ -212,7 +212,7 @@
                                                 <div class="Order-personal">
                                                     <div class="row">
                                                         <div class="row-block">
-                                                            <a class="Order-title" href="../order/oneorder.html">
+                                                            <a class="Order-title" href="{% url 'oneorder' %}">
                                                                 Эльдорадо
                                                             </a>
                                                             <div class="ProductCard-cartElement" style="margin-top: 10px;">
@@ -316,5 +316,3 @@
             </div>
         </div>
     {% endblock content_body%}
-</body>
-</html>
