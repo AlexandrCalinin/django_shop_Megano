@@ -2,7 +2,7 @@ from django.views.generic import TemplateView
 
 
 class BaseView(TemplateView):
-    template_name = 'core/base.html'
+    template_name = 'core/product_supply.html'
 
 
 class AboutView(TemplateView):
