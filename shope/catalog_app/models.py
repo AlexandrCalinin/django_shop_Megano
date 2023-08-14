@@ -19,9 +19,6 @@ class Category(BaseModel):
         verbose_name_plural = _('Categories')
         ordering = ['id']
 
-    def get_absolute_url(self):
-        return reverse('filter_catalog', kwargs={'category_id': self.pk})
-
 
 class Image(BaseModel):
     """Модель изображения для товара"""
