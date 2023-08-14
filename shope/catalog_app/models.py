@@ -55,8 +55,5 @@ class Product(BaseModel):
         verbose_name_plural = _('Products')
         ordering = ['id']
 
-    def get_absolute_url(self):
-        return reverse('product', kwargs={'product_id': self.pk})
-
     def _tag(self):
         return [t.name for t in self.tag.all()]
