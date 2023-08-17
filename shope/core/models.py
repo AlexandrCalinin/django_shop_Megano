@@ -2,6 +2,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
+from shope.catalog_app.models import Product
 
 
 class BaseModel(models.Model):
@@ -33,3 +34,18 @@ class Seller(BaseModel):
     def __str__(self) -> str:
         """Строкое представление."""
         return self.name
+
+
+class BaseModelItem(BaseModel):
+
+    """
+    Базовая модель для корзины и заказов.
+    """
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('product'))
+    seller = models.ForeignKey(Seller, on_delete=models.CASCADE, verbose_name=_('seller'))
+    count = models.IntegerField(verbose_name=_('count product'))
+    amount = models.DecimalField(verbose_name=_('amount'))
+
+    class Meta:
+        abstract = True

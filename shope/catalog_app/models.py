@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 from taggit.managers import TaggableManager
 
-from core.models import BaseModel
+from shope.core.models import BaseModel
 from django.utils.translation import gettext_lazy as _
 
 
