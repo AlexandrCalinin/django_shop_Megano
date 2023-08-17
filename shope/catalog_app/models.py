@@ -1,5 +1,4 @@
 from django.db import models
-from django.urls import reverse
 from taggit.managers import TaggableManager
 
 from core.models import BaseModel
@@ -55,5 +54,34 @@ class Product(BaseModel):
         verbose_name_plural = _('Products')
         ordering = ['id']
 
-    def _tag(self):
-        return [t.name for t in self.tag.all()]
+
+class Slider(BaseModel):
+    """Модель слайдера. Используется для набора сменяемых баннеров"""
+    product = models.ForeignKey(
+        'Product', on_delete=models.CASCADE, verbose_name=_('Product')
+    )
+    description = models.TextField(blank=True, verbose_name=_('Description'))
+    image = models.ImageField(upload_to="images/%Y/%m/%d", verbose_name=_('Image'))
+
+    def __str__(self):
+        return self.product
+
+    class Meta:
+        verbose_name = _('Slider')
+        verbose_name_plural = _('Sliders')
+        ordering = ['id']
+
+
+class Banner(BaseModel):
+    """Модель баннера. Используется для сета баннеров с минимальными ценами в своей категории"""
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name=_('Category'))
+    image = models.ImageField(upload_to="images/%Y/%m/%d", verbose_name=_('Image'))
+    category_min_price = models.PositiveIntegerField(default=1, verbose_name=_('Minimal price'))
+
+    def __str__(self):
+        return self.category
+
+    class Meta:
+        verbose_name = _('Slider')
+        verbose_name_plural = _('Sliders')
+        ordering = ['id']
