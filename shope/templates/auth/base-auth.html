@@ -13,7 +13,7 @@
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <link href="../static/favicon.ico" rel="shortcut icon">
+    <link href="{% static 'favicon.ico' %}" rel="shortcut icon">
     <link rel="preload" href="{% static 'assets/fonts/Roboto/Roboto-Regular.woff' %}" as="font">
     <link rel="preload" href="{% static 'assets/fonts/Roboto/Roboto-Italic.woff' %}" as="font">
     <link rel="preload" href="{% static 'assets/fonts/Roboto/Roboto-Bold.woff' %}" as="font">
@@ -38,13 +38,13 @@
                         <div class="row ControlPanel-rowSplit">
                             <div class="row-block hide_700">
                                 <ul class="menu menu_img menu_smallImg ControlPanel-menu">
-                                    <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'assets/img/icons/socialHeader/tw.svg' %}" alt="tw.svg" /></a>
+                                    <li class="menu-item"><a class="menu-link" target="_blank" href="https://twitter.com/"><img src="{% static 'assets/img/icons/socialHeader/tw.svg' %}" alt="tw.svg" /></a>
                                     </li>
-                                    <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'assets/img/icons/socialHeader/in.svg' %}" alt="in.svg" /></a>
+                                    <li class="menu-item"><a class="menu-link" target="_blank" href="https://www.linkedin.com/"><img src="{% static 'assets/img/icons/socialHeader/in.svg' %}" alt="in.svg" /></a>
                                     </li>
-                                    <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'assets/img/icons/socialHeader/pt.svg' %}" alt="pt.svg" /></a>
+                                    <li class="menu-item"><a class="menu-link" target="_blank" href="https://www.pinterest.com/"><img src="{% static 'assets/img/icons/socialHeader/pt.svg' %}" alt="pt.svg" /></a>
                                     </li>
-                                    <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'assets/img/icons/socialHeader/mail.svg' %}" alt="mail.svg" /></a>
+                                    <li class="menu-item"><a class="menu-link" target="_blank" href="https://www.google.com/gmail/about/"><img src="{% static 'assets/img/icons/socialHeader/mail.svg' %}" alt="mail.svg" /></a>
                                     </li>
                                 </ul>
                             </div>
@@ -107,15 +107,15 @@
                     <p>Phone: 8.800.200.600<br>Email: xxx@meg.com<br>
                     </p>
                     <ul class="menu menu_img menu_smallImg Footer-menuSoc">
-                        <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'assets/img/icons/socialFooter/fb.svg' %}" alt="fb.svg" /></a>
+                        <li class="menu-item"><a class="menu-link" target="_blank" href="https://www.facebook.com/"><img src="{% static 'assets/img/icons/socialFooter/fb.svg' %}" alt="fb.svg" /></a>
                         </li>
-                        <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'assets/img/icons/socialFooter/tw.svg' %}" alt="tw.svg" /></a>
+                        <li class="menu-item"><a class="menu-link" target="_blank" href="https://twitter.com/"><img src="{% static 'assets/img/icons/socialFooter/tw.svg' %}" alt="tw.svg" /></a>
                         </li>
-                        <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'assets/img/icons/socialFooter/in.svg' %}" alt="in.svg" /></a>
+                        <li class="menu-item"><a class="menu-link" target="_blank" href="https://www.linkedin.com/"><img src="{% static 'assets/img/icons/socialFooter/in.svg' %}" alt="in.svg" /></a>
                         </li>
-                        <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'assets/img/icons/socialFooter/pt.svg' %}" alt="pt.svg" /></a>
+                        <li class="menu-item"><a class="menu-link" target="_blank" href="https://www.pinterest.com/"><img src="{% static 'assets/img/icons/socialFooter/pt.svg' %}" alt="pt.svg" /></a>
                         </li>
-                        <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'assets/img/icons/socialFooter/mail.svg' %}" alt="mail.svg" /></a>
+                        <li class="menu-item"><a class="menu-link" target="_blank" href="https://www.google.com/gmail/about/"><img src="{% static 'assets/img/icons/socialFooter/mail.svg' %}" alt="mail.svg" /></a>
                         </li>
                     </ul>
                 </div>
