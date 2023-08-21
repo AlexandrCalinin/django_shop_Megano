@@ -5,7 +5,7 @@
 {% block content %}
 
     <div class="header">
-        <h3 class="sign-in">Регистрация</h3>
+        <h3 class="sign-in">{% translate 'Регистрация' %}</h3>
 
     </div>
     <div class="clear"></div>
@@ -24,7 +24,7 @@
 
 
         <a class="registr" href="{% url 'login' %}">
-            Вход
+            {% translate 'Вход' %}
         </a>
         <div class="clear"></div>
     </form>
