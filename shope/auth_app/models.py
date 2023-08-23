@@ -11,12 +11,13 @@ class User(AbstractUser):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.USERNAME_FIELD = "email"
-        self.REQUIRED_FIELDS = ["username"]
 
     class Meta:
         verbose_name = _('пользователь')
         verbose_name_plural = _('пользователи')
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username"]
 
     username = models.CharField(unique=True, default="", max_length=48, null=False, blank=False)
     email = models.EmailField(unique=True, default="", null=False, blank=False)

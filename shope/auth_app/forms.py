@@ -1,28 +1,17 @@
-import hashlib
-from random import random
-
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
+from django import forms
 
-from .models import User
+User = get_user_model()
 
 
 class UserRegisterForm(UserCreationForm):
-
-    class Meta:
+    class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('username', 'email', 'password')
+        fields = ('username', 'email')
 
-    def __init__(self, *args, **kwargs):
-        super(UserCreationForm).__init__(*args, **kwargs)
-
-        self.fields['username'].widget.attrs['placeholder'] = 'Введите имя пользователя'
-        self.email['email'].widget.attrs['placeholder'] = 'Введите email'
-        self.password['password'].widget.attrs['placeholder'] = 'Введите пароль'
-
-    def save(self, commit=True):
-        user = super(UserRegisterForm, self).save()
-        user.is_active = False
-        salt = hashlib.sha1(str(random()).encode('utf8')).hexdigest()[:6]
-        user.activation_key = hashlib.sha1((user.email + salt).encode('utf8')).hexdigest()
-        user.save()
-        return user
+    email = forms.EmailField(
+        label="Email",
+        max_length=254,
+        widget=forms.EmailInput(attrs={'autocomplete': 'email'})
+    )

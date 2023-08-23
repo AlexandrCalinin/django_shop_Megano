@@ -1,0 +1,4 @@
+{% autoescape off %}
+<h1>{% translate 'Пожалуйста, перейдите на почту и подтвердите свой email для завершения регистрации' %}</h1>
+http://{{ domain }}{% url 'confirm-email' uidb64=uid token=token %}
+{% endautoescape %}
