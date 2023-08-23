@@ -5,4 +5,8 @@ env/
 __pycache__/
 *.DS_Store
 ._*
+
+# database
 db.sqlite3
+*.sqlite3
+migrations/
