@@ -1,6 +1,6 @@
 
 
-class ProductDiscount():
+class ProductDiscount:
 
     def get_all_discount_on_product(self):
         """

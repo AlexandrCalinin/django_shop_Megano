@@ -1,6 +1,6 @@
 
 
-class ListOfViewedProduct():
+class ListOfViewedProduct:
 
     def add_product_list_viewed_products(self):
         """

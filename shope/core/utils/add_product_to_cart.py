@@ -1,6 +1,6 @@
 
 
-class AddProductToCart():
+class AddProductToCart:
 
     def add_product_to_cart(self):
         """
