@@ -1,3 +1,9 @@
-from .base_model import *
-from .base_item import *
-from .seller import *
+"""Определение пространства имен для core.models"""
+
+from .base_model import BaseModel
+from .base_item import BaseModelItem
+from .seller import Seller
+
+__all__ = ['BaseModel', 'BaseModelItem', 'Seller']
+
+NAME = 'Package models'
