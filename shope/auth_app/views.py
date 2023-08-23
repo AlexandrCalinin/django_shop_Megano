@@ -1,5 +1,4 @@
-from django.contrib.auth import authenticate, get_user_model, login
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import PasswordResetView, LogoutView
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ValidationError
@@ -14,8 +13,8 @@ from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.contrib.auth.tokens import default_token_generator as token_generator
 
-
-User = get_user_model()
+from .models import User
+from .forms import UserRegisterForm
 
 
 class SetNewPasswordView(PasswordResetView):
@@ -27,22 +26,24 @@ class RegisterView(View):
 
     def get(self, request):
         context = {
-            'form': UserCreationForm()
+            'form': UserRegisterForm
         }
         return render(request, self.template_name, context)
 
     def post(self, request):
-        form = UserCreationForm(request.POST)
+        form_class = UserRegisterForm(request.POST)
 
-        if form.is_valid():
-            form.save()
-            email = form.cleaned_data.get('email')
-            password = form.cleaned_data.get('password1')
-            user = authenticate(email=email, password=password)
+        if form_class.is_valid():
+            print(2)
+            form_class.save()
+            username = form_class.cleaned_data.get('name')
+            email = form_class.cleaned_data.get('login')
+            password = form_class.cleaned_data.get('pass')
+            user = authenticate(username=username, email=email, password=password)
             self.send_link_to_verify_email(request, user)
             return redirect('confirm-email')
         context = {
-            'form': form
+            'form': form_class
         }
         return render(request, self.template_name, context)
 
@@ -79,8 +80,7 @@ class EmailVerifyView(View):
         try:
             uid = urlsafe_base64_decode(uidb64).decode()
             user = User.objects.get(pk=uid)
-        except (TypeError, ValueError, OverflowError,
-                User.DoesNotExist, ValidationError):
+        except Exception:
             user = None
         return user
 
