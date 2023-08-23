@@ -64,10 +64,10 @@ class Order(BaseModel):
 class OrderItem(BaseModelItem):
     """Модель товаров в заказе"""
 
-    order_id = models.ForeignKey(Order,
-                                 verbose_name=_('order'),
-                                 on_delete=models.CASCADE,
-                                 related_name='order_item')
+    order = models.ForeignKey(Order,
+                              verbose_name=_('order'),
+                              on_delete=models.CASCADE,
+                              related_name='order_item')
 
     class Meta:
         verbose_name = _('OrderItem')
