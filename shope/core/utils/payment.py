@@ -5,12 +5,17 @@
  - получить статус оплаты;
 """
 
+import os
+from dotenv import load_dotenv, find_dotenv
+
 from yookassa import Configuration, Payment
 
+load_dotenv(find_dotenv())
+PAY_ACCOUNT_ID = os.environ.get('PAY_ACCOUNT_ID')
+PAY_ACCOUNT_SECRET_KEY = os.environ.get('PAY_ACCOUNT_SECRET_KEY')
 
-# для тестов, потом перенесу в .env
-Configuration.account_id = '237093'
-Configuration.secret_key = 'test_ggEVF9sH36dcZS6ahfZzaa0miBp4c-Y9IxJT4YTHS5k'
+Configuration.account_id = PAY_ACCOUNT_ID
+Configuration.secret_key = PAY_ACCOUNT_SECRET_KEY
 
 
 class OrderPayment:
