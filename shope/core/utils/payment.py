@@ -10,12 +10,10 @@ from django.conf import settings
 from yookassa import Configuration, Payment
 
 
-Configuration.account_id = settings.PAY_ACCOUNT_ID
-Configuration.secret_key = settings.PAY_ACCOUNT_SECRET_KEY
-
-
 class OrderPayment:
     """Класс интеграции с сервисом оплаты"""
+    Configuration.account_id = settings.PAY_ACCOUNT_ID
+    Configuration.secret_key = settings.PAY_ACCOUNT_SECRET_KEY
 
     def new_order_pay(self):
         """
@@ -34,5 +32,5 @@ class OrderPayment:
             "capture": True,
             "description": "Заказ №72"
         })
-        print(payment.confirmation.confirmation_token)
+
         return str(payment.confirmation.confirmation_token)
