@@ -153,3 +153,7 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
 
 AUTH_USER_MODEL = 'auth_app.User'
+
+# payment
+PAY_ACCOUNT_ID = os.environ.get('PAY_ACCOUNT_ID')
+PAY_ACCOUNT_SECRET_KEY = os.environ.get('PAY_ACCOUNT_SECRET_KEY')

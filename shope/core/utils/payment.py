@@ -5,17 +5,13 @@
  - получить статус оплаты;
 """
 
-import os
-from dotenv import load_dotenv, find_dotenv
+from django.conf import settings
 
 from yookassa import Configuration, Payment
 
-load_dotenv(find_dotenv())
-PAY_ACCOUNT_ID = os.environ.get('PAY_ACCOUNT_ID')
-PAY_ACCOUNT_SECRET_KEY = os.environ.get('PAY_ACCOUNT_SECRET_KEY')
 
-Configuration.account_id = PAY_ACCOUNT_ID
-Configuration.secret_key = PAY_ACCOUNT_SECRET_KEY
+Configuration.account_id = settings.PAY_ACCOUNT_ID
+Configuration.secret_key = settings.PAY_ACCOUNT_SECRET_KEY
 
 
 class OrderPayment:
