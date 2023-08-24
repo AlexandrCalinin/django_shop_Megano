@@ -9,24 +9,32 @@
 
     </div>
     <div class="clear"></div>
-    <form action="{% url 'register' %}" method="post">
+    <form action="{% url 'auth_app:register' %}" method="post">
         {% csrf_token %}
         <div>
-            <input class="user-input" type="text" name="name" id="name" placeholder="Имя" />
+            {{ form.username }}
         </div>
         <div>
-            <input class="user-input" type="email" name="login" id="name" placeholder="E-mail" />
+            {{ form.first_name }}
         </div>
         <div>
-
-            <input type="password" name="pass" id="name" placeholder="Пароль" />
+            {{ form.last_name }}
         </div>
-        <input type="submit" value="Зарегистрироваться" />
-
-
-        <a class="registr" href="{% url 'login' %}">
-            {% translate 'Вход' %}
-        </a>
-        <div class="clear"></div>
+        <div>
+            {{ form.email }}
+        </div>
+        <div>
+            {{ form.password1 }}
+        </div>
+        <div>
+            {{ form.password2 }}
+        </div>
+        <input type="submit" value="Зарегистрироваться"/>
     </form>
+
+
+    <a class="registr" href="{% url 'auth_app:login' %}">
+        {% translate 'Вход' %}
+    </a>
+    <div class="clear"></div>
 {% endblock content %}

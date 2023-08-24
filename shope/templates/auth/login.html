@@ -7,19 +7,18 @@
         <h3 class="sign-in">{% translate 'Вход' %}</h3>
     </div>
     <div class="clear"></div>
-    <form action="#">
+    <form action="{% url 'auth_app:login' %}">
         <div>
             <input class="user-input" type="text" name="name" id="name" placeholder="E-mail" />
         </div>
         <div>
-
             <input type="password" name="pass" id="name" placeholder="*********" />
         </div>
         <div>
             <input type="submit" value="Войти" />
         </div>
-        <a class="forgot-label" href="{% url 'e-mail' %}">{% translate 'Забыли пароль?' %}</a>
-        <a class="registr" href="{% url 'register' %}">
+        <a class="forgot-label" href="{% url 'auth_app:e-mail' %}">{% translate 'Забыли пароль?' %}</a>
+        <a class="registr" href="{% url 'auth_app:register' %}">
             {% translate 'Регистрация' %}
         </a>
     </form>
