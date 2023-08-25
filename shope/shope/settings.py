@@ -152,4 +152,3 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
 
 AUTH_USER_MODEL = 'auth_app.User'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
