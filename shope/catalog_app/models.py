@@ -86,20 +86,3 @@ class Banner(BaseModel):
         verbose_name = _('Slider')
         verbose_name_plural = _('Sliders')
         ordering = ['id']
-
-
-class Price(BaseModel):
-    """Модель цены товара"""
-    price = models.DecimalField(max_digits=9, default=0, decimal_places=2, verbose_name=_("Product's price"))
-    product = models.ForeignKey('Product', on_delete=models.CASCADE, verbose_name=_('Product'))
-    seller = models.ForeignKey(
-        Seller, on_delete=models.CASCADE, related_name="product_seller", verbose_name=_('Seller')
-    )
-
-    def __str__(self):
-        return self.price
-
-    class Meta:
-        verbose_name = _('Price')
-        verbose_name_plural = _('Prices')
-        ordering = ['id']
