@@ -40,7 +40,8 @@ class RegisterView(FormView):
     def send_link_to_verify_email(cls, user):
         verify_link = reverse_lazy('auth_app:verify_email', args=[user.email, user.activation_key])
         subject = f'Для активации учетной записи {user.username} пройдите по ссылке'
-        message = f'Для подтверждения учетной записи {user.username}  на портале \n {verify_link}'
+        message = f'Для подтверждения учетной записи {user.username} перейдите по ссылке' \
+                  f' на портале \n http://127.0.0.1:8000/{verify_link}'
         return send_mail(subject, message, "AlexandrKalinin123@yandex.ru", [user.email], fail_silently=False)
 
     def verify(self, email, activate_key):
