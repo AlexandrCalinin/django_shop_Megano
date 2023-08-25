@@ -2,6 +2,7 @@ from django.db import models
 from taggit.managers import TaggableManager
 
 from core.models.base_model import BaseModel
+from core.models.seller import Seller
 from django.utils.translation import gettext_lazy as _
 
 
