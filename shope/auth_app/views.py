@@ -25,7 +25,7 @@ class RegisterView(FormView):
         form = self.form_class(data=request.POST)
         if form.is_valid():
             user = form.save()
-            if self.send_link_to_verify_email(user=user):
+            if self.send_link_to_verify_email(self, user=user):
                 return HttpResponseRedirect(reverse('auth_app:login'))
             else:
                 print("Email is not verified")
@@ -36,8 +36,8 @@ class RegisterView(FormView):
         }
         return render(request, self.template_name, context)
 
-    @classmethod
-    def send_link_to_verify_email(cls, user):
+    @staticmethod
+    def send_link_to_verify_email(self, user):
         verify_link = reverse_lazy('auth_app:verify_email', args=[user.email, user.activation_key])
         subject = f'Для активации учетной записи {user.username} пройдите по ссылке'
         message = f'Для подтверждения учетной записи {user.username} перейдите по ссылке' \

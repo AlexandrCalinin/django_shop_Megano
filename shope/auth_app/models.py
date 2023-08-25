@@ -13,8 +13,8 @@ class User(AbstractUser):
         super().__init__(*args, **kwargs)
 
     class Meta:
-        verbose_name = _('пользователь')
-        verbose_name_plural = _('пользователи')
+        verbose_name = _('user')
+        verbose_name_plural = _('users')
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
