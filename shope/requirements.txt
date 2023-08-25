@@ -19,3 +19,4 @@ xlrd==2.0.1
 psycopg2-binary==2.9.5
 phonenumbers==8.13.11
 inject==5.0.0
+yookassa==2.4.0
