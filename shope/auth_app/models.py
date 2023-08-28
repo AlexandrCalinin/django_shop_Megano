@@ -24,9 +24,10 @@ class User(AbstractUser):
     middle_name = models.CharField(default="", null=False, blank=False, max_length=48)
     activation_key = models.CharField(default="", null=False, blank=False, max_length=48)
     activation_key_set = models.DateTimeField(auto_now=True, blank=True, null=True)
-    is_activation_key_expired = models.BooleanField(blank=True, null=True)
+    is_activation_key_expired = models.BooleanField(default=False, blank=True, null=True)
 
-    def activation_key_expired(self):
-        if now() <= datetime.strptime(str(self.activation_key_set), "'%Y-%m-%d'") + timedelta(hours=48):
-            return True
-        return False
+    @staticmethod
+    def activation_key_expired(activation_key_set):
+        if now() <= datetime.strptime(str(activation_key_set), '%Y-%m-%d %H:%M:%S') + timedelta(days=2):
+            return False
+        return True

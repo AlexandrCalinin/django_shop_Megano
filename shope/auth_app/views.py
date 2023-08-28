@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.views import PasswordResetView, LogoutView
 from django.core.mail import send_mail
@@ -41,25 +42,36 @@ class RegisterView(FormView):
         verify_link = reverse_lazy('auth_app:verify_email', args=[user.email, user.activation_key])
         subject = f'Для активации учетной записи {user.username} пройдите по ссылке'
         message = f'Для подтверждения учетной записи {user.username} перейдите по ссылке' \
-                  f' на портале \n http://127.0.0.1:8000/{verify_link}'
-        return send_mail(subject, message, "AlexandrKalinin123@yandex.ru", [user.email], fail_silently=False)
+                  f' на портале \n {settings.DOMAIN_NAME}{verify_link}'
+        return send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
 
     def verify(self, email, activate_key):
         try:
-            user = User.objects.get(email=email)
-            if user and user.activation_key == activate_key and not user.is_activation_key_expires():
-                user.activation_key = ''
-                user.activation_key_expires = None
-                user.is_active = True
-                user.save()
-                auth.login(self, user)
-            return render(self, 'auth/virify-email.html')
+            user = User.objects.filter(email=email).values()
+
+            for i in user:
+                activation_key_set = i['activation_key_set']
+                activation_key = i['activation_key']
+
+                if activation_key == activate_key \
+                        and not User.activation_key_expired(activation_key_set=activation_key_set):
+                    user.activation_key = ''
+                    user.is_activation_key_expired = True
+                    user.is_active = True
+                    user.save()
+                    auth.login(self, user)
+                return render(self, 'auth/verify-email.html')
+
         except Exception:
-            return HttpResponseRedirect(reverse('/'))
+            User.objects.filter(email=email).delete()
+            return render(self, 'auth/registration-error.html')
 
 
-class EmailVerifyView(View):
-    template_name = 'auth/verify_email.html'
+class VefifyEmailView(View):
+    template_name = 'auth/verify-email.html'
+
+    def get(self, request):
+        return render(request, 'auth/verify-email.html')
 
 
 class ForgotPasswordView(View):
