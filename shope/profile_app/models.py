@@ -9,7 +9,7 @@ class Profile(BaseModel):
     """Модель профайла"""
     phone = models.CharField(max_length=10, verbose_name=_('Phone'))
     image = models.ImageField(upload_to="photos/%Y/%m/%d", verbose_name=_('Avatar'))
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_('User'))
+    user = models.OneToOneField(User, blank=True, on_delete=models.CASCADE, verbose_name=_('User'))
 
     def __str__(self):
         return self.user
