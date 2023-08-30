@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -27,7 +27,7 @@ class User(AbstractUser):
     is_activation_key_expired = models.BooleanField(default=False, blank=True, null=True)
 
     @staticmethod
-    def activation_key_expired(activation_key_set):
-        if now() <= datetime.strptime(str(activation_key_set), '%Y-%m-%d %H:%M:%S') + timedelta(days=2):
+    def activation_key_expired(self):
+        if now() <= self.activation_key_set + timedelta(hours=48):
             return False
         return True

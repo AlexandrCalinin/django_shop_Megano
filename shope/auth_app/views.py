@@ -47,30 +47,25 @@ class RegisterView(FormView):
 
     def verify(self, email, activate_key):
         try:
-            user = User.objects.filter(email=email).values()
+            user = User.objects.get(email=email)
 
-            for i in user:
-                activation_key_set = i['activation_key_set']
-                activation_key = i['activation_key']
-
-                if activation_key == activate_key \
-                        and not User.activation_key_expired(activation_key_set=activation_key_set):
-                    user.activation_key = ''
-                    user.is_activation_key_expired = True
-                    user.is_active = True
-                    user.save()
-                    auth.login(self, user)
-                return render(self, 'auth/verify-email.html')
+            if user.activation_key == activate_key and not User.activation_key_expired(user):
+                user.activation_key = ''
+                user.is_activation_key_expired = None
+                user.is_active = True
+                user.save()
+                auth.login(self, user)
+            return reverse_lazy('home')
 
         except Exception:
             User.objects.filter(email=email).delete()
             return render(self, 'auth/registration-error.html')
 
 
-class VefifyEmailView(View):
+class VerifyEmailView(View):
     template_name = 'auth/verify-email.html'
 
-    def get(self, request):
+    def get(self, request, email, activate_key):
         return render(request, 'auth/verify-email.html')
 
 
