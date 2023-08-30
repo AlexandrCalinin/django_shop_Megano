@@ -1,3 +1,5 @@
+import inject
+
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.views import PasswordResetView, LogoutView
@@ -10,6 +12,10 @@ from django.views.generic import FormView
 
 from .models import User
 from .forms import UserRegisterForm
+from core.utils.injector import configure_inject
+from interface.auth_interface import IAuth
+
+configure_inject()
 
 
 class SetNewPasswordView(PasswordResetView):
@@ -17,7 +23,7 @@ class SetNewPasswordView(PasswordResetView):
 
 
 class RegisterView(FormView):
-    model = User
+    _user: IAuth = inject.attr(IAuth)
     form_class = UserRegisterForm
     template_name = "auth/registr.html"
     success_url = reverse_lazy('auth_app:login')
@@ -47,7 +53,7 @@ class RegisterView(FormView):
 
     def verify(self, email, activate_key):
         try:
-            user = User.objects.get(email=email)
+            user = self._user.get_user_by_email(_email=email)
 
             if user.activation_key == activate_key and not User.activation_key_expired(user):
                 user.activation_key = ''
@@ -58,7 +64,7 @@ class RegisterView(FormView):
             return reverse_lazy('home')
 
         except Exception:
-            User.objects.filter(email=email).delete()
+            self._user.delete_user_by_email(email)
             return render(self, 'auth/registration-error.html')
 
 
