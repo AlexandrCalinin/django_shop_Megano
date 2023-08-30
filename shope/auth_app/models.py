@@ -9,9 +9,6 @@ from django.utils.translation import gettext_lazy as _
 class User(AbstractUser):
     """User model"""
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
