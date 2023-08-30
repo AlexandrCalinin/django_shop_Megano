@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from catalog_app.models import Product, Category, Image, Slider, Banner
+from catalog_app.models import Product, Category, Image, Slider, Banner, DiscountProduct, DiscountProductGroup, CartSale
 
 
 @admin.register(Product)
@@ -26,3 +26,18 @@ class SliderAdmin(admin.ModelAdmin):
 @admin.register(Banner)
 class BannerAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Banner._meta.fields]
+
+
+@admin.register(DiscountProduct)
+class DiscountProductAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in DiscountProduct._meta.fields]
+
+
+@admin.register(DiscountProductGroup)
+class DiscountProductGroupAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in DiscountProductGroup._meta.fields]
+
+
+@admin.register(CartSale)
+class CartSaleAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in CartSale._meta.fields]
