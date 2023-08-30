@@ -4,10 +4,6 @@ from django.utils import timezone
 from .base_model import BaseModel
 
 
-class MaxDiscountErrorException(Exception):
-    pass
-
-
 class DiscountBaseModel(BaseModel):
     """Базовая модель для скидок"""
     name = models.CharField(max_length=255, verbose_name=_('Discount name'))
