@@ -1,7 +1,7 @@
 from beartype import beartype
 
-from ..auth_app.models import User
-from ..interface.auth_interface import IAuth
+from auth_app.models import User
+from interface.auth_interface import IAuth
 
 
 class AuthRepository(IAuth):

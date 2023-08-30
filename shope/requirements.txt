@@ -20,3 +20,4 @@ psycopg2-binary==2.9.5
 phonenumbers==8.13.11
 inject==5.0.0
 yookassa==2.4.0
+beartype==0.15.0

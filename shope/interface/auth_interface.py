@@ -1,6 +1,6 @@
 from abc import abstractmethod
 
-from ..auth_app.models import User
+from auth_app.models import User
 
 
 class IAuth:
