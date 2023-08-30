@@ -15,7 +15,6 @@ class IOrder:
         """Получить заказ."""
         pass
 
-
     @abstractmethod
     def get_by_name(self, _name: str) -> Order:
         """Получить заказ."""
