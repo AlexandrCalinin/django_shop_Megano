@@ -1,9 +1,11 @@
 import inject
 
-
+from interface.order_interface import IOrder
+from repositories.order_repositories import OrderRepository
 
 BINDS = (
-    (Interface, Repository),
+    (IOrder, OrderRepository),
+
 )
 
 

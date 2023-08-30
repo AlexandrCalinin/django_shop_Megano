@@ -15,13 +15,13 @@
                             <div class="NavigateProfile">
                                 <ul class="menu menu_vt">
                                     <li class="menu-item_ACTIVE menu-item">
-                                        <a class="menu-link" href="{% url 'account' profile_id=profile_id %}">Личный кабинет</a>
+                                        <a class="menu-link" href="{% url 'account' %}">Личный кабинет</a>
                                     </li>
                                     <li class="menu-item">
-                                        <a class="menu-link" href="{% url 'profile' profile_id=profile_id %}">Профиль</a>
+                                        <a class="menu-link" href="{% url 'profile'  %}">Профиль</a>
                                     </li>
                                     <li class="menu-item">
-                                        <a class="menu-link" href="{% url 'order_app:history-order' profile_id=profile_id %}">История заказов</a>
+                                        <a class="menu-link" href="{% url 'order_app:history-order'  %}">История заказов</a>
                                     </li>
                                 </ul>
                             </div>
@@ -39,7 +39,7 @@
                             </div>
                             <div class="Account-column">
                                 <div class="Account-name">Иванов Иван Иванович</div>
-                                <a class="Account-editLink" href="{% url 'profile' profile_id=profile_id %}">Редактировать профиль</a>
+                                <a class="Account-editLink" href="{% url 'profile'  %}">Редактировать профиль</a>
                             </div>
                         </div>
                         <div class="Account-group">
@@ -48,9 +48,9 @@
                                     <div class="Order-personal">
                                         <div class="row">
                                             <div class="row-block">
-                                                <a class="Order-title" href="{% url 'order_app:one-order' profile_id=profile_id %}">Заказ&#32;<span class="Order-numberOrder">№200</span>&#32;от&#32;<span class="Order-dateOrder">21.07.2020</span></a>
+                                                <a class="Order-title" href="{% url 'order_app:one-order' %}">Заказ&#32;<span class="Order-numberOrder">№200</span>&#32;от&#32;<span class="Order-dateOrder">21.07.2020</span></a>
                                                 <div class="Account-editLink">
-                                                    <a href="{% url 'order_app:history-order' profile_id=profile_id %}">История заказов</a>
+                                                    <a href="{% url 'order_app:history-order'  %}">История заказов</a>
                                                 </div>
                                             </div>
                                             <div class="row-block">
