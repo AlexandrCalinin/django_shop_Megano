@@ -1,6 +1,7 @@
 from django.db import models
 from taggit.managers import TaggableManager
 
+from core.models.base_discount import DiscountBaseModel
 from core.models.base_model import BaseModel
 from core.models.seller import Seller
 from django.utils.translation import gettext_lazy as _
@@ -85,4 +86,47 @@ class Banner(BaseModel):
     class Meta:
         verbose_name = _('Slider')
         verbose_name_plural = _('Sliders')
+        ordering = ['id']
+
+
+class DiscountProduct(DiscountBaseModel):
+    """Модель скидки на товар"""
+    product = models.ForeignKey('Product', on_delete=models.CASCADE, verbose_name=_('Product'))
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name=_('Category'))
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('Product discount')
+        verbose_name_plural = _('Product discounts')
+        ordering = ['id']
+
+
+class DiscountProductGroup(DiscountBaseModel):
+    """Модель скидки на группу товаров"""
+    product = models.ForeignKey('Product', on_delete=models.CASCADE, verbose_name=_('Product'))
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('Group of product discount')
+        verbose_name_plural = _('Group of product discounts')
+        ordering = ['id']
+
+
+class CartSale(DiscountBaseModel):
+    """Модель скидки на корзину"""
+    amount = models.DecimalField(
+        decimal_places=0, max_digits=7, verbose_name=_('Amount of products for a success discount')
+    )
+    quantity = models.PositiveIntegerField(default=2, verbose_name=_('Quantity of products for a success discount'))
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('Cart discount')
+        verbose_name_plural = _('Cart discounts')
         ordering = ['id']

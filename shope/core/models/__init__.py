@@ -4,5 +4,6 @@ from .base_model import BaseModel
 from .base_item import BaseModelItem
 from .seller import Seller
 from .price import Price
+from .base_discount import DiscountBaseModel
 
 NAME = 'Package models'
