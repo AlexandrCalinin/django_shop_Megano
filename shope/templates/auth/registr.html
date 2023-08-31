@@ -11,23 +11,37 @@
     <div class="clear"></div>
     <form action="{% url 'auth_app:register' %}" method="post">
         {% csrf_token %}
-        <div>
-            {{ form.username }}
-        </div>
-        <div>
-            {{ form.first_name }}
-        </div>
-        <div>
-            {{ form.last_name }}
-        </div>
-        <div>
-            {{ form.email }}
-        </div>
-        <div>
-            {{ form.password1 }}
-        </div>
-        <div>
-            {{ form.password2 }}
+        {#        <div>#}
+        {#            {{ form.username }}#}
+        {#        </div>#}
+        {#        <div>#}
+        {#            {{ form.first_name }}#}
+        {#        </div>#}
+        {#        <div>#}
+        {#            {{ form.last_name }}#}
+        {#        </div>#}
+        {#        <div>#}
+        {#            {{ form.email }}#}
+        {#        </div>#}
+        {#        <div>#}
+        {#            {{ form.password1 }}#}
+        {#        </div>#}
+        {#        <div>#}
+        {#            {{ form.password2 }}#}
+        {#        </div>#}
+        <div class="form-row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="small mb-1" for="{{ form.first_name.id_for_label }}">Имя</label>
+                    {{ form.first_name }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="small mb-1" for="{{ form.last_name.id_for_label }}">Фамилия</label>
+                    {{ form.last_name }}
+                </div>
+            </div>
         </div>
         <input type="submit" value="Зарегистрироваться"/>
     </form>

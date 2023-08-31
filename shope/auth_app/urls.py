@@ -8,7 +8,7 @@ from .views import SetNewPasswordView, ForgotPasswordView, \
 app_name = 'auth_app'
 
 urlpatterns = [
-    path('set-new-password/', SetNewPasswordView.as_view(), name='restore_password'),
+    path('set-new-password/<email>/', SetNewPasswordView.as_view(), name='restore_password'),
     path('login/', LoginView.as_view(template_name='auth/login.html'), name='login'),
     path('forgot-password/', ForgotPasswordView.as_view(), name='e-mail'),
     path('register/', RegisterView.as_view(), name='register'),

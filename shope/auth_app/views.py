@@ -2,7 +2,8 @@ import inject
 
 from django.conf import settings
 from django.contrib import auth
-from django.contrib.auth.views import PasswordResetView, LogoutView
+from django.contrib.auth.views import PasswordResetView, LogoutView, PasswordResetConfirmView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -11,15 +12,11 @@ from django.views import View
 from django.views.generic import FormView
 
 from .models import User
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, ResetPasswordForm, SetNewPasswordForm
 from core.utils.injector import configure_inject
 from interface.auth_interface import IAuth
 
 configure_inject()
-
-
-class SetNewPasswordView(PasswordResetView):
-    template_name = "auth/password.html"
 
 
 class RegisterView(FormView):
@@ -32,7 +29,7 @@ class RegisterView(FormView):
         form = self.form_class(data=request.POST)
         if form.is_valid():
             user = form.save()
-            if self.send_link_to_verify_email(self, user=user):
+            if self.send_link_to_verify_email(user=user):
                 return HttpResponseRedirect(reverse('auth_app:login'))
             else:
                 print("Email is not verified")
@@ -44,7 +41,7 @@ class RegisterView(FormView):
         return render(request, self.template_name, context)
 
     @staticmethod
-    def send_link_to_verify_email(self, user):
+    def send_link_to_verify_email(user):
         verify_link = reverse_lazy('auth_app:verify_email', args=[user.email, user.activation_key])
         subject = f'Для активации учетной записи {user.username} пройдите по ссылке'
         message = f'Для подтверждения учетной записи {user.username} перейдите по ссылке' \
@@ -75,8 +72,42 @@ class VerifyEmailView(View):
         return render(request, 'auth/verify-email.html')
 
 
-class ForgotPasswordView(View):
+class ForgotPasswordView(SuccessMessageMixin, PasswordResetView):
+    form_class = ResetPasswordForm
+    _user: IAuth = inject.attr(IAuth)
     template_name = "auth/e-mail.html"
+    success_url = reverse_lazy('home')
+
+    def post(self, request, *args, **kwargs):
+        try:
+            form = self.form_class(data=request.POST)
+            if form.is_valid():
+                email = form.cleaned_data.get('email')
+                user = self._user.get_user_by_email(_email=email)
+                if self.data_to_send_email(email=email, user=user):
+                    return render(request, 'auth/change_password_success.html')
+                else:
+                    raise Exception
+        except Exception:
+            return render(request, 'auth/change_password_error.html')
+
+    @staticmethod
+    def data_to_send_email(email, user):
+        subject = f'Для продолжения сброса пароля {user.username} пройдите по ссылке'
+        message = f'Для подтверждения сброса пароля {user.username} перейдите по ссылке ' \
+                  f'на портале \n{settings.DOMAIN_NAME}/auth/set-new-password/{email}'
+        return send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
+
+
+class SetNewPasswordView(SuccessMessageMixin, PasswordResetConfirmView):
+    form_class = SetNewPasswordForm
+    _user: IAuth = inject.attr(IAuth)
+    template_name = "auth/password.html"
+    success_url = reverse_lazy('auth_app:login')
+    success_message = 'Пароль успешно изменен. Можете авторизоваться на сайте.'
+
+    def get(self, request, *args, **kwargs):
+        pass
 
 
 class UserLogoutView(LogoutView):
