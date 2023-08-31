@@ -1,10 +1,13 @@
 import inject
 
+from interface.discount_interface import IDiscountBaseModel
 from interface.order_interface import IOrder
+from repositories.discount_repositories import DiscountBaseModelRepository
 from repositories.order_repositories import OrderRepository
 
 BINDS = (
     (IOrder, OrderRepository),
+    (IDiscountBaseModel, DiscountBaseModelRepository),
 
 )
 
