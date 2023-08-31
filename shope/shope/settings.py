@@ -30,7 +30,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -153,6 +152,7 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
 
 AUTH_USER_MODEL = 'auth_app.User'
+DOMAIN_NAME = os.environ.get("DOMAIN_NAME")
 
 # payment
 PAY_ACCOUNT_ID = os.environ.get('PAY_ACCOUNT_ID')
