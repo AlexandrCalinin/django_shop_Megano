@@ -20,4 +20,4 @@
     python fixtures_dumper.py
 
 # rule for load data
-    python manage.py loaddata db.json
+    python fixtures_loader.py
