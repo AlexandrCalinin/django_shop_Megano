@@ -15,3 +15,9 @@
 # rule for commit
     origin/fixbugs/задача или номер задачи
     origin/feature/задача или номер задачи
+
+# rule for dump data
+    python fixtures_dumper.py
+
+# rule for load data
+    python manage.py loaddata db.json
