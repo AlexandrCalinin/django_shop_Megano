@@ -136,7 +136,7 @@ class CartSale(DiscountBaseModel):
 class Rewiew(BaseModel):
     """Модель отзывов"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Rewiew'))
-    text = models.TextField()
+    text = models.CharField(max_length=255, verbose_name=_('Text'))
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('Product'))
 
     def __str__(self):
