@@ -1,11 +1,13 @@
 import inject
 
 from interface.order_interface import IOrder
+from interface.auth_interface import IAuth
 from repositories.order_repositories import OrderRepository
+from repositories.auth_repositories import AuthRepository
 
 BINDS = (
     (IOrder, OrderRepository),
-
+    (IAuth, AuthRepository)
 )
 
 
