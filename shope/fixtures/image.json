@@ -6,8 +6,7 @@
       "created_at": "2023-08-31T08:32:25.695Z",
       "updated_at": "2023-08-31T08:32:25.695Z",
       "is_active": true,
-      "image": "images/2023/08/31/Телевизор1.jpg",
-      "product": 1
+      "image": "images/2023/08/31/Телевизор1.jpg"
     }
   },
   {
@@ -17,8 +16,7 @@
       "created_at": "2023-08-31T08:35:11.310Z",
       "updated_at": "2023-08-31T08:35:11.310Z",
       "is_active": true,
-      "image": "images/2023/08/31/Телевизор2.jpg",
-      "product": 1
+      "image": "images/2023/08/31/Телевизор2.jpg"
     }
   },
   {
@@ -28,8 +26,7 @@
       "created_at": "2023-08-31T08:36:07.076Z",
       "updated_at": "2023-08-31T08:36:07.076Z",
       "is_active": true,
-      "image": "images/2023/08/31/Телевизор3.jpg",
-      "product": 1
+      "image": "images/2023/08/31/Телевизор3.jpg"
     }
   },
   {
@@ -39,8 +36,7 @@
       "created_at": "2023-08-31T08:41:56.737Z",
       "updated_at": "2023-08-31T08:41:56.737Z",
       "is_active": true,
-      "image": "images/2023/08/31/Телевизор1_JCBQNS3.jpg",
-      "product": 2
+      "image": "images/2023/08/31/Телевизор1_JCBQNS3.jpg"
     }
   },
   {
@@ -50,8 +46,7 @@
       "created_at": "2023-08-31T08:42:45.742Z",
       "updated_at": "2023-08-31T08:42:45.742Z",
       "is_active": true,
-      "image": "images/2023/08/31/Телевизор2_kSA6N1n.jpg",
-      "product": 2
+      "image": "images/2023/08/31/Телевизор2_kSA6N1n.jpg"
     }
   },
   {
@@ -61,8 +56,7 @@
       "created_at": "2023-08-31T08:42:57.148Z",
       "updated_at": "2023-08-31T08:42:57.148Z",
       "is_active": true,
-      "image": "images/2023/08/31/Телевизор3_tlXDymg.jpg",
-      "product": 2
+      "image": "images/2023/08/31/Телевизор3_tlXDymg.jpg"
     }
   },
   {
@@ -72,8 +66,7 @@
       "created_at": "2023-08-31T08:49:10.645Z",
       "updated_at": "2023-08-31T08:49:10.645Z",
       "is_active": true,
-      "image": "images/2023/08/31/Телевизор1_Dk11m3f.jpg",
-      "product": 3
+      "image": "images/2023/08/31/Телевизор1_Dk11m3f.jpg"
     }
   },
   {
@@ -83,8 +76,7 @@
       "created_at": "2023-08-31T08:49:19.548Z",
       "updated_at": "2023-08-31T08:49:19.548Z",
       "is_active": true,
-      "image": "images/2023/08/31/Телевизор2_3THJh7x.jpg",
-      "product": 3
+      "image": "images/2023/08/31/Телевизор2_3THJh7x.jpg"
     }
   },
   {
@@ -94,8 +86,7 @@
       "created_at": "2023-08-31T08:49:30.781Z",
       "updated_at": "2023-08-31T08:49:30.781Z",
       "is_active": true,
-      "image": "images/2023/08/31/Телевизор3_H4PelO0.jpg",
-      "product": 3
+      "image": "images/2023/08/31/Телевизор3_H4PelO0.jpg"
     }
   },
   {
@@ -105,8 +96,7 @@
       "created_at": "2023-08-31T12:32:46.824Z",
       "updated_at": "2023-08-31T12:32:46.824Z",
       "is_active": true,
-      "image": "images/2023/08/31/Телевизор1_21ncQum.jpg",
-      "product": 4
+      "image": "images/2023/08/31/Телевизор1_21ncQum.jpg"
     }
   },
   {
@@ -116,8 +106,7 @@
       "created_at": "2023-08-31T12:33:00.462Z",
       "updated_at": "2023-08-31T12:33:00.462Z",
       "is_active": true,
-      "image": "images/2023/08/31/Телевизор2_zacEp5y.jpg",
-      "product": 4
+      "image": "images/2023/08/31/Телевизор2_zacEp5y.jpg"
     }
   },
   {
@@ -127,8 +116,7 @@
       "created_at": "2023-08-31T12:33:12.623Z",
       "updated_at": "2023-08-31T12:33:12.623Z",
       "is_active": true,
-      "image": "images/2023/08/31/Телевизор3_Vr6Fy3O.jpg",
-      "product": 4
+      "image": "images/2023/08/31/Телевизор3_Vr6Fy3O.jpg"
     }
   },
   {
@@ -138,8 +126,7 @@
       "created_at": "2023-08-31T12:38:41.862Z",
       "updated_at": "2023-08-31T12:38:41.862Z",
       "is_active": true,
-      "image": "images/2023/08/31/Наушники1.jpg",
-      "product": 5
+      "image": "images/2023/08/31/Наушники1.jpg"
     }
   },
   {
@@ -149,8 +136,7 @@
       "created_at": "2023-08-31T12:38:58.309Z",
       "updated_at": "2023-08-31T12:38:58.309Z",
       "is_active": true,
-      "image": "images/2023/08/31/Наушники2.jpg",
-      "product": 5
+      "image": "images/2023/08/31/Наушники2.jpg"
     }
   },
   {
@@ -160,8 +146,7 @@
       "created_at": "2023-08-31T12:43:20.197Z",
       "updated_at": "2023-08-31T12:43:20.197Z",
       "is_active": true,
-      "image": "images/2023/08/31/Наушники1_RYlRljk.jpg",
-      "product": 6
+      "image": "images/2023/08/31/Наушники1_RYlRljk.jpg"
     }
   },
   {
@@ -171,8 +156,7 @@
       "created_at": "2023-08-31T12:43:28.781Z",
       "updated_at": "2023-08-31T12:43:28.781Z",
       "is_active": true,
-      "image": "images/2023/08/31/Наушники2_i3a1MSU.jpg",
-      "product": 6
+      "image": "images/2023/08/31/Наушники2_i3a1MSU.jpg"
     }
   },
   {
@@ -182,8 +166,7 @@
       "created_at": "2023-08-31T12:43:43.705Z",
       "updated_at": "2023-08-31T12:43:43.705Z",
       "is_active": true,
-      "image": "images/2023/08/31/Наушники3.jpg",
-      "product": 6
+      "image": "images/2023/08/31/Наушники3.jpg"
     }
   },
   {
@@ -193,8 +176,7 @@
       "created_at": "2023-08-31T12:51:37.136Z",
       "updated_at": "2023-08-31T12:51:37.136Z",
       "is_active": true,
-      "image": "images/2023/08/31/wash_m1.jpg",
-      "product": 7
+      "image": "images/2023/08/31/wash_m1.jpg"
     }
   },
   {
@@ -204,8 +186,7 @@
       "created_at": "2023-08-31T12:51:45.417Z",
       "updated_at": "2023-08-31T12:51:45.417Z",
       "is_active": true,
-      "image": "images/2023/08/31/wash_m2.jpg",
-      "product": 7
+      "image": "images/2023/08/31/wash_m2.jpg"
     }
   },
   {
@@ -215,8 +196,7 @@
       "created_at": "2023-08-31T12:51:54.293Z",
       "updated_at": "2023-08-31T12:51:54.293Z",
       "is_active": true,
-      "image": "images/2023/08/31/wash_m3.jpg",
-      "product": 7
+      "image": "images/2023/08/31/wash_m3.jpg"
     }
   },
   {
@@ -226,8 +206,7 @@
       "created_at": "2023-08-31T13:27:11.148Z",
       "updated_at": "2023-08-31T13:27:11.148Z",
       "is_active": true,
-      "image": "images/2023/08/31/wash_m1_ySt3L9V.jpg",
-      "product": 8
+      "image": "images/2023/08/31/wash_m1_ySt3L9V.jpg"
     }
   },
   {
@@ -237,8 +216,7 @@
       "created_at": "2023-08-31T13:27:20.329Z",
       "updated_at": "2023-08-31T13:27:20.329Z",
       "is_active": true,
-      "image": "images/2023/08/31/wash_m2_ALUt9zD.jpg",
-      "product": 8
+      "image": "images/2023/08/31/wash_m2_ALUt9zD.jpg"
     }
   },
   {
@@ -248,8 +226,7 @@
       "created_at": "2023-08-31T13:27:28.569Z",
       "updated_at": "2023-08-31T13:27:28.569Z",
       "is_active": true,
-      "image": "images/2023/08/31/wash_m3_SpXsWLc.jpg",
-      "product": 8
+      "image": "images/2023/08/31/wash_m3_SpXsWLc.jpg"
     }
   },
   {
@@ -259,8 +236,7 @@
       "created_at": "2023-08-31T13:31:00.315Z",
       "updated_at": "2023-08-31T13:31:00.315Z",
       "is_active": true,
-      "image": "images/2023/08/31/wash_m1_23VXLm2.jpg",
-      "product": 9
+      "image": "images/2023/08/31/wash_m1_23VXLm2.jpg"
     }
   },
   {
@@ -270,8 +246,7 @@
       "created_at": "2023-08-31T13:31:09.419Z",
       "updated_at": "2023-08-31T13:31:09.419Z",
       "is_active": true,
-      "image": "images/2023/08/31/wash_m2_7Pabke5.jpg",
-      "product": 9
+      "image": "images/2023/08/31/wash_m2_7Pabke5.jpg"
     }
   },
   {
@@ -281,8 +256,7 @@
       "created_at": "2023-08-31T13:31:17.443Z",
       "updated_at": "2023-08-31T13:31:17.443Z",
       "is_active": true,
-      "image": "images/2023/08/31/wash_m3_5tiwpxN.jpg",
-      "product": 9
+      "image": "images/2023/08/31/wash_m3_5tiwpxN.jpg"
     }
   },
   {
@@ -292,8 +266,7 @@
       "created_at": "2023-08-31T13:37:38.809Z",
       "updated_at": "2023-08-31T13:37:38.809Z",
       "is_active": true,
-      "image": "images/2023/08/31/Колонки1.jpg",
-      "product": 10
+      "image": "images/2023/08/31/Колонки1.jpg"
     }
   },
   {
@@ -303,8 +276,7 @@
       "created_at": "2023-08-31T13:37:48.935Z",
       "updated_at": "2023-08-31T13:37:48.935Z",
       "is_active": true,
-      "image": "images/2023/08/31/Колонки2.jpg",
-      "product": 10
+      "image": "images/2023/08/31/Колонки2.jpg"
     }
   },
   {
@@ -314,8 +286,7 @@
       "created_at": "2023-08-31T13:37:58.434Z",
       "updated_at": "2023-08-31T13:37:58.434Z",
       "is_active": true,
-      "image": "images/2023/08/31/Колонки3.jpg",
-      "product": 10
+      "image": "images/2023/08/31/Колонки3.jpg"
     }
   },
   {
@@ -325,8 +296,7 @@
       "created_at": "2023-08-31T13:41:52.704Z",
       "updated_at": "2023-08-31T13:41:52.704Z",
       "is_active": true,
-      "image": "images/2023/08/31/Колонки1_Ibks63F.jpg",
-      "product": 11
+      "image": "images/2023/08/31/Колонки1_Ibks63F.jpg"
     }
   },
   {
@@ -336,8 +306,7 @@
       "created_at": "2023-08-31T13:42:04.115Z",
       "updated_at": "2023-08-31T13:42:04.115Z",
       "is_active": true,
-      "image": "images/2023/08/31/Колонки2_xbqjb3p.jpg",
-      "product": 11
+      "image": "images/2023/08/31/Колонки2_xbqjb3p.jpg"
     }
   },
   {
@@ -347,8 +316,7 @@
       "created_at": "2023-08-31T13:42:13.377Z",
       "updated_at": "2023-08-31T13:42:13.377Z",
       "is_active": true,
-      "image": "images/2023/08/31/Колонки3_NrRDmLj.jpg",
-      "product": 11
+      "image": "images/2023/08/31/Колонки3_NrRDmLj.jpg"
     }
   },
   {
@@ -358,8 +326,7 @@
       "created_at": "2023-08-31T13:48:14.884Z",
       "updated_at": "2023-08-31T13:48:14.884Z",
       "is_active": true,
-      "image": "images/2023/08/31/photoap1.jpg",
-      "product": 12
+      "image": "images/2023/08/31/photoap1.jpg"
     }
   },
   {
@@ -369,8 +336,7 @@
       "created_at": "2023-08-31T13:48:24.468Z",
       "updated_at": "2023-08-31T13:48:24.468Z",
       "is_active": true,
-      "image": "images/2023/08/31/photoap2.jpg",
-      "product": 12
+      "image": "images/2023/08/31/photoap2.jpg"
     }
   },
   {
@@ -380,8 +346,7 @@
       "created_at": "2023-08-31T13:48:38.462Z",
       "updated_at": "2023-08-31T13:48:38.462Z",
       "is_active": true,
-      "image": "images/2023/08/31/photoap3.jpg",
-      "product": 12
+      "image": "images/2023/08/31/photoap3.jpg"
     }
   },
   {
@@ -391,8 +356,7 @@
       "created_at": "2023-08-31T13:48:48.205Z",
       "updated_at": "2023-08-31T13:48:48.205Z",
       "is_active": true,
-      "image": "images/2023/08/31/photoap4.jpg",
-      "product": 12
+      "image": "images/2023/08/31/photoap4.jpg"
     }
   },
   {
@@ -402,8 +366,7 @@
       "created_at": "2023-08-31T13:52:33.747Z",
       "updated_at": "2023-08-31T13:52:33.747Z",
       "is_active": true,
-      "image": "images/2023/08/31/коптер1.jpg",
-      "product": 13
+      "image": "images/2023/08/31/коптер1.jpg"
     }
   },
   {
@@ -413,8 +376,7 @@
       "created_at": "2023-08-31T13:52:42.845Z",
       "updated_at": "2023-08-31T13:52:42.845Z",
       "is_active": true,
-      "image": "images/2023/08/31/коптер2.jpg",
-      "product": 13
+      "image": "images/2023/08/31/коптер2.jpg"
     }
   },
   {
@@ -424,8 +386,7 @@
       "created_at": "2023-08-31T13:52:52.508Z",
       "updated_at": "2023-08-31T13:52:52.508Z",
       "is_active": true,
-      "image": "images/2023/08/31/коптер3.jpg",
-      "product": 13
+      "image": "images/2023/08/31/коптер3.jpg"
     }
   },
   {
@@ -435,8 +396,7 @@
       "created_at": "2023-08-31T13:53:01.764Z",
       "updated_at": "2023-08-31T13:53:01.764Z",
       "is_active": true,
-      "image": "images/2023/08/31/коптер4.jpg",
-      "product": 13
+      "image": "images/2023/08/31/коптер4.jpg"
     }
   },
   {
@@ -446,8 +406,7 @@
       "created_at": "2023-08-31T18:38:13.949Z",
       "updated_at": "2023-08-31T18:38:13.949Z",
       "is_active": true,
-      "image": "images/2023/08/31/мфу1.jpg",
-      "product": 14
+      "image": "images/2023/08/31/мфу1.jpg"
     }
   },
   {
@@ -457,8 +416,7 @@
       "created_at": "2023-08-31T18:38:24.022Z",
       "updated_at": "2023-08-31T18:38:24.022Z",
       "is_active": true,
-      "image": "images/2023/08/31/мфу2.jpg",
-      "product": 14
+      "image": "images/2023/08/31/мфу2.jpg"
     }
   },
   {
@@ -468,8 +426,7 @@
       "created_at": "2023-08-31T18:38:33.055Z",
       "updated_at": "2023-08-31T18:38:33.055Z",
       "is_active": true,
-      "image": "images/2023/08/31/мфу3.jpg",
-      "product": 14
+      "image": "images/2023/08/31/мфу3.jpg"
     }
   },
   {
@@ -479,8 +436,7 @@
       "created_at": "2023-08-31T18:38:41.382Z",
       "updated_at": "2023-08-31T18:38:41.382Z",
       "is_active": true,
-      "image": "images/2023/08/31/мфу4.jpg",
-      "product": 14
+      "image": "images/2023/08/31/мфу4.jpg"
     }
   },
   {
@@ -490,8 +446,7 @@
       "created_at": "2023-08-31T18:41:49.423Z",
       "updated_at": "2023-08-31T18:41:49.423Z",
       "is_active": true,
-      "image": "images/2023/08/31/table1.jpg",
-      "product": 15
+      "image": "images/2023/08/31/table1.jpg"
     }
   },
   {
@@ -501,8 +456,7 @@
       "created_at": "2023-08-31T18:41:56.343Z",
       "updated_at": "2023-08-31T18:41:56.343Z",
       "is_active": true,
-      "image": "images/2023/08/31/table2.jpg",
-      "product": 15
+      "image": "images/2023/08/31/table2.jpg"
     }
   },
   {
@@ -512,8 +466,7 @@
       "created_at": "2023-08-31T18:42:04.054Z",
       "updated_at": "2023-08-31T18:42:04.054Z",
       "is_active": true,
-      "image": "images/2023/08/31/table3.jpg",
-      "product": 15
+      "image": "images/2023/08/31/table3.jpg"
     }
   },
   {
@@ -523,8 +476,7 @@
       "created_at": "2023-08-31T18:42:10.823Z",
       "updated_at": "2023-08-31T18:42:10.823Z",
       "is_active": true,
-      "image": "images/2023/08/31/table4.jpg",
-      "product": 15
+      "image": "images/2023/08/31/table4.jpg"
     }
   },
   {
@@ -534,8 +486,7 @@
       "created_at": "2023-08-31T18:48:41.806Z",
       "updated_at": "2023-08-31T18:48:41.806Z",
       "is_active": true,
-      "image": "images/2023/08/31/phone1.jpg",
-      "product": 16
+      "image": "images/2023/08/31/phone1.jpg"
     }
   },
   {
@@ -545,8 +496,7 @@
       "created_at": "2023-08-31T18:48:50.429Z",
       "updated_at": "2023-08-31T18:48:50.429Z",
       "is_active": true,
-      "image": "images/2023/08/31/phone2.jpg",
-      "product": 16
+      "image": "images/2023/08/31/phone2.jpg"
     }
   },
   {
@@ -556,8 +506,7 @@
       "created_at": "2023-08-31T18:49:02.685Z",
       "updated_at": "2023-08-31T18:49:02.685Z",
       "is_active": true,
-      "image": "images/2023/08/31/phone3.jpg",
-      "product": 16
+      "image": "images/2023/08/31/phone3.jpg"
     }
   },
   {
@@ -567,8 +516,7 @@
       "created_at": "2023-08-31T18:51:08.056Z",
       "updated_at": "2023-08-31T18:51:08.056Z",
       "is_active": true,
-      "image": "images/2023/08/31/phone1_ZcxDc9c.jpg",
-      "product": 17
+      "image": "images/2023/08/31/phone1_ZcxDc9c.jpg"
     }
   },
   {
@@ -578,8 +526,7 @@
       "created_at": "2023-08-31T18:51:15.907Z",
       "updated_at": "2023-08-31T18:51:15.907Z",
       "is_active": true,
-      "image": "images/2023/08/31/phone2_vsicKoL.jpg",
-      "product": 17
+      "image": "images/2023/08/31/phone2_vsicKoL.jpg"
     }
   },
   {
@@ -589,8 +536,7 @@
       "created_at": "2023-08-31T18:51:24.917Z",
       "updated_at": "2023-08-31T18:51:24.917Z",
       "is_active": true,
-      "image": "images/2023/08/31/phone3_3WMv5cl.jpg",
-      "product": 17
+      "image": "images/2023/08/31/phone3_3WMv5cl.jpg"
     }
   },
   {
@@ -600,8 +546,7 @@
       "created_at": "2023-08-31T18:54:01.325Z",
       "updated_at": "2023-08-31T18:54:01.325Z",
       "is_active": true,
-      "image": "images/2023/08/31/phone1_aUNsxV9.jpg",
-      "product": 18
+      "image": "images/2023/08/31/phone1_aUNsxV9.jpg"
     }
   },
   {
@@ -611,8 +556,7 @@
       "created_at": "2023-08-31T18:54:09.642Z",
       "updated_at": "2023-08-31T18:54:09.642Z",
       "is_active": true,
-      "image": "images/2023/08/31/phone2_8EGNbTm.jpg",
-      "product": 18
+      "image": "images/2023/08/31/phone2_8EGNbTm.jpg"
     }
   },
   {
@@ -622,8 +566,7 @@
       "created_at": "2023-08-31T18:54:20.123Z",
       "updated_at": "2023-08-31T18:54:20.123Z",
       "is_active": true,
-      "image": "images/2023/08/31/phone3_taZpcUf.jpg",
-      "product": 18
+      "image": "images/2023/08/31/phone3_taZpcUf.jpg"
     }
   },
   {
@@ -633,8 +576,7 @@
       "created_at": "2023-08-31T18:59:48.619Z",
       "updated_at": "2023-08-31T18:59:48.619Z",
       "is_active": true,
-      "image": "images/2023/08/31/microp1.jpg",
-      "product": 19
+      "image": "images/2023/08/31/microp1.jpg"
     }
   },
   {
@@ -644,8 +586,7 @@
       "created_at": "2023-08-31T18:59:56.787Z",
       "updated_at": "2023-08-31T18:59:56.787Z",
       "is_active": true,
-      "image": "images/2023/08/31/microp2.jpg",
-      "product": 19
+      "image": "images/2023/08/31/microp2.jpg"
     }
   },
   {
@@ -655,8 +596,7 @@
       "created_at": "2023-08-31T19:00:04.819Z",
       "updated_at": "2023-08-31T19:00:04.819Z",
       "is_active": true,
-      "image": "images/2023/08/31/microp3.jpg",
-      "product": 19
+      "image": "images/2023/08/31/microp3.jpg"
     }
   },
   {
@@ -666,8 +606,7 @@
       "created_at": "2023-08-31T19:00:12.843Z",
       "updated_at": "2023-08-31T19:00:12.843Z",
       "is_active": true,
-      "image": "images/2023/08/31/microp4.jpg",
-      "product": 19
+      "image": "images/2023/08/31/microp4.jpg"
     }
   },
   {
@@ -677,8 +616,7 @@
       "created_at": "2023-08-31T19:02:20.586Z",
       "updated_at": "2023-08-31T19:02:20.586Z",
       "is_active": true,
-      "image": "images/2023/08/31/microp1_a2coSTd.jpg",
-      "product": 20
+      "image": "images/2023/08/31/microp1_a2coSTd.jpg"
     }
   },
   {
@@ -688,8 +626,7 @@
       "created_at": "2023-08-31T19:02:29.323Z",
       "updated_at": "2023-08-31T19:02:29.323Z",
       "is_active": true,
-      "image": "images/2023/08/31/microp2_BBNGbFC.jpg",
-      "product": 20
+      "image": "images/2023/08/31/microp2_BBNGbFC.jpg"
     }
   },
   {
@@ -699,8 +636,7 @@
       "created_at": "2023-08-31T19:02:38.226Z",
       "updated_at": "2023-08-31T19:02:38.226Z",
       "is_active": true,
-      "image": "images/2023/08/31/microp3_YDVrqMB.jpg",
-      "product": 20
+      "image": "images/2023/08/31/microp3_YDVrqMB.jpg"
     }
   },
   {
@@ -710,8 +646,7 @@
       "created_at": "2023-08-31T19:02:46.777Z",
       "updated_at": "2023-08-31T19:02:46.777Z",
       "is_active": true,
-      "image": "images/2023/08/31/microp4_IFIAqgT.jpg",
-      "product": 20
+      "image": "images/2023/08/31/microp4_IFIAqgT.jpg"
     }
   },
   {
@@ -721,8 +656,7 @@
       "created_at": "2023-08-31T19:07:17.051Z",
       "updated_at": "2023-08-31T19:07:17.051Z",
       "is_active": true,
-      "image": "images/2023/08/31/microp1_oFQ4pHS.jpg",
-      "product": 21
+      "image": "images/2023/08/31/microp1_oFQ4pHS.jpg"
     }
   },
   {
@@ -732,8 +666,7 @@
       "created_at": "2023-08-31T19:07:26.416Z",
       "updated_at": "2023-08-31T19:07:26.416Z",
       "is_active": true,
-      "image": "images/2023/08/31/microp2_Lyp6Nih.jpg",
-      "product": 21
+      "image": "images/2023/08/31/microp2_Lyp6Nih.jpg"
     }
   },
   {
@@ -743,8 +676,7 @@
       "created_at": "2023-08-31T19:07:34.307Z",
       "updated_at": "2023-08-31T19:07:34.307Z",
       "is_active": true,
-      "image": "images/2023/08/31/microp3_SrPalI3.jpg",
-      "product": 21
+      "image": "images/2023/08/31/microp3_SrPalI3.jpg"
     }
   },
   {
@@ -754,8 +686,7 @@
       "created_at": "2023-08-31T19:07:42.201Z",
       "updated_at": "2023-08-31T19:07:42.201Z",
       "is_active": true,
-      "image": "images/2023/08/31/microp4_TzAnQx1.jpg",
-      "product": 21
+      "image": "images/2023/08/31/microp4_TzAnQx1.jpg"
     }
   },
   {
@@ -765,8 +696,7 @@
       "created_at": "2023-08-31T19:10:44.912Z",
       "updated_at": "2023-08-31T19:10:44.912Z",
       "is_active": true,
-      "image": "images/2023/08/31/microp1_s9ZaL3J.jpg",
-      "product": 22
+      "image": "images/2023/08/31/microp1_s9ZaL3J.jpg"
     }
   },
   {
@@ -776,8 +706,7 @@
       "created_at": "2023-08-31T19:10:53.024Z",
       "updated_at": "2023-08-31T19:10:53.024Z",
       "is_active": true,
-      "image": "images/2023/08/31/microp2_Mgg9hCM.jpg",
-      "product": 22
+      "image": "images/2023/08/31/microp2_Mgg9hCM.jpg"
     }
   },
   {
@@ -787,8 +716,7 @@
       "created_at": "2023-08-31T19:11:02.434Z",
       "updated_at": "2023-08-31T19:11:02.434Z",
       "is_active": true,
-      "image": "images/2023/08/31/microp3_3irp4fQ.jpg",
-      "product": 22
+      "image": "images/2023/08/31/microp3_3irp4fQ.jpg"
     }
   },
   {
@@ -798,8 +726,7 @@
       "created_at": "2023-08-31T19:11:10.919Z",
       "updated_at": "2023-08-31T19:11:10.919Z",
       "is_active": true,
-      "image": "images/2023/08/31/microp4_82kBOlM.jpg",
-      "product": 22
+      "image": "images/2023/08/31/microp4_82kBOlM.jpg"
     }
   },
   {
@@ -809,8 +736,7 @@
       "created_at": "2023-08-31T19:13:37.433Z",
       "updated_at": "2023-08-31T19:13:37.433Z",
       "is_active": true,
-      "image": "images/2023/08/31/microp1_g9gaZpe.jpg",
-      "product": 23
+      "image": "images/2023/08/31/microp1_g9gaZpe.jpg"
     }
   }
 ]

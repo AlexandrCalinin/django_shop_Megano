@@ -27,9 +27,9 @@ class Category(BaseModel):
 class Image(BaseModel):
     """Модель изображения для товара"""
     image = models.ImageField(upload_to="images/%Y/%m/%d", verbose_name=_('Image'))
-    product = models.ForeignKey(
-        'Product', on_delete=models.CASCADE, related_name='image_for_product', verbose_name=_('Product')
-    )
+    # product = models.ForeignKey(
+    #     'Product', on_delete=models.CASCADE, related_name='image_for_product', verbose_name=_('Product')
+    # )
 
     def __str__(self):
         return f'{self.image}'
@@ -45,7 +45,7 @@ class Product(BaseModel):
     title = models.CharField(max_length=255, verbose_name=_('Title  '))
     description = models.TextField(blank=True, verbose_name=_('Description'))
     name = models.CharField(max_length=255, verbose_name=_('Name'))
-    image = models.ManyToManyField('Image', blank=True, related_name='image_to_product', verbose_name=_('Image'))
+    image = models.ManyToManyField('Image', related_name='image_to_product', verbose_name=_('Image'))
     tag = TaggableManager()
     category = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name=_('Category'))
     is_limited = models.BooleanField(default=True, verbose_name=_('Limited'))
