@@ -1,8 +1,8 @@
 import os
 
 
-data1 = os.system("python -Xutf8 manage.py dumpdata catalog_app.Category > fixtures/category.json")
-data5 = os.system("python -Xutf8 manage.py dumpdata catalog_app.Image > fixtures/image.json")
-data2 = os.system("python -Xutf8 manage.py dumpdata catalog_app.Product > fixtures/product.json")
-data3 = os.system("python -Xutf8 manage.py dumpdata taggit.Tag > fixtures/tag.json")
-data4 = os.system("python -Xutf8 manage.py dumpdata taggit.TaggedItem > fixtures/taggeditem.json")
+os.system("python -Xutf8 manage.py dumpdata catalog_app.Category > fixtures/1_category.json")
+os.system("python -Xutf8 manage.py dumpdata catalog_app.Image > fixtures/3_image.json")
+os.system("python -Xutf8 manage.py dumpdata taggit.Tag > fixtures/5_tag.json")
+os.system("python -Xutf8 manage.py dumpdata taggit.TaggedItem > fixtures/7_taggeditem.json")
+os.system("python -Xutf8 manage.py dumpdata catalog_app.Product > fixtures/9_product.json")
