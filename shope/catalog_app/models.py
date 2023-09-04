@@ -2,6 +2,7 @@ from django.core.validators import FileExtensionValidator
 from django.db import models
 from taggit.managers import TaggableManager
 
+from auth_app.models import User
 from core.models.base_discount import DiscountBaseModel
 from core.models.base_model import BaseModel
 from core.models.seller import Seller
@@ -133,3 +134,17 @@ class CartSale(DiscountBaseModel):
         verbose_name = _('Cart discount')
         verbose_name_plural = _('Cart discounts')
         ordering = ['id']
+
+
+class Rewiew(BaseModel):
+    """Модель отзывов"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Rewiew'))
+    text = models.CharField(max_length=255, verbose_name=_('Text'))
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('Product'))
+
+    def __str__(self):
+        return self.user
+
+    class Meta:
+        verbose_name = _('Rewiew')
+        verbose_name_plural = _('Reviews')

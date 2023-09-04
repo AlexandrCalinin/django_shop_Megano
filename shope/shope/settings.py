@@ -161,3 +161,8 @@ DOMAIN_NAME = os.environ.get("DOMAIN_NAME")
 # payment
 PAY_ACCOUNT_ID = os.environ.get('PAY_ACCOUNT_ID')
 PAY_ACCOUNT_SECRET_KEY = os.environ.get('PAY_ACCOUNT_SECRET_KEY')
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_ERROR_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/auth/login/'
