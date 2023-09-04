@@ -1,17 +1,19 @@
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from taggit.managers import TaggableManager
 
 from auth_app.models import User
 from core.models.base_discount import DiscountBaseModel
 from core.models.base_model import BaseModel
-from core.models.seller import Seller
 from django.utils.translation import gettext_lazy as _
 
 
 class Category(BaseModel):
     """Модель категории"""
     title = models.CharField(max_length=255, verbose_name=_('Title'))
-    image = models.ImageField(upload_to="images/%Y/%m/%d", verbose_name=_('Image'))
+    image = models.FileField(
+        upload_to="images/%Y/%m/%d", validators=[FileExtensionValidator(['svg'])], verbose_name=_('Image')
+    )
 
     def __str__(self):
         return f'{self.title}'
@@ -25,9 +27,6 @@ class Category(BaseModel):
 class Image(BaseModel):
     """Модель изображения для товара"""
     image = models.ImageField(upload_to="images/%Y/%m/%d", verbose_name=_('Image'))
-    product = models.ForeignKey(
-        'Product', on_delete=models.CASCADE, related_name='image_for_product', verbose_name=_('Product')
-    )
 
     def __str__(self):
         return f'{self.image}'
