@@ -1,4 +1,6 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
+
+from catalog_app.models import DiscountProduct
 
 
 class TestCatalogView(TemplateView):
@@ -13,8 +15,8 @@ class TestProductView(TemplateView):
     template_name = 'catalog_app/product.html'
 
 
-class TestSaleView(TemplateView):
-    template_name = 'catalog_app/sale.html'
+class SaleView(TemplateView):
+    template_name = 'catalog_app/discount_list.html'
 
 
 class CatalogFilterView(TemplateView):
