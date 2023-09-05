@@ -1,0 +1,23 @@
+{% extends 'auth_app/base-auth.html' %}
+{% load i18n %}
+
+
+{% block content %}
+    <div class="header">
+        <h3 class="sign-in">{% translate 'Восстановление пароля (1/2)' %}</h3>
+        <h5>{% translate 'Для восстановления пароля введите адрес электронной почты, на которую зарегистрирована учетная запись' %}</h5>
+    </div>
+
+    <form action="{% url 'auth_app:e-mail' %}" method="post">
+        {% csrf_token %}
+        <div>
+            {{ form.email }}
+        </div>
+        <div>
+            <input type="submit" value="Получить проверочный код" />
+        </div>
+        <a class="registr" href="{% url 'auth_app:register' %}">
+            {% translate 'Вход' %}
+        </a>
+    </form>
+{% endblock content %}

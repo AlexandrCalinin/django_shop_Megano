@@ -1,0 +1,32 @@
+{% extends 'auth_app/base-auth.html' %}
+{% load i18n %}
+
+
+{% block content %}
+    <div class="header">
+        <h3 class="sign-in">{% translate 'Вход' %}</h3>
+    </div>
+    <div class="clear"></div>
+    <form action="{% url 'auth_app:login' %}" method="post">
+        {% csrf_token %}
+             <div class="col-md-6">
+                <div class="form-group">
+                    <label class="small mb-1" for="{{ form.username.id_for_label }}">Введите почту</label>
+                    {{ form.username }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="small mb-1" for="{{ form.password.id_for_label }}">Введите пароль</label>
+                    {{ form.password }}
+                </div>
+            </div>
+        <div>
+            <input type="submit" value="Войти" />
+        </div>
+        <a class="forgot-label" href="{% url 'auth_app:e-mail' %}">{% translate 'Забыли пароль?' %}</a>
+        <a class="registr" href="{% url 'auth_app:register' %}">
+            {% translate 'Регистрация' %}
+        </a>
+    </form>
+{% endblock content %}

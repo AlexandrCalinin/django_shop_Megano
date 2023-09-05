@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('core', '0001_initial'),
-        ('catalog_app', '0002_slider_banner'),
+        ('catalog_app', '0001_initial'),
         ('order_app', '0001_initial'),
     ]
 
