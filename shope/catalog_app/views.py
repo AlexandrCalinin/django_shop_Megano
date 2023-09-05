@@ -16,8 +16,12 @@ class TestProductView(TemplateView):
 
 
 class SaleView(TemplateView):
-    template_name = 'catalog_app/discount_list.html'
+    template_name = 'catalog_app/sale.html'
 
 
 class CatalogFilterView(TemplateView):
     template_name = 'catalog_app/filter_catalog.html'
+
+
+class DiscountListView(TemplateView):
+    template_name = 'catalog_app/discount_list.html'
