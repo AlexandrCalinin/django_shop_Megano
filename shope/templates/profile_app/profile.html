@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load static %}
 {% block content_body %}
+    {% if user.is_authenticated %}<p>{{ user.get_username }}</p>{% endif %}
     <div class="Middle Middle_top">
         <div class="Section Section_column Section_columnLeft">
             <div class="wrap">
