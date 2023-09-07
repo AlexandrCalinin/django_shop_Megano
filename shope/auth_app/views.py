@@ -57,6 +57,7 @@ class RegisterView(FormView):
                 user.activation_key = ''
                 user.is_activation_key_expired = None
                 user.is_active = True
+                print(user.is_active)
                 user.save()
                 auth.login(self, user)
             return HttpResponseRedirect(reverse('home'))
