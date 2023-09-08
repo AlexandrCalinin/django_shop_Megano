@@ -52,6 +52,7 @@
     <script src="{% static 'assets/plg/CountDown/countdown.js' %}"></script>
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <meta name="csrf-token" content="{{csrf_token}}">
 </head>
 <body class="Site">
 <!--if lt IE 8
@@ -161,14 +162,7 @@ block
                             <a class="dropdown-content-a" href="../profile/account">Выход</a>
                         </div>
                     </div>
-                    <a class="CartBlock-block" href="{% url 'cart' %}">
-                        <img class="CartBlock-img"
-                             src="{% static 'assets/img/icons/cart.svg' %}"
-                             alt="cart.svg"/>
-                        <span class="CartBlock-amount">0</span></a>
-                    <div class="CartBlock-block">
-                        <span class="CartBlock-price">0.00$</span>
-                    </div>
+                    {% include 'includes/card_edit.html' %}
                 </div>
             </div>
             <div class="row-block Header-trigger">
@@ -422,7 +416,7 @@ block
 <!--        +breadcrumbs('Главная','Портфолио')-->
 <!--    +Article('portfolio')-->
 <!---->
-<script src="{% static 'assets/plg/jQuery/jquery-3.5.0.slim.min.js' %}"></script>
+<script src="{% static '/assets/plg/jQuery/jquery-3.7.0.min.js' %}"></script>
 <script src="{% static 'assets/plg/form/jquery.form.js' %}"></script>
 <script src="{% static 'assets/plg/form/jquery.maskedinput.min.js' %}"></script>
 <script src="{% static 'assets/plg/range/ion.rangeSlider.min.js' %}"></script>
