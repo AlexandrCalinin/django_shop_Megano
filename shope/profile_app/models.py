@@ -16,10 +16,6 @@ def profile_image_path(instance: "Profile", filename: str) -> str:
 
 class Profile(BaseModel):
     """Модель профайла"""
-    # phone = models.CharField(max_length=10,
-    #                          verbose_name=_('phone'),
-    #                          null=True,
-    #                          blank=True)
 
     phone = PhoneNumberField(unique=True,
                              verbose_name=_('phone'),
