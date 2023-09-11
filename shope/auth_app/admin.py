@@ -1,6 +1,13 @@
-from django.contrib import admin
+"""User admin."""
 
+
+from django.contrib import admin
 from .models import User
 
 
-admin.site.register(User)
+class UserAdmin(admin.ModelAdmin):
+    """User admin"""
+    pass
+
+
+admin.site.register(User, UserAdmin)
