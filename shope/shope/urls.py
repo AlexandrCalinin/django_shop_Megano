@@ -36,8 +36,11 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns.extend(
-        static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+        static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # type: ignore
     )
     urlpatterns.extend(
-        static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # type: ignore
     )
+
+    print('media url', settings.MEDIA_URL)
+    print('media root', settings.MEDIA_ROOT)
