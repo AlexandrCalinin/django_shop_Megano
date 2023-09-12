@@ -144,3 +144,74 @@ class Rewiew(BaseModel):
     class Meta:
         verbose_name = _('Rewiew')
         verbose_name_plural = _('Reviews')
+
+
+###############################################################
+# ХАРАКТЕРИСТИКИ ПРОДУКТОВ
+###############################################################
+
+class CharacteristicType(BaseModel):
+    """Виды характеристик продуктов"""
+
+    name = models.CharField(verbose_name=_('name'),
+                            max_length=150
+                            )
+
+    category = models.ForeignKey('Category',
+                                 on_delete=models.CASCADE,
+                                 verbose_name=_('category'),
+                                 )
+
+    class Meta:
+        """Meta"""
+        verbose_name = _('type characteristic of product')
+        verbose_name_plural = _('types characteristic of product')
+
+    def __str__(self):
+        """Строковое представление"""
+        return str(self.name)
+
+
+class CharacteristicValue(BaseModel):
+    """Значение характеристики продукта"""
+    characteristic_type = models.ForeignKey(CharacteristicType,
+                                            on_delete=models.CASCADE,
+                                            verbose_name=_('type of characteristic'),
+                                            related_name='characteristic_value'
+                                            )
+    value = models.CharField(verbose_name=_('value'),
+                             max_length=100
+                             )
+
+    class Meta:
+        """Meta"""
+        verbose_name = _('characteristic value')
+        verbose_name_plural = _('characteristic values')
+
+    def __str__(self):
+        """Строковое представление"""
+        return f'{self.characteristic_type} - {self.value}'
+
+
+class CharacteristicProduct(BaseModel):
+    """Значение характеристики в продукте"""
+    product = models.ForeignKey(Product,
+                                on_delete=models.CASCADE,
+                                verbose_name=_('product'),
+                                related_name='characteristic_product'
+                                )
+
+    characteristic_value = models.ForeignKey(CharacteristicValue,
+                                             on_delete=models.CASCADE,
+                                             verbose_name=_('value of characteristic'),
+                                             related_name='characteristic_product'
+                                             )
+
+    class Meta:
+        """Meta"""
+        verbose_name = _('characteristic of product')
+        verbose_name_plural = _('characteristics of product')
+
+    def __str__(self):
+        """Строковое представление"""
+        return f'{self.product} - {self.characteristic_value}'
