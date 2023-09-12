@@ -8,6 +8,9 @@ from interface.auth_interface import IAuth
 from repositories.order_repositories import OrderRepository
 from repositories.auth_repositories import AuthRepository
 
+from repositories.profile_repositories import ProfileRepository
+from interface.profile_interface import IProfile
+
 BINDS = (
     (IOrder, OrderRepository),
     (IDiscountBaseModel, DiscountBaseModelRepository),
@@ -15,6 +18,7 @@ BINDS = (
     (IDiscountProduct, DiscountProductRepository),
     (IDiscountProductGroup, DiscountProductGroupRepository),
     (ICartSale, CartSaleRepository),
+    (IProfile, ProfileRepository),
 )
 
 

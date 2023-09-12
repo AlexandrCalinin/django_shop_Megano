@@ -4,6 +4,7 @@ import random
 from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, SetPasswordForm, AuthenticationForm, \
     UsernameField
 from django import forms
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
 from .models import User
 
@@ -23,7 +24,10 @@ class UserRegisterForm(UserCreationForm):
         self.fields['password1'].widget.attrs['placeholder'] = 'Введите пароль'
         self.fields['password2'].widget.attrs['placeholder'] = 'Повторите пароль'
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control py-4'
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+                'autocomplete': 'off'
+            })
 
     def save(self, commit=True):
         user = super(UserRegisterForm, self).save()
@@ -69,15 +73,23 @@ class ResetPasswordForm(PasswordResetForm):
     def init(self, *args, **kwargs):
         super(PasswordResetForm, self).__init__(*args, **kwargs)
         self.fields['email'].widget.attrs['placeholder'] = 'Введите email'
-        self.fields.widget.attrs['class'] = 'form-control py-4'
+        self.fields.widget.attrs.update({
+            'class': 'form-control',
+            'autocomplete': 'off'
+        })
+
+    @staticmethod
+    def get_token(user):
+        token_generator = PasswordResetTokenGenerator()
+        token = token_generator.make_token(user)
+        return token
 
 
 class SetNewPasswordForm(SetPasswordForm):
     class Meta:
         fields = ('new_password1', 'new_password2')
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def init(self):
         self.fields['new_password1'].widget.attrs['placeholder'] = 'Введите новый пароль'
         self.fields['new_password2'].widget.attrs['placeholder'] = 'Повторите ввод нового пароля'
         for field in self.fields:

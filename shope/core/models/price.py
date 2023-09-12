@@ -14,7 +14,7 @@ class Price(BaseModel):
     )
 
     def __str__(self):
-        return self.price
+        return str(self.price)
 
     class Meta:
         verbose_name = _('price')

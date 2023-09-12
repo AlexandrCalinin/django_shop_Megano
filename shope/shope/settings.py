@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'cart_app',
 
     'order_app.apps.OrderAppConfig',
+    'phonenumber_field',
 
 ]
 
@@ -132,11 +133,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-FIXTURE_DIRS = [
-    'fixtures',
-]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 # Default primary key field type
@@ -161,8 +159,3 @@ DOMAIN_NAME = os.environ.get("DOMAIN_NAME")
 # payment
 PAY_ACCOUNT_ID = os.environ.get('PAY_ACCOUNT_ID')
 PAY_ACCOUNT_SECRET_KEY = os.environ.get('PAY_ACCOUNT_SECRET_KEY')
-
-LOGIN_REDIRECT_URL = '/'
-LOGIN_ERROR_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
-LOGIN_URL = '/auth/login/'
