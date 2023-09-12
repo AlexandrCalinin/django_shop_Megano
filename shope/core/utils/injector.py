@@ -1,8 +1,9 @@
 import inject
 
-from interface.discount_interface import IDiscountBaseModel
+from interface.discount_interface import IDiscountBaseModel, IDiscountProduct, IDiscountProductGroup, ICartSale
 from interface.order_interface import IOrder
-from repositories.discount_repositories import DiscountBaseModelRepository
+from repositories.discount_repositories import DiscountBaseModelRepository, DiscountProductRepository, \
+    DiscountProductGroupRepository, CartSaleRepository
 from interface.auth_interface import IAuth
 from repositories.order_repositories import OrderRepository
 from repositories.auth_repositories import AuthRepository
@@ -10,7 +11,10 @@ from repositories.auth_repositories import AuthRepository
 BINDS = (
     (IOrder, OrderRepository),
     (IDiscountBaseModel, DiscountBaseModelRepository),
-    (IAuth, AuthRepository)
+    (IAuth, AuthRepository),
+    (IDiscountProduct, DiscountProductRepository),
+    (IDiscountProductGroup, DiscountProductGroupRepository),
+    (ICartSale, CartSaleRepository),
 )
 
 
