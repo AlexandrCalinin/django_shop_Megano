@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.views.generic import TemplateView, ListView
 
-from catalog_app.models import Product
+from core.models import Price
 from repositories.cartitem_repositories import CartItemRepository
 from repositories.cart_repositories import CartRepository
 
@@ -14,36 +14,41 @@ from core.utils.add_product_to_cart import AddProductToCart
 class CatalogView(ListView):
     template_name = 'catalog_app/catalog.html'
     context_object_name = 'products'
-    queryset = Product.objects.prefetch_related('image')
+    queryset = Price.objects.all()
     paginate_by = 10
+    ordering = ['price']
 
     def get_context_data(self, **kwargs):
         context = super(CatalogView, self).get_context_data(**kwargs)
 
         cart = CartRepository()
         cartitem = CartItemRepository()
+        try:
+            cart_id = cart.get_by_user(_user=self.request.user)
+            cartitem = cartitem.get_by_cart_id(_cart=cart_id)
 
-        cart_id = cart.get_by_user(_user_id=self.request.user.id)
-        cartitem = cartitem.get_by_cart_id(_cart=cart_id)
+            summ = 0
+            count = 0
+            for item in cartitem:
+                count += item.count
+                summ += item.amount
 
-        summ = 0
-        count = 0
-        for item in cartitem:
-            summ += item.count
-            count += item.amount
+            context['count'] = count
+            context['amount'] = summ
 
-        context['count'] = count
-        context['amount'] = summ
-
+        except Exception:
+            context['count'] = 0
+            context['amount'] = 0
         return context
 
     def post(self, request, *args, **kwargs):
 
         if request.headers['X-Requested-With'] == 'XMLHttpRequest':
             form = CartEditForm(request.POST)
+
             if form.is_valid():
                 add = AddProductToCart()
-                summ, count = add.add_product_to_cart(form.cleaned_data, request.user.id)
+                summ, count = add.add_product_to_cart(form.cleaned_data, request.user)
 
                 context = self.get_context_data(object_list=self.get_queryset(), **kwargs)
 
@@ -52,6 +57,7 @@ class CatalogView(ListView):
 
                 result = render_to_string('includes/card_edit.html', context=context, request=request)
                 return JsonResponse({'result': result})
+
 
 class TestComparisonView(TemplateView):
     template_name = 'catalog_app/comparison.html'

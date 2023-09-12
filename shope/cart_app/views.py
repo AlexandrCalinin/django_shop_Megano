@@ -1,8 +1,9 @@
-from django.shortcuts import render
-from django.views import View
+
 from django.views.generic import TemplateView
 
-from cart_app.models import CartItem, Cart
+
+from repositories.cart_repositories import CartRepository
+from repositories.cartitem_repositories import CartItemRepository
 
 
 class CartView(TemplateView):
@@ -10,7 +11,21 @@ class CartView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(CartView, self).get_context_data(**kwargs)
-        cart_id = Cart.objects.get(user=self.request.user)
-        cartitem = CartItem.objects.filter(cart_id=cart_id)
-        context['items'] = cartitem
+
+        cart = CartRepository()
+        cartitem = CartItemRepository()
+
+        cart_id = cart.get_by_user(_user=self.request.user)
+        cart_products = cartitem.get_by_cart_id(_cart=cart_id)
+
+        summ = 0
+        count = 0
+        for item in cart_products:
+            count += item.count
+            summ += item.amount
+
+        context['items'] = cart_products
+        context['count'] = count
+        context['amount'] = summ
+
         return context
