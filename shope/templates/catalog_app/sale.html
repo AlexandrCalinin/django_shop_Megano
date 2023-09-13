@@ -1,186 +1,249 @@
 {% extends 'core/base.html' %}
+{% load i18n %}
 {% load static %}
-<body class="Site">
+{% block content_body %}
 
-    {% block content_body %}
+    <div class="Middle Middle_top">
+        <div class="Middle-top">
+            <div class="wrap">
+                <div class="Middle-header">
 
-        <div class="Middle Middle_top">
-            <div class="Middle-top">
-                <div class="wrap">
-                    <div class="Middle-header">
-
-                        <ul class="breadcrumbs Middle-breadcrumbs">
-                            <li class="breadcrumbs-item"><a href="../core/index.html">Главная</a>
-                            </li>
-                            <li class="breadcrumbs-item breadcrumbs-item_current"><span>Блог</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="Section">
-                <div class="wrap">
-                    <div class="Cards Cards_blog">
-                        <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>
-                            <div class="Card-date">
-                                <strong class="Card-date-number">24
-                                </strong><span class="Card-date-month">nov</span>
-                            </div>
-                            <div class="Card-pin">
-                            </div>
-                            <div class="Card-content">
-                                <strong class="Card-title"><a href="#">Basic Time Management Advanced Course</a>
-                                </strong>
-                                <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore
-                                </div>
-                            </div>
-                        </div>
-                        <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>
-                            <div class="Card-content">
-                                <strong class="Card-title"><a href="#">Music Playing Featured Technologies For Children</a>
-                                </strong>
-                                <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore
-                                </div>
-                            </div>
-                        </div>
-                        <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>
-                            <div class="Card-date">
-                                <strong class="Card-date-number">26
-                                </strong><span class="Card-date-month">nov</span>
-                            </div>
-                            <div class="Card-content">
-                                <strong class="Card-title"><a href="#">Advanced Virtual Reality Tools Developers &amp; Gamers</a>
-                                </strong>
-                                <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore
-                                </div>
-                            </div>
-                        </div>
-                        <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>
-                            <div class="Card-date">
-                                <strong class="Card-date-number">27
-                                </strong><span class="Card-date-month">nov</span>
-                            </div>
-                            <div class="Card-date Card-date_to">
-                                <strong class="Card-date-number">29
-                                </strong><span class="Card-date-month">nov</span>
-                            </div>
-                            <div class="Card-content">
-                                <strong class="Card-title"><a href="#">True Color 4K Monitors &amp; All in One Personal Books</a>
-                                </strong>
-                                <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore
-                                </div>
-                            </div>
-                        </div>
-                        <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>
-                            <div class="Card-date">
-                                <strong class="Card-date-number">28
-                                </strong><span class="Card-date-month">nov</span>
-                            </div>
-                            <div class="Card-content">
-                                <strong class="Card-title"><a href="#">Advanced Virtual Reality Tools Developers &amp; Gamers</a>
-                                </strong>
-                                <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore
-                                </div>
-                            </div>
-                        </div>
-                        <div class="Card"><a class="Card-picture" href="#"></a>
-                            <div class="Card-date">
-                                <strong class="Card-date-number">29
-                                </strong><span class="Card-date-month">nov</span>
-                            </div>
-                            <div class="Card-date Card-date_to">
-                                <strong class="Card-date-number">29
-                                </strong><span class="Card-date-month">nov</span>
-                            </div>
-                            <div class="Card-content">
-                                <strong class="Card-title"><a href="#">Basic Time Management Advanced Course</a>
-                                </strong>
-                                <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore
-                                </div>
-                            </div>
-                        </div>
-                        <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>
-                            <div class="Card-date">
-                                <strong class="Card-date-number">30
-                                </strong><span class="Card-date-month">nov</span>
-                            </div>
-                            <div class="Card-content">
-                                <strong class="Card-title"><a href="#">Music Playing Featured Technologies For Children</a>
-                                </strong>
-                                <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore
-                                </div>
-                            </div>
-                        </div>
-                        <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>
-                            <div class="Card-date">
-                                <strong class="Card-date-number">31
-                                </strong><span class="Card-date-month">nov</span>
-                            </div>
-                            <div class="Card-content">
-                                <strong class="Card-title"><a href="#">Music Playing Featured Technologies For Children</a>
-                                </strong>
-                                <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore
-                                </div>
-                            </div>
-                        </div>
-                        <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>
-                            <div class="Card-date">
-                                <strong class="Card-date-number">01
-                                </strong><span class="Card-date-month">dec</span>
-                            </div>
-                            <div class="Card-content">
-                                <strong class="Card-title"><a href="#">Basic Time Management Advanced Course</a>
-                                </strong>
-                                <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore
-                                </div>
-                            </div>
-                        </div>
-                        <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>
-                            <div class="Card-date">
-                                <strong class="Card-date-number">02
-                                </strong><span class="Card-date-month">dec</span>
-                            </div>
-                            <div class="Card-content">
-                                <strong class="Card-title"><a href="#">Advanced Virtual Reality Tools Developers &amp; Gamers</a>
-                                </strong>
-                                <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore
-                                </div>
-                            </div>
-                        </div>
-                        <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>
-                            <div class="Card-date">
-                                <strong class="Card-date-number">01
-                                </strong><span class="Card-date-month">dec</span>
-                            </div>
-                            <div class="Card-content">
-                                <strong class="Card-title"><a href="#">Basic Time Management Advanced Course</a>
-                                </strong>
-                                <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore
-                                </div>
-                            </div>
-                        </div>
-                        <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>
-                            <div class="Card-date">
-                                <strong class="Card-date-number">02
-                                </strong><span class="Card-date-month">dec</span>
-                            </div>
-                            <div class="Card-content">
-                                <strong class="Card-title"><a href="#">Advanced Virtual Reality Tools Developers &amp; Gamers</a>
-                                </strong>
-                                <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <ul class="breadcrumbs Middle-breadcrumbs">
+                        <li class="breadcrumbs-item"><a href="{% url 'home' %}">{% trans 'Home' %}</a>
+                        </li>
+                        <li class="breadcrumbs-item breadcrumbs-item_current"><span>{% trans 'Sales' %}</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-        <div class="Pagination">
-            <div class="Pagination-ins"><a class="Pagination-element Pagination-element_prev" href="#"><img src="{% static '/assets/img/icons/prevPagination.svg' %}" alt="prevPagination.svg" /></a><a class="Pagination-element Pagination-element_current" href="#"><span class="Pagination-text">1</span></a><a class="Pagination-element" href="#"><span class="Pagination-text">2</span></a><a class="Pagination-element" href="#"><span class="Pagination-text">3</span></a><a class="Pagination-element Pagination-element_prev" href="#"><img src="{% static '/assets/img/icons/nextPagination.svg' %}" alt="nextPagination.svg" /></a>
+        <div class="Section">
+            <div class="wrap">
+                <div class="Cards Cards_blog">
+                    {% for sale in product_sales %}
+                    <div class="Card"><a class="Card-picture" href="{% url 'product_sale_detail' sale_id=sale.pk %}"><img src="{{ sale.image.url }}" alt="product.png" /></a>
+                        <div class="Card-date">
+                            <strong class="Card-date-number">{{ sale.data_start.day }}
+                            </strong><span class="Card-date-month">{{ sale.data_start.month }}</span>
+                        </div>
+                        {% if sale.data_end != sale.data_start %}
+                        <div class="Card-date Card-date_to">
+                            <strong class="Card-date-number">{{ sale.data_end.day }}
+                            </strong><span class="Card-date-month">{{ sale.data_end.month }}</span>
+                        </div>
+                        {% endif %}
+                        <div class="Card-pin">
+                        </div>
+                        <div class="Card-content">
+                            <strong class="Card-title"><a href="{% url 'product_sale_detail' sale_id=sale.pk %}">{{ sale.name }}</a>
+                            </strong>
+                            <div class="Card-description">{{ sale.description }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% for sale in product_group_sales %}
+                    <div class="Card"><a class="Card-picture" href="{% url 'product_group_sale_detail' sale_id=sale.pk %}"><img src="{{ sale.image.url }}" alt="product.png" /></a>
+                        <div class="Card-date">
+                            <strong class="Card-date-number">{{ sale.data_start.day }}
+                            </strong><span class="Card-date-month">{{ sale.data_start.month }}</span>
+                        </div>
+                        {% if sale.data_end != sale.data_start %}
+                        <div class="Card-date Card-date_to">
+                            <strong class="Card-date-number">{{ sale.data_end.day }}
+                            </strong><span class="Card-date-month">{{ sale.data_end.month }}</span>
+                        </div>
+                        {% endif %}
+                        <div class="Card-pin">
+                        </div>
+                        <div class="Card-content">
+                            <strong class="Card-title"><a href="{% url 'product_group_sale_detail' sale_id=sale.pk %}">{{ sale.name }}</a>
+                            </strong>
+                            <div class="Card-description">{{ sale.description }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% for sale in cart_sales %}
+                    <div class="Card"><a class="Card-picture" href="{% url 'cart_sale_detail' sale_id=sale.pk %}"><img src="{{ sale.image.url }}" alt="product.png" /></a>
+                        <div class="Card-date">
+                            <strong class="Card-date-number">{{ sale.data_start.day }}
+                            </strong><span class="Card-date-month">{{ sale.data_start.month }}</span>
+                        </div>
+                        {% if sale.data_end != sale.data_start %}
+                        <div class="Card-date Card-date_to">
+                            <strong class="Card-date-number">{{ sale.data_end.day }}
+                            </strong><span class="Card-date-month">{{ sale.data_end.month }}</span>
+                        </div>
+                        {% endif %}
+                        <div class="Card-pin">
+                        </div>
+                        <div class="Card-content">
+                            <strong class="Card-title"><a href="{% url 'cart_sale_detail' sale_id=sale.pk %}">{{ sale.name }}</a>
+                            </strong>
+                            <div class="Card-description">{{ sale.description }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+<!--                    <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>-->
+<!--                        <div class="Card-date">-->
+<!--                            <strong class="Card-date-number">24-->
+<!--                            </strong><span class="Card-date-month">nov</span>-->
+<!--                        </div>-->
+<!--                        <div class="Card-pin">-->
+<!--                        </div>-->
+<!--                        <div class="Card-content">-->
+<!--                            <strong class="Card-title"><a href="#">Basic Time Management Advanced Course</a>-->
+<!--                            </strong>-->
+<!--                            <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>-->
+<!--                        <div class="Card-content">-->
+<!--                            <strong class="Card-title"><a href="#">Music Playing Featured Technologies For Children</a>-->
+<!--                            </strong>-->
+<!--                            <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>-->
+<!--                        <div class="Card-date">-->
+<!--                            <strong class="Card-date-number">26-->
+<!--                            </strong><span class="Card-date-month">nov</span>-->
+<!--                        </div>-->
+<!--                        <div class="Card-content">-->
+<!--                            <strong class="Card-title"><a href="#">Advanced Virtual Reality Tools Developers &amp; Gamers</a>-->
+<!--                            </strong>-->
+<!--                            <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>-->
+<!--                        <div class="Card-date">-->
+<!--                            <strong class="Card-date-number">27-->
+<!--                            </strong><span class="Card-date-month">nov</span>-->
+<!--                        </div>-->
+<!--                        <div class="Card-date Card-date_to">-->
+<!--                            <strong class="Card-date-number">29-->
+<!--                            </strong><span class="Card-date-month">nov</span>-->
+<!--                        </div>-->
+<!--                        <div class="Card-content">-->
+<!--                            <strong class="Card-title"><a href="#">True Color 4K Monitors &amp; All in One Personal Books</a>-->
+<!--                            </strong>-->
+<!--                            <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>-->
+<!--                        <div class="Card-date">-->
+<!--                            <strong class="Card-date-number">28-->
+<!--                            </strong><span class="Card-date-month">nov</span>-->
+<!--                        </div>-->
+<!--                        <div class="Card-content">-->
+<!--                            <strong class="Card-title"><a href="#">Advanced Virtual Reality Tools Developers &amp; Gamers</a>-->
+<!--                            </strong>-->
+<!--                            <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="Card"><a class="Card-picture" href="#"></a>-->
+<!--                        <div class="Card-date">-->
+<!--                            <strong class="Card-date-number">29-->
+<!--                            </strong><span class="Card-date-month">nov</span>-->
+<!--                        </div>-->
+<!--                        <div class="Card-date Card-date_to">-->
+<!--                            <strong class="Card-date-number">29-->
+<!--                            </strong><span class="Card-date-month">nov</span>-->
+<!--                        </div>-->
+<!--                        <div class="Card-content">-->
+<!--                            <strong class="Card-title"><a href="#">Basic Time Management Advanced Course</a>-->
+<!--                            </strong>-->
+<!--                            <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>-->
+<!--                        <div class="Card-date">-->
+<!--                            <strong class="Card-date-number">30-->
+<!--                            </strong><span class="Card-date-month">nov</span>-->
+<!--                        </div>-->
+<!--                        <div class="Card-content">-->
+<!--                            <strong class="Card-title"><a href="#">Music Playing Featured Technologies For Children</a>-->
+<!--                            </strong>-->
+<!--                            <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>-->
+<!--                        <div class="Card-date">-->
+<!--                            <strong class="Card-date-number">31-->
+<!--                            </strong><span class="Card-date-month">nov</span>-->
+<!--                        </div>-->
+<!--                        <div class="Card-content">-->
+<!--                            <strong class="Card-title"><a href="#">Music Playing Featured Technologies For Children</a>-->
+<!--                            </strong>-->
+<!--                            <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>-->
+<!--                        <div class="Card-date">-->
+<!--                            <strong class="Card-date-number">01-->
+<!--                            </strong><span class="Card-date-month">dec</span>-->
+<!--                        </div>-->
+<!--                        <div class="Card-content">-->
+<!--                            <strong class="Card-title"><a href="#">Basic Time Management Advanced Course</a>-->
+<!--                            </strong>-->
+<!--                            <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>-->
+<!--                        <div class="Card-date">-->
+<!--                            <strong class="Card-date-number">02-->
+<!--                            </strong><span class="Card-date-month">dec</span>-->
+<!--                        </div>-->
+<!--                        <div class="Card-content">-->
+<!--                            <strong class="Card-title"><a href="#">Advanced Virtual Reality Tools Developers &amp; Gamers</a>-->
+<!--                            </strong>-->
+<!--                            <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>-->
+<!--                        <div class="Card-date">-->
+<!--                            <strong class="Card-date-number">01-->
+<!--                            </strong><span class="Card-date-month">dec</span>-->
+<!--                        </div>-->
+<!--                        <div class="Card-content">-->
+<!--                            <strong class="Card-title"><a href="#">Basic Time Management Advanced Course</a>-->
+<!--                            </strong>-->
+<!--                            <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="Card"><a class="Card-picture" href="#"><img src="{% static '/assets/img/content/sale/product.png' %}" alt="product.png" /></a>-->
+<!--                        <div class="Card-date">-->
+<!--                            <strong class="Card-date-number">02-->
+<!--                            </strong><span class="Card-date-month">dec</span>-->
+<!--                        </div>-->
+<!--                        <div class="Card-content">-->
+<!--                            <strong class="Card-title"><a href="#">Advanced Virtual Reality Tools Developers &amp; Gamers</a>-->
+<!--                            </strong>-->
+<!--                            <div class="Card-description">Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh euismod tincid unt ut laoreet dolore-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                </div>
             </div>
         </div>
+    </div>
+    <div class="Pagination">
+        <div class="Pagination-ins"><a class="Pagination-element Pagination-element_prev" href="#"><img src="{% static '/assets/img/icons/prevPagination.svg' %}" alt="prevPagination.svg" /></a><a class="Pagination-element Pagination-element_current" href="#"><span class="Pagination-text">1</span></a><a class="Pagination-element" href="#"><span class="Pagination-text">2</span></a><a class="Pagination-element" href="#"><span class="Pagination-text">3</span></a><a class="Pagination-element Pagination-element_prev" href="#"><img src="{% static '/assets/img/icons/nextPagination.svg' %}" alt="nextPagination.svg" /></a>
+        </div>
+    </div>
 
-    {% endblock content_body %}
-</body>
+{% endblock content_body %}
 
-</html>
