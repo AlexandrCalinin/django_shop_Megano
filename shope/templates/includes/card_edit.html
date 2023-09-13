@@ -1,9 +1,11 @@
 {% load static %}
-<a class="CartBlock-block" href="{% url 'cart' %}">
-    <img class="CartBlock-img"
-         src="{% static 'assets/img/icons/cart.svg' %}"
-         alt="cart.svg"/>
-    <span class="CartBlock-amount">{{count}}</span></a>
 <div class="CartBlock-block">
-    <span class="CartBlock-price">{{ amount }}$</span>
+    <a class="CartBlock-block" href="{% url 'cart' %}">
+        <img class="CartBlock-img"
+             src="{% static 'assets/img/icons/cart.svg' %}"
+             alt="cart.svg"/>
+        <span class="CartBlock-amount">{{count}}</span></a>
+    <div class="CartBlock-block">
+        <span class="CartBlock-price">{{ amount }}$</span>
+    </div>
 </div>
