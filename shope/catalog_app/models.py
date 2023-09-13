@@ -10,140 +10,143 @@ from django.utils.translation import gettext_lazy as _
 
 class Category(BaseModel):
     """Модель категории"""
-    title = models.CharField(max_length=255, verbose_name=_('Title'))
+    title = models.CharField(max_length=255, verbose_name=_('title'))
     image = models.FileField(
-        upload_to="images/%Y/%m/%d", validators=[FileExtensionValidator(['svg'])], verbose_name=_('Image')
+        upload_to="images/%Y/%m/%d", validators=[FileExtensionValidator(['svg'])], verbose_name=_('image')
     )
 
     def __str__(self):
         return f'{self.title}'
 
     class Meta:
-        verbose_name = _('Category')
-        verbose_name_plural = _('Categories')
+        verbose_name = _('category')
+        verbose_name_plural = _('categories')
         ordering = ['id']
 
 
 class Image(BaseModel):
     """Модель изображения для товара"""
-    image = models.ImageField(upload_to="images/%Y/%m/%d", verbose_name=_('Image'))
+    image = models.ImageField(upload_to="images/%Y/%m/%d", verbose_name=_('image'))
 
     def __str__(self):
         return f'{self.image}'
 
     class Meta:
-        verbose_name = _('Image')
-        verbose_name_plural = _('Images')
+        verbose_name = _('image')
+        verbose_name_plural = _('images')
         ordering = ['id']
 
 
 class Product(BaseModel):
     """Модель товара"""
-    title = models.CharField(max_length=255, verbose_name=_('Title  '))
-    description = models.TextField(blank=True, verbose_name=_('Description'))
-    name = models.CharField(max_length=255, verbose_name=_('Name'))
-    image = models.ManyToManyField('Image', related_name='image_to_product', verbose_name=_('Image'))
+    title = models.CharField(max_length=255, verbose_name=_('title  '))
+    description = models.TextField(blank=True, verbose_name=_('description'))
+    name = models.CharField(max_length=255, verbose_name=_('name'))
+    image = models.ManyToManyField('Image', related_name='image_to_product', verbose_name=_('image'))
     tag = TaggableManager()
-    category = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name=_('Category'))
-    is_limited = models.BooleanField(default=True, verbose_name=_('Limited'))
-    is_delivery = models.BooleanField(default=True, verbose_name=_('Delivery'))
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name=_('category'))
+    is_limited = models.BooleanField(default=True, verbose_name=_('limited'))
+    is_delivery = models.BooleanField(default=True, verbose_name=_('delivery'))
 
     def __str__(self):
         return self.title
 
     class Meta:
-        verbose_name = _('Product')
-        verbose_name_plural = _('Products')
+        verbose_name = _('product')
+        verbose_name_plural = _('products')
         ordering = ['id']
 
 
 class Slider(BaseModel):
     """Модель слайдера. Используется для набора сменяемых баннеров"""
     product = models.ForeignKey(
-        'Product', on_delete=models.CASCADE, verbose_name=_('Product')
+        'Product', on_delete=models.CASCADE, verbose_name=_('product')
     )
-    description = models.TextField(blank=True, verbose_name=_('Description'))
-    image = models.ImageField(upload_to="images/%Y/%m/%d", verbose_name=_('Image'))
+    description = models.TextField(blank=True, verbose_name=_('description'))
+    image = models.ImageField(upload_to="images/%Y/%m/%d", verbose_name=_('image'))
 
     def __str__(self):
         return self.product
 
     class Meta:
-        verbose_name = _('Slider')
-        verbose_name_plural = _('Sliders')
+        verbose_name = _('slider')
+        verbose_name_plural = _('sliders')
         ordering = ['id']
 
 
 class Banner(BaseModel):
     """Модель баннера. Используется для сета баннеров с минимальными ценами в своей категории"""
-    category = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name=_('Category'))
-    image = models.ImageField(upload_to="images/%Y/%m/%d", verbose_name=_('Image'))
-    category_min_price = models.PositiveIntegerField(default=1, verbose_name=_('Minimal price'))
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name=_('category'))
+    image = models.ImageField(upload_to="images/%Y/%m/%d", verbose_name=_('image'))
+    category_min_price = models.PositiveIntegerField(default=1, verbose_name=_('minimal price'))
 
     def __str__(self):
         return self.category
 
     class Meta:
-        verbose_name = _('Slider')
-        verbose_name_plural = _('Sliders')
+        verbose_name = _('banner')
+        verbose_name_plural = _('banners')
         ordering = ['id']
 
 
 class DiscountProduct(DiscountBaseModel):
     """Модель скидки на товар"""
-    product = models.ForeignKey('Product', on_delete=models.CASCADE, verbose_name=_('Product'))
-    category = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name=_('Category'))
+    image = models.ImageField(upload_to="images/%Y/%m/%d", null=True, verbose_name=_('image'))
+    product = models.ForeignKey('Product', on_delete=models.CASCADE, verbose_name=_('product'))
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name=_('category'))
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = _('Product discount')
-        verbose_name_plural = _('Product discounts')
+        verbose_name = _('product discount')
+        verbose_name_plural = _('product discounts')
         ordering = ['id']
 
 
 class DiscountProductGroup(DiscountBaseModel):
     """Модель скидки на группу товаров"""
-    product = models.ForeignKey('Product', on_delete=models.CASCADE, verbose_name=_('Product'))
+    image = models.ImageField(upload_to="images/%Y/%m/%d", null=True, verbose_name=_('image'))
+    product = models.ManyToManyField('product', verbose_name=_('product'))
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = _('Group of product discount')
-        verbose_name_plural = _('Group of product discounts')
+        verbose_name = _('group of product discount')
+        verbose_name_plural = _('group of product discounts')
         ordering = ['id']
 
 
 class CartSale(DiscountBaseModel):
     """Модель скидки на корзину"""
+    image = models.ImageField(upload_to="images/%Y/%m/%d", null=True, verbose_name=_('image'))
     amount = models.DecimalField(
-        decimal_places=0, max_digits=7, verbose_name=_('Amount of products for a success discount')
+        decimal_places=0, max_digits=7, verbose_name=_('amount of products for a success discount')
     )
-    quantity = models.PositiveIntegerField(default=2, verbose_name=_('Quantity of products for a success discount'))
+    quantity = models.PositiveIntegerField(default=2, verbose_name=_('quantity of products for a success discount'))
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = _('Cart discount')
-        verbose_name_plural = _('Cart discounts')
+        verbose_name = _('cart discount')
+        verbose_name_plural = _('cart discounts')
         ordering = ['id']
 
 
 class Rewiew(BaseModel):
     """Модель отзывов"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Rewiew'))
-    text = models.CharField(max_length=255, verbose_name=_('Text'))
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('Product'))
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('rewiew'))
+    text = models.CharField(max_length=255, verbose_name=_('text'))
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('product'))
 
     def __str__(self):
         return self.user
 
     class Meta:
-        verbose_name = _('Rewiew')
-        verbose_name_plural = _('Reviews')
+        verbose_name = _('rewiew')
+        verbose_name_plural = _('reviews')
 
 
 ###############################################################
@@ -215,3 +218,4 @@ class CharacteristicProduct(BaseModel):
     def __str__(self):
         """Строковое представление"""
         return f'{self.product} - {self.characteristic_value}'
+
