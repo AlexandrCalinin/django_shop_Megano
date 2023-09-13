@@ -4,7 +4,9 @@ from django.views.generic import TemplateView, ListView, DetailView
 from catalog_app.models import DiscountProduct, DiscountProductGroup, CartSale
 
 from core.utils.injector import configure_inject
-from interface.discount_interface import IDiscountProduct, IDiscountProductGroup, ICartSale
+from interface.cart_sale_interface import ICartSale
+from interface.discount_product_group_interface import IDiscountProductGroup
+from interface.discount_product_interface import IDiscountProduct
 
 configure_inject()
 
@@ -29,9 +31,9 @@ class SaleView(TemplateView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['product_sales'] = self._product_sales.get_object_list(DiscountProduct)
-        context['product_group_sales'] = self._product_group_sales.get_object_list(DiscountProductGroup)
-        context['cart_sales'] = self._cart_sales.get_object_list(CartSale)
+        context['product_sales'] = self._product_sales.get_list()
+        context['product_group_sales'] = self._product_group_sales.get_list()
+        context['cart_sales'] = self._cart_sales.get_list()
         return context
 
 
