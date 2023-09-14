@@ -11,6 +11,11 @@ from repositories.auth_repositories import AuthRepository
 from repositories.profile_repositories import ProfileRepository
 from interface.profile_interface import IProfile
 
+from interface.cart_interface import ICart
+from interface.cartitem_interface import ICartItem
+from repositories.cart_repositories import CartRepository
+from repositories.cartitem_repositories import CartItemRepository
+
 BINDS = (
     (IOrder, OrderRepository),
     (IDiscountBaseModel, DiscountBaseModelRepository),
@@ -19,6 +24,8 @@ BINDS = (
     (IDiscountProductGroup, DiscountProductGroupRepository),
     (ICartSale, CartSaleRepository),
     (IProfile, ProfileRepository),
+    (ICart, CartRepository),
+    (ICartItem, CartItemRepository),
 )
 
 

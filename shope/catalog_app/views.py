@@ -1,10 +1,8 @@
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
-
 from core.models import Price
-from repositories.cartitem_repositories import CartItemRepository
-from repositories.cart_repositories import CartRepository
+
 import inject
 from django.views.generic import TemplateView, ListView, DetailView
 
@@ -12,29 +10,30 @@ from catalog_app.models import DiscountProduct, DiscountProductGroup, CartSale
 
 from core.utils.injector import configure_inject
 from interface.discount_interface import IDiscountProduct, IDiscountProductGroup, ICartSale
-
-configure_inject()
+from interface.cart_interface import ICart
+from interface.cartitem_interface import ICartItem
 
 from .form import CartEditForm
 
 from core.utils.add_product_to_cart import AddProductToCart
 
-
+configure_inject()
 class CatalogView(ListView):
     template_name = 'catalog_app/catalog.html'
     context_object_name = 'products'
     queryset = Price.objects.all()
     paginate_by = 10
     ordering = ['price']
+    _cart: ICart = inject.attr(ICart)
+    _cartitem: ICartItem = inject.attr(ICartItem)
 
     def get_context_data(self, **kwargs):
         context = super(CatalogView, self).get_context_data(**kwargs)
 
-        cart = CartRepository()
-        cartitem = CartItemRepository()
+
         try:
-            cart_id = cart.get_by_user(_user=self.request.user)
-            cartitem = cartitem.get_by_cart_id(_cart=cart_id)
+            cart_id = self._cart.get_by_user(_user=self.request.user)
+            cartitem = self._cartitem.get_by_cart_id(_cart=cart_id)
 
             summ = 0
             count = 0
@@ -50,7 +49,7 @@ class CatalogView(ListView):
             context['amount'] = 0
         return context
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, **kwargs):
 
         if request.headers['X-Requested-With'] == 'XMLHttpRequest':
             form = CartEditForm(request.POST)
