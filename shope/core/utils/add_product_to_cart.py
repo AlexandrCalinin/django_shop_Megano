@@ -1,30 +1,32 @@
-from django.http import HttpResponse
+import inject
+from core.utils.injector import configure_inject
 
 from auth_app.models import User
-from repositories.cart_repositories import CartRepository
-from repositories.cartitem_repositories import CartItemRepository
-from core.models import Seller
+from interface.cartitem_interface import ICartItem
+from interface.cart_interface import ICart
+
+
+configure_inject()
 
 
 class AddProductToCart:
-
+    _cart: ICart = inject.attr(ICart)
+    _cartitem: ICartItem = inject.attr(ICartItem)
     def add_product_to_cart(self, data: dict, user: User) -> tuple[int, int]:
         """добавить товар в корзину"""
-        cart = CartRepository()
-        cartitem = CartItemRepository()
 
-        if not cart.filter_by_user(_user=user):
-            cart.create_user(_user=user)
+        if not self._cart.filter_by_user(_user=user):
+            self._cart.create_user(_user=user)
 
-        cart = cart.get_by_user(_user=user)
-        cartitem_product = cartitem.get_by_cart_id(_cart=cart)
+        cart = self._cart.get_by_user(_user=user)
+        cartitem_product = self._cartitem.get_by_cart_id(_cart=cart)
 
         product = data['product']
         product_count = data['count']
         amount = data['amount']
         seller = data['seller']
 
-        cartitem.create_cartitem(_cart=cart, _product=product, _count=product_count,
+        self._cartitem.create_cartitem(_cart=cart, _product=product, _count=product_count,
                                  _amount=amount, _seller=seller)
 
         summ = 0
