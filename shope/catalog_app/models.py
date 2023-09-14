@@ -201,13 +201,13 @@ class CharacteristicProduct(BaseModel):
     product = models.ForeignKey(Product,
                                 on_delete=models.CASCADE,
                                 verbose_name=_('product'),
-                                related_name='characteristic_product'
+                                related_name='characteristics'
                                 )
 
     characteristic_value = models.ForeignKey(CharacteristicValue,
                                              on_delete=models.CASCADE,
                                              verbose_name=_('value of characteristic'),
-                                             related_name='characteristic_product'
+                                             related_name='characteristics'
                                              )
 
     class Meta:
@@ -218,4 +218,3 @@ class CharacteristicProduct(BaseModel):
     def __str__(self):
         """Строковое представление"""
         return f'{self.product} - {self.characteristic_value}'
-

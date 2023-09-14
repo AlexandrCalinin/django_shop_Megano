@@ -1,19 +1,23 @@
-
-
+"""Catalog app views"""
 import inject
 from django.views.generic import TemplateView, ListView, DetailView
-
-from catalog_app.models import DiscountProduct, DiscountProductGroup, CartSale
-
 from core.utils.injector import configure_inject
-from interface.discount_interface import IDiscountProduct, IDiscountProductGroup, ICartSale
+from interface.discount_interface import (
+    IDiscountProduct,
+    IDiscountProductGroup,
+    ICartSale)
+from interface.characteristic_interface import ICharacteristicProduct
+from catalog_app.models import DiscountProduct, DiscountProductGroup, CartSale
 from .models import Product
+from core.models import Price
 
 configure_inject()
 
 
 class ProductDetailView(DetailView):
     """Детальная страница продукта"""
+    _characteristics: ICharacteristicProduct = inject.attr(ICharacteristicProduct)
+
     model = Product
     template_name = 'catalog_app/product.html'
     context_object_name = 'product'
@@ -24,13 +28,12 @@ class ProductDetailView(DetailView):
         return Product.objects.prefetch_related(
             'image',
             'tag',
-            'characteristic_product'
         )
 
     def get_context_data(self, **kwargs):
         """get_context_data"""
         contex = super().get_context_data(**kwargs)
-        contex['characteristics'] = self.object.characteristic_product
+        contex['characteristics'] = self._characteristics.get_by_product(_product=self.object)
         return contex
 
 
