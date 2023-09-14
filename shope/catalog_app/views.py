@@ -1,4 +1,4 @@
-<<<<<<< shope/catalog_app/views.py
+
 
 import inject
 from django.views.generic import TemplateView, ListView, DetailView
@@ -10,6 +10,7 @@ from interface.discount_interface import IDiscountProduct, IDiscountProductGroup
 from .models import Product
 
 configure_inject()
+
 
 class ProductDetailView(DetailView):
     """Детальная страница продукта"""
@@ -42,7 +43,6 @@ class TestComparisonView(TemplateView):
 
 
 class SaleView(TemplateView):
->>>>>>> shope/catalog_app/views.py
     template_name = 'catalog_app/sale.html'
     _product_sales: IDiscountProduct = inject.attr(IDiscountProduct)
     _product_group_sales: IDiscountProductGroup = inject.attr(IDiscountProductGroup)
