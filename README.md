@@ -23,3 +23,12 @@
     python manage.py migrate
     python manage.py createsuperuser
     python fixtures_loader.py
+
+# running Celery
+    pip install -r requirements.txt
+    celery -A shope worker --loglevel=info
+
+# Running docker
+    docker compose up -d --build - сборка перед стартом контейнеров
+    docker compose up -d - запуск контейнеров (-d для запуска в фоне)
+    docker compose down - остановка контейнеров
