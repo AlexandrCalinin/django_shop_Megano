@@ -12,7 +12,6 @@ from core.utils.injector import configure_inject
 from interface.cart_sale_interface import ICartSale
 from interface.discount_product_group_interface import IDiscountProductGroup
 from interface.discount_product_interface import IDiscountProduct
-from interface.discount_interface import IDiscountProduct, IDiscountProductGroup, ICartSale
 from interface.cart_interface import ICart
 from interface.cartitem_interface import ICartItem
 
@@ -33,20 +32,10 @@ class CatalogView(ListView):
     def get_context_data(self, **kwargs):
         context = super(CatalogView, self).get_context_data(**kwargs)
 
-
         try:
-            cart_id = self._cart.get_by_user(_user=self.request.user)
-            cartitem = self._cartitem.get_by_cart_id(_cart=cart_id)
-
-            summ = 0
-            count = 0
-            for item in cartitem:
-                count += item.count
-                summ += item.amount
-
+            summ, count = AddProductToCart().get_count_product_in_cart(user=self.request.user)
             context['count'] = count
             context['amount'] = summ
-
         except Exception:
             context['count'] = 0
             context['amount'] = 0
@@ -59,10 +48,11 @@ class CatalogView(ListView):
 
             if form.is_valid():
                 add = AddProductToCart()
-                summ, count = add.add_product_to_cart(form.cleaned_data, request.user)
+                add.add_product_to_cart(form.cleaned_data, request.user)
 
                 context = self.get_context_data(object_list=self.get_queryset(), **kwargs)
 
+                summ, count = add.get_count_product_in_cart(request.user)
                 context['count'] = count
                 context['amount'] = summ
 
