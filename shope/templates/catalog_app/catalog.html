@@ -90,7 +90,7 @@
 
                             <div class="Card" id="{{ item.product.id }}"><a class="Card-picture" href="#"><img src="/media/{{item.product.image.first}}"></a>
                                 <div class="Card-content">
-                                    <strong class="Card-title"><a href="{% url 'product' %}">{{ item.product.title }}</a>
+                                    <strong class="Card-title"><a href="{% url 'product' pk=item.product.id%}">{{ item.product.title }}</a>
                                     </strong>
                                     <div class="Card-description">
                                         <div class="Card-cost"><span class="Card-price" >${{ item.price }}</span>
