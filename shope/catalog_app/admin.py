@@ -1,6 +1,17 @@
 from django.contrib import admin
 
-from catalog_app.models import Product, Category, Image, Slider, Banner, DiscountProduct, DiscountProductGroup, CartSale
+from .models import (Product,
+                     Category,
+                     Image,
+                     Slider,
+                     Banner,
+                     DiscountProduct,
+                     DiscountProductGroup,
+                     CartSale,
+                     CharacteristicType,
+                     CharacteristicValue,
+                     CharacteristicProduct,
+                     )
 
 
 @admin.register(Product)
@@ -41,3 +52,26 @@ class DiscountProductGroupAdmin(admin.ModelAdmin):
 @admin.register(CartSale)
 class CartSaleAdmin(admin.ModelAdmin):
     list_display = [field.name for field in CartSale._meta.fields]
+
+
+###############################################################
+# ХАРАКТЕРИСТИКИ ПРОДУКТОВ
+###############################################################
+class CharacteristicTypeAdmin(admin.ModelAdmin):
+    """CharacteristicType admin"""
+    pass
+
+
+class ChatacteristicValueAdmin(admin.ModelAdmin):
+    """ChatacteristicValue admin"""
+    pass
+
+
+class CharacteristicProductAdmin(admin.ModelAdmin):
+    """ChatacteristicProduct admin"""
+    pass
+
+
+admin.site.register(CharacteristicProduct, CharacteristicProductAdmin)
+admin.site.register(CharacteristicType, CharacteristicTypeAdmin)
+admin.site.register(CharacteristicValue, ChatacteristicValueAdmin)
