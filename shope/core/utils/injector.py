@@ -21,6 +21,9 @@ from interface.cartitem_interface import ICartItem
 from repositories.cart_repositories import CartRepository
 from repositories.cartitem_repositories import CartItemRepository
 
+from repositories.characterisic_repositories import CharacteristicRepository
+from interface.characteristic_interface import ICharacteristicProduct
+
 BINDS = (
     (IOrder, OrderRepository),
     (IDiscountBaseModel, DiscountBaseModelRepository),
@@ -31,6 +34,7 @@ BINDS = (
     (IProfile, ProfileRepository),
     (ICart, CartRepository),
     (ICartItem, CartItemRepository),
+    (ICharacteristicProduct, CharacteristicRepository),
 )
 
 

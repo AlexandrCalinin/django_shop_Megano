@@ -1,3 +1,4 @@
+"""Catalog app views"""
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
@@ -5,9 +6,6 @@ from core.models import Price
 
 import inject
 from django.views.generic import TemplateView, ListView, DetailView
-
-from catalog_app.models import DiscountProduct, DiscountProductGroup, CartSale
-
 from core.utils.injector import configure_inject
 from interface.cart_sale_interface import ICartSale
 from interface.discount_product_group_interface import IDiscountProductGroup
@@ -18,8 +16,36 @@ from interface.cartitem_interface import ICartItem
 from .form import CartEditForm
 
 from core.utils.add_product_to_cart import AddProductToCart
+from interface.characteristic_interface import ICharacteristicProduct
+from catalog_app.models import DiscountProduct, DiscountProductGroup, CartSale
+from catalog_app.models import Product
 
 configure_inject()
+
+
+class ProductDetailView(DetailView):
+    """Детальная страница продукта"""
+    _characteristics: ICharacteristicProduct = inject.attr(ICharacteristicProduct)
+
+    model = Product
+    template_name = 'catalog_app/product.html'
+    context_object_name = 'product'
+
+    def get_queryset(self):
+        """get querysert"""
+
+        return Product.objects.prefetch_related(
+            'image',
+            'tag',
+        )
+
+    def get_context_data(self, **kwargs):
+        """get_context_data"""
+        contex = super().get_context_data(**kwargs)
+        contex['characteristics'] = self._characteristics.get_by_product(_product=self.object)
+        return contex
+
+
 class CatalogView(ListView):
     template_name = 'catalog_app/catalog.html'
     context_object_name = 'products'
@@ -62,10 +88,6 @@ class CatalogView(ListView):
 
 class TestComparisonView(TemplateView):
     template_name = 'catalog_app/comparison.html'
-
-
-class TestProductView(TemplateView):
-    template_name = 'catalog_app/product.html'
 
 
 class SaleView(TemplateView):
