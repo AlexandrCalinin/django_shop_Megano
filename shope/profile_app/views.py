@@ -1,43 +1,75 @@
 """Views for profile app"""
 
+from typing import Any
 from django.contrib import messages
+from django.db import transaction
+from django.forms.models import BaseModelForm
+from django.http import HttpResponse
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-
-from django.shortcuts import redirect, render
+from django.contrib.auth import update_session_auth_hash
 from .models import Profile
 
 from django.views.generic import (
     UpdateView,
-    View,
     TemplateView,
     DetailView
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import EditUserForm, EditProfileForm
+from .forms import EditUserForm, EditProfileForm, CustomPasswordChangeForm
 
 
 class EditProfileView(LoginRequiredMixin, UpdateView):
+    """Редактирование данных пользователя"""
     model = Profile
-    template_name = 'profile_app/test.html'
-    # form_class = EditProfileForm
-    fields = ['avatar']
-    context_object_name = 'form'
+    template_name = 'profile_app/profile.html'
+    form_class = EditProfileForm
+    _SUCCESS_MESSAGE = _('Your profile has been updated')
+
+    def get_success_url(self) -> str:
+        return reverse('profile')
 
     def get_object(self):
+        """get object"""
         return self.request.user.profile
 
     def get_context_data(self, **kwargs):
+        """get context data"""
         context = super().get_context_data(**kwargs)
-        context["avatar"] = self.object.avatar
+        if self.request.POST:
+            context['user_form'] = EditUserForm(self.request.POST,
+                                                instance=self.request.user)
+            context['password_form'] = CustomPasswordChangeForm(self.request.user,
+                                                                self.request.POST)
+        else:
+            context['user_form'] = EditUserForm(instance=self.request.user)
+            context['password_form'] = CustomPasswordChangeForm(self.request.user)
         return context
 
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        context = self.get_context_data()
+        user_form = context['user_form']
+        password_form = context['password_form']
+        valid_list = [form.is_valid(), user_form.is_valid()]
+        if password_form.has_changed():
+            valid_list.append(password_form.is_valid())
 
-def show_image_view(request):
+        with transaction.atomic():
+            if all(valid_list):
+                user_form.save()
+                form.save()
 
-    profile_form = EditProfileForm(instance=request.user.profile)
-    context = {'profile': profile_form}
+                if password_form.has_changed():
+                    password_form.save()
+                    update_session_auth_hash(self.request, password_form.user)
 
-    return render(request, 'profile_app/test.html', context)
+            else:
+                context.update({'user_form': user_form,
+                                'password_form': password_form})
+
+                return self.render_to_response(context)
+            messages.success(self.request, self._SUCCESS_MESSAGE)
+            return super().form_valid(form)
 
 
 class AccountView(TemplateView):
