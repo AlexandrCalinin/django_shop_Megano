@@ -2,7 +2,7 @@
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
-from core.models import Price
+from core.utils.product_list_in_catalog import ProductListCatalog
 
 import inject
 from django.views.generic import TemplateView, ListView, DetailView
@@ -47,13 +47,15 @@ class ProductDetailView(DetailView):
 
 
 class CatalogView(ListView):
+    """Каталог"""
     template_name = 'catalog_app/catalog.html'
     context_object_name = 'products'
-    queryset = Price.objects.all()
-    paginate_by = 10
-    ordering = ['price']
+
     _cart: ICart = inject.attr(ICart)
     _cartitem: ICartItem = inject.attr(ICartItem)
+
+    def get_queryset(self):
+        return ProductListCatalog.product_list()
 
     def get_context_data(self, **kwargs):
         context = super(CatalogView, self).get_context_data(**kwargs)

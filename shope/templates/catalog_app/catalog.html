@@ -88,9 +88,10 @@
                         <div class="Cards">
                             {% for item in products %}
 
-                            <div class="Card" id="{{ item.product.id }}"><a class="Card-picture" href="#"><img src="/media/{{item.product.image.first}}"></a>
+                            <div class="Card" id="{{ item.product.id }}">
+                                <a class="Card-picture" href="{% url 'product' pk=item.product.id%}"><img src="/media/{{item.product.image.first}}"></a>
                                 <div class="Card-content">
-                                    <strong class="Card-title"><a href="{% url 'product' pk=item.product.id%}">{{ item.product.title }}</a>
+                                    <strong class="Card-title"><a href="{% url 'product' pk=item.product.id%}?price={{ item.price }}&seller={{ item.seller.id }}">{{ item.product.title }}</a>
                                     </strong>
                                     <div class="Card-description">
                                         <div class="Card-cost"><span class="Card-price" >${{ item.price }}</span>
@@ -106,12 +107,11 @@
                                 </div>
                             </div>
                             {% endfor %}
+                        </div>
                         <div class="Pagination">
                             <div class="Pagination-ins"><a class="Pagination-element Pagination-element_prev" href="#"><img src="{% static '/assets/img/icons/prevPagination.svg' %}" alt="prevPagination.svg"></a><a class="Pagination-element Pagination-element_current" href="#"><span class="Pagination-text">1</span></a><a class="Pagination-element" href="#"><span class="Pagination-text">2</span></a><a class="Pagination-element" href="#"><span class="Pagination-text">3</span></a><a class="Pagination-element Pagination-element_prev" href="#"><img src="{% static '/assets/img/icons/nextPagination.svg' %}" alt="nextPagination.svg"></a>
                             </div>
                         </div>
-
-                    </div>
                 </div>
             </div>
         </div>
