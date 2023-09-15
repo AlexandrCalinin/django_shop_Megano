@@ -20,6 +20,9 @@ from repositories.product_repositories import ProductRepository
 from repositories.profile_repositories import ProfileRepository
 from interface.profile_interface import IProfile
 
+from repositories.characterisic_repositories import CharacteristicRepository
+from interface.characteristic_interface import ICharacteristicProduct
+
 BINDS = (
     (IOrder, OrderRepository),
     (IDiscountBaseModel, DiscountBaseModelRepository),
@@ -29,6 +32,7 @@ BINDS = (
     (ICartSale, CartSaleRepository),
     (IProfile, ProfileRepository),
     (IProduct, ProductRepository),
+    (ICharacteristicProduct, CharacteristicRepository),
 )
 
 
