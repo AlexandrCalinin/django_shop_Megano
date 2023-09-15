@@ -54,7 +54,6 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
         if password_form.has_changed():
             valid_list.append(password_form.is_valid())
 
-        with transaction.atomic():
             if all(valid_list):
                 user_form.save()
                 form.save()
