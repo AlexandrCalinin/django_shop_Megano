@@ -24,7 +24,7 @@ class BaseView(TemplateView):
         #     print('qs_id', qs_id)
         #
         # print('qs', len(list(qs) + list(qs_id)), list(qs) + list(qs_id))
-        context['product_top_list'] = self._product_top_list.get_product_top_list()
+        context['product_top_list'] = self._product_top_list.get_product_top_list(const=8)
 
         return context
 
