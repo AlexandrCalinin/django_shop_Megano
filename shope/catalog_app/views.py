@@ -1,6 +1,7 @@
 """Catalog app views"""
 import inject
 from django.views.generic import TemplateView, ListView, DetailView
+
 from core.utils.injector import configure_inject
 from interface.cart_sale_interface import ICartSale
 from interface.discount_product_group_interface import IDiscountProductGroup
@@ -35,8 +36,9 @@ class ProductDetailView(DetailView):
         return contex
 
 
-class TestCatalogView(TemplateView):
+class TestCatalogView(ListView):
     template_name = 'catalog_app/catalog.html'
+    queryset = Product.objects.prefetch_related('image', 'tag')
 
 
 class TestComparisonView(TemplateView):
