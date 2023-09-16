@@ -1,5 +1,7 @@
 """Catalog app views"""
 import inject
+from django.db.models import Q
+from django.utils.datastructures import MultiValueDictKeyError
 from django.views.generic import TemplateView, ListView, DetailView
 
 from core.utils.injector import configure_inject
@@ -38,7 +40,66 @@ class ProductDetailView(DetailView):
 
 class TestCatalogView(ListView):
     template_name = 'catalog_app/catalog.html'
-    queryset = Product.objects.prefetch_related('image', 'tag')
+
+    def get(self, request, **kwargs):
+        return super().get(request, **kwargs)
+
+    def get_queryset(self):
+        try:
+            is_limited = True if self.request.GET.get('in_stock') else False
+            free_delivery = True if self.request.GET.get('free_delivery') else False
+
+            if self.request.GET.get('price'):
+                range_price = self.request.GET.get('price')
+                min_price, max_price = range_price.split(';')
+
+                if self.request.GET.get('title'):
+                    product_name = self.request.GET.get('title')
+
+                    if product_name is not None and free_delivery and is_limited:
+                        queryset = (Product.objects.prefetch_related('image', 'tag').
+                                    filter(title__icontains=product_name, is_delivery=free_delivery,
+                                           is_limited=is_limited))
+                        return queryset
+
+                    elif product_name is not None and free_delivery:
+                        queryset = (Product.objects.prefetch_related('image', 'tag').
+                                    filter(title__icontains=product_name, is_delivery=free_delivery))
+                        return queryset
+
+                    elif product_name is not None and is_limited:
+                        queryset = (Product.objects.prefetch_related('image', 'tag').
+                                    filter(title__icontains=product_name, is_limited=is_limited))
+                        return queryset
+
+                    elif product_name is not None:
+                        queryset = (Product.objects.prefetch_related('image', 'tag').
+                                    filter(title__icontains=product_name))
+                        return queryset
+
+                else:
+                    if free_delivery and is_limited:
+                        queryset = (Product.objects.prefetch_related('image', 'tag').
+                                    filter(is_delivery=free_delivery, is_limited=is_limited))
+                        return queryset
+
+                    elif free_delivery:
+                        queryset = (Product.objects.prefetch_related('image', 'tag').
+                                    filter(is_delivery=free_delivery))
+                        return queryset
+
+                    elif is_limited:
+                        queryset = (Product.objects.prefetch_related('image', 'tag').
+                                    filter(is_limited=is_limited))
+                        return queryset
+                    else:
+                        queryset = Product.objects.prefetch_related('image', 'tag')
+                        return queryset
+
+        except MultiValueDictKeyError:
+            print('MultiValueDictKeyError')
+            queryset = Product.objects.prefetch_related('image', 'tag')
+            return queryset
 
 
 class TestComparisonView(TemplateView):
