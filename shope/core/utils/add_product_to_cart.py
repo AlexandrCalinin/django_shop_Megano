@@ -15,7 +15,7 @@ class AddProductToCart:
     _cart: ICart = inject.attr(ICart)
     _cartitem: ICartItem = inject.attr(ICartItem)
 
-    def add_product_to_cart(self, data: dict, user: User) -> None:
+    def add_product_to_cart(self, user: User, **kwargs) -> None:
         """добавить товар в корзину"""
 
         if not self._cart.filter_by_user(_user=user):
@@ -23,14 +23,10 @@ class AddProductToCart:
 
         cart = self._cart.get_by_user(_user=user)
 
-
-        product = data['product']
-        product_count = data['count']
-        amount = data['amount']
-        seller = data['seller']
+        product, product_count, amount, seller = kwargs.values()
 
         self._cartitem.create_cartitem(_cart=cart, _product=product, _count=product_count,
-                                 _amount=amount, _seller=seller)
+                                       _amount=amount, _seller=seller)
 
     def remove_product_from_cart(self):
         """

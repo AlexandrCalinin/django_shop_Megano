@@ -2,10 +2,11 @@
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
-from core.utils.product_list_in_catalog import ProductListCatalog
 
 import inject
 from django.views.generic import TemplateView, ListView, DetailView
+
+from core.models import Price
 from core.utils.injector import configure_inject
 from interface.cart_sale_interface import ICartSale
 from interface.discount_product_group_interface import IDiscountProductGroup
@@ -55,19 +56,7 @@ class CatalogView(ListView):
     _cartitem: ICartItem = inject.attr(ICartItem)
 
     def get_queryset(self):
-        return ProductListCatalog.product_list()
-
-    def get_context_data(self, **kwargs):
-        context = super(CatalogView, self).get_context_data(**kwargs)
-
-        try:
-            summ, count = AddProductToCart().get_count_product_in_cart(user=self.request.user)
-            context['count'] = count
-            context['amount'] = summ
-        except Exception:
-            context['count'] = 0
-            context['amount'] = 0
-        return context
+        return Price.objects.all()
 
     def post(self, request, **kwargs):
 
@@ -76,7 +65,7 @@ class CatalogView(ListView):
 
             if form.is_valid():
                 add = AddProductToCart()
-                add.add_product_to_cart(form.cleaned_data, request.user)
+                add.add_product_to_cart(request.user, **form.cleaned_data)
 
                 context = self.get_context_data(object_list=self.get_queryset(), **kwargs)
 
