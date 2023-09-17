@@ -30,15 +30,12 @@ class RegisterView(FormView):
         form = self.form_class(data=request.POST)
         email = request.POST['email']
         if form.is_valid():
-            print(1)
             user = form.save()
             if self.send_link_to_verify_email(user=user):
                 return HttpResponseRedirect(reverse('auth_app:confirm-email'))
             else:
                 self._user.delete_user_by_email(_email=email)
-                print("Email is not verified")
         self._user.delete_user_by_email(_email=email)
-        print("Form is not valid")
 
         context = {
             'form': form
