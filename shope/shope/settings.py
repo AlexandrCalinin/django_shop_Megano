@@ -14,10 +14,8 @@ import os
 from dotenv import load_dotenv, find_dotenv
 from pathlib import Path
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -28,15 +26,16 @@ SECRET_KEY = 'django-insecure-!s-kq@=nln)z#y)caov*1-4nog(_8s1=&e19ofq2cr0*k8#bbm
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+DOCKER = False
 # Docker
-if os.getenv('DOCKER'):
+if DOCKER:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': os.getenv("POSTGRES_DB"),
             'PASSWORD': os.getenv("POSTGRES_PASSWORD"),
             'USER': os.getenv("POSTGRES_USER"),
-            'HOST': 'db-shop',
+            'HOST': '127.0.0.1',
             'PORT': '5432',
         }
     }
@@ -48,10 +47,11 @@ else:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-    STATIC_URL = '/static/'
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'static'),
     ]
+
+STATIC_URL = '/static/'
 
 ALLOWED_HOSTS = ["*"]
 
@@ -106,7 +106,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'shope.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -129,7 +128,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -142,7 +140,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -176,7 +173,6 @@ DOMAIN_NAME = os.environ.get("DOMAIN_NAME")
 # payment
 PAY_ACCOUNT_ID = os.environ.get('PAY_ACCOUNT_ID')
 PAY_ACCOUNT_SECRET_KEY = os.environ.get('PAY_ACCOUNT_SECRET_KEY')
-
 
 # celery
 CELERY_TIMEZONE = "Moldova/Chișinău"
