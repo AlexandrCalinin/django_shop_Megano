@@ -35,7 +35,7 @@ if DOCKER:
             'NAME': os.getenv("POSTGRES_DB"),
             'PASSWORD': os.getenv("POSTGRES_PASSWORD"),
             'USER': os.getenv("POSTGRES_USER"),
-            'HOST': '127.0.0.1',
+            'HOST': 'db-shop',
             'PORT': '5432',
         }
     }

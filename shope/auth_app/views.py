@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.auth.views import PasswordResetView, LogoutView, PasswordResetConfirmView, LoginView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import auth
+from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
@@ -35,7 +36,8 @@ class RegisterView(FormView):
                 return HttpResponseRedirect(reverse('auth_app:confirm-email'))
             else:
                 self._user.delete_user_by_email(_email=email)
-        self._user.delete_user_by_email(_email=email)
+        else:
+            self._user.delete_user_by_email(_email=email)
 
         context = {
             'form': form
@@ -44,11 +46,15 @@ class RegisterView(FormView):
 
     @staticmethod
     def send_link_to_verify_email(user):
+        print(settings.DOCKER)
         verify_link = reverse_lazy('auth_app:verify_email', args=[user.email, user.activation_key])
         subject = f'Для активации учетной записи {user.username} пройдите по ссылке'
         message = f'Для подтверждения учетной записи {user.username} перейдите по ссылке' \
                   f' на портале \n {settings.DOMAIN_NAME}{verify_link}'
-        return send_mail_to_user.delay(subject, message, user.email)
+        if settings.DOCKER:
+            return send_mail_to_user.delay(subject, message, user.email)
+        else:
+            return send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
 
     def verify(self, email, activate_key):
         try:
@@ -106,7 +112,10 @@ class ForgotPasswordView(SuccessMessageMixin, PasswordResetView):
         subject = f'Для продолжения сброса пароля {username} пройдите по ссылке'
         message = f'Для подтверждения сброса пароля {username} перейдите по ссылке ' \
                   f'на портале \n{settings.DOMAIN_NAME}/auth/set-new-password/{uidb64}/{token}'
-        return send_mail_to_user.delay(subject, message, email)
+        if settings.DOCKER:
+            return send_mail_to_user.delay(subject, message, email)
+        else:
+            return send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
 
 
 class SetNewPasswordView(SuccessMessageMixin, PasswordResetConfirmView):
