@@ -29,7 +29,7 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
     def get_success_url(self) -> str:
         return reverse('profile')
 
-    def get_object(self):
+    def get_object(self, *args, **kwargs):
         """get object"""
         return self.request.user.profile
 
@@ -54,26 +54,29 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
         if password_form.has_changed():
             valid_list.append(password_form.is_valid())
 
-            if all(valid_list):
-                user_form.save()
-                form.save()
+        if all(valid_list):
+            user_form.save()
+            form.save()
 
-                if password_form.has_changed():
-                    password_form.save()
-                    update_session_auth_hash(self.request, password_form.user)
+            if password_form.has_changed():
+                password_form.save()
+                update_session_auth_hash(self.request, password_form.user)
 
-            else:
-                context.update({'user_form': user_form,
-                                'password_form': password_form})
+        else:
+            context.update({'user_form': user_form,
+                            'password_form': password_form})
 
-                return self.render_to_response(context)
-            messages.success(self.request, self._SUCCESS_MESSAGE)
-            return super().form_valid(form)
+            return self.render_to_response(context)
+        messages.success(self.request, self._SUCCESS_MESSAGE)
+        return super().form_valid(form)
 
 
-class AccountView(TemplateView):
+class AccountView(LoginRequiredMixin, DetailView):
+    """Аккаунт пользователя"""
+
     template_name = 'profile_app/account.html'
+    model = Profile
 
-
-class ProfileAvatarView(TemplateView):
-    template_name = 'profile_app/profileAvatar.html'
+    def get_object(self, *args, **kwargs):
+        """get object"""
+        return self.request.user.profile
