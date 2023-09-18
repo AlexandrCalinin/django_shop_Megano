@@ -1,22 +1,23 @@
 """Views for profile app"""
 
 from typing import Any
+import inject
 from django.contrib import messages
-from django.db import transaction
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Profile
 
 from django.views.generic import (
     UpdateView,
-    TemplateView,
     DetailView
 )
-from django.contrib.auth.mixins import LoginRequiredMixin
+
 from .forms import EditUserForm, EditProfileForm, CustomPasswordChangeForm
+from interface.order_interface import IOrder
 
 
 class EditProfileView(LoginRequiredMixin, UpdateView):
@@ -76,7 +77,13 @@ class AccountView(LoginRequiredMixin, DetailView):
 
     template_name = 'profile_app/account.html'
     model = Profile
+    _last_order: IOrder = inject.attr(IOrder)
 
     def get_object(self, *args, **kwargs):
         """get object"""
         return self.request.user.profile
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['last_order'] = self._last_order.get_last_by_user(self.request.user)
+        return context
