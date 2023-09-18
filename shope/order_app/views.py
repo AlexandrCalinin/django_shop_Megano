@@ -16,6 +16,7 @@ class HistoryOrderView(LoginRequiredMixin, ListView):
     """Oreder list tempale class. Will be deleted"""
     template_name = 'order_app/historyorder.html'
     context_object_name = 'order_list'
+    paginate_by = 3
     model = Order
     _order_list: IOrder = inject.attr(IOrder)
 

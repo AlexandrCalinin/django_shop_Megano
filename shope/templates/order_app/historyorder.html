@@ -38,4 +38,32 @@
             </div>
         </div>
     </div>
+    <div class="Pagination">
+        <div class="Pagination-ins">
+            {% if page_obj.has_previous %}
+                <a class="Pagination-element Pagination-element_prev"
+                   href="?page={{ page_obj.previous_page_number }}">
+                    <img src="{% static '/assets/img/icons/prevPagination.svg' %}"
+                         alt="prevPagination.svg">
+                {% endif %}
+            </a>
+            {% for i_page in paginator.page_range %}
+                {% if i_page == page_obj.number %}
+                    <a class="Pagination-element Pagination-element_current"
+                       href="?page={{ i_page }}">
+                        <span class="Pagination-text">{{ i_page }}</span></a>
+                {% else %}
+                    <a class="Pagination-element" href="?page={{ i_page }}">
+                        <span class="Pagination-text">{{ i_page }}</span></a>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <a class="Pagination-element Pagination-element_prev"
+                   href="?page={{ page_obj.next_page_number }}">
+                    <img src="{% static '/assets/img/icons/nextPagination.svg' %}"
+                         alt="nextPagination.svg">
+                </a>
+            {% endif %}
+        </div>
+    </div>
 {% endblock content_body %}
