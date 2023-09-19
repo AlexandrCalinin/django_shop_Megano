@@ -102,9 +102,11 @@ a(href="http://browsehappy.com/") Выберите новую версию
                 <nav class="row-block">
                     <div class="row ControlPanel-rowSplit">
                         <div class="row-block">
-                            {% if user_is_authenticated == False %}
+                            {% if user.is_authenticated == False %}
                                 <a class="ControlPanel-title" href="{% url 'auth_app:login' %}">Вход</a>
                                 <a class="ControlPanel-title" href="{% url 'auth_app:register' %}">Регистрация</a>
+                            {% else %}
+                                <a class="ControlPanel-title" href="{% url 'auth_app:logout' %}">Выход</a>
                             {% endif %}
                         </div>
                     </div>
