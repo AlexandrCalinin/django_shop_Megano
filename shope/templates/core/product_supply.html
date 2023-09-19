@@ -153,25 +153,28 @@
                     </header>
                     <div class="Cards">
                         {% for product in product_top_list %}
-                        <div class="Card hide_md hide_1450">
-                            <a class="Card-picture" href="#">
-                                {% if product.image %}
-                                <img src="{{ product.image.all.0.image.url }}" alt="{{ product.image.all.0.image.name }}" />
-                                {% endif %}
-                            </a>
-                            <div class="Card-content">
-                                <strong class="Card-title"><a href="#">{{ product.title }}</a>
-                                </strong>
-                                <div class="Card-description">
-                                    <div class="Card-cost"><span class="Card-price">{{ product.value }}</span>
-                                    </div>
-                                    <div class="Card-category">{{ product.category.title }}
-                                    </div>
-                                    <div class="Card-hover"><a class="Card-btn" href="#"><img src="{% static 'assets/img/icons/card/cart.svg' %}" alt="cart.svg" /></a><a class="Card-btn" href="compare.html"><img src="{% static 'assets/img/icons/card/change.svg' %}" alt="change.svg" /></a>
+                            <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
+                                {% csrf_token %}
+                                <div class="Card hide_md hide_1450">
+                                    <button class="Card-picture btn_reset" href="{% url 'product' product_id=product.id %}" type="submit">
+                                        {% if product.image %}
+                                        <img src="{{ product.image.all.0.image.url }}" alt="{{ product.image.all.0.image.name }}" />
+                                        {% endif %}
+                                    </button>
+                                    <div class="Card-content">
+                                        <strong class="Card-title"><button class=" btn_reset" href="{% url 'product' product_id=product.id %}" type="submit">{{ product.title }}</button>
+                                        </strong>
+                                        <div class="Card-description">
+                                            <div class="Card-cost"><span class="Card-price">{{ product.value }}</span>
+                                            </div>
+                                            <div class="Card-category">{{ product.category.title }}
+                                            </div>
+                                            <div class="Card-hover"><a class="Card-btn" href="#"><img src="{% static 'assets/img/icons/card/cart.svg' %}" alt="cart.svg" /></a><a class="Card-btn" href="compare.html"><img src="{% static 'assets/img/icons/card/change.svg' %}" alt="change.svg" /></a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            </form>
                         {% endfor %}
 
                     </div>
