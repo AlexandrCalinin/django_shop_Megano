@@ -1072,7 +1072,7 @@
 }
 
 .Card-category {
-    display: block;
+    display: inline;
     margin-top: 11px;
 }
 

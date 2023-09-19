@@ -49,7 +49,7 @@ class Order(BaseModel):
     class Meta:
         """Meta class"""
         verbose_name = _('order')
-        verbose_name_plural = _('orderss')
+        verbose_name_plural = _('orders')
 
     def __str__(self) -> str:
         """Строкое представление."""

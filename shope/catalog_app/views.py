@@ -1,9 +1,12 @@
 """Catalog app views"""
 import inject
+
 from django.http import HttpResponseRedirect
 from django.views import View
+
 from django.utils.datastructures import MultiValueDictKeyError
 from django.views.generic import TemplateView, ListView, DetailView
+
 from core.utils.injector import configure_inject
 from interface.cart_sale_interface import ICartSale
 from interface.category_interface import ICategory
@@ -12,7 +15,11 @@ from interface.discount_product_interface import IDiscountProduct
 from interface.characteristic_interface import ICharacteristicProduct
 from catalog_app.models import DiscountProduct, DiscountProductGroup, CartSale, ProductViewed
 from catalog_app.models import Product
+
 from interface.product_viewed_interface import IProductViewed
+
+from interface.catalog_filter_interface import ICatalogFilter
+
 
 configure_inject()
 
@@ -41,8 +48,25 @@ class ProductDetailView(DetailView):
         return contex
 
 
-class TestCatalogView(TemplateView):
+class TestCatalogView(ListView):
     template_name = 'catalog_app/catalog.html'
+    _filter: ICatalogFilter = inject.attr(ICatalogFilter)
+
+    def get(self, request, **kwargs):
+        return super().get(request, **kwargs)
+
+    def get_queryset(self):
+        try:
+            is_limited = True if self.request.GET.get('in_stock') else False
+            free_delivery = True if self.request.GET.get('free_delivery') else False
+            # range_price = self.request.GET.get('price')
+            product_name = self.request.GET.get('title')
+            queryset = self._filter.get_filtered_products(product_name, free_delivery, is_limited)
+            return queryset
+
+        except MultiValueDictKeyError:
+            queryset = Product.objects.prefetch_related('image', 'tag')
+            return queryset
 
 
 class TestComparisonView(TemplateView):

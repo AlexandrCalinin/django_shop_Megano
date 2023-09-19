@@ -41,7 +41,7 @@
                                         <div class="Profile-avatar Profile-avatar_noimg">
                                             <label class="Profile-fileLabel" for="avatar">
                                                 {% if profile.avatar %}
-                                                    <img src="{{ profile.avatar.url }}" alt="#.png" />
+                                                    <img src="{{ profile.avatar.url }}" />
                                                 {% else %}
                                                     <img src="{% static '/assets/img/icons/upload.png' %}" alt="card.jpg">
                                                     Загрузить фото
