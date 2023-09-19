@@ -13,11 +13,6 @@ class OrderRepository(IOrder):
         model.save()
 
     @beartype
-    def get_by_id(self, _id: int) -> Order:
-        """Вернуть объект заказа."""
-
-        return Order.objects.get(_id)
-
     def get_list_by_user(self, _user: User) -> QuerySet[Order]:
         """Получить список заказов пользоветеля."""
 
@@ -28,3 +23,8 @@ class OrderRepository(IOrder):
         """Получить последний заказ покупателя по дате создания"""
 
         return Order.objects.filter(user=_user).latest('created_at')
+
+    @beartype
+    def get_by_pk(self, _pk: int) -> QuerySet[Order]:
+        """Получить заказ по pk"""
+        return Order.objects.filter(pk=_pk).select_related('user')

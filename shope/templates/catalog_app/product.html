@@ -111,12 +111,14 @@
                                         <th>Характеристика</th>
                                         <th>Значение</th>
                                     </tr>
-                                    {% for i_chatacteristic in characteristics.all %}
-                                        <tr>
-                                            <td>{{ i_chatacteristic.characteristic_value.characteristic_type }}</td>
-                                            <td>{{ i_chatacteristic.characteristic_value.value }}</td>
-                                        </tr>
-                                    {% endfor %}
+                                    {% if characteristics %}
+                                        {% for i_chatacteristic in characteristics.all %}
+                                            <tr>
+                                                <td>{{ i_chatacteristic.characteristic_value.characteristic_type }}</td>
+                                                <td>{{ i_chatacteristic.characteristic_value.value }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% endif %}
                                 </table>
                             </div>
                         </div>

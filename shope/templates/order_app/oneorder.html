@@ -1,12 +1,13 @@
 {% extends "core/base.html" %}
 {% load i18n %}
 {% load static %}
+{% load  core_tags %}
 {% block content_body %}
     <div class="Middle Middle_top">
         <div class="Middle-top">
             <div class="wrap">
                 <div class="Middle-header">
-                    <h1 class="Middle-title">Заказ №200</h1>
+                    <h1 class="Middle-title">Заказ № {{ order.pk }}</h1>
                 </div>
             </div>
         </div>
@@ -21,41 +22,41 @@
                                     <div class="row-block">
                                         <div class="Order-info Order-info_date">
                                             <div class="Order-infoType">Дата заказа:</div>
-                                            <div class="Order-infoContent">21.07.20</div>
+                                            <div class="Order-infoContent">{{ order.created_at|date:"d-m-Y" }}</div>
                                         </div>
                                         <div class="Order-info">
                                             <div class="Order-infoType">ФИО:</div>
-                                            <div class="Order-infoContent">Иванов Иван Иванович</div>
+                                            <div class="Order-infoContent">{{ order.user.middle_name }}</div>
                                         </div>
                                         <div class="Order-info">
                                             <div class="Order-infoType">Телефон:</div>
-                                            <div class="Order-infoContent">+7000000000</div>
+                                            <div class="Order-infoContent">{{ order.user.profile.phone }}</div>
                                         </div>
                                         <div class="Order-info">
                                             <div class="Order-infoType">E-mail:</div>
-                                            <div class="Order-infoContent">send@test.test</div>
+                                            <div class="Order-infoContent">{{ order.user.email }}</div>
                                         </div>
                                     </div>
                                     <div class="row-block">
                                         <div class="Order-info Order-info_delivery">
                                             <div class="Order-infoType">Тип доставки:</div>
-                                            <div class="Order-infoContent">Обычная доставка</div>
+                                            <div class="Order-infoContent">{% value_delivery_type order.delivery_type %}</div>
                                         </div>
                                         <div class="Order-info">
                                             <div class="Order-infoType">Город:</div>
-                                            <div class="Order-infoContent">Москва</div>
+                                            <div class="Order-infoContent">{{ order.city }}</div>
                                         </div>
                                         <div class="Order-info">
                                             <div class="Order-infoType">Адрес:</div>
-                                            <div class="Order-infoContent">Ул. Академика Арцимовича, д. 10, кв. 10</div>
+                                            <div class="Order-infoContent">{{ order.address }}</div>
                                         </div>
                                         <div class="Order-info Order-info_pay">
                                             <div class="Order-infoType">Оплата:</div>
-                                            <div class="Order-infoContent">Онлайн картой</div>
+                                            <div class="Order-infoContent">{% value_pay_type order.pay_type %}</div>
                                         </div>
                                         <div class="Order-info Order-info_status">
                                             <div class="Order-infoType">Статус:</div>
-                                            <div class="Order-infoContent">Не оплачен</div>
+                                            <div class="Order-infoContent">{% value_status order.status %}</div>
                                         </div>
                                         <div class="Order-info Order-info_error">
                                             <div class="Order-infoType">Оплата не прошла:</div>
@@ -65,72 +66,32 @@
                                 </div>
                             </div>
                             <div class="Cart Cart_order">
-                                <div class="Cart-product">
-                                    <div class="Cart-block Cart-block_row">
-                                        <div class="Cart-block Cart-block_pict">
-                                            <a class="Cart-pict" href="#">
-                                                <img class="Cart-img"
-                                                     src="../django-frontend/assets/img/content/home/card.jpg"
-                                                     alt="card.jpg" />
-                                            </a>
+                                {% for i_item in  order_items.all %}
+                                    <div class="Cart-product">
+                                        <div class="Cart-block Cart-block_row">
+                                            <div class="Cart-block Cart-block_pict">
+                                                <a class="Cart-pict" href="{% url "product" i_item.product.pk %}">
+                                                    <img class="Cart-img"
+                                                         src="{{ i_item.product.image.first.image.url }}"
+                                                         alt="{{ i_item.product.image.first }}" />
+                                                </a>
+                                            </div>
+                                            <div class="Cart-block Cart-block_info">
+                                                <a class="Cart-title" href="">{{ i_item.product.title }}</a>
+                                                <div class="Cart-desc">{{ i_item.product.description }}</div>
+                                            </div>
+                                            <div class="Cart-block Cart-block_price">
+                                                <div class="Cart-price">{{ i_item.amount }}</div>
+                                            </div>
                                         </div>
-                                        <div class="Cart-block Cart-block_info">
-                                            <a class="Cart-title" href="#">Ноутбук</a>
-                                            <div class="Cart-desc">Это супер ноутбук, 3 гб. 4 ядра</div>
-                                        </div>
-                                        <div class="Cart-block Cart-block_price">
-                                            <div class="Cart-price">80.00$</div>
-                                        </div>
-                                    </div>
-                                    <div class="Cart-block Cart-block_row">
-                                        <div class="Cart-block Cart-block_amount">1 шт.</div>
-                                    </div>
-                                </div>
-                                <div class="Cart-product">
-                                    <div class="Cart-block Cart-block_row">
-                                        <div class="Cart-block Cart-block_pict">
-                                            <a class="Cart-pict" href="#">
-                                                <img class="Cart-img"
-                                                     src="../django-frontend/assets/img/content/sale/product.png"
-                                                     alt="product.png" />
-                                            </a>
-                                        </div>
-                                        <div class="Cart-block Cart-block_info">
-                                            <a class="Cart-title" href="#">Планшет</a>
-                                            <div class="Cart-desc">Это планшет с современным железом. Процессор последнего поколения</div>
-                                        </div>
-                                        <div class="Cart-block Cart-block_price">
-                                            <div class="Cart-price">40.99$</div>
+                                        <div class="Cart-block Cart-block_row">
+                                            <div class="Cart-block Cart-block_amount">{{ i_item.count }} шт.</div>
                                         </div>
                                     </div>
-                                    <div class="Cart-block Cart-block_row">
-                                        <div class="Cart-block Cart-block_amount">1 шт.</div>
-                                    </div>
-                                </div>
-                                <div class="Cart-product">
-                                    <div class="Cart-block Cart-block_row">
-                                        <div class="Cart-block Cart-block_pict">
-                                            <a class="Cart-pict" href="#">
-                                                <img class="Cart-img"
-                                                     src="../django-frontend/assets/img/content/home/card.jpg"
-                                                     alt="card.jpg" />
-                                            </a>
-                                        </div>
-                                        <div class="Cart-block Cart-block_info">
-                                            <a class="Cart-title" href="#">Ноутбук</a>
-                                            <div class="Cart-desc">Это супер ноутбук, 3 гб. 4 ядра</div>
-                                        </div>
-                                        <div class="Cart-block Cart-block_price">
-                                            <div class="Cart-price">80.00$</div>
-                                        </div>
-                                    </div>
-                                    <div class="Cart-block Cart-block_row">
-                                        <div class="Cart-block Cart-block_amount">1 шт.</div>
-                                    </div>
-                                </div>
+                                {% endfor %}
                                 <div class="Cart-total">
                                     <div class="Cart-block Cart-block_total">
-                                    <strong class="Cart-title">Итого:<span class="Cart-price">200.99$</span>
+                                    <strong class="Cart-title">Итого:<span class="Cart-price">{{ order.amount }}</span>
                                 </strong>
                             </div>
                             <div class="Cart-block">
