@@ -1,6 +1,5 @@
 """Order views"""
-from typing import Any
-from django.db.models.query import QuerySet
+
 import inject
 from django.views.generic import ListView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -28,16 +27,16 @@ class OneOrderView(TemplateView):
     """Oreder detail tempale class. Will be deleted"""
     template_name = 'order_app/oneorder.html'
 
-    _order: IOrder = inject.attr(IOrder)
+    # _order: IOrder = inject.attr(IOrder)
 
-    def get(self, request, *args, **kwargs):
-        order = self._order.get_by_id(_id=request.id)
+    # def get(self, request, *args, **kwargs):
+    #     order = self._order.get_by_id(_id=request.id)
 
-        # order = Order.create(
+    #     # order = Order.create(
 
-        # )
+    #     # )
 
-        self._order.save(model=order)
+    #     self._order.save(model=order)
 
 
 class CreateOrderView(TemplateView):
