@@ -115,18 +115,24 @@ class CartSaleDetailView(DetailView):
 class ChangeListProductViewedView(View):
     """Представление для изменения списка просмотренных товаров"""
     _product_viewed_list: IProductViewed = inject.attr(IProductViewed)
+    _create_product_viewed: IProductViewed = inject.attr(IProductViewed)
+    _get_product_viewed_by_id: IProductViewed = inject.attr(IProductViewed)
+    _delete_product_viewed_by_id: IProductViewed = inject.attr(IProductViewed)
 
     def post(self, request, *args, **kwargs):
         product_id = kwargs.get('product_id')
         if request.user.is_authenticated:
             user_id = request.user.id
-            product, created = ProductViewed.objects.get_or_create(user_id=user_id, product_id=product_id)
-            if not created:
-                product.delete()
-                ProductViewed.objects.create(user_id=user_id, product_id=product_id)
+            product = self._get_product_viewed_by_id.get_product_viewed_by_id(_user_id=user_id, _product_id=product_id)
+            if not product:
+                self._create_product_viewed.create_product_viewed(_user_id=user_id, _product_id=product_id)
+            else:
+                self._delete_product_viewed_by_id.delete_product_viewed_by_id(_user_id=user_id, _product_id=product_id)
+                self._create_product_viewed.create_product_viewed(_user_id=user_id, _product_id=product_id)
             product_viewed_list = self._product_viewed_list.get_product_viewed_list(_user_id=user_id)
             if len(product_viewed_list) > 20:
-                product_viewed_list.first().delete()
+                self._delete_product_viewed_by_id.delete_product_viewed_by_id(
+                    _user_id=product_viewed_list.first().user_id, _product_id=product_viewed_list.first().product_id)
         return HttpResponseRedirect(f'/catalog/product/{product_id}/')
 
 

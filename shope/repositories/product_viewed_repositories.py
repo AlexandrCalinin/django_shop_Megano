@@ -1,3 +1,5 @@
+from typing import Union
+
 from beartype import beartype
 from django.db.models import QuerySet
 
@@ -6,7 +8,28 @@ from interface.product_viewed_interface import IProductViewed
 
 
 class ProductViewedRepository(IProductViewed):
+
     @beartype
     def get_product_viewed_list(self, _user_id: int) -> QuerySet[ProductViewed]:
         """Вернуть кверисет просмотренных продуктов"""
         return ProductViewed.objects.filter(user_id=_user_id)
+
+    @beartype
+    def create_product_viewed(self, _user_id: int, _product_id: int) -> None:
+        """Создать объект просмотренного продукта"""
+        ProductViewed.objects.create(user_id=_user_id, product_id=_product_id)
+
+    @beartype
+    def get_product_viewed_by_id(self, _user_id: int, _product_id: int) -> Union[ProductViewed, None]:
+        """Получить объект просмотренного продукта"""
+        try:
+            product = ProductViewed.objects.get(user_id=_user_id, product_id=_product_id)
+        except ProductViewed.DoesNotExist:
+            product = None
+            print(product, 'ProductViewed.DoesNotExist')
+        return product
+
+    @beartype
+    def delete_product_viewed_by_id(self, _user_id: int, _product_id: int) -> None:
+        """Удалить объект просмотренного продукта"""
+        ProductViewed.objects.get(user_id=_user_id, product_id=_product_id).delete()
