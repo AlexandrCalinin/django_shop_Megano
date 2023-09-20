@@ -1,11 +1,12 @@
 """Order views"""
 
 import inject
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, DetailView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from core.utils.injector import configure_inject
 from interface.order_interface import IOrder
+from interface.order_item_interface import IOrderItem
 from order_app.models import Order
 
 configure_inject()
@@ -23,20 +24,22 @@ class HistoryOrderView(LoginRequiredMixin, ListView):
         return self._order_list.get_list_by_user(self.request.user)
 
 
-class OneOrderView(TemplateView):
-    """Oreder detail tempale class. Will be deleted"""
+class DetailOrderView(DetailView):
+    """Детальная страница заказа"""
     template_name = 'order_app/oneorder.html'
+    model = Order
+    context_object_name = 'order'
+    _order: IOrder = inject.attr(IOrder)
+    _order_item = inject.attr(IOrderItem)
 
-    # _order: IOrder = inject.attr(IOrder)
+    def get_queryset(self):
+        pk = self.kwargs.get('pk')
+        return self._order.get_by_pk(pk)
 
-    # def get(self, request, *args, **kwargs):
-    #     order = self._order.get_by_id(_id=request.id)
-
-    #     # order = Order.create(
-
-    #     # )
-
-    #     self._order.save(model=order)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['order_items'] = self._order_item.get_by_order(self.get_object())
+        return context
 
 
 class CreateOrderView(TemplateView):
