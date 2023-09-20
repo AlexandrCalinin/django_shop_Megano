@@ -26,6 +26,9 @@ from interface.characteristic_interface import ICharacteristicProduct
 from interface.catalog_filter_interface import ICatalogFilter
 from repositories.catalog_filter_repositories import CatalogFilterRepository
 
+from repositories.order_item_repositories import OrderItemRepository
+from interface.order_item_interface import IOrderItem
+
 BINDS = (
     (IOrder, OrderRepository),
     (IDiscountBaseModel, DiscountBaseModelRepository),
@@ -37,6 +40,7 @@ BINDS = (
     (IProduct, ProductRepository),
     (ICharacteristicProduct, CharacteristicRepository),
     (ICatalogFilter, CatalogFilterRepository),
+    (IOrderItem, OrderItemRepository),
 )
 
 

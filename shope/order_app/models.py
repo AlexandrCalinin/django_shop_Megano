@@ -73,4 +73,4 @@ class OrderItem(BaseModelItem):
         verbose_name = _('OrderItem')
 
     def __str__(self):
-        return str(self.product)
+        return f'заказ {self.order} ({self.product} * {self.count} = {self.amount}  '

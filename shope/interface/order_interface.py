@@ -21,3 +21,8 @@ class IOrder:
     def get_last_by_user(self, _user: User) -> Order:
         """Получить последний заказ покупателя по дате создания"""
         pass
+
+    @abstractmethod
+    def get_by_pk(self, _pk: int) -> Order:
+        """Получить заказ по pk"""
+        pass
