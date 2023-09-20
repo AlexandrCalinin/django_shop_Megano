@@ -232,4 +232,3 @@ class ProductViewed(BaseModel):
         verbose_name = _('viewed product')
         verbose_name_plural = _('viewed products')
         ordering = ['id']
-        return f'{self.product}-{self.characteristic_value}'

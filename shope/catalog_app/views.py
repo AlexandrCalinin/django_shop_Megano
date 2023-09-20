@@ -117,9 +117,8 @@ class ChangeListProductViewedView(View):
     _product_viewed_list: IProductViewed = inject.attr(IProductViewed)
 
     def post(self, request, *args, **kwargs):
-        print(request.POST)
+        product_id = kwargs.get('product_id')
         if request.user.is_authenticated:
-            product_id = kwargs.get('product_id')
             user_id = request.user.id
             product, created = ProductViewed.objects.get_or_create(user_id=user_id, product_id=product_id)
             if not created:
