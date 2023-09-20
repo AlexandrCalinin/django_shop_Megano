@@ -77,7 +77,7 @@
                                                 </a>
                                             </div>
                                             <div class="Cart-block Cart-block_info">
-                                                <a class="Cart-title" href="">{{ i_item.product.title }}</a>
+                                                <a class="Cart-title" href="{% url "product" i_item.product.pk %}">{{ i_item.product.title }}</a>
                                                 <div class="Cart-desc">{{ i_item.product.description }}</div>
                                             </div>
                                             <div class="Cart-block Cart-block_price">
