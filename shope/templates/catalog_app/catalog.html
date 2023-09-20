@@ -66,13 +66,14 @@
                             <strong class="Section-title">Популярные тэги</strong>
                         </header>
                         <div class="Section-columnContent">
-                            <form class="form" action="{% url 'catalog' %}" method="get">
+                            <form action="{% url 'catalog' %}" method="get">
                                 <div class="buttons">
-                                    <input class="btn btn_default btn_sm" type="submit" name="Техника" value="Техника">
-                                    <input class="btn btn_default btn_sm" type="submit" name="Аудио" value="Аудио">
-                                    <input class="btn btn_default btn_sm" type="submit" name="Телевизоры" value="Телевизоры">
-                                    <input class="btn btn_default btn_sm" type="submit" name="Телефоны" value="Телефоны">
-                                    <input class="btn btn_default btn_sm" type="submit" name="Фурнитура" value="Фурнитура">
+                                    <button class="btn btn_default btn_sm" name="tag" value="1">Аудио</button>
+                                    <button class="btn btn_default btn_sm" name="tag" value="2">Техника</button>
+                                    <button class="btn btn_default btn_sm" name="tag" value="3">Телевизоры</button>
+                                    <button class="btn btn_default btn_sm" name="tag" value="4">Телефоны</button>
+                                    <button class="btn btn_default btn_sm" name="tag" value="5">Фурнитура</button>
+                                    <button class="btn btn_default btn_sm" name="tag" value="6">Видео</button>
                                 </div>
                             </form>
                         </div>

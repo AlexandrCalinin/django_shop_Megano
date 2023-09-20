@@ -14,3 +14,8 @@ class ICatalogFilter:
                               free_delivery: bool, is_limited: bool) -> QuerySet[Product]:
         """Получить отфильтрованные продукты"""
         pass
+
+    @abstractmethod
+    def filter_by_tag(self, tag: Any) -> QuerySet[Product]:
+        """Получить отфильтрованные продукты по тегам"""
+        pass

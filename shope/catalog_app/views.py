@@ -38,7 +38,7 @@ class ProductDetailView(DetailView):
         return contex
 
 
-class TestCatalogView(ListView):
+class CatalogView(ListView):
     template_name = 'catalog_app/catalog.html'
     _filter: ICatalogFilter = inject.attr(ICatalogFilter)
 
@@ -47,12 +47,18 @@ class TestCatalogView(ListView):
 
     def get_queryset(self):
         try:
-            is_limited = True if self.request.GET.get('in_stock') else False
-            free_delivery = True if self.request.GET.get('free_delivery') else False
-            # range_price = self.request.GET.get('price')
-            product_name = self.request.GET.get('title')
-            queryset = self._filter.get_filtered_products(product_name, free_delivery, is_limited)
-            return queryset
+            if self.request.GET.get('tag') is not None:
+                tag = self.request.GET.get('tag')
+                queryset = self._filter.filter_by_tag(tag)
+                print(queryset)
+                return queryset
+            else:
+                is_limited = True if self.request.GET.get('in_stock') else False
+                free_delivery = True if self.request.GET.get('free_delivery') else False
+                # range_price = self.request.GET.get('price')
+                product_name = self.request.GET.get('title')
+                queryset = self._filter.get_filtered_products(product_name, free_delivery, is_limited)
+                return queryset
 
         except MultiValueDictKeyError:
             queryset = Product.objects.prefetch_related('image', 'tag')
