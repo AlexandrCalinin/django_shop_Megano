@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Optional
 
 from beartype import beartype
 from django.db.models import QuerySet
@@ -20,13 +20,12 @@ class ProductViewedRepository(IProductViewed):
         ProductViewed.objects.create(user_id=_user_id, product_id=_product_id)
 
     @beartype
-    def get_product_viewed_by_id(self, _user_id: int, _product_id: int) -> Union[ProductViewed, None]:
+    def get_product_viewed_by_id(self, _user_id: int, _product_id: int) -> Optional[ProductViewed]:
         """Получить объект просмотренного продукта"""
         try:
             product = ProductViewed.objects.get(user_id=_user_id, product_id=_product_id)
         except ProductViewed.DoesNotExist:
             product = None
-            print(product, 'ProductViewed.DoesNotExist')
         return product
 
     @beartype
