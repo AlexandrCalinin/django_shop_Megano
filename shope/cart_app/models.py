@@ -17,7 +17,7 @@ class Cart(BaseModel):
         verbose_name = _('Cart')
 
     def __str__(self):
-        return self.user
+        return str(self.user)
 
 
 class CartItem(BaseModelItem):
@@ -31,4 +31,4 @@ class CartItem(BaseModelItem):
         verbose_name = _('CartItem')
 
     def __str__(self):
-        return self.cart_id
+        return f'{self.cart_id} - {self.product}'

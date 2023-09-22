@@ -1,3 +1,5 @@
+from ctypes import Union
+from typing import Optional
 from beartype import beartype
 from django.db.models import QuerySet
 
@@ -16,13 +18,16 @@ class OrderRepository(IOrder):
     def get_list_by_user(self, _user: User) -> QuerySet[Order]:
         """Получить список заказов пользоветеля."""
 
-        return Order.objects.filter(user=_user)
+        return Order.objects.filter(user=_user).order_by('-created_at')
 
     @beartype
-    def get_last_by_user(self, _user: User) -> Order:
+    def get_last_by_user(self, _user: User) -> Optional[Order]:
         """Получить последний заказ покупателя по дате создания"""
 
-        return Order.objects.filter(user=_user).latest('created_at')
+        try:
+            return Order.objects.filter(user=_user).latest('created_at')
+        except Order.DoesNotExist:
+            return None
 
     @beartype
     def get_by_pk(self, _pk: int) -> QuerySet[Order]:
