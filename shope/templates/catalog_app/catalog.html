@@ -17,10 +17,10 @@
                                     <div class="range Section-columnRange">
                                         <input class="range-line"
                                                id="price"
-                                               data-from="7"
-                                               data-max="55"
-                                               data-min="7"
-                                               data-to="55"
+                                               data-from="100"
+                                               data-max="12300"
+                                               data-min="100"
+                                               data-to="12300"
                                                data-type="double"
                                                name="price"
                                                type="text">
@@ -82,11 +82,14 @@
                 <div class="Section-content">
                     <div class="Sort">
                         <div class="Sort-title">Сортировать по:</div>
-                        <div class="Sort-variants">
-                            <a class="Sort-sortBy Sort-sortBy_dec" href="#">Популярности</a><a class="Sort-sortBy"
-                                                                                               href="#">Цене</a><a
-                                class="Sort-sortBy" href="#">Отзывам</a><a class="Sort-sortBy Sort-sortBy_inc" href="#">Новизне</a>
-                        </div>
+                        <form action="{% url 'catalog' %}" method="get">
+                            <div class="Sort-variants">
+                                <button class="btn btn_default btn_sm" name="sort" value="1">Популярности</button>
+                                <button class="btn btn_default btn_sm" name="sort" value="2">Цене</button>
+                                <button class="btn btn_default btn_sm" name="sort" value="3">Отзывам</button>
+                                <button class="btn btn_default btn_sm" name="sort" value="4">Новизне</button>
+                            </div>
+                        </form>
                     </div>
                     <div class="Cards">
                         {% for product in object_list %}
@@ -98,7 +101,9 @@
                                             href="{% url 'product' product.pk %}">{{ product.title }}</a>
                                     </strong>
                                     <div class="Card-description">
-                                        <div class="Card-cost"><span class="Card-price">55 $</span></div>
+                                        <div class="Card-cost">
+                                            <span class="Card-price">{{ product.min_price|floatformat:"0" }}₽</span>
+                                        </div>
                                         {% for product_tag in product.tag.all %}
                                             {% if product_tag|length == 1 %}
                                                 <div class="Card-category">{{ product_tag }}</div>
