@@ -9,6 +9,7 @@ from interface.order_interface import IOrder
 
 from interface.product_interface import IProduct
 from interface.product_viewed_interface import IProductViewed
+from interface.slider_interface import ISlider
 from repositories.cart_sale_repositories import CartSaleRepository
 from repositories.category_repositories import CategoryRepository
 from repositories.discount_product_group_repositories import DiscountProductGroupRepository
@@ -32,6 +33,7 @@ from repositories.catalog_filter_repositories import CatalogFilterRepository
 
 from repositories.order_item_repositories import OrderItemRepository
 from interface.order_item_interface import IOrderItem
+from repositories.slider_repositories import SliderRepository
 
 BINDS = (
     (IOrder, OrderRepository),
@@ -46,7 +48,7 @@ BINDS = (
     (ICategory, CategoryRepository),
     (ICatalogFilter, CatalogFilterRepository),
     (IProductViewed, ProductViewedRepository),
-
+    (ISlider, SliderRepository),
     (IOrderItem, OrderItemRepository),
 )
 

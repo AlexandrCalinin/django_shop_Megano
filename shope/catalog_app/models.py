@@ -66,7 +66,7 @@ class Slider(BaseModel):
     image = models.ImageField(upload_to="images/%Y/%m/%d", verbose_name=_('image'))
 
     def __str__(self):
-        return self.product
+        return f'{self.product}'
 
     class Meta:
         verbose_name = _('slider')
@@ -81,7 +81,7 @@ class Banner(BaseModel):
     category_min_price = models.PositiveIntegerField(default=1, verbose_name=_('minimal price'))
 
     def __str__(self):
-        return self.category
+        return f'{self.category}'
 
     class Meta:
         verbose_name = _('banner')
