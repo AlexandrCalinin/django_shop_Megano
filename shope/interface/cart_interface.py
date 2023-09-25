@@ -18,12 +18,8 @@ class ICart:
         pass
 
     @abstractmethod
-    def filter_by_user(self, _user: User) -> Cart:
-        """Вернуть объект объект корзины"""
-        pass
-
-    @abstractmethod
     def create_cart(self, _user: User) -> None:
         """Создать корзину"""
         pass
+
 

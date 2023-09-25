@@ -1,5 +1,5 @@
 """Catalog app views"""
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpRequest
 from django.template.loader import render_to_string
 
 
@@ -56,26 +56,31 @@ class CatalogView(ListView):
     _cartitem: ICartItem = inject.attr(ICartItem)
 
     def get_queryset(self):
+
         return Price.objects.all()
 
-    def post(self, request, **kwargs):
+    def post(self, request: HttpRequest, **kwargs):
 
         if request.headers['X-Requested-With'] == 'XMLHttpRequest':
-            form = CartEditForm(request.POST)
+            form = CartEditForm(data=request.POST)
 
             if form.is_valid():
-                add = AddProductToCart()
-                add.add_product_to_cart(request.user, **form.cleaned_data)
-
                 context = self.get_context_data(object_list=self.get_queryset(), **kwargs)
+                add = AddProductToCart()
 
-                summ, count = add.get_count_product_in_cart(request.user)
+                if request.user.is_authenticated:
+                    add.add_product_to_cart(request.user, **form.cleaned_data, )
+                    amount, count = add.get_count_product_in_cart(request.user)
+                else:
+
+                    add.add_product_for_anonymous_user(request, **form.cleaned_data)
+                    amount, count = add.get_count_product_for_anonymous_user(request)
+
                 context['count'] = count
-                context['amount'] = summ
+                context['amount'] = amount
 
                 result = render_to_string('includes/card_edit.html', context=context, request=request)
                 return JsonResponse({'result': result})
-
 
 class TestComparisonView(TemplateView):
     template_name = 'catalog_app/comparison.html'

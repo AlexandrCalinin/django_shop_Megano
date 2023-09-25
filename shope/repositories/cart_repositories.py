@@ -5,6 +5,7 @@ from auth_app.models import User
 from interface.cart_interface import ICart
 from cart_app.models import Cart
 
+
 class CartRepository(ICart):
 
     @beartype
@@ -15,16 +16,9 @@ class CartRepository(ICart):
     def get_by_user(self, _user: User) -> Cart:
         """Вернуть объект корзины."""
 
-        return Cart.objects.get(user=_user)
+        return Cart.objects.get(user=_user, is_active=True)
 
+    def create_cart(self, _user: User) -> None:
+        """Создать корзину"""
+        Cart.objects.create(_user)
 
-    @beartype
-    def filter_by_user(self, _user: User) -> QuerySet[Cart]:
-        """Вернуть объект корзины."""
-
-        return Cart.objects.filter(user=_user)
-
-    @beartype
-    def create_user(self, _user: User) -> None:
-        """Создвать корзину"""
-        Cart.objects.create(user=_user)

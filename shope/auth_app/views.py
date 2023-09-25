@@ -12,6 +12,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.views.generic import FormView
 
+from core.utils.add_product_to_cart import AddProductToCart
 from .models import User
 from .forms import UserRegisterForm, ResetPasswordForm, SetNewPasswordForm, UserLoginForm
 from core.utils.injector import configure_inject
@@ -35,7 +36,8 @@ class RegisterView(FormView):
             else:
                 print("Email is not verified")
         print("Form is not valid")
-
+        add = AddProductToCart()
+        add.create_cart_and_cartitem(request)
         context = {
             'form': form
         }

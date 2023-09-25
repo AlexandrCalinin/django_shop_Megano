@@ -89,7 +89,7 @@
                             {% for item in products %}
 
                             <div class="Card" id="{{ item.product.id }}">
-                                <a class="Card-picture" href="{% url 'product' pk=item.product.id%}"><img src="/media/{{item.product.image.first}}"></a>
+                                <a class="Card-picture" href="{% url 'product' pk=item.product.id%}" name="{{item.product.image.first}}"><img src="/media/{{item.product.image.first}}"></a>
                                 <div class="Card-content">
                                     <strong class="Card-title"><a href="{% url 'product' pk=item.product.id%}?price={{ item.price }}&seller={{ item.seller.id }}">{{ item.product.title }}</a>
                                     </strong>
@@ -98,8 +98,8 @@
                                         </div>
                                         <div class="Card-category" >{{ item.product.category }}
                                         </div>
-                                        <div class="Card-hover">
-                                            <button class="Send_data" type="submit" name="{{ item.seller.id }}" value="{{ item.price }}">
+                                        <div class="Card-hover" >
+                                            <button class="Send_data" type="submit" id="{{ item.seller.id }}" name="{{ item.product.title }}" value="{{ item.price }}">
                                                 <a class="Card-btn" href="#"><img src="{% static '/assets/img/icons/card/cart.svg' %}" alt="cart.svg"></a>
                                             </button>
                                         </div>

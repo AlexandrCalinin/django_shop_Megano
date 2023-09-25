@@ -22,3 +22,12 @@ class ICartItem:
     def get_by_cart_id(self, _cart: Cart) -> CartItem:
         """Получить CartItem"""
         pass
+
+    @abstractmethod
+    def get_by_product_id(self, _product: str, _cart: Cart) -> CartItem:
+        """Получить CartItem"""
+        pass
+
+    def get_count_amount(self, _cart: Cart) -> CartItem:
+        """Получить количество продуктов и сумму"""
+        pass
