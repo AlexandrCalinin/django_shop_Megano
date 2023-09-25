@@ -29,6 +29,9 @@ from repositories.catalog_filter_repositories import CatalogFilterRepository
 from repositories.order_item_repositories import OrderItemRepository
 from interface.order_item_interface import IOrderItem
 
+from repositories.cart_repositories import CartRepository
+from interface.cart_interface import ICart
+
 BINDS = (
     (IOrder, OrderRepository),
     (IDiscountBaseModel, DiscountBaseModelRepository),
@@ -41,6 +44,7 @@ BINDS = (
     (ICharacteristicProduct, CharacteristicRepository),
     (ICatalogFilter, CatalogFilterRepository),
     (IOrderItem, OrderItemRepository),
+    (ICart, CartRepository),
 )
 
 

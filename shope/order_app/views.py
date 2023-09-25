@@ -10,8 +10,8 @@ from django.contrib import messages
 from core.utils.injector import configure_inject
 from interface.order_interface import IOrder
 from interface.order_item_interface import IOrderItem
+from interface.cart_interface import ICart
 from order_app.models import Order
-from core.enums import PayType
 from profile_app.forms import EditProfileForm, EditUserForm
 from order_app.forms import CreateOrderForm
 
@@ -54,6 +54,7 @@ class CreateOrderView(LoginRequiredMixin, CreateView):
     context_object_name = 'order'
     form_class = CreateOrderForm
     model = Order
+    _cart = inject.attr(ICart)
     _SUCCESS_MESSAGE = _('Your order has been created')
 
     def get_success_url(self) -> str:
@@ -62,6 +63,7 @@ class CreateOrderView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
+        context['cart'] = self._cart.get_active_by_user(self.request.user)
         if self.request.POST:
             context['form'] = CreateOrderForm(self.request.POST, instance=self.request.user)  # type: ignore
             context['user_form'] = EditUserForm(self.request.POST,
@@ -78,6 +80,7 @@ class CreateOrderView(LoginRequiredMixin, CreateView):
         context = self.get_context_data()
         user_form = context['user_form']
         profile_form = context['profile_form']
+        cart = context['cart']
         valid_list = [form.is_valid(), user_form.is_valid(), profile_form.is_valid()]
         if all(valid_list):
             order_form = form.save(commit=False)
@@ -85,6 +88,9 @@ class CreateOrderView(LoginRequiredMixin, CreateView):
             order_form.save()
             user_form.save()
             profile_form.save()
+            cart.is_active = False
+            self._cart.save(cart)
+
         else:
             context.update({'user_form': user_form,
                             'profile_form': profile_form})

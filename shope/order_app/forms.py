@@ -26,7 +26,14 @@ class CreateOrderForm(forms.ModelForm):
     delivery_type = forms.CharField(label=_('Delivery type'),
                                     widget=forms.RadioSelect(choices=DeliveryType.choices,
                                                              attrs={'class': 'toggle-box',
+                                                                    'onchange': 'deliveryChange(this);',
                                                                     'data-validate': 'require'}))
+
+    pay_type = forms.CharField(label=_('Pay type'),
+                               widget=forms.RadioSelect(choices=PayType.choices,
+                                                        attrs={'class': 'toggle-box',
+                                                               'onchange': 'PayChange(this);',
+                                                               'data-validate': 'require'}))
 
     class Meta:
         """Meta Class"""
