@@ -18,6 +18,6 @@ class CartRepository(ICart):
             return None
 
     @beartype
-    def save(self, _cart: Cart) -> None:
+    def save(self, model: Cart) -> None:
         """ Сохранить корзину."""
-        _cart.save()
+        model.save()

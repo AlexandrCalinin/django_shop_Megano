@@ -42,4 +42,5 @@ class CreateOrderForm(forms.ModelForm):
             'city',
             'address',
             'delivery_type',
+            'user'
         ]
