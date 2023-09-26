@@ -6,6 +6,7 @@ from django.views import View
 
 from django.utils.datastructures import MultiValueDictKeyError
 from django.views.generic import TemplateView, ListView, DetailView
+from django.db.models import Max, Count, Subquery, F, OuterRef
 
 from core.utils.injector import configure_inject
 from interface.cart_sale_interface import ICartSale
@@ -19,6 +20,7 @@ from catalog_app.models import Product
 from interface.product_viewed_interface import IProductViewed
 
 from interface.catalog_filter_interface import ICatalogFilter
+from core.models.price import Price
 
 
 configure_inject()
@@ -35,7 +37,6 @@ class ProductDetailView(DetailView):
 
     def get_queryset(self):
         """get querysert"""
-
         return Product.objects.prefetch_related(
             'image',
             'tag',
@@ -45,6 +46,22 @@ class ProductDetailView(DetailView):
         """get_context_data"""
         contex = super().get_context_data(**kwargs)
         contex['characteristics'] = self._characteristics.get_by_product(_product=self.object)
+
+        latest_prices = Product.objects.filter(pk=self.kwargs.get('product_id')).annotate(
+            latest_price=Max('price__date')
+        ).annotate(
+            latest_price_value=Subquery(
+                Price.objects.filter(
+                    product=OuterRef('pk'),
+                    date=F('product__price__date')
+                ).values('price')[:1]
+            )
+        ).annotate(
+            price_count=Count('price')
+        ).filter(price_count__gt=0)
+
+        for i_price in latest_prices:
+            print(f'{i_price} - {i_price.latest_price_value}')
         return contex
 
 
