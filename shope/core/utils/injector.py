@@ -1,5 +1,6 @@
 import inject
 
+from interface.banner_interface import IBanner
 from interface.cart_sale_interface import ICartSale
 from interface.category_interface import ICategory
 from interface.discount_interface import IDiscountBaseModel
@@ -10,6 +11,7 @@ from interface.order_interface import IOrder
 from interface.product_interface import IProduct
 from interface.product_viewed_interface import IProductViewed
 from interface.slider_interface import ISlider
+from repositories.banner_repositories import BannerRepository
 from repositories.cart_sale_repositories import CartSaleRepository
 from repositories.category_repositories import CategoryRepository
 from repositories.discount_product_group_repositories import DiscountProductGroupRepository
@@ -49,6 +51,7 @@ BINDS = (
     (ICatalogFilter, CatalogFilterRepository),
     (IProductViewed, ProductViewedRepository),
     (ISlider, SliderRepository),
+    (IBanner, BannerRepository),
     (IOrderItem, OrderItemRepository),
 )
 
