@@ -48,8 +48,8 @@ class CatalogView(ListView):
     def get_queryset(self):
         try:
             if self.request.GET.get('tag') is not None:
-                tag = self.request.GET.get('tag')
-                return self._filter.filter_by_tag(tag)
+                tag_name = self.request.GET.get('tag')
+                return self._filter.filter_by_tag(tag_name)
             elif self.request.GET.get('sort') is not None:
                 sort = self.request.GET.get('sort')
                 return self._filter.filter_by_sort(sort)
@@ -84,10 +84,6 @@ class SaleView(TemplateView):
         context['product_group_sales'] = self._product_group_sales.get_list()
         context['cart_sales'] = self._cart_sales.get_list()
         return context
-
-
-class CatalogFilterView(TemplateView):
-    template_name = 'catalog_app/filter_catalog.html'
 
 
 class ProductSaleDetailView(DetailView):
