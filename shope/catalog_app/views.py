@@ -48,7 +48,7 @@ class ProductDetailView(DetailView):
         return contex
 
 
-class TestCatalogView(ListView):
+class CatalogView(ListView):
     template_name = 'catalog_app/catalog.html'
     _filter: ICatalogFilter = inject.attr(ICatalogFilter)
 
@@ -57,16 +57,25 @@ class TestCatalogView(ListView):
 
     def get_queryset(self):
         try:
-            is_limited = True if self.request.GET.get('in_stock') else False
-            free_delivery = True if self.request.GET.get('free_delivery') else False
-            # range_price = self.request.GET.get('price')
-            product_name = self.request.GET.get('title')
-            queryset = self._filter.get_filtered_products(product_name, free_delivery, is_limited)
-            return queryset
+            if self.request.GET.get('tag') is not None:
+                tag_name = self.request.GET.get('tag')
+                return self._filter.filter_by_tag(tag_name)
+            elif self.request.GET.get('sort') is not None:
+                sort = self.request.GET.get('sort')
+                return self._filter.filter_by_sort(sort)
+            else:
+                is_limited = True if self.request.GET.get('in_stock') else False
+                free_delivery = True if self.request.GET.get('free_delivery') else False
+                if self.request.GET.get('price'):
+                    product_min_price, product_max_price = self.request.GET.get('price').split(';')
+                else:
+                    product_min_price, product_max_price = None, None
+                product_name = self.request.GET.get('title')
+                return self._filter.get_filtered_products(product_name, free_delivery,
+                                                          is_limited, product_min_price, product_max_price)
 
         except MultiValueDictKeyError:
-            queryset = Product.objects.prefetch_related('image', 'tag')
-            return queryset
+            return Product.objects.prefetch_related('image', 'tag')
 
 
 class TestComparisonView(TemplateView):
@@ -85,10 +94,6 @@ class SaleView(TemplateView):
         context['product_group_sales'] = self._product_group_sales.get_list()
         context['cart_sales'] = self._cart_sales.get_list()
         return context
-
-
-class CatalogFilterView(TemplateView):
-    template_name = 'catalog_app/filter_catalog.html'
 
 
 class ProductSaleDetailView(DetailView):

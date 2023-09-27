@@ -411,6 +411,27 @@
                         }
                     });
 
+        }
+    };
+};
+
+modal().init();
+var range = function(){
+    return {
+        init: function(){
+            var $range = $('.range'),
+                $line = $range.find('.range-line');
+            
+            $line.ionRangeSlider({
+                onStart: function(data){
+                    $('.rangePrice').text(
+                        '₽' + data.from + ' - ₽' + data.to
+                    )
+                },
+                onChange: function(data){
+                    $('.rangePrice').text(
+                        '₽' + data.from + ' - ₽' + data.to
+                    )
                 }
             };
         };
