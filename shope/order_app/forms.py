@@ -32,7 +32,7 @@ class CreateOrderForm(forms.ModelForm):
     pay_type = forms.CharField(label=_('Pay type'),
                                widget=forms.RadioSelect(choices=PayType.choices,
                                                         attrs={'class': 'toggle-box',
-                                                               'onchange': 'PayChange(this);',
+                                                               'onchange': 'payChange(this);',
                                                                'data-validate': 'require'}))
 
     class Meta:
@@ -42,5 +42,6 @@ class CreateOrderForm(forms.ModelForm):
             'city',
             'address',
             'delivery_type',
-            'user'
+            'user',
+            'amount'
         ]

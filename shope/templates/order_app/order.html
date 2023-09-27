@@ -43,6 +43,7 @@
                                     <div class="form-group">
                                         <label class="form-label" for="name">{{ user_form.middle_name.label }}</label>
                                         {{ user_form.middle_name }}
+                                        <input name='user' hidden value={{ request.user.id }}>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label" for="phone">{{ profile_form.phone.label }}</label>
@@ -132,7 +133,8 @@
                                     {% endfor %}
                                     <div class="Cart-total">
                                         <div class="Cart-block Cart-block_total">
-                                            <strong class="Cart-title">Итого:</strong><span class="Cart-price">200.99$</span>
+                                            <strong class="Cart-title">Итого:</strong><span class="Cart-price">{{ total_amount| floatformat:2 }}</span>
+                                            <input name='amount'hidden value={{ total_amount }}>
                                         </div>
                                         <div class="Cart-block">
                                             <button class="btn btn_primary btn_lg" type="submit">Оплатить</button>

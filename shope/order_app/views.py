@@ -1,9 +1,9 @@
 """Order views"""
 
 from typing import Any
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 import inject
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -13,9 +13,10 @@ from core.utils.injector import configure_inject
 from interface.order_interface import IOrder
 from interface.order_item_interface import IOrderItem
 from interface.cart_interface import ICart
-from order_app.models import Order
+from order_app.models import Order, OrderItem
 from profile_app.forms import EditProfileForm, EditUserForm
 from order_app.forms import CreateOrderForm
+
 
 configure_inject()
 
@@ -57,7 +58,7 @@ class CreateOrderView(LoginRequiredMixin, CreateView):
     form_class = CreateOrderForm
     model = Order
     _cart = inject.attr(ICart)
-    _SUCCESS_MESSAGE = _('Your order has been created')
+    _order_items = inject.attr(IOrderItem)
 
     def get_success_url(self) -> str:
         """get success url"""
@@ -65,21 +66,16 @@ class CreateOrderView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['cart'] = self._cart.get_active_by_user(self.request.user)
-        # if self.request.POST:
-        #     context['form'] = CreateOrderForm(self.request.POST, instance=self.request.user)  # type: ignore
-        #     context['user_form'] = EditUserForm(self.request.POST,
-        #                                         instance=self.request.user)
-        #     context['profile_form'] = EditProfileForm(self.request.POST,
-        #                                               instance=self.request.user.profile)  # type: ignore
-        # else:
+        cart = self._cart.get_active_by_user(self.request.user)
+        context['cart'] = cart
         context['user_form'] = EditUserForm(instance=self.request.user)
         context['profile_form'] = EditProfileForm(instance=self.request.user.profile)  # type: ignore
+        context['total_amount'] = self._cart.total_amount(cart)
 
         return context
 
     def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
-        form = CreateOrderForm(self.request.POST, initial={'user': request.user})  # type: ignore
+        form = CreateOrderForm(self.request.POST)  # type: ignore
         user_form = EditUserForm(self.request.POST,
                                  instance=request.user)
         profile_form = EditProfileForm(self.request.POST,
@@ -88,17 +84,16 @@ class CreateOrderView(LoginRequiredMixin, CreateView):
 
         valid_list = [form.is_valid(), user_form.is_valid(), profile_form.is_valid()]
         if all(valid_list):
-            # order_form = form.save(commit=False)
-            # order_form.user = self.request.user
-
-            # order_form.save()
-            order_form = form.save()
+            order_obj = form.save()
             user_form.save()
             profile_form.save()
             # cart.is_active = True
-            cart.save()
-            messages.success(self.request, self._SUCCESS_MESSAGE)
-            return redirect('order_app:one-order', order_form.pk)
+            self._cart.save(cart)
+            cart_list = self._cart.model_to_list(cart)
+            bulk_list = [OrderItem(order=order_obj, **i_cart_list) for i_cart_list in cart_list]
+            self._order_items.bulk_create(bulk_list)
+
+            return redirect('order_app:one-order', order_obj.pk)
         else:
             context = {
                 'form': form,
@@ -107,28 +102,3 @@ class CreateOrderView(LoginRequiredMixin, CreateView):
             }
 
         return render(request, self.template_name, context=context)
-
-        # return super().post(request, *args, **kwargs)
-
-    # def form_valid(self, form):
-    #     context = self.get_context_data()
-    #     user_form = context['user_form']
-    #     profile_form = context['profile_form']
-    #     cart = context['cart']
-    #     valid_list = [form.is_valid(), user_form.is_valid(), profile_form.is_valid()]
-    #     if all(valid_list):
-    #         order_form = form.save(commit=False)
-    #         order_form.user = self.request.user
-    #         order_form.save()
-    #         user_form.save()
-    #         profile_form.save()
-    #         cart.is_active = False
-    #         self._cart.save(cart)
-
-    #     else:
-    #         context.update({'user_form': user_form,
-    #                         'profile_form': profile_form})
-
-    #         return self.render_to_response(context)
-    #     messages.success(self.request, self._SUCCESS_MESSAGE)
-    #     return super().form_valid(form)

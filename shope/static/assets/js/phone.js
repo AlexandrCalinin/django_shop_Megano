@@ -24,7 +24,7 @@ function deliveryChange(src) {
     document.getElementById("order-delivery").textContent = src.value
 }
 
-function PayChange(src) {
+function payChange(src) {
     document.getElementById("order-pay").textContent = src.value
 }
 
