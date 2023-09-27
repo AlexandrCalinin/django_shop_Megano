@@ -87,7 +87,7 @@ class CreateOrderView(LoginRequiredMixin, CreateView):
             order_obj = form.save()
             user_form.save()
             profile_form.save()
-            # cart.is_active = True
+            cart.is_active = False
             self._cart.save(cart)
             cart_list = self._cart.model_to_list(cart)
             bulk_list = [OrderItem(order=order_obj, **i_cart_list) for i_cart_list in cart_list]
