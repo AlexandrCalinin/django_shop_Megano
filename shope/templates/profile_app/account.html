@@ -44,7 +44,13 @@
                             </div>
                         </div>
                         <div class="Account-group">
-                            <div class="Account-column Account-column_full">{% get_order last_order %}</div>
+                            <div class="Account-column Account-column_full">
+                                {% if last_order %}
+                                    {% get_order last_order %}
+                                {% else %}
+                                    У вас еще нет заказов
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
