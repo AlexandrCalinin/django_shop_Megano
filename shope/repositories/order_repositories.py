@@ -3,6 +3,7 @@ from django.db.models import QuerySet
 
 from interface.order_interface import IOrder
 from order_app.models import Order
+from auth_app.models import User
 
 
 class OrderRepository(IOrder):
@@ -12,13 +13,18 @@ class OrderRepository(IOrder):
         model.save()
 
     @beartype
-    def get_by_id(self, _id: int) -> Order:
-        """Вернуть объект заказа."""
+    def get_list_by_user(self, _user: User) -> QuerySet[Order]:
+        """Получить список заказов пользоветеля."""
 
-        return Order.objects.get(_id)
+        return Order.objects.filter(user=_user)
 
     @beartype
-    def get_by_name(self, _name: str) -> QuerySet[Order]:
-        """Вернуть объект заказа."""
+    def get_last_by_user(self, _user: User) -> Order:
+        """Получить последний заказ покупателя по дате создания"""
 
-        return Order.objects.filter(name=_name)
+        return Order.objects.filter(user=_user).latest('created_at')
+
+    @beartype
+    def get_by_pk(self, _pk: int) -> QuerySet[Order]:
+        """Получить заказ по pk"""
+        return Order.objects.filter(pk=_pk).select_related('user')

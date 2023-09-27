@@ -94,13 +94,22 @@
                     <div class="Cards">
                         {% if object_list %}
                             {% for product in object_list %}
-                                <div class="Card"><a class="Card-picture" href="{% url 'product' product.pk %}"><img
+                                <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
+                                {% csrf_token %}
+                                    <div class="Card">
+                                        <button class="Card-picture btn_reset" href="{% url 'product' product.pk %}" type="submit">
+                                        <img
                                         src="{{ product.image.all.0.image.url }}"
-                                        alt="{{ product.image.all.0.image.name }}"></a>
+                                        alt="{{ product.image.all.0.image.name }}">
+                                </button>
+
                                     <div class="Card-content">
-                                        <strong class="Card-title"><a
-                                                href="{% url 'product' product.pk %}">{{ product.title }}</a>
+                                         <strong class="Card-title">
+                                            <button class=" btn_reset" href="{% url 'product' product.pk %}" type="submit">
+                                                {{ product.title }}
+                                            </button>
                                         </strong>
+
                                         <div class="Card-description">
                                             <div class="Card-cost">
                                                 <span class="Card-price">{{ product.min_price|floatformat:"0" }}₽</span>
@@ -117,12 +126,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                    </div>
+                                </form>
                             {% endfor %}
                         {% else %}
                             <h2>Товаров по Вашему запросу нет.</h2>
-                        {% endif %}
-
+                        {% endif %}            
                     </div>
                     <div class="Pagination">
                         <div class="Pagination-ins">

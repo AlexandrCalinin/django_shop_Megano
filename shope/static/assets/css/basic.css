@@ -445,6 +445,18 @@ textarea {
 }
 
 /*----------  Button  ----------*/
+.btn_reset {
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit;
+    border: 1px solid #fff;
+    font-weight: inherit;
+    text-transform: inherit;
+    letter-spacing: inherit;
+    background: #fff;
+    cursor: pointer;
+}
+
 .btn {
     display: inline-flex;
     align-items: center;

@@ -49,7 +49,7 @@ class Order(BaseModel):
     class Meta:
         """Meta class"""
         verbose_name = _('order')
-        verbose_name_plural = _('orderss')
+        verbose_name_plural = _('orders')
 
     def __str__(self) -> str:
         """Строкое представление."""
@@ -73,4 +73,4 @@ class OrderItem(BaseModelItem):
         verbose_name = _('OrderItem')
 
     def __str__(self):
-        return self.product
+        return f'заказ {self.order} ({self.product} * {self.count} = {self.amount}  '

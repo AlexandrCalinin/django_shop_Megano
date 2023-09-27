@@ -142,7 +142,7 @@ class Rewiew(BaseModel):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('product'))
 
     def __str__(self):
-        return self.user
+        return f'{self.user} - {self.product}'
 
     class Meta:
         verbose_name = _('rewiew')
@@ -172,7 +172,7 @@ class CharacteristicType(BaseModel):
 
     def __str__(self):
         """Строковое представление"""
-        return str(self.name)
+        return f'{self.name}'
 
 
 class CharacteristicValue(BaseModel):
@@ -193,7 +193,7 @@ class CharacteristicValue(BaseModel):
 
     def __str__(self):
         """Строковое представление"""
-        return f'{self.characteristic_type} - {self.value}'
+        return f'{self.characteristic_type}-{self.value}'
 
 
 class CharacteristicProduct(BaseModel):
@@ -218,3 +218,17 @@ class CharacteristicProduct(BaseModel):
     def __str__(self):
         """Строковое представление"""
         return f'{self.product} - {self.characteristic_value}'
+
+
+class ProductViewed(BaseModel):
+    """Модель просмотренных товаров"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('user'))
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('product'))
+
+    def __str__(self):
+        return f'Товар {self.product} просмотрен {self.user}'
+
+    class Meta:
+        verbose_name = _('viewed product')
+        verbose_name_plural = _('viewed products')
+        ordering = ['id']

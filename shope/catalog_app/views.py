@@ -1,16 +1,25 @@
 """Catalog app views"""
 import inject
+
+from django.http import HttpResponseRedirect
+from django.views import View
+
 from django.utils.datastructures import MultiValueDictKeyError
 from django.views.generic import TemplateView, ListView, DetailView
 
 from core.utils.injector import configure_inject
 from interface.cart_sale_interface import ICartSale
+from interface.category_interface import ICategory
 from interface.discount_product_group_interface import IDiscountProductGroup
 from interface.discount_product_interface import IDiscountProduct
 from interface.characteristic_interface import ICharacteristicProduct
-from catalog_app.models import DiscountProduct, DiscountProductGroup, CartSale
+from catalog_app.models import DiscountProduct, DiscountProductGroup, CartSale, ProductViewed
 from catalog_app.models import Product
+
+from interface.product_viewed_interface import IProductViewed
+
 from interface.catalog_filter_interface import ICatalogFilter
+
 
 configure_inject()
 
@@ -22,6 +31,7 @@ class ProductDetailView(DetailView):
     model = Product
     template_name = 'catalog_app/product.html'
     context_object_name = 'product'
+    pk_url_kwarg = 'product_id'
 
     def get_queryset(self):
         """get querysert"""
@@ -105,3 +115,41 @@ class CartSaleDetailView(DetailView):
     model = CartSale
     context_object_name = 'sale'
     pk_url_kwarg = 'sale_id'
+
+
+class ChangeListProductViewedView(View):
+    """Представление для изменения списка просмотренных товаров"""
+    _product_viewed_list: IProductViewed = inject.attr(IProductViewed)
+    _create_product_viewed: IProductViewed = inject.attr(IProductViewed)
+    _get_product_viewed_by_id: IProductViewed = inject.attr(IProductViewed)
+    _delete_product_viewed_by_id: IProductViewed = inject.attr(IProductViewed)
+
+    def post(self, request, *args, **kwargs):
+        product_id = kwargs.get('product_id')
+        if request.user.is_authenticated:
+            user_id = request.user.id
+            product = self._get_product_viewed_by_id.get_product_viewed_by_id(_user_id=user_id, _product_id=product_id)
+            if not product:
+                self._create_product_viewed.create_product_viewed(_user_id=user_id, _product_id=product_id)
+            else:
+                self._delete_product_viewed_by_id.delete_product_viewed_by_id(_user_id=user_id, _product_id=product_id)
+                self._create_product_viewed.create_product_viewed(_user_id=user_id, _product_id=product_id)
+            product_viewed_list = self._product_viewed_list.get_product_viewed_list(_user_id=user_id)
+            if len(product_viewed_list) > 20:
+                self._delete_product_viewed_by_id.delete_product_viewed_by_id(
+                    _user_id=product_viewed_list.first().user_id, _product_id=product_viewed_list.first().product_id)
+        return HttpResponseRedirect(f'/catalog/product/{product_id}/')
+
+
+class ProductViewedView(TemplateView):
+    """Представление для отображения списка просмотренных товаров"""
+    template_name = 'catalog_app/product_viewed.html'
+    _category_list: ICategory = inject.attr(ICategory)
+    _product_viewed_list: IProductViewed = inject.attr(IProductViewed)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_id = self.request.user.id
+        context['product_viewed_list'] = self._product_viewed_list.get_product_viewed_list(_user_id=user_id)
+        context['category_list'] = self._category_list.get_category_list()
+        return context
