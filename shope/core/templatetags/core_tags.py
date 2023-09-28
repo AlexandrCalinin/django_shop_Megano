@@ -13,9 +13,9 @@ def get_order(order):
 
     context = {
         'order': order,
-        'delivery_type': DeliveryType[order.delivery_type],
-        'pay_type': PayType[order.pay_type],
-        'status': OrderStatus[order.status]
+        'delivery_type': DeliveryType[order.delivery_type].value,
+        'pay_type': PayType[order.pay_type].value,
+        'status': OrderStatus[order.status].value
     }
     return context
 

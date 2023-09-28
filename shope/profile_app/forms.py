@@ -1,7 +1,7 @@
 """Forms for Profile app"""
 
 from django import forms
-from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm, SetPasswordForm
+from django.contrib.auth.forms import UserChangeForm, SetPasswordForm
 from django.utils.translation import gettext_lazy as _
 from phonenumber_field.formfields import PhoneNumberField
 from .models import Profile

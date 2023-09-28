@@ -1,4 +1,5 @@
 from abc import abstractmethod
+from typing import Optional
 from django.db.models import QuerySet
 
 from order_app.models import Order
@@ -18,7 +19,7 @@ class IOrder:
         pass
 
     @abstractmethod
-    def get_last_by_user(self, _user: User) -> Order:
+    def get_last_by_user(self, _user: User) -> Optional[Order]:
         """Получить последний заказ покупателя по дате создания"""
         pass
 
