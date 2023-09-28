@@ -36,8 +36,8 @@ class RegisterView(FormView):
             else:
                 print("Email is not verified")
         print("Form is not valid")
-        add = AddProductToCart()
-        add.create_cart_and_cartitem(request)
+        add_product_to_cart = AddProductToCart()
+        add_product_to_cart.create_cart_and_cartitem(request)
         context = {
             'form': form
         }

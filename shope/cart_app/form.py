@@ -8,3 +8,10 @@ class ChangeCountForm(forms.Form):
 
     class Meta:
         fields = ['product', 'count', 'seller']
+
+
+class DeleteForm(forms.Form):
+    product = forms.CharField(max_length=8)
+
+    class Meta:
+        fields = ['product']

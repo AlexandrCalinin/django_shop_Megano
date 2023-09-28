@@ -28,6 +28,12 @@ class ICartItem:
         """Получить CartItem"""
         pass
 
+    @abstractmethod
     def get_count_amount(self, _cart: Cart) -> CartItem:
         """Получить количество продуктов и сумму"""
+        pass
+
+    @abstractmethod
+    def delete_product(self, _product: str) -> None:
+        """Удалить объект"""
         pass

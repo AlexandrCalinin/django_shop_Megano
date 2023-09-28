@@ -1,7 +1,6 @@
 import inject
-from django.db.models import Sum
 
-from cart_app.models import CartItem, Cart
+from cart_app.models import CartItem
 from catalog_app.models import Product
 from core.models import Seller, Price
 from core.utils.injector import configure_inject
@@ -9,7 +8,6 @@ from core.utils.injector import configure_inject
 from auth_app.models import User
 from interface.cartitem_interface import ICartItem
 from interface.cart_interface import ICart
-
 
 configure_inject()
 
@@ -20,29 +18,63 @@ class AddProductToCart:
 
     def add_product_to_cart(self, user: User, **kwargs) -> None:
         """добавить товар в корзину"""
+
         product_id, product_name, image, product_count, amount, seller_id = kwargs.values()
 
         cart = self._cart.get_by_user(_user=user)
-        cartitem = self._cartitem.get_by_cart_id(_cart=cart)
         product = Product.objects.get(id=product_id)
         seller = Seller.objects.get(id=seller_id)
 
-        try:
-            cartitem.objects.get(product_id=product)
-            self.change_count_product_in_cart(user, product=product_id, count=product_count, seller=seller)
-        except Exception:
-            self._cartitem.create_cartitem(_cart=cart, _product=product, _count=product_count,
-                                           _amount=amount, _seller=seller)
+        if self._cartitem.get_by_product_id(_product=product_id, _cart=cart):
+            self.change_count_product_in_cart(user=user,
+                                              product=product_id,
+                                              count=product_count,
+                                              seller=seller)
+        else:
+            self._cartitem.create_cartitem(_cart=cart,
+                                           _product=product,
+                                           _count=product_count,
+                                           _amount=amount,
+                                           _seller=seller)
 
-    def remove_product_from_cart(self, request):
+    @staticmethod
+    def add_product_for_anonymous_user(request, **kwargs):
+        """
+        добавить товар в корзину для не зарегистрированного пользователя
+        """
+        product, product_name, image, product_count, amount, seller = kwargs.values()
+
+        product_info = {'product': product, 'product_name': product_name,
+                        'image': image, 'count': product_count,
+                        'amount': amount, 'price': amount, 'seller': seller}
+
+        if 'cart' in request.session:
+
+            if not product in request.session["cart"]:  # сохраняем товары в сессию если такого товара нету в корзине
+                request.session["cart"][product] = product_info
+            else:  # если есть то прибаляем ко-во товаров
+                request.session["cart"][product]['count'] = \
+                    int(request.session["cart"][product]['count']) + int(product_count)
+
+                request.session["cart"][product]['amount'] = \
+                    float(request.session["cart"][product]['amount']) + float(request.session["cart"][product]['price'])
+        else:
+            request.session["cart"] = {}
+            request.session["cart"][product] = product_info
+        request.session.modified = True
+
+    def remove_product_from_cart(self, product, request):
         """
         убрать товар из корзины
         """
-        product = request.POST['product']
+
         if request.user.is_authenticated:
-            CartItem.objects.get(product=product).delete()
+            self._cartitem.delete_product(_product=product)
         else:
+
             del request.session['cart'][product]
+            request.session.modified = True
+
 
     def change_count_product_in_cart(self, user, **kwargs):
         """
@@ -51,10 +83,11 @@ class AddProductToCart:
         cart = self._cart.get_by_user(_user=user)
         product, count, seller = kwargs.values()
 
-        price = Price.objects.get(product=product, seller=seller)
+        price = Price.objects.filter(product=product,
+                                     seller=seller).last()
 
-        # product = self._cartitem.get_by_product_id(_product=product, _cart=cart)
-        product_i = CartItem.objects.filter(product=product, cart_id=cart).first()
+        product_i = self._cartitem.get_by_product_id(_product=product,
+                                                     _cart=cart)
 
         product_i.count += int(count)
         if count == '1':
@@ -63,16 +96,28 @@ class AddProductToCart:
             product_i.amount -= price.price
 
         product_i.save()
-        return product_i.amount
+        return product_i
 
-    def change_count_product_in_cart_for_anonymous(self, request, **kwargs) -> None:
+    @staticmethod
+    def change_count_for_anonymous(request, **kwargs):
         """
         изменить кол-во товаров в корзине для не зарегистрированного пользователя
         """
 
-        product, count, seller = kwargs.values()
+        product, get_count, seller = kwargs.values()
+
         request.session["cart"][product]['count'] = \
-            int(request.session["cart"][product]['count']) + int(count)
+            int(request.session["cart"][product]['count']) + int(get_count)
+
+        if get_count == '1':
+            request.session["cart"][product]['amount'] =\
+                float(request.session["cart"][product]['amount']) + float(request.session["cart"][product]['price'])
+        else:
+            request.session["cart"][product]['amount'] = \
+                float(request.session["cart"][product]['amount']) - float(request.session["cart"][product]['price'])
+
+        request.session.modified = True
+        return request.session["cart"][product]
 
     def get_list_in_cart(self, request) -> CartItem:
         """
@@ -85,7 +130,7 @@ class AddProductToCart:
             products = request.session['cart']
             return products.values()
 
-    def get_count_product_in_cart(self, user: User) -> tuple[int,int]:
+    def get_count_product_in_cart(self, user: User) -> tuple[int, int]:
         """
         получить кол-во товаров в корзине
         """
@@ -96,7 +141,8 @@ class AddProductToCart:
 
         return round(amount, 2), count
 
-    def get_count_product_for_anonymous_user(self, request):
+    @staticmethod
+    def get_count_product_for_anonymous_user(request):
         """
         получить кол-во товаров в корзине для не зарегистрированного пользователя
         """
@@ -107,31 +153,13 @@ class AddProductToCart:
             amount = 0
             for item in products.values():
                 count += int(item['count'])
-                amount += int(item['count']) * float(item['amount'])
+                amount += int(item['count']) * float(item['price'])
+
             return round(amount, 2), round(count, 2)
+
         except KeyError:
             return 0, 0
 
-    def add_product_for_anonymous_user(self, request, **kwargs):
-        """
-        добавилть товар в корзину для не зарегистрированного пользователя
-        """
-        product, product_name, image, product_count, amount, seller = kwargs.values()
-
-        product_info = {'product': product, 'product_name': product_name,
-                        'image': image, 'count': product_count,
-                        'amount': amount, 'seller': seller}
-
-        if 'cart' in request.session:
-            if not product in request.session["cart"]:
-                request.session["cart"][product] = product_info
-            else:
-                request.session["cart"][product]['count'] = \
-                    int(request.session["cart"][product]['count']) + int(product_count)
-        else:
-            request.session["cart"] = {}
-            request.session["cart"][product] = product_info
-        request.session.modified = True
 
     def create_cart_and_cartitem(self, request) -> None:
         """Создать корзину"""

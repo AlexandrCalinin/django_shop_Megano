@@ -10,8 +10,6 @@
                         {% if user.is_authenticated %}
                         {% for item in items %}
                         <div class="Cart-product" id="{{ item.product.id }}">
-
-
                                 <div class="Cart-block Cart-block_row">
                                     <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="#"><img class="Cart-img" src="/media/{{ item.product.image.first }}" alt="card.jpg" /></a>
                                 </div>
@@ -68,7 +66,14 @@
                         {% endif %}
                         </form>
                     </div>
-                   {% include 'includes/total_amount_in_cart.html' %}
+                    <div class="Cart-total">
+                        {% include 'includes/total_amount_in_cart.html' %}
+                        {% if user.is_authenticated %}
+                            <div class="Cart-block"><a class="btn btn_success btn_lg" href="../order/order.html">Оформить заказ</a></div>
+                        {% else %}
+                            <div class="Cart-block"><a class="btn btn_success btn_lg" href="{% url 'auth_app:register' %}">Регистрация</a></div>
+                        {% endif %}
+                    </div>
 
 
             </div>

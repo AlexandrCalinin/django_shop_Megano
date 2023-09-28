@@ -47,7 +47,7 @@ class ProductDetailView(DetailView):
         return contex
 
 
-class CatalogView(ListView):
+class CatalogListView(ListView):
     """Каталог"""
     template_name = 'catalog_app/catalog.html'
     context_object_name = 'products'
@@ -59,28 +59,25 @@ class CatalogView(ListView):
 
         return Price.objects.all()
 
-    def post(self, request: HttpRequest, **kwargs):
+
+class AddProductToCartView(TemplateView):
+
+    def post(self, request: HttpRequest):
 
         if request.headers['X-Requested-With'] == 'XMLHttpRequest':
             form = CartEditForm(data=request.POST)
 
             if form.is_valid():
-                context = self.get_context_data(object_list=self.get_queryset(), **kwargs)
                 add = AddProductToCart()
 
                 if request.user.is_authenticated:
                     add.add_product_to_cart(request.user, **form.cleaned_data, )
-                    amount, count = add.get_count_product_in_cart(request.user)
                 else:
-
                     add.add_product_for_anonymous_user(request, **form.cleaned_data)
-                    amount, count = add.get_count_product_for_anonymous_user(request)
 
-                context['count'] = count
-                context['amount'] = amount
-
-                result = render_to_string('includes/card_edit.html', context=context, request=request)
+                result = render_to_string('includes/card_edit.html', request=request)
                 return JsonResponse({'result': result})
+
 
 class TestComparisonView(TemplateView):
     template_name = 'catalog_app/comparison.html'
