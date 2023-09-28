@@ -66,7 +66,7 @@ class Slider(BaseModel):
     image = models.ImageField(upload_to="images/%Y/%m/%d", verbose_name=_('image'))
 
     def __str__(self):
-        return self.product
+        return f'{self.product}'
 
     class Meta:
         verbose_name = _('slider')
@@ -78,10 +78,9 @@ class Banner(BaseModel):
     """Модель баннера. Используется для сета баннеров с минимальными ценами в своей категории"""
     category = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name=_('category'))
     image = models.ImageField(upload_to="images/%Y/%m/%d", verbose_name=_('image'))
-    category_min_price = models.PositiveIntegerField(default=1, verbose_name=_('minimal price'))
 
     def __str__(self):
-        return self.category
+        return f'{self.category}'
 
     class Meta:
         verbose_name = _('banner')

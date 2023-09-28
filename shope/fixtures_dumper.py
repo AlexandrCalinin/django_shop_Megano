@@ -12,3 +12,5 @@ os.system("python -Xutf8 manage.py dumpdata core.Price > fixtures/12_price.json"
 os.system("python -Xutf8 manage.py dumpdata catalog_app.DiscountProduct > fixtures/13_discount_product.json")
 os.system("python -Xutf8 manage.py dumpdata catalog_app.DiscountProductGroup > fixtures/15_discount_product_group.json")
 os.system("python -Xutf8 manage.py dumpdata catalog_app.CartSale > fixtures/17_cart_sale.json")
+os.system("python -Xutf8 manage.py dumpdata catalog_app.Banner > fixtures/19_banner.json")
+os.system("python -Xutf8 manage.py dumpdata catalog_app.Slider > fixtures/21_slider.json")
