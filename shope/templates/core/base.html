@@ -158,29 +158,31 @@ block
             </div>
             <div class="CategoriesButton-content">
               {% for category in category_list %}
-                <div class="CategoriesButton-link">
-                  {% if category.title != 'Скидки' %}
-                    <a href="{% url 'catalog' %}">
-                  {% else %}
-                    <a href="{% url 'sale' %}">
-                  {% endif %}
-                    <div class="CategoriesButton-icon">
-                      <img src="{{ category.image.url }}" alt="1.svg">
-                    </div>
-                      <span class="CategoriesButton-text">{{ category.title }}</span>
-                    </a>
-                    </a>
-                  {% if category.characteristictype_set.exists %}
-                    <a class="CategoriesButton-arrow" href="#"></a>
-                    <div class="CategoriesButton-submenu">
-                      {% for char in category.characteristictype_set.all %}
-                        <a class="CategoriesButton-link" href="#">
-                          <span class="CategoriesButton-text">{{ char.name }}</span>
-                        </a>
-                      {% endfor %}
-                    </div>
-                  {% endif %}
-                </div>
+                <form action="{% url 'catalog' %}" method="get">
+                  <div class="CategoriesButton-link">
+                    {% if category.title != 'Скидки' %}
+                      <button class="btn-as-link" href="{% url 'catalog' %}" name="category" value="{{ category.id }}">
+                    {% else %}
+                      <a href="{% url 'sale' %}">
+                    {% endif %}
+                      <div class="CategoriesButton-icon">
+                        <img src="{{ category.image.url }}" alt="1.svg">
+                      </div>
+                        <span class="CategoriesButton-text">{{ category.title }}</span>
+                      </a>
+                      </button>
+                    {% if category.characteristictype_set.exists %}
+                      <a class="CategoriesButton-arrow" href="#"></a>
+                      <div class="CategoriesButton-submenu">
+                        {% for char in category.characteristictype_set.all %}
+                          <a class="CategoriesButton-link" href="#">
+                            <span class="CategoriesButton-text">{{ char.name }}</span>
+                          </a>
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+                  </div>
+                </form>
               {% endfor %}
             </div>
           </div>

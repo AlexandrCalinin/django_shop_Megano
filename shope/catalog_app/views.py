@@ -74,6 +74,9 @@ class CatalogView(ListView):
 
     def get_queryset(self):
         try:
+            if self.request.GET.get('category') is not None:
+                category_id = self.request.GET.get('category')
+                return self._filter.get_filtered_products_by_category(category_id)
             if self.request.GET.get('tag') is not None:
                 tag_name = self.request.GET.get('tag')
                 return self._filter.filter_by_tag(tag_name)
