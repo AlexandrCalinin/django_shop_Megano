@@ -1,6 +1,6 @@
 import random
 
-from django.db.models import QuerySet, Sum, Q, Avg, Min, Max
+from django.db.models import QuerySet, Sum, Q, Avg, Min, Max, F
 from django.db.models import Func
 
 from catalog_app.models import Product
@@ -28,7 +28,9 @@ class ProductRepository(IProduct):
     def get_product_limit_list(self, const: int) -> QuerySet[Product]:
         """Вернуть кверисет лимитированых продуктов"""
         qs = Product.objects.filter(is_active=True, is_limited=True).annotate(
-            min_price=Round(Min('price__price')), max_price=Round(Max('price__price')), value=Round(Avg('price__price'))
+            min_price=Round(Min('price__price')),
+            max_price=Round(Max('price__price')),
+            value=Round(Avg('price__price'))
         )
         if len(qs) > const:
             const_num_list = random.sample([product.pk for product in qs], const)
