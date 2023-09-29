@@ -7,15 +7,19 @@ from .views import (
     SaleView,
     ProductSaleDetailView,
     ProductGroupSaleDetailView,
-    CartSaleDetailView,
     AddProductToCartView,
+    CartSaleDetailView,
+    ChangeListProductViewedView, ProductViewedView
 )
 
 urlpatterns = [
     path('comparison/', TestComparisonView.as_view(), name="comparison"),
 
-    path('product/<int:pk>/', ProductDetailView.as_view(), name="product"),  # <int:product_id>/
+    path('product/<int:product_id>/', ProductDetailView.as_view(), name="product"),
+    path('changeviewedlist/<int:product_id>', ChangeListProductViewedView.as_view(), name='change_viewed'),
+    path('viewed_products/<int:user_id>', ProductViewedView.as_view(), name='viewed_products'),
     path('sale/', SaleView.as_view(), name="sale"),
+
     path('filter_catalog/', CatalogFilterView.as_view(), name="filter_catalog"),
     path('catalog/', CatalogListView.as_view(), name="catalog"),
     path('catalog/add', AddProductToCartView.as_view(), name="catalog_add"),

@@ -1,6 +1,9 @@
 from abc import abstractmethod
+from typing import Optional
+from django.db.models import QuerySet
 
 from order_app.models import Order
+from auth_app.models import User
 
 
 class IOrder:
@@ -11,11 +14,16 @@ class IOrder:
         pass
 
     @abstractmethod
-    def get_by_id(self, _id: int) -> Order:
-        """Получить заказ."""
+    def get_list_by_user(self, _user: User) -> QuerySet[Order]:
+        """Получить список заказов пользоветеля."""
         pass
 
     @abstractmethod
-    def get_by_name(self, _name: str) -> Order:
-        """Получить заказ."""
+    def get_last_by_user(self, _user: User) -> Optional[Order]:
+        """Получить последний заказ покупателя по дате создания"""
+        pass
+
+    @abstractmethod
+    def get_by_pk(self, _pk: int) -> Order:
+        """Получить заказ по pk"""
         pass

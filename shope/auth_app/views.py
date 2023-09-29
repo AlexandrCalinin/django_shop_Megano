@@ -1,9 +1,9 @@
 import inject
 
 from django.conf import settings
-from django.contrib import auth
 from django.contrib.auth.views import PasswordResetView, LogoutView, PasswordResetConfirmView, LoginView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import auth
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -17,6 +17,8 @@ from .models import User
 from .forms import UserRegisterForm, ResetPasswordForm, SetNewPasswordForm, UserLoginForm
 from core.utils.injector import configure_inject
 from interface.auth_interface import IAuth
+from .tasks import send_mail_to_user
+from .models import User
 
 configure_inject()
 
@@ -29,27 +31,36 @@ class RegisterView(FormView):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(data=request.POST)
+        email = request.POST['email']
         if form.is_valid():
             user = form.save()
             if self.send_link_to_verify_email(user=user):
                 return HttpResponseRedirect(reverse('auth_app:confirm-email'))
             else:
-                print("Email is not verified")
-        print("Form is not valid")
-        add_product_to_cart = AddProductToCart()
-        add_product_to_cart.create_cart_and_cartitem(request)
+                self._user.delete_user_by_email(_email=email)
+        else:
+            self._user.delete_user_by_email(_email=email)
+
         context = {
             'form': form
         }
+
+        add_product_to_cart = AddProductToCart()
+        add_product_to_cart.create_cart_and_cartitem(request)
+
         return render(request, self.template_name, context)
 
     @staticmethod
     def send_link_to_verify_email(user):
+        print(settings.DOCKER)
         verify_link = reverse_lazy('auth_app:verify_email', args=[user.email, user.activation_key])
         subject = f'Для активации учетной записи {user.username} пройдите по ссылке'
         message = f'Для подтверждения учетной записи {user.username} перейдите по ссылке' \
                   f' на портале \n {settings.DOMAIN_NAME}{verify_link}'
-        return send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
+        if settings.DOCKER:
+            return send_mail_to_user.delay(subject, message, user.email)
+        else:
+            return send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
 
     def verify(self, email, activate_key):
         try:
@@ -59,13 +70,12 @@ class RegisterView(FormView):
                 user.activation_key = ''
                 user.is_activation_key_expired = None
                 user.is_active = True
-                print(user.is_active)
                 user.save()
                 auth.login(self, user)
-            return HttpResponseRedirect(reverse('home'))
+            return HttpResponseRedirect(reverse('auth_app:login'))
 
         except Exception:
-            User.objects.filter(email).delete()
+            User.objects.get(email).delete()
             return render(self, 'auth_app/registration-error.html')
 
 
@@ -108,7 +118,10 @@ class ForgotPasswordView(SuccessMessageMixin, PasswordResetView):
         subject = f'Для продолжения сброса пароля {username} пройдите по ссылке'
         message = f'Для подтверждения сброса пароля {username} перейдите по ссылке ' \
                   f'на портале \n{settings.DOMAIN_NAME}/auth/set-new-password/{uidb64}/{token}'
-        return send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
+        if settings.DOCKER:
+            return send_mail_to_user.delay(subject, message, email)
+        else:
+            return send_mail(subject, message, settings.EMAIL_HOST_USER, [email], fail_silently=False)
 
 
 class SetNewPasswordView(SuccessMessageMixin, PasswordResetConfirmView):

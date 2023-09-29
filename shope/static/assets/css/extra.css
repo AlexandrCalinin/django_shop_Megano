@@ -6,6 +6,10 @@
     display: flex;
 }
 
+.Card-product {
+    padding: 15px;
+}
+
 @media screen and (max-width: 480px) {
     .Account-group {
         display: block;
@@ -1068,7 +1072,7 @@
 }
 
 .Card-category {
-    display: block;
+    display: inline;
     margin-top: 11px;
 }
 

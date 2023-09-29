@@ -18,7 +18,7 @@ class User(AbstractUser):
 
     username = models.CharField(unique=True, default="", max_length=48, null=False, blank=False)
     email = models.EmailField(unique=True, default="", null=False, blank=False)
-    middle_name = models.CharField(default="", null=False, blank=False, max_length=48)
+    middle_name = models.CharField(verbose_name=_('Full name'), default="", null=False, blank=False, max_length=48)
     activation_key = models.CharField(default="", null=False, blank=False, max_length=48)
     activation_key_set = models.DateTimeField(auto_now=True, blank=True, null=True)
     is_activation_key_expired = models.BooleanField(default=False, blank=True, null=True)

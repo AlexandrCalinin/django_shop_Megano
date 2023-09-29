@@ -11,13 +11,16 @@ class Cart(BaseModel):
     Модель корзины пользователя.
     """
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_('user'))
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE,
+                             verbose_name=_('user'),
+                             related_name='carts')
 
     class Meta:
         verbose_name = _('Cart')
 
     def __str__(self):
-        return self.user
+        return f'{self.pk}-{self.user} - active({self.is_active})'
 
 
 class CartItem(BaseModelItem):
@@ -25,10 +28,13 @@ class CartItem(BaseModelItem):
     Модель для хранения товаров в корзине.
     """
 
-    cart_id = models.ForeignKey(Cart, on_delete=models.CASCADE, verbose_name=_('cart'))
+    cart_id = models.ForeignKey(Cart,
+                                on_delete=models.CASCADE,
+                                verbose_name=_('cart'),
+                                related_name='cartitems')
 
     class Meta:
         verbose_name = _('CartItem')
 
     def __str__(self):
-        return self.cart_id
+        return f'{self.cart_id} - {self.product}'

@@ -1,5 +1,5 @@
 """Profile app models"""
-
+from PIL import Image
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
@@ -16,6 +16,7 @@ def profile_image_path(instance: "Profile", filename: str) -> str:
 
 class Profile(BaseModel):
     """Модель профайла"""
+    _MAX_SIZE = 300
 
     phone = PhoneNumberField(unique=True,
                              verbose_name=_('phone'),
@@ -41,3 +42,21 @@ class Profile(BaseModel):
         verbose_name = _("user's profile")
         verbose_name_plural = _("user's profiles")
         ordering = ['id']
+
+    def save(self, *args, **kwargs):
+        """Изменение размера картинки"""
+        super().save(*args, **kwargs)
+        if self.avatar:
+            filepath = self.avatar.path
+            widht = self.avatar.width
+            height = self.avatar.height
+            max_size = max(widht, height)
+
+            if max_size > self._MAX_SIZE:
+                image = Image.open(filepath)
+                image = image.resize(
+                    (round(widht / max_size * self._MAX_SIZE),
+                     round(height / max_size * self._MAX_SIZE)),
+                    Image.ANTIALIAS
+                )
+                image.save(filepath)

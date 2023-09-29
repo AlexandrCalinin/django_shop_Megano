@@ -26,19 +26,19 @@ class Order(BaseModel):
     pay_type = models.CharField(verbose_name=_('payment type'),
                                 choices=PayType.choices,
                                 max_length=10,
-                                default=PayType.bank_card
+                                default=PayType.bank_card.name
                                 )
 
     delivery_type = models.CharField(verbose_name=_('delivery type'),
                                      choices=DeliveryType.choices,
                                      max_length=10,
-                                     default=DeliveryType.REGULAR
+                                     default=DeliveryType.REGULAR.name
                                      )
 
     status = models.CharField(verbose_name=_('status'),
                               choices=OrderStatus.choices,
                               max_length=10,
-                              default=OrderStatus.NOT_PAID
+                              default=OrderStatus.NOT_PAID.name
                               )
 
     amount = models.DecimalField(verbose_name=_('order amount'),
@@ -49,7 +49,7 @@ class Order(BaseModel):
     class Meta:
         """Meta class"""
         verbose_name = _('order')
-        verbose_name_plural = _('orderss')
+        verbose_name_plural = _('orders')
 
     def __str__(self) -> str:
         """Строкое представление."""

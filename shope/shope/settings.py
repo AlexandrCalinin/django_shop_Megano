@@ -14,10 +14,8 @@ import os
 from dotenv import load_dotenv, find_dotenv
 from pathlib import Path
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -27,6 +25,33 @@ SECRET_KEY = 'django-insecure-!s-kq@=nln)z#y)caov*1-4nog(_8s1=&e19ofq2cr0*k8#bbm
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+DOCKER = False
+# Docker
+if DOCKER:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv("POSTGRES_DB"),
+            'PASSWORD': os.getenv("POSTGRES_PASSWORD"),
+            'USER': os.getenv("POSTGRES_USER"),
+            'HOST': 'db-shop',
+            'PORT': '5432',
+        }
+    }
+    STATIC_ROOT = os.path.join(BASE_DIR, '/static')
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'static'),
+    ]
+
+STATIC_URL = '/static/'
 
 ALLOWED_HOSTS = ["*"]
 
@@ -82,16 +107,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'shope.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
 
 # Password validation
@@ -112,7 +129,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -126,14 +142,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
 
 FIXTURE_DIRS = [
     'fixtures',
@@ -165,6 +175,24 @@ DOMAIN_NAME = os.environ.get("DOMAIN_NAME")
 PAY_ACCOUNT_ID = os.environ.get('PAY_ACCOUNT_ID')
 PAY_ACCOUNT_SECRET_KEY = os.environ.get('PAY_ACCOUNT_SECRET_KEY')
 
-FIXTURE_DIRS = [
-    'fixtures',
-]
+# celery
+CELERY_TIMEZONE = "Moldova/Chișinău"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+
+# REDIS
+REDIS_HOST = '0.0.0.0'
+REDIS_PORT = '6379'
+REDIS_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}'
+CELERY_BROKER_URL = REDIS_URL
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = REDIS_URL
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+# authentication
+LOGIN_REDIRECT_URL = '/'
+LOGIN_ERROR_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/auth/login'

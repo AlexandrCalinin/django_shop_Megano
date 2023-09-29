@@ -1,8 +1,7 @@
 """Forms for Profile app"""
 
-from typing import Any, Dict
 from django import forms
-from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.forms import UserChangeForm, SetPasswordForm
 from django.utils.translation import gettext_lazy as _
 from phonenumber_field.formfields import PhoneNumberField
 from .models import Profile
@@ -12,10 +11,21 @@ from auth_app.models import User
 class EditUserForm(UserChangeForm):
     """Форма редактирования данных пользователя"""
     email = forms.EmailField(label=_('Email'),
-                             widget=forms.EmailInput(attrs={'readonly': True}))
+                             widget=forms.EmailInput(
+                                 attrs={'class': 'form-input',
+                                        'id': 'mail',
+                                        'data-validate': 'require',
+                                        'readonly': True}
+    )
+    )
 
     middle_name = forms.CharField(label=_('Full name'),
-                                  widget=forms.TextInput(attrs={'class': 'form-input', 'id': 'name'}))
+                                  widget=forms.TextInput(
+                                      attrs={'class': 'form-input',
+                                             'id': 'name',
+                                             'data-validate': 'require'}
+    )
+    )
 
     class Meta:
         """Meta Class"""
@@ -29,16 +39,48 @@ class EditUserForm(UserChangeForm):
 class EditProfileForm(forms.ModelForm):
     """Форма редактирования профайла пользователя"""
     phone = PhoneNumberField(label=_('Phone'),
-                             widget=forms.TextInput(attrs={'class': 'form-input', 'id': 'phone'}))
+                             widget=forms.TextInput(
+                                 attrs={'class': 'form-input',
+                                        'id': 'phone'}))
 
-    avatar = forms.ImageField(label=_('avatar'),
-                              widget=forms.FileInput())
+    avatar = forms.ImageField(label=_('Avatar'),
+                              widget=forms.FileInput(
+                                  attrs={'class': 'Profile-file form-input',
+                                         'id': 'avatar',
+                                         'name': 'avatar',
+                                         'data-validate': 'onlyImgAvatar'}))
 
     class Meta:
         """Meta Class"""
         model = Profile
         fields = [
-            'user',
             'phone',
             'avatar',
         ]
+
+
+class CustomPasswordChangeForm(SetPasswordForm):
+    """Форма изменения пароля"""
+    new_password1 = forms.CharField(label=_('New password'),
+                                    required=False,
+                                    widget=forms.TextInput(
+                                        attrs={'class': 'form-input',
+                                               'id': 'password',
+                                               'type': 'password',
+                                               'placeholder': _('You can change your password')}
+    )
+    )
+
+    new_password2 = forms.CharField(label=_('Confirm password'),
+                                    required=False,
+                                    widget=forms.TextInput(
+                                        attrs={'class': 'form-input',
+                                               'id': 'passwordReply',
+                                               'type': 'password',
+                                               'placeholder': _('Confirm password')}
+    )
+    )
+
+    class Meta:
+        """Meta Class"""
+        model = User
