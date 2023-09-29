@@ -28,3 +28,10 @@ class ICart:
     def model_to_list(self, model: Cart) -> Optional[list]:
         """ Получить список для товаров в корзине."""
         pass
+
+    @abstractmethod
+    def create_cart(self, _user: User) -> None:
+        """Создать корзину"""
+        pass
+
+

@@ -39,6 +39,8 @@ from repositories.slider_repositories import SliderRepository
 
 from repositories.cart_repositories import CartRepository
 from interface.cart_interface import ICart
+from interface.cartitem_interface import ICartItem
+from repositories.cartitem_repositories import CartItemRepository
 
 BINDS = (
     (IOrder, OrderRepository),
@@ -57,6 +59,7 @@ BINDS = (
     (IBanner, BannerRepository),
     (IOrderItem, OrderItemRepository),
     (ICart, CartRepository),
+    (ICartItem, CartItemRepository),
 )
 
 
