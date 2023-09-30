@@ -2,7 +2,6 @@ from django.urls import path
 from .views import (
     ProductDetailView,
     CatalogListView,
-    CatalogFilterView,
     TestComparisonView,
     SaleView,
     ProductSaleDetailView,
@@ -20,7 +19,7 @@ urlpatterns = [
     path('viewed_products/<int:user_id>', ProductViewedView.as_view(), name='viewed_products'),
     path('sale/', SaleView.as_view(), name="sale"),
 
-    path('filter_catalog/', CatalogFilterView.as_view(), name="filter_catalog"),
+    # path('filter_catalog/', CatalogFilterView.as_view(), name="filter_catalog"),
     path('catalog/', CatalogListView.as_view(), name="catalog"),
     path('catalog/add', AddProductToCartView.as_view(), name="catalog_add"),
 

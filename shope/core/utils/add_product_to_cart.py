@@ -21,7 +21,7 @@ class AddProductToCart:
 
         product_id, product_name, image, product_count, amount, seller_id = kwargs.values()
 
-        cart = self._cart.get_by_user(_user=user)
+        cart = self._cart.get_active_by_user(_user=user)
         product = Product.objects.get(id=product_id)
         seller = Seller.objects.get(id=seller_id)
 
@@ -80,7 +80,7 @@ class AddProductToCart:
         """
         изменить кол-во товаров в корзине
         """
-        cart = self._cart.get_by_user(_user=user)
+        cart = self._cart.get_active_by_user(_user=user)
         product, count, seller = kwargs.values()
 
         price = Price.objects.filter(product=product,
@@ -124,7 +124,7 @@ class AddProductToCart:
         получить список товаров в корзине
         """
         if request.user.is_authenticated:
-            cart = self._cart.get_by_user(_user=request.user)
+            cart = self._cart.get_active_by_user(_user=request.user)
             return self._cartitem.get_by_cart_id(_cart=cart)
         else:
             products = request.session['cart']
@@ -134,10 +134,14 @@ class AddProductToCart:
         """
         получить кол-во товаров в корзине
         """
-        cart = self._cart.get_by_user(_user=user)
+        cart = self._cart.get_active_by_user(_user=user)
         cart_products = self._cartitem.get_count_amount(_cart=cart)
 
         count, amount = cart_products.values()
+
+        if count == None or amount == None:
+            count = 0
+            amount = 0
 
         return round(amount, 2), count
 
@@ -160,18 +164,21 @@ class AddProductToCart:
         except KeyError:
             return 0, 0
 
-
-    def create_cart_and_cartitem(self, request) -> None:
+    def create_cart_and_cartitem(self, user, request) -> None:
         """Создать корзину"""
-        try:
-            cart = self._cart.get_by_user(_user=request.user)
+        if self._cart.get_active_by_user(_user=user) == None:
+            cart = self._cart.create_cart(_user=user)
+        else:
+            cart = self._cart.get_active_by_user(_user=user)
 
-        except:
-            cart = self._cart.create_cart(request.user)
 
-        products = request.session['cart']
-
-        CartItem.objects.bulk_create([CartItem(cart_id=cart, product=item['product'],
-                                               count=item['count'], amount=item['amount'],
-                                               seller=item['seller']) for item in products.values()])
-        products.clear()
+        # if 'cart' in request.session:
+        #     products = request.session['cart']
+        #     for item, value in request.session['cart'].items():
+        #         product = Product.objects.get(pk=item)
+        #         Seller.objects.get(pk=int(value['seller']))
+        #         CartItem.objects.create(cart_id=cart, product=product, count=value['count'], amount=value['amount'])
+        #     #CartItem.objects.bulk_create([CartItem(cart_id=cart, product=item['product'],
+        #                                           # count=item['count'], amount=item['amount'],
+        #                                           # seller=item['seller']) for item in products.values()])
+        #     products.clear()

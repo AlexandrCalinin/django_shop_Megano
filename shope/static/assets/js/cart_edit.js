@@ -2,6 +2,7 @@ console.log("файл работает")
 
 
 function cart_add(product_id, product_name, image, product_count, amount, seller){
+console.log('workdwasd')
 
 var csrf = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
@@ -60,9 +61,6 @@ var csrf = $('meta[name="csrf-token"]').attr('content');
     $('.Cart-block.Cart-block_total').html(data.total_amount)
     $('.Cart-product[id="' + product_id  + '"' ).first().remove()
     console.log($('.Cart-product[id="' + product_id  + '"' ).first())
-
-
-
     },
     error: (error) => {
     console.log(error)}
@@ -70,7 +68,7 @@ var csrf = $('meta[name="csrf-token"]').attr('content');
 
 };
 
-$('.Card-hover').on('click', 'button[class="Send_data"]', function(){
+$('.Card-hover').on('click', 'a[class="Card-btn"]', function(){
     var product_id = $(this).parents('.Card').attr('id')
     var product_count = 1
     var amount = $(this).attr('value')
@@ -78,7 +76,7 @@ $('.Card-hover').on('click', 'button[class="Send_data"]', function(){
     var product_name = $(this).attr('name')
     var image = $(this).parents('.Card').children('.Card-picture').attr('name')
 
-   cart_add(product_id, product_name, image, product_count, amount, seller)
+    cart_add(product_id, product_name, image, product_count, amount, seller)
 })
 
 $('.Amount').on('click', 'button[class="Amount-add"]', function(){

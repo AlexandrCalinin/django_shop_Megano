@@ -47,6 +47,7 @@ class CartRepository(ICart):
         return res
 
     @beartype
-    def create_cart(self, _user: User) -> None:
+    def create_cart(self, _user: User):
         """Создать корзину"""
-        Cart.objects.create(_user)
+        return Cart.objects.create(user=_user)
+
