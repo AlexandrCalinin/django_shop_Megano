@@ -27,7 +27,7 @@ class CatalogFilterRepository:
         if product_name is not None:
             if free_delivery and is_limited:
                 return self.queryset.filter(title__icontains=product_name, is_delivery=free_delivery,
-                                            is_limited=is_limited,
+                                            is_active=is_limited,
                                             min_price__range=(product_min_price, product_max_price))
 
             elif free_delivery:
@@ -35,7 +35,7 @@ class CatalogFilterRepository:
                                             min_price__range=(product_min_price, product_max_price))
 
             elif is_limited:
-                return self.queryset.filter(title__icontains=product_name, is_limited=is_limited,
+                return self.queryset.filter(title__icontains=product_name, is_active=is_limited,
                                             min_price__range=(product_min_price, product_max_price))
 
             else:
@@ -43,7 +43,7 @@ class CatalogFilterRepository:
                                             min_price__range=(product_min_price, product_max_price))
         else:
             if free_delivery and is_limited:
-                return self.queryset.filter(is_delivery=free_delivery, is_limited=is_limited,
+                return self.queryset.filter(is_delivery=free_delivery, is_active=is_limited,
                                             min_price__range=(product_min_price, product_max_price))
 
             elif free_delivery:
@@ -51,7 +51,7 @@ class CatalogFilterRepository:
                                             min_price__range=(product_min_price, product_max_price))
 
             elif is_limited:
-                return self.queryset.filter(is_limited=is_limited,
+                return self.queryset.filter(is_active=is_limited,
                                             min_price__range=(product_min_price, product_max_price))
             else:
                 if not isinstance(product_min_price, str):
@@ -61,15 +61,7 @@ class CatalogFilterRepository:
 
     @beartype
     def filter_by_tag(self, tag_name: Any) -> QuerySet[Product]:
-        tags_dict = {
-            '1': 'audio',
-            '2': 'appliances',
-            '3': 'tv',
-            '4': 'telephones',
-            '5': 'furniture',
-            '6': 'video',
-        }
-        tags = Tag.objects.filter(slug=tags_dict[tag_name]).values_list('name', flat=True)
+        tags = Tag.objects.filter(slug=tag_name).values_list('name', flat=True)
         return self.queryset.filter(tag__name__in=tags)
 
     @beartype
