@@ -11,3 +11,8 @@ class IProduct:
     def get_product_top_list(self, const: int) -> QuerySet[Product]:
         """Получить кверисет популярных продуктов"""
         pass
+
+    @abstractmethod
+    def get_product_limit_list(self, const: int) -> QuerySet[Product]:
+        """Получить кверисет лимитированых продуктов"""
+        pass
