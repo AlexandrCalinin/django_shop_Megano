@@ -5,21 +5,32 @@
     <script src="https://yookassa.ru/checkout-widget/v1/checkout-widget.js"></script>
     <div id="payment-form"></div>
     <script>
-//Инициализация виджета. Все параметры обязательные.
-const confirmation_t = '{{ confirmation_t }}'
-const checkout = new window.YooMoneyCheckoutWidget({
-    confirmation_token: confirmation_t, //Токен, который перед проведением оплаты нужно получить от ЮKassa
-    return_url: 'https://example.com', //Ссылка на страницу завершения оплаты
-    error_callback: function(error) {
-        //Обработка ошибок инициализации
-    }
-});
+        const confirmation_t = '{{ confirmation_t }}'
+        //Инициализация виджета. Все параметры обязательные.
+        const checkout = new window.YooMoneyCheckoutWidget({
+            confirmation_token: confirmation_t, //Токен, который  получили после создания платежа
+            return_url: '', //Ссылка на страницу завершения оплаты
+            
+            customization :{
+                modal: true
+            },
+            
+            error_callback: function(error) {
+                console.log(error)
+            }
+        });
 
-//Отображение платежной формы в контейнере
-checkout.render('payment-form')
-//Метод возвращает Promise, исполнение которого говорит о полной загрузке платежной формы (можно не использовать).
-  .then(() => {
-     //Код, который нужно выполнить после отображения платежной формы.
-  });
+        checkout.on('success', () => {
+            //Код, который нужно выполнить после успешной оплаты.
+            setTimeout(function(){
+                window.location.href = "{% url 'pay_app:success-pay' pk %}";
+              }, 5 * 1000);
+
+            //Удаление инициализированного виджета
+            checkout.destroy();
+        });
+        
+        //Отображение платежной формы в контейнере
+        checkout.render('payment-form');
     </script>
 {% endblock content_body %}

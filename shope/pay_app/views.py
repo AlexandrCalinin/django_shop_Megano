@@ -1,15 +1,29 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from core.utils.payment import OrderPayment
 
+from order_app.models import Order
+import inject
+from interface.order_interface import IOrder
 
-class CreatePaymentView(TemplateView):
-    """CreatePaymentView."""
+
+class CreatePaymentView(View):
+    """Оплатить заказ"""
     template_name = 'pay_app/new_payment.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    def get(self, request, pk):
+        context = {'confirmation_t': OrderPayment(pk).new_order_pay(),
+                   'pk': pk}
 
-        context['confirmation_t'] = OrderPayment().new_order_pay()
+        return render(request, self.template_name, context)
 
-        return context
+
+class SaccessPaymentView(View):
+    """Успешная оплата заказа."""
+    template_name = 'pay_app/success.html'
+    _order: IOrder = inject.attr(IOrder)
+
+    def get(self, request, pk):
+        OrderPayment(pk).pay_notifications()
+
+        return render(request, self.template_name, {})
