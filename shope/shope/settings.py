@@ -64,15 +64,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'auth_app',
     'core',
     'taggit',
     'catalog_app',
     'profile_app',
     'cart_app',
-
+    'pay_app.apps.PayAppConfig',
     'order_app.apps.OrderAppConfig',
     'phonenumber_field',
+
 
 ]
 
