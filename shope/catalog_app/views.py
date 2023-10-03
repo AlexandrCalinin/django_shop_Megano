@@ -1,4 +1,7 @@
 """Catalog app views"""
+from django.http import JsonResponse, HttpRequest
+from django.template.loader import render_to_string
+
 import inject
 
 from django.http import HttpResponseRedirect
@@ -13,6 +16,11 @@ from interface.cart_sale_interface import ICartSale
 from interface.category_interface import ICategory
 from interface.discount_product_group_interface import IDiscountProductGroup
 from interface.discount_product_interface import IDiscountProduct
+
+
+from .form import CartEditForm
+
+from core.utils.add_product_to_cart import AddProductToCart
 from interface.characteristic_interface import ICharacteristicProduct
 from catalog_app.models import DiscountProduct, DiscountProductGroup, CartSale, ProductViewed
 from catalog_app.models import Product
@@ -65,7 +73,8 @@ class ProductDetailView(DetailView):
         return contex
 
 
-class CatalogView(ListView):
+class CatalogListView(ListView):
+    """Каталог"""
     template_name = 'catalog_app/catalog.html'
     _filter: ICatalogFilter = inject.attr(ICatalogFilter)
 
@@ -74,6 +83,9 @@ class CatalogView(ListView):
 
     def get_queryset(self):
         try:
+            if self.request.GET.get('category') is not None:
+                category_id = self.request.GET.get('category')
+                return self._filter.get_filtered_products_by_category(category_id)
             if self.request.GET.get('tag') is not None:
                 tag_name = self.request.GET.get('tag')
                 return self._filter.filter_by_tag(tag_name)
@@ -93,6 +105,23 @@ class CatalogView(ListView):
 
         except MultiValueDictKeyError:
             return Product.objects.prefetch_related('image', 'tag')
+
+
+class AddProductToCartView(TemplateView):
+
+    def post(self, request: HttpRequest):
+        if request.headers['X-Requested-With'] == 'XMLHttpRequest':
+            form = CartEditForm(data=request.POST)
+
+            if form.is_valid():
+                add = AddProductToCart()
+                if request.user.is_authenticated:
+                    add.add_product_to_cart(request.user, **form.cleaned_data, )
+                else:
+                    add.add_product_for_anonymous_user(request, **form.cleaned_data)
+
+                result = render_to_string('includes/card_edit.html', request=request)
+                return JsonResponse({'result': result})
 
 
 class TestComparisonView(TemplateView):

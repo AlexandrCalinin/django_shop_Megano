@@ -14,7 +14,7 @@ class BaseModelItem(BaseModel):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('product'))
     seller = models.ForeignKey(Seller, on_delete=models.CASCADE, verbose_name=_('seller'))
     count = models.IntegerField(verbose_name=_('count product'))
-    amount = models.DecimalField(decimal_places=2, max_digits=7, verbose_name=_('amount'))
+    amount = models.DecimalField(decimal_places=2, max_digits=10, verbose_name=_('amount'))
 
     class Meta:
         abstract = True
