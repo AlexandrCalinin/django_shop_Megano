@@ -199,3 +199,6 @@ LOGIN_REDIRECT_URL = '/'
 LOGIN_ERROR_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/auth/login'
+
+# Payment
+SUCCESS_PAYMENT = 'succeeded'
