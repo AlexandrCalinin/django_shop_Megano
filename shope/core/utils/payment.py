@@ -17,6 +17,7 @@ class OrderPayment:
     Configuration.account_id = settings.PAY_ACCOUNT_ID
     Configuration.secret_key = settings.PAY_ACCOUNT_SECRET_KEY
     _order: IOrder = inject.attr(IOrder)
+    _SUCCESS_STATUS = 'succeeded'
 
     def new_order_pay(self, pk):
         """Новая оплата по заказу."""
@@ -44,7 +45,7 @@ class OrderPayment:
         order = self._order.get_by_pk(pk)
 
         payment = Payment.find_one(order.payment_id)
-        if payment.status == "succeeded":
+        if payment.status == self._SUCCESS_STATUS:
             order.status = OrderStatus.PAID.name
             self._order.save(order)
             return True
@@ -55,7 +56,7 @@ class OrderPayment:
 
         payment_id = responce['object']['id']
         order = self._order.get_by_payment_id(payment_id)
-        if responce['object']['status'] == "succeeded":
+        if responce['object']['status'] == self._SUCCESS_STATUS:
             order.status = OrderStatus.PAID.name
             self._order.save(order)
             return True
