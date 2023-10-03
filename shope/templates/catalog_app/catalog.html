@@ -93,10 +93,11 @@
                     <div class="Cards">
                         {% if object_list %}
                             {% for product in object_list %}
+
                                 <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
                                 {% csrf_token %}
-                                    <div class="Card">
-                                        <button class="Card-picture btn_reset" href="{% url 'product' product.pk %}" type="submit">
+                                    <div class="Card" id="{{ product.id }}">
+                                        <button class="Card-picture btn_reset" name="{{ product.image.all.0.image.url }}"  type="submit">
                                         <img
                                         src="{{ product.image.all.0.image.url }}"
                                         alt="{{ product.image.all.0.image.name }}">
@@ -104,7 +105,7 @@
 
                                     <div class="Card-content">
                                          <strong class="Card-title">
-                                            <button class=" btn_reset" href="{% url 'product' product.pk %}" type="submit">
+                                            <button class=" btn_reset"  type="submit">
                                                 {{ product.title }}
                                             </button>
                                         </strong>
@@ -124,8 +125,9 @@
                                                     {% endif %}
                                                 {% endif %}
                                             {% endfor %}
-                                            <div class="Card-hover"><a class="Card-btn" href="{% url 'catalog_add' %}"><img
-                                                    src="{% static '/assets/img/icons/card/cart.svg' %}" alt="cart.svg"></a>
+                                            <div class="Card-hover">
+                                                <a class="Card-btn" name="{{product.title}}" value="{{ product.min_price }}" id="2" href="#">
+                                                    <img src="{% static '/assets/img/icons/card/cart.svg' %}" alt="cart.svg"></a>
                                             </div>
                                         </div>
                                     </div>
@@ -153,5 +155,8 @@
             </div>
         </div>
     </div>
+
+    <script src="{% static '/assets/plg/jQuery/jquery-3.7.0.min.js' %}"></script>
+    <script src="{% static '/assets/js/cart_edit.js' %}"></script>
 {% endblock content_body %}
 </body>
