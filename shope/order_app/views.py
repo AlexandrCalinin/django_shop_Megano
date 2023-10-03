@@ -41,14 +41,14 @@ class DetailOrderView(DetailView):
     _order: IOrder = inject.attr(IOrder)
     _order_item = inject.attr(IOrderItem)
 
-    def get_queryset(self):
-        pk = self.kwargs.get('pk')
-        return self._order.get_by_pk(pk)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['order_items'] = self._order_item.get_by_order(self.get_object())  # type: ignore
         return context
+
+    def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+
+        return redirect('pay_app:new-pay', self.kwargs.get('pk'))
 
 
 class CreateOrderView(LoginRequiredMixin, CreateView):
@@ -93,7 +93,7 @@ class CreateOrderView(LoginRequiredMixin, CreateView):
             bulk_list = [OrderItem(order=order_obj, **i_cart_list) for i_cart_list in cart_list]
             self._order_items.bulk_create(bulk_list)
 
-            return redirect('order_app:one-order', order_obj.pk)
+            return redirect('pay_app:new-pay', order_obj.pk)
         else:
             context = {
                 'form': form,

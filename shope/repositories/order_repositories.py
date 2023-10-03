@@ -30,9 +30,12 @@ class OrderRepository(IOrder):
             return None
 
     @beartype
-    def get_by_pk(self, _pk: int) -> QuerySet[Order]:
+    def get_by_pk(self, _pk: int) -> Optional[Order]:
         """Получить заказ по pk"""
-        return Order.objects.filter(pk=_pk).select_related('user')
+        try:
+            return Order.objects.get(pk=_pk)
+        except Order.DoesNotExist:
+            return None
 
     @beartype
     def get_by_payment_id(self, _payment_id: str) -> Optional[Order]:

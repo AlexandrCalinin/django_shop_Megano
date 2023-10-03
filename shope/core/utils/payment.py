@@ -18,20 +18,14 @@ class OrderPayment:
     Configuration.secret_key = settings.PAY_ACCOUNT_SECRET_KEY
     _order: IOrder = inject.attr(IOrder)
 
-    # def __init__(self, pk) -> None:
-    #     """ Инициализация класса"""
-    #     self.order = self._order.get_by_pk(pk)[0]
-    #     self.value = self.order.amount
-    #     self.order_pk = self.order.pk
-
     def new_order_pay(self, pk):
         """Новая оплата по заказу."""
 
-        order = self._order.get_by_pk(pk)[0]
+        order = self._order.get_by_pk(pk)
 
         payment = Payment.create({
             "amount": {
-                "value": "2.00",
+                "value": order.amount,
                 "currency": "RUB"
             },
             "confirmation": {
@@ -47,7 +41,7 @@ class OrderPayment:
 
     def pay_notifications(self, pk):
         """Получить статус оплаты методом GET"""
-        order = self._order.get_by_pk(pk)[0]
+        order = self._order.get_by_pk(pk)
 
         payment = Payment.find_one(order.payment_id)
         if payment.status == "succeeded":
