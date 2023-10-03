@@ -33,3 +33,11 @@ class OrderRepository(IOrder):
     def get_by_pk(self, _pk: int) -> QuerySet[Order]:
         """Получить заказ по pk"""
         return Order.objects.filter(pk=_pk).select_related('user')
+
+    @beartype
+    def get_by_payment_id(self, _payment_id: str) -> Optional[Order]:
+        """Получить заказ по идентификатору оплаты"""
+        try:
+            return Order.objects.get(payment_id=_payment_id)
+        except Order.DoesNotExist:
+            return None
