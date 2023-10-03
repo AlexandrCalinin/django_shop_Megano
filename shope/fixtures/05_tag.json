@@ -27,224 +27,56 @@
     "model": "taggit.tag",
     "pk": 4,
     "fields": {
-      "name": "voice",
-      "slug": "voice"
-    }
-  },
-  {
-    "model": "taggit.tag",
-    "pk": 5,
-    "fields": {
-      "name": "pk",
-      "slug": "pk"
-    }
-  },
-  {
-    "model": "taggit.tag",
-    "pk": 6,
-    "fields": {
-      "name": "clear",
-      "slug": "clear"
-    }
-  },
-  {
-    "model": "taggit.tag",
-    "pk": 7,
-    "fields": {
-      "name": "washing machine",
-      "slug": "washing-machine"
-    }
-  },
-  {
-    "model": "taggit.tag",
-    "pk": 8,
-    "fields": {
-      "name": "5.1",
-      "slug": "51"
-    }
-  },
-  {
-    "model": "taggit.tag",
-    "pk": 9,
-    "fields": {
-      "name": "sound",
-      "slug": "sound"
-    }
-  },
-  {
-    "model": "taggit.tag",
-    "pk": 10,
-    "fields": {
-      "name": "KLEERNET",
-      "slug": "kleernet"
-    }
-  },
-  {
-    "model": "taggit.tag",
-    "pk": 11,
-    "fields": {
-      "name": "2.0",
-      "slug": "20"
-    }
-  },
-  {
-    "model": "taggit.tag",
-    "pk": 12,
-    "fields": {
-      "name": "256Вт",
-      "slug": "256вт"
-    }
-  },
-  {
-    "model": "taggit.tag",
-    "pk": 13,
-    "fields": {
-      "name": "photo",
-      "slug": "photo"
-    }
-  },
-  {
-    "model": "taggit.tag",
-    "pk": 14,
-    "fields": {
       "name": "camera",
       "slug": "camera"
     }
   },
   {
     "model": "taggit.tag",
-    "pk": 15,
+    "pk": 5,
     "fields": {
-      "name": "slr",
-      "slug": "slr"
+      "name": "audio",
+      "slug": "audio"
     }
   },
   {
     "model": "taggit.tag",
-    "pk": 16,
+    "pk": 6,
     "fields": {
-      "name": "fly",
-      "slug": "fly"
+      "name": "furniture",
+      "slug": "furniture"
     }
   },
   {
     "model": "taggit.tag",
-    "pk": 17,
+    "pk": 7,
     "fields": {
-      "name": "mfu",
-      "slug": "mfu"
+      "name": "telephone",
+      "slug": "telephone"
     }
   },
   {
     "model": "taggit.tag",
-    "pk": 18,
+    "pk": 8,
     "fields": {
-      "name": "print",
-      "slug": "print"
+      "name": "kitchen appliances",
+      "slug": "kitchen appliances"
     }
   },
   {
     "model": "taggit.tag",
-    "pk": 19,
+    "pk": 9,
     "fields": {
-      "name": "table",
-      "slug": "table"
+      "name": "bathroom appliances",
+      "slug": "bathroom appliances"
     }
   },
   {
     "model": "taggit.tag",
-    "pk": 20,
+    "pk": 10,
     "fields": {
-      "name": "Nothing Phone",
-      "slug": "nothing-phone"
-    }
-  },
-  {
-    "model": "taggit.tag",
-    "pk": 21,
-    "fields": {
-      "name": "phone",
-      "slug": "phone"
-    }
-  },
-  {
-    "model": "taggit.tag",
-    "pk": 22,
-    "fields": {
-      "name": "smartphone",
-      "slug": "smartphone"
-    }
-  },
-  {
-    "model": "taggit.tag",
-    "pk": 23,
-    "fields": {
-      "name": "iPhone",
-      "slug": "iphone"
-    }
-  },
-  {
-    "model": "taggit.tag",
-    "pk": 24,
-    "fields": {
-      "name": "Apple",
-      "slug": "apple"
-    }
-  },
-  {
-    "model": "taggit.tag",
-    "pk": 25,
-    "fields": {
-      "name": "microwave",
-      "slug": "microwave"
-    }
-  },
-  {
-    "model": "taggit.tag",
-    "pk": 26,
-    "fields": {
-      "name": "teapot",
-      "slug": "teapot"
-    }
-  },
-  {
-    "model": "taggit.tag",
-    "pk": 27,
-    "fields": {
-      "name": "kettle",
-      "slug": "kettle"
-    }
-  },
-  {
-    "model": "taggit.tag",
-    "pk": 28,
-    "fields": {
-      "name": "coffee",
-      "slug": "coffee"
-    }
-  },
-  {
-    "model": "taggit.tag",
-    "pk": 29,
-    "fields": {
-      "name": "coffee machines",
-      "slug": "coffee-machines"
-    }
-  },
-  {
-    "model": "taggit.tag",
-    "pk": 30,
-    "fields": {
-      "name": "lamp",
-      "slug": "lamp"
-    }
-  },
-  {
-    "model": "taggit.tag",
-    "pk": 31,
-    "fields": {
-      "name": "torchere",
-      "slug": "torchere"
+      "name": "appliances",
+      "slug": "appliances"
     }
   }
 ]

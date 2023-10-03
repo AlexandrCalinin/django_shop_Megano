@@ -1,5 +1,6 @@
 {% extends 'core/base.html' %}
 {% load static %}
+{% load unique_tags %}
 
 <body class="Site">
 {% block content_body %}
@@ -68,12 +69,10 @@
                         <div class="Section-columnContent">
                             <form action="{% url 'catalog' %}" method="get">
                                 <div class="buttons">
-                                    <button class="btn btn_default btn_sm" name="tag" value="1">Аудио</button>
-                                    <button class="btn btn_default btn_sm" name="tag" value="2">Техника</button>
-                                    <button class="btn btn_default btn_sm" name="tag" value="3">Телевизоры</button>
-                                    <button class="btn btn_default btn_sm" name="tag" value="4">Телефоны</button>
-                                    <button class="btn btn_default btn_sm" name="tag" value="5">Фурнитура</button>
-                                    <button class="btn btn_default btn_sm" name="tag" value="6">Видео</button>
+                                    {% unique_tags as unique_tags %}
+                                    {% for tag in unique_tags %}
+                                        <button class="btn btn_default btn_sm" name="tag" value="{{ tag.name }}">{{ tag.name }}</button>
+                                    {% endfor %}
                                 </div>
                             </form>
                         </div>
@@ -116,10 +115,14 @@
                                                 <span class="Card-price">{{ product.min_price|floatformat:"0" }}₽</span>
                                             </div>
                                             {% for product_tag in product.tag.all %}
-                                                {% if product_tag|length == 1 %}
+                                                {% if product.tag.all|length == 1 %}
                                                     <div class="Card-category">{{ product_tag }}</div>
                                                 {% else %}
-                                                    <div class="Card-category">{{ product_tag }},</div>
+                                                    {% if product_tag == product.tag.all.last %}
+                                                        <div class="Card-category">{{ product_tag }}</div>
+                                                    {% else %}
+                                                        <div class="Card-category">{{ product_tag }},</div>
+                                                    {% endif %}
                                                 {% endif %}
                                             {% endfor %}
                                             <div class="Card-hover">

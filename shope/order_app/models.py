@@ -46,6 +46,8 @@ class Order(BaseModel):
                                  decimal_places=2,
                                  max_digits=10)
 
+    payment_id = models.CharField(max_length=200, blank=True, null=True)
+
     class Meta:
         """Meta class"""
         verbose_name = _('order')

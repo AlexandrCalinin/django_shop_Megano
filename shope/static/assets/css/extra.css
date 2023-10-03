@@ -1,3 +1,9 @@
+.btn-as-link {
+    border: 0;
+    background: inherit;
+    padding-right: 0;
+}
+
 .Account {
     visibility: visible;
 }
@@ -2216,7 +2222,7 @@ a.Cart-title {
     }
 }
 
-.CategoriesButton-link a {
+.CategoriesButton-link a, button {
     align-items: center;
     display: flex;
     padding: 29px 30px 25px 0;
@@ -2229,7 +2235,7 @@ a.Cart-title {
 }
 
 @media screen and (min-width: 990px) {
-    .CategoriesButton-link a:hover {
+    .CategoriesButton-link a:hover, button:hover {
         color: #0063d1;
         font-weight: 500;
         border-bottom-color: transparent;
@@ -2237,7 +2243,7 @@ a.Cart-title {
 }
 
 @media screen and (max-width: 480px) {
-    .CategoriesButton-link a {
+    .CategoriesButton-link a, button {
         font-size: 13px;
         padding-right: 25px;
     }
