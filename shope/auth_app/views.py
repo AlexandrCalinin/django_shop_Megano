@@ -34,6 +34,8 @@ class RegisterView(FormView):
         email = request.POST['email']
         if form.is_valid():
             user = form.save()
+            add_product_to_cart = AddProductToCart()
+            add_product_to_cart.create_cart_and_cartitem(user, request)
             if self.send_link_to_verify_email(user=user):
                 return HttpResponseRedirect(reverse('auth_app:confirm-email'))
             else:
@@ -45,8 +47,7 @@ class RegisterView(FormView):
             'form': form
         }
 
-        add_product_to_cart = AddProductToCart()
-        add_product_to_cart.create_cart_and_cartitem(request)
+
 
         return render(request, self.template_name, context)
 
