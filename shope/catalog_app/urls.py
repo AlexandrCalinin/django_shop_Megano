@@ -6,7 +6,6 @@ from .views import (
     SaleView,
     ProductSaleDetailView,
     ProductGroupSaleDetailView,
-    AddProductToCartView,
     CartSaleDetailView,
     ChangeListProductViewedView, ProductViewedView
 )
@@ -20,8 +19,6 @@ urlpatterns = [
     path('sale/', SaleView.as_view(), name="sale"),
 
     path('catalog/', CatalogListView.as_view(), name="catalog"),
-    path('catalog/add', AddProductToCartView.as_view(), name="catalog_add"),
-
 
     path('sale/<int:sale_id>/', ProductSaleDetailView.as_view(), name="product_sale_detail"),
     path('sale/<int:sale_id>/', ProductGroupSaleDetailView.as_view(), name="product_group_sale_detail"),

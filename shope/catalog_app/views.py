@@ -17,10 +17,6 @@ from interface.category_interface import ICategory
 from interface.discount_product_group_interface import IDiscountProductGroup
 from interface.discount_product_interface import IDiscountProduct
 
-
-from .form import CartEditForm
-
-from core.utils.add_product_to_cart import AddProductToCart
 from interface.characteristic_interface import ICharacteristicProduct
 from catalog_app.models import DiscountProduct, DiscountProductGroup, CartSale, ProductViewed
 from catalog_app.models import Product
@@ -105,24 +101,6 @@ class CatalogListView(ListView):
 
         except MultiValueDictKeyError:
             return Product.objects.prefetch_related('image', 'tag')
-
-
-class AddProductToCartView(TemplateView):
-
-    def post(self, request: HttpRequest):
-        if request.headers['X-Requested-With'] == 'XMLHttpRequest':
-            form = CartEditForm(data=request.POST)
-
-            if form.is_valid():
-                add = AddProductToCart()
-                if request.user.is_authenticated:
-                    add.add_product_to_cart(request.user, **form.cleaned_data, )
-                else:
-                    add.add_product_for_anonymous_user(request, **form.cleaned_data)
-
-                result = render_to_string('includes/card_edit.html', request=request)
-                return JsonResponse({'result': result})
-
 
 class TestComparisonView(TemplateView):
     template_name = 'catalog_app/comparison.html'

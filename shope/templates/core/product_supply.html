@@ -135,7 +135,7 @@
             <h2 class="Section-title">{% trans 'Popular products' %}
             </h2>
           </header>
-            <div class="Cards">
+            <div class="Cards" id="{{product.id}}">
               {% for product in product_top_list %}
                 <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
                   {% csrf_token %}

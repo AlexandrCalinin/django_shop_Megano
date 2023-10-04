@@ -1,13 +1,15 @@
 import inject
-
-from cart_app.models import CartItem
-from catalog_app.models import Product
-from core.models import Seller, Price
 from core.utils.injector import configure_inject
 
 from auth_app.models import User
+from cart_app.models import CartItem
+from catalog_app.models import Product
+from core.models import Seller, Price
+
 from interface.cartitem_interface import ICartItem
 from interface.cart_interface import ICart
+from interface.product_interface import IProduct
+from interface.price_interface import IPrice
 
 configure_inject()
 
@@ -15,6 +17,8 @@ configure_inject()
 class AddProductToCart:
     _cart: ICart = inject.attr(ICart)
     _cartitem: ICartItem = inject.attr(ICartItem)
+    _product: IProduct = inject.attr(IProduct)
+    _price: IPrice = inject.attr(IPrice)
 
     def add_product_to_cart(self, user: User, **kwargs) -> None:
         """добавить товар в корзину"""
@@ -75,7 +79,6 @@ class AddProductToCart:
             del request.session['cart'][product]
             request.session.modified = True
 
-
     def change_count_product_in_cart(self, user, **kwargs):
         """
         изменить кол-во товаров в корзине
@@ -83,8 +86,8 @@ class AddProductToCart:
         cart = self._cart.get_active_by_user(_user=user)
         product, count, seller = kwargs.values()
 
-        price = Price.objects.filter(product=product,
-                                     seller=seller).last()
+        price = self._price.get_by_product_and_seller(product_id=product,
+                                                      seller_id=seller)
 
         product_i = self._cartitem.get_by_product_id(_product=product,
                                                      _cart=cart)
@@ -110,7 +113,7 @@ class AddProductToCart:
             int(request.session["cart"][product]['count']) + int(get_count)
 
         if get_count == '1':
-            request.session["cart"][product]['amount'] =\
+            request.session["cart"][product]['amount'] = \
                 float(request.session["cart"][product]['amount']) + float(request.session["cart"][product]['price'])
         else:
             request.session["cart"][product]['amount'] = \
@@ -171,14 +174,20 @@ class AddProductToCart:
         else:
             cart = self._cart.get_active_by_user(_user=user)
 
+        if 'cart' in request.session:
+            products = request.session['cart']
+            for item, value in products.items():
 
-        # if 'cart' in request.session:
-        #     products = request.session['cart']
-        #     for item, value in request.session['cart'].items():
-        #         product = Product.objects.get(pk=item)
-        #         Seller.objects.get(pk=int(value['seller']))
-        #         CartItem.objects.create(cart_id=cart, product=product, count=value['count'], amount=value['amount'])
-        #     #CartItem.objects.bulk_create([CartItem(cart_id=cart, product=item['product'],
-        #                                           # count=item['count'], amount=item['amount'],
-        #                                           # seller=item['seller']) for item in products.values()])
-        #     products.clear()
+                product = self._product.get_by_id(product_id=item)
+                seller = Seller.objects.get(pk=value['seller'])
+
+                count = value['count']
+                amount = value['amount']
+
+                self._cartitem.create_cartitem(_cart=cart,
+                                               _product=product,
+                                               _count=count,
+                                               _amount=amount,
+                                               _seller=seller)
+
+            products.clear()

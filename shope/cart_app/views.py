@@ -1,8 +1,8 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpRequest
 from django.template.loader import render_to_string
 from django.views.generic import ListView, TemplateView
 
-from .form import ChangeCountForm, DeleteForm
+from .form import ChangeCountForm, DeleteForm, CartEditForm
 from core.utils.add_product_to_cart import AddProductToCart
 
 
@@ -40,6 +40,26 @@ class ChangeCountProductView(TemplateView):
                 return JsonResponse({'cart': cart_edit,
                                      'count_change': count_change,
                                      'total_amount': total_amount})
+
+
+class AddProductToCartView(TemplateView):
+    add_product_to_cart = AddProductToCart()
+    def post(self, request: HttpRequest):
+        if request.headers['X-Requested-With'] == 'XMLHttpRequest':
+            form = CartEditForm(data=request.POST)
+
+            if form.is_valid():
+
+                if request.user.is_authenticated:
+                    self.add_product_to_cart.add_product_to_cart(request.user, **form.cleaned_data)
+                else:
+                    self.add_product_to_cart.add_product_for_anonymous_user(request, **form.cleaned_data)
+
+                result = render_to_string('includes/card_edit.html', request=request)
+                return JsonResponse({'result': result})
+            else:
+                print("форма не прошла")
+                return JsonResponse({'result': 0})
 
 
 class DeleteCartItemView(TemplateView):

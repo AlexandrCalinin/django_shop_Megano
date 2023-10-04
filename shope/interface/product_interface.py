@@ -16,3 +16,8 @@ class IProduct:
     def get_product_limit_list(self, const: int) -> QuerySet[Product]:
         """Получить кверисет лимитированых продуктов"""
         pass
+
+    @abstractmethod
+    def get_by_id(self, product) -> Product:
+        """Получить продукт по id"""
+        pass

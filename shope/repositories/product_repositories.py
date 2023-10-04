@@ -1,5 +1,6 @@
 import random
 
+from beartype import beartype
 from django.db.models import QuerySet, Sum, Q, Avg, Min, Max, F
 from django.db.models import Func
 
@@ -36,3 +37,8 @@ class ProductRepository(IProduct):
             const_num_list = random.sample([product.pk for product in qs], const)
             qs = qs.filter(product__id__in=const_num_list)
         return qs
+
+    @beartype
+    def get_by_id(self, product: str) -> Product:
+        """Получить продукт по id"""
+        return Product.objects.get(product)
