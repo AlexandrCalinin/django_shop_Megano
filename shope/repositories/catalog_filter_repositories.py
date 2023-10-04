@@ -78,3 +78,8 @@ class CatalogFilterRepository:
     def get_filtered_products_by_category(self, _category_id: str) -> QuerySet[Product]:
         """Получить отфильтрованные по категории продукты"""
         return self.queryset.filter(is_active=True, category_id=int(_category_id))
+
+    @beartype
+    def get_filtered_products_by_char(self, _char_id: str) -> QuerySet[Product]:
+        """Получить отфильтрованные по категории продукты"""
+        return self.queryset.filter(is_active=True, category__characteristictype__id=int(_char_id))
