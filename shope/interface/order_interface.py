@@ -24,6 +24,11 @@ class IOrder:
         pass
 
     @abstractmethod
-    def get_by_pk(self, _pk: int) -> Order:
+    def get_by_pk(self, _pk: int) -> Optional[Order]:
         """Получить заказ по pk"""
+        pass
+
+    @abstractmethod
+    def get_by_payment_id(self, _payment_id: str) -> Optional[Order]:
+        """Получить заказ по идентификатору оплаты"""
         pass

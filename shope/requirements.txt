@@ -22,3 +22,4 @@ inject==5.0.0
 yookassa==2.4.0
 beartype==0.15.0
 django_extensions==3.2.3
+djangorestframework==3.14.0

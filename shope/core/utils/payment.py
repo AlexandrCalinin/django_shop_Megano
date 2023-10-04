@@ -18,40 +18,45 @@ class OrderPayment:
     Configuration.secret_key = settings.PAY_ACCOUNT_SECRET_KEY
     _order: IOrder = inject.attr(IOrder)
 
-    def __init__(self, pk) -> None:
-        """ Инициализация класса"""
-        self.order = self._order.get_by_pk(pk)[0]
-        self.value = self.order.amount
-        self.order_pk = self.order.pk
+    def new_order_pay(self, pk):
+        """Новая оплата по заказу."""
 
-    def new_order_pay(self):
-        """
-        Новая оплата по заказу.
-        Тестовая реализация
-        """
+        order = self._order.get_by_pk(pk)
 
         payment = Payment.create({
             "amount": {
-                "value": "2.00",
+                "value": order.amount,
                 "currency": "RUB"
             },
             "confirmation": {
                 "type": "embedded"
             },
             "capture": True,
-            "description": self.order_pk
+            "description": order.pk
         })
 
-        self.order.payment_id = payment.id
-        self._order.save(self.order)
+        order.payment_id = payment.id
+        self._order.save(order)
         return str(payment.confirmation.confirmation_token)
 
-    def pay_notifications(self):
-        """Получить статус оплаты"""
+    def pay_notifications(self, pk):
+        """Получить статус оплаты методом GET"""
+        order = self._order.get_by_pk(pk)
 
-        payment = Payment.find_one(self.order.payment_id)
-        if payment.status == "succeeded":
-            self.order.status = OrderStatus.PAID.name
-            self._order.save(self.order)
+        payment = Payment.find_one(order.payment_id)
+        if payment.status == settings.SUCCESS_PAYMENT:
+            order.status = OrderStatus.PAID.name
+            self._order.save(order)
+            return True
+        return False
+
+    def pay_api_notifications(self, responce):
+        """Получить статус оплаты API"""
+
+        payment_id = responce['object']['id']
+        order = self._order.get_by_payment_id(payment_id)
+        if responce['object']['status'] == settings.SUCCESS_PAYMENT:
+            order.status = OrderStatus.PAID.name
+            self._order.save(order)
             return True
         return False
