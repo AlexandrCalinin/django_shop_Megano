@@ -15,19 +15,12 @@ class UserRegisterForm(UserCreationForm):
         model = User
         fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
 
-    def init(self, *args, **kwargs):
-        super(UserRegisterForm, self).__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs['placeholder'] = 'Введите имя пользователя'
-        self.fields['email'].widget.attrs['placeholder'] = 'Введите адрес эл.почты'
-        self.fields['first_name'].widget.attrs['placeholder'] = 'Введите  имя'
-        self.fields['last_name'].widget.attrs['placeholder'] = 'Введите  фамилию'
-        self.fields['password1'].widget.attrs['placeholder'] = 'Введите пароль'
-        self.fields['password2'].widget.attrs['placeholder'] = 'Повторите пароль'
-        for field_name, field in self.fields.items():
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control',
-                'autocomplete': 'off'
-            })
+    username = forms.CharField(max_length=64, widget=forms.TextInput(attrs={'placeholder': 'Имя пользователя'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
+    first_name = forms.CharField(max_length=48, widget=forms.TextInput(attrs={'placeholder': 'Имя'}))
+    last_name = forms.CharField(max_length=48, widget=forms.TextInput(attrs={'placeholder': 'Фамилия'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Пароль'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Повторите пароль'}))
 
     def save(self, commit=True):
         user = super(UserRegisterForm, self).save()
@@ -42,12 +35,6 @@ class UserLoginForm(AuthenticationForm):
 
     class Meta:
         fields = ('email', 'password')
-
-    def init(self):
-        self.fields['email'].widget.attrs['placeholder'] = 'Введите email'
-        self.fields['password'].widget.attrs['placeholder'] = 'Введите пароль'
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control py-4'
 
     username = UsernameField(
         widget=forms.TextInput(
@@ -70,13 +57,7 @@ class ResetPasswordForm(PasswordResetForm):
     class Meta:
         fields = 'email'
 
-    def init(self, *args, **kwargs):
-        super(PasswordResetForm, self).__init__(*args, **kwargs)
-        self.fields['email'].widget.attrs['placeholder'] = 'Введите email'
-        self.fields.widget.attrs.update({
-            'class': 'form-control',
-            'autocomplete': 'off'
-        })
+    email = forms.EmailField(max_length=254, widget=forms.EmailInput(attrs={'placeholder': 'Введите email'}))
 
     @staticmethod
     def get_token(user):
@@ -89,11 +70,5 @@ class SetNewPasswordForm(SetPasswordForm):
     class Meta:
         fields = ('new_password1', 'new_password2')
 
-    def init(self):
-        self.fields['new_password1'].widget.attrs['placeholder'] = 'Введите новый пароль'
-        self.fields['new_password2'].widget.attrs['placeholder'] = 'Повторите ввод нового пароля'
-        for field in self.fields:
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control',
-                'autocomplete': 'off'
-            })
+    new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Введите пароль'}))
+    new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Повторите ввод пароля'}))
