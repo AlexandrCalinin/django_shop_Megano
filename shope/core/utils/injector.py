@@ -42,6 +42,9 @@ from interface.cart_interface import ICart
 from interface.cartitem_interface import ICartItem
 from repositories.cartitem_repositories import CartItemRepository
 
+from interface.seller_interface import ISeller
+from repositories.seller_repositories import SellerRepository
+
 BINDS = (
     (IOrder, OrderRepository),
     (IDiscountBaseModel, DiscountBaseModelRepository),
@@ -60,6 +63,7 @@ BINDS = (
     (IOrderItem, OrderItemRepository),
     (ICart, CartRepository),
     (ICartItem, CartItemRepository),
+    (ISeller, SellerRepository),
 )
 
 
