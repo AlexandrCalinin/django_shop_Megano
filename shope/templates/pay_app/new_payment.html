@@ -12,7 +12,7 @@
             return_url: '', //Ссылка на страницу завершения оплаты
             
             customization :{
-                modal: true
+                modal: false
             },
             
             error_callback: function(error) {
@@ -22,9 +22,8 @@
 
         checkout.on('success', () => {
             //Код, который нужно выполнить после успешной оплаты.
-            setTimeout(function(){
-                window.location.href = "{% url 'pay_app:success-pay' pk %}";
-              }, 5 * 1000);
+          
+            window.location.href = "{% url 'pay_app:success-pay' pk %}";
 
             //Удаление инициализированного виджета
             checkout.destroy();
