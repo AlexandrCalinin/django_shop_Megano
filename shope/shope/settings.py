@@ -103,6 +103,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'core.utils.context_processors.cart_processor',
+                'core.utils.context_processors.get_category_list',
             ],
         },
     },

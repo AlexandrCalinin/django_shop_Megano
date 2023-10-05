@@ -4,6 +4,24 @@
     padding-right: 0;
 }
 
+.subbtn-as-link {
+    align-items: center;
+    display: flex;
+    margin-left: 34px;
+    margin-right: 34px;
+    padding: 29px 30px 25px 0;
+    background: transparent;
+    color: #555;
+    padding-top: 12px;
+    padding-bottom: 12.5px;
+    font-size: 16px;
+    font-weight: 400;
+    border: 0;
+    line-height: 1.2em;
+    letter-spacing: 1.4px;
+    position: relative;
+}
+
 .Account {
     visibility: visible;
 }

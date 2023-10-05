@@ -103,7 +103,10 @@ class CatalogListView(ListView):
             if self.request.GET.get('category') is not None:
                 category_id = self.request.GET.get('category')
                 return self._filter.get_filtered_products_by_category(category_id)
-            if self.request.GET.get('tag') is not None:
+            elif self.request.GET.get('char') is not None:
+                char_id = self.request.GET.get('char')
+                return self._filter.get_filtered_products_by_char(char_id)
+            elif self.request.GET.get('tag') is not None:
                 tag_name = self.request.GET.get('tag')
                 return self._filter.filter_by_tag(tag_name)
             elif self.request.GET.get('sort') is not None:

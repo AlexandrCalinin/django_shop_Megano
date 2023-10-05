@@ -197,9 +197,9 @@ block
                       <a class="CategoriesButton-arrow" href="#"></a>
                       <div class="CategoriesButton-submenu">
                         {% for char in category.characteristictype_set.all %}
-                          <a class="CategoriesButton-link" href="#">
+                          <button class="subbtn-as-link" href="{% url 'catalog' %}" name="char" value="{{ char.id }}">
                             <span class="CategoriesButton-text">{{ char.name }}</span>
-                          </a>
+                          </button>
                         {% endfor %}
                       </div>
                     {% endif %}
