@@ -14,6 +14,7 @@ from django.db.models import Max, Count, Subquery, F, OuterRef
 from core.utils.injector import configure_inject
 from interface.cart_sale_interface import ICartSale
 from interface.category_interface import ICategory
+from interface.product_interface import IProduct
 from interface.discount_product_group_interface import IDiscountProductGroup
 from interface.discount_product_interface import IDiscountProduct
 
@@ -28,6 +29,7 @@ from catalog_app.models import Product
 from interface.product_viewed_interface import IProductViewed
 
 from interface.catalog_filter_interface import ICatalogFilter
+from interface.seller_interface import ISeller
 from core.models.price import Price
 
 
@@ -37,6 +39,8 @@ configure_inject()
 class ProductDetailView(DetailView):
     """Детальная страница продукта"""
     _characteristics: ICharacteristicProduct = inject.attr(ICharacteristicProduct)
+    _sellers_of_product: IProduct = inject.attr(IProduct)
+    _price_of_seller: ISeller = inject.attr(ISeller)
 
     model = Product
     template_name = 'catalog_app/product.html'
@@ -54,8 +58,21 @@ class ProductDetailView(DetailView):
         """get_context_data"""
         contex = super().get_context_data(**kwargs)
         contex['characteristics'] = self._characteristics.get_by_product(_product=self.object)
+        sellers = []
+        min_price = 0
+        for i_seller in self._sellers_of_product.get_sellers_of_product((self.kwargs['product_id'])):
+            price = self._price_of_seller.get_last_price_of_product(
+                i_seller['price__seller'],
+                self.kwargs['product_id']
+            )
+            sellers.append(price)
+            if (price['product_seller__price'] < min_price) or min_price == 0:
+                min_price = price['product_seller__price']
 
-        latest_prices = Product.objects.filter(pk=self.kwargs.get('product_id')).annotate(
+        contex['sellers'] = sellers
+        contex['min_price'] = min_price
+
+        latest_prices = Product.objects.filter(pk=1).annotate(
             latest_price=Max('price__date')
         ).annotate(
             latest_price_value=Subquery(
@@ -66,10 +83,10 @@ class ProductDetailView(DetailView):
             )
         ).annotate(
             price_count=Count('price')
-        ).filter(price_count__gt=0)
+        ).filter(price_count__gt=0).annotate(product_seller=F('price__seller__id'))
 
         for i_price in latest_prices:
-            print(f'{i_price} - {i_price.latest_price_value}')
+            print(f'{i_price} - {i_price.latest_price_value} -  {i_price.product_seller}')
         return contex
 
 

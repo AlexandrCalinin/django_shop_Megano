@@ -1,8 +1,11 @@
 import random
+from typing import Any
+from beartype import beartype
 
 from django.db.models import QuerySet, Sum, Q, Avg, Min, Max, FloatField
 from django.db.models import Func
 from django.db.models.functions import Cast
+
 
 from catalog_app.models import Product
 from interface.product_interface import IProduct
@@ -37,3 +40,9 @@ class ProductRepository(IProduct):
             const_num_list = random.sample([product.pk for product in qs], const)
             qs = qs.filter(product__id__in=const_num_list)
         return qs
+
+    @beartype
+    def get_sellers_of_product(self, _pk: int) -> list:
+        """Получить список продавцов, которые продают данный продукт"""
+        distinct = list(Product.objects.filter(pk=1).values('price__seller').distinct())
+        return distinct
