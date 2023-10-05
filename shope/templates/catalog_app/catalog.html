@@ -127,7 +127,11 @@
                                             {% endfor %}
                                             <div class="Card-hover">
                                                 <a class="Card-btn" name="{{product.title}}" value="{{ product.min_price }}" id="2" href="#">
-                                                    <img src="{% static '/assets/img/icons/card/cart.svg' %}" alt="cart.svg"></a>
+                                                    <img src="{% static '/assets/img/icons/card/cart.svg' %}" alt="cart.svg">
+                                                </a>
+                                                <a class="Card-btn" href="compare.html">
+                                                    <img src="{% static 'assets/img/icons/card/change.svg' %}" alt="change.svg">
+                                                </a>
                                             </div>
                                         </div>
                                     </div>

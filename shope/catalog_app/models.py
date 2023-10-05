@@ -231,3 +231,17 @@ class ProductViewed(BaseModel):
         verbose_name = _('viewed product')
         verbose_name_plural = _('viewed products')
         ordering = ['id']
+
+
+class CompareProduct(BaseModel):
+    """Модель просмотренных товаров"""
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, verbose_name=_('user'))
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('product'))
+
+    def __str__(self):
+        return f'Товар {self.product}'
+
+    class Meta:
+        verbose_name = _('product for comparison')
+        verbose_name_plural = _('products for comparison')
+        ordering = ['id']

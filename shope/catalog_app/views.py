@@ -144,8 +144,11 @@ class AddProductToCartView(TemplateView):
                 return JsonResponse({'result': result})
 
 
-class TestComparisonView(TemplateView):
+class ComparisonView(TemplateView):
     template_name = 'catalog_app/comparison.html'
+
+    def post(self, request, *args, **kwargs):
+        pass
 
 
 class SaleView(TemplateView):

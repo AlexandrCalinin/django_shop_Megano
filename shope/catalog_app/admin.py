@@ -10,7 +10,7 @@ from .models import (Product,
                      CartSale,
                      CharacteristicType,
                      CharacteristicValue,
-                     CharacteristicProduct, ProductViewed,
+                     CharacteristicProduct, ProductViewed, CompareProduct,
                      )
 
 
@@ -57,6 +57,11 @@ class CartSaleAdmin(admin.ModelAdmin):
 @admin.register(ProductViewed)
 class ProductViewedAdmin(admin.ModelAdmin):
     list_display = [field.name for field in ProductViewed._meta.fields]
+
+
+@admin.register(CompareProduct)
+class CompareProductAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in CompareProduct._meta.fields]
 
 
 ###############################################################

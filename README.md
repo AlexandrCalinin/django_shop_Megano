@@ -21,7 +21,6 @@
 
 # rule for load data
     python manage.py migrate
-    python manage.py createsuperuser
     python fixtures_loader.py
 
 # running Celery

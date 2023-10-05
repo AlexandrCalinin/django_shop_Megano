@@ -26,7 +26,12 @@ class ProductRepository(IProduct):
         ).order_by('-qty')[:const]
         if len(qs) < const:
             qs = Product.objects.filter(~Q(id__in=qs), is_active=True, price__price__gte=1).annotate(
-                value=Round(Cast(Min('price__price'), output_field=FloatField())))[:const - 0]
+                value=Round(Cast(Min('price__price'), output_field=FloatField())),
+                # product_seller=
+
+            )[:const - 0]
+            # for p in qs:
+            #     print(p, p.product_seller)
         return qs
 
     def get_product_limit_list(self, const: int) -> QuerySet[Product]:
