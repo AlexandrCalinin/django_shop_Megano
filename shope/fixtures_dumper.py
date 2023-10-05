@@ -14,3 +14,8 @@ os.system("python -Xutf8 manage.py dumpdata catalog_app.DiscountProductGroup > f
 os.system("python -Xutf8 manage.py dumpdata catalog_app.CartSale > fixtures/17_cart_sale.json")
 os.system("python -Xutf8 manage.py dumpdata catalog_app.Banner > fixtures/19_banner.json")
 os.system("python -Xutf8 manage.py dumpdata catalog_app.Slider > fixtures/21_slider.json")
+
+# Характеристики
+os.system("python -Xutf8 manage.py dumpdata catalog_app.CharacteristicType > fixtures/22_characteristic_type.json")
+os.system("python -Xutf8 manage.py dumpdata catalog_app.CharacteristicValue > fixtures/23_characteristic_value.json")
+os.system("python -Xutf8 manage.py dumpdata catalog_app.CharacteristicProduct > fixtures/24_characteristic_product.json")
