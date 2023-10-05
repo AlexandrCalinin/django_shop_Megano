@@ -2,18 +2,18 @@ from django.urls import path
 from .views import (
     ProductDetailView,
     CatalogListView,
-    ComparisonView,
+    ComparisonView, AddComparisonView,
     SaleView,
     ProductSaleDetailView,
     ProductGroupSaleDetailView,
     AddProductToCartView,
     CartSaleDetailView,
-    ChangeListProductViewedView, ProductViewedView
+    ChangeListProductViewedView, ProductViewedView,
 )
 
 urlpatterns = [
     path('comparison/', ComparisonView.as_view(), name="comparison"),
-    path('comparison/add/<int:product_id>/', ComparisonView.as_view(), name="add_comparison"),
+    path('comparison/add/<int:product_id>/', AddComparisonView.as_view(), name="add_comparison"),
     path('product/<int:product_id>/', ProductDetailView.as_view(), name="product"),
     path('changeviewedlist/<int:product_id>', ChangeListProductViewedView.as_view(), name='change_viewed'),
     path('viewed_products/<int:user_id>', ProductViewedView.as_view(), name='viewed_products'),

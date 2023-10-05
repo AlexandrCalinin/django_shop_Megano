@@ -137,45 +137,52 @@
           </header>
             <div class="Cards">
               {% for product in product_top_list %}
-                <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
-                  {% csrf_token %}
-                  <div class="Card hide_md hide_1450">
+
+                <div class="Card hide_md hide_1450">
+                  <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
+                    {% csrf_token %}
                     <button class="Card-picture btn_reset" href="{% url 'product' product_id=product.id %}" type="submit">
                       {% if product.image %}
                         <img src="{{ product.image.all.0.image.url }}" alt="{{ product.image.all.0.image.name }}">
                       {% endif %}
                     </button>
+                  </form>
                     <div class="Card-content">
-                      <strong class="Card-title"><button class=" btn_reset" href="{% url 'product' product_id=product.id %}" type="submit">{{ product.title }}</button>
+                      <strong class="Card-title">
+                        <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
+                          {% csrf_token %}
+                          <button class=" btn_reset" href="{% url 'product' product_id=product.id %}" type="submit">{{ product.title }}</button>
+                        </form>
                       </strong>
                       <div class="Card-description">
                         <div class="Card-cost"><span class="Card-price">{{ product.value }}</span>
                         </div>
                         <div class="Card-category">
-                            {% for product_tag in product.tag.all %}
-                                {% if product_tag|length == 1 %}
-                                    <div class="Card-category">{{ product_tag }}</div>
-                                {% else %}
-                                    <div class="Card-category">{{ product_tag }},</div>
-                                {% endif %}
-                            {% endfor %}
+                          {% for product_tag in product.tag.all %}
+                            {% if product_tag|length == 1 %}
+                              <div class="Card-category">{{ product_tag }}</div>
+                            {% else %}
+                              <div class="Card-category">{{ product_tag }},</div>
+                            {% endif %}
+                          {% endfor %}
                         </div>
                         <div class="Card-hover">
                           <a class="Card-btn" href="#">
                             <img src="{% static 'assets/img/icons/card/cart.svg' %}" alt="cart.svg">
                           </a>
-                          <form action="{% url 'add_comparison' product_id=product.id %}" method="post">
-                            <button class="Card-btn btn_reset" type="submit">
-                              <a class="Card-btn" href="#">
+                          <form class="Card-btn" action="{% url 'add_comparison' product_id=product.id %}" method="post">
+                            {% csrf_token %}
+{#                            <button class="Card-btn btn_reset" href="{% url 'add_comparison' product_id=product.id %}" type="submit">#}
+                              <button class="Card-btn btn_reset" href="{% url 'add_comparison' product_id=product.id %}" type="submit">
                                 <img src="{% static 'assets/img/icons/card/change.svg' %}" alt="change.svg">
-                              </a>
-                            </button>
+                              </button>
+{#                            </button>#}
                           </form>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </form>
+                </div>
+
               {% endfor %}
             </div>
         </div>

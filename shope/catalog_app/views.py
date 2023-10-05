@@ -1,6 +1,8 @@
 """Catalog app views"""
+from django.contrib import messages
 from django.http import JsonResponse, HttpRequest
 from django.template.loader import render_to_string
+from django.utils.translation import gettext as _
 
 import inject
 
@@ -14,6 +16,7 @@ from django.db.models import Max, Count, Subquery, F, OuterRef
 from core.utils.injector import configure_inject
 from interface.cart_sale_interface import ICartSale
 from interface.category_interface import ICategory
+from interface.compare_product_interface import ICompareProduct
 from interface.product_interface import IProduct
 from interface.discount_product_group_interface import IDiscountProductGroup
 from interface.discount_product_interface import IDiscountProduct
@@ -147,8 +150,17 @@ class AddProductToCartView(TemplateView):
 class ComparisonView(TemplateView):
     template_name = 'catalog_app/comparison.html'
 
+
+class AddComparisonView(View):
+    _create_compare_product: ICompareProduct = inject.attr(ICompareProduct)
+
     def post(self, request, *args, **kwargs):
-        pass
+        session_key = request.session.session_key
+        product_id = kwargs.get('product_id')
+        self._create_compare_product.create_compare_product(_product_id=product_id, _session_key=session_key)
+        messages.add_message(request, messages.INFO, _("The product has been added to the comparison"))
+        print(session_key, product_id)
+        return HttpResponseRedirect('/')
 
 
 class SaleView(TemplateView):

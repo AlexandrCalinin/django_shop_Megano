@@ -234,8 +234,8 @@ class ProductViewed(BaseModel):
 
 
 class CompareProduct(BaseModel):
-    """Модель просмотренных товаров"""
-    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, verbose_name=_('user'))
+    """Модель товаров для сравнения"""
+    session_key = models.CharField(max_length=128, blank=True, null=True, default=None, verbose_name=_('session key'))
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('product'))
 
     def __str__(self):
