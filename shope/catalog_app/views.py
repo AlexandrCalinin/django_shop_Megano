@@ -1,6 +1,7 @@
 """Catalog app views"""
 from django.contrib import messages
 from django.http import JsonResponse, HttpRequest
+from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 
@@ -151,16 +152,32 @@ class ComparisonView(TemplateView):
     template_name = 'catalog_app/comparison.html'
 
 
+def add_comparison(request, product_id):
+    return_dict = dict()
+    session_key = request.session.session_key
+    product_id = product_id
+    return_dict['session_key'] = session_key
+    return_dict['product_id'] = product_id
+    # self._create_compare_product.create_compare_product(_product_id=product_id, _session_key=session_key)
+    # messages.add_message(request, messages.INFO, _("The product has been added to the comparison"))
+    # print(session_key, product_id)
+    return JsonResponse(return_dict)
+
+
 class AddComparisonView(View):
     _create_compare_product: ICompareProduct = inject.attr(ICompareProduct)
 
     def post(self, request, *args, **kwargs):
+        return_dict = dict()
         session_key = request.session.session_key
         product_id = kwargs.get('product_id')
-        self._create_compare_product.create_compare_product(_product_id=product_id, _session_key=session_key)
-        messages.add_message(request, messages.INFO, _("The product has been added to the comparison"))
-        print(session_key, product_id)
-        return HttpResponseRedirect('/')
+        return_dict['session_key'] = session_key
+        return_dict['product_id'] = product_id
+        # self._create_compare_product.create_compare_product(_product_id=product_id, _session_key=session_key)
+        # messages.add_message(request, messages.INFO, _("The product has been added to the comparison"))
+        # print(session_key, product_id)
+        # return redirect(self.request.path)
+        return JsonResponse(return_dict)
 
 
 class SaleView(TemplateView):

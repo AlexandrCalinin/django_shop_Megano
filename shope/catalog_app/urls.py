@@ -8,7 +8,7 @@ from .views import (
     ProductGroupSaleDetailView,
     AddProductToCartView,
     CartSaleDetailView,
-    ChangeListProductViewedView, ProductViewedView,
+    ChangeListProductViewedView, ProductViewedView, add_comparison,
 )
 
 urlpatterns = [

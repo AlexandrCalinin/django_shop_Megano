@@ -228,6 +228,17 @@ block
     {% block content_header_slyder %}
     {% endblock content_header_slyder %}
   </header>
+  {% if messages %}
+
+<!--    {% for message in messages %}-->
+<!--      <div class="alert alert-success alert-dismissible fade show" role="alert">-->
+<!--        <strong>{{ message }}</strong>-->
+<!--        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>-->
+<!--      </div>-->
+<!--    {% endfor %}-->
+
+
+  {% endif %}
   {% block content_body %}
   {% endblock content_body %}
   <footer class="Footer">
@@ -307,5 +318,6 @@ block
 <script src="{% static 'assets/js/scripts.js' %}"></script>
 <script src="https://unpkg.com/imask"></script>
 <script src="{% static 'assets/js/phone.js' %}"></script>
+<script src="{% static 'assets/js/comparison.js' %}"></script>
 </body>
 </html>
