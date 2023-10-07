@@ -43,5 +43,5 @@ if settings.DEBUG:
         static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # type: ignore
     )
 
-    print('media url', settings.MEDIA_URL)
-    print('media root', settings.MEDIA_ROOT)
+    # print('media url', settings.MEDIA_URL)
+    # print('media root', settings.MEDIA_ROOT)
