@@ -27,7 +27,7 @@ from .form import CartEditForm
 
 from core.utils.add_product_to_cart import AddProductToCart
 from interface.characteristic_interface import ICharacteristicProduct
-from catalog_app.models import DiscountProduct, DiscountProductGroup, CartSale, ProductViewed
+from catalog_app.models import DiscountProduct, DiscountProductGroup, CartSale, ProductViewed, CompareProduct
 from catalog_app.models import Product
 
 from interface.product_viewed_interface import IProductViewed
@@ -159,8 +159,9 @@ def add_comparison(request, product_id):
     return_dict['session_key'] = session_key
     return_dict['product_id'] = product_id
     # self._create_compare_product.create_compare_product(_product_id=product_id, _session_key=session_key)
-    # messages.add_message(request, messages.INFO, _("The product has been added to the comparison"))
-    # print(session_key, product_id)
+    CompareProduct.objects.create(product_id=product_id, session_key=session_key)
+    messages.add_message(request, messages.INFO, _("The product has been added to the comparison"))
+    print(session_key, product_id)
     return JsonResponse(return_dict)
 
 
@@ -174,9 +175,11 @@ class AddComparisonView(View):
         return_dict['session_key'] = session_key
         return_dict['product_id'] = product_id
         # self._create_compare_product.create_compare_product(_product_id=product_id, _session_key=session_key)
-        # messages.add_message(request, messages.INFO, _("The product has been added to the comparison"))
+        CompareProduct.objects.create(product_id=product_id, session_key=session_key)
+        messages.add_message(request, messages.INFO, _("The product has been added to the comparison"))
         # print(session_key, product_id)
         # return redirect(self.request.path)
+        # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         return JsonResponse(return_dict)
 
 
