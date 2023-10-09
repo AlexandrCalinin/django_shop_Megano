@@ -44,5 +44,5 @@ class ProductRepository(IProduct):
     @beartype
     def get_sellers_of_product(self, _pk: int) -> list:
         """Получить список продавцов, которые продают данный продукт"""
-        distinct = list(Product.objects.filter(pk=1).values('price__seller').distinct())
+        distinct = list(Product.objects.filter(pk=_pk).values('price__seller').distinct())
         return distinct
