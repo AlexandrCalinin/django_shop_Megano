@@ -36,3 +36,6 @@
 # Admin
     admin@mail.ru (почта)
     admin    (пароль)
+
+# Add permissions for sellers
+    python manage.py seller_permissions
