@@ -174,6 +174,8 @@ class AddComparisonView(View):
         product_id = kwargs.get('product_id')
         return_dict['session_key'] = session_key
         return_dict['product_id'] = product_id
+        print("return_dict", return_dict['product_id'])
+        print(request.POST)
         # self._create_compare_product.create_compare_product(_product_id=product_id, _session_key=session_key)
         CompareProduct.objects.create(product_id=product_id, session_key=session_key)
         messages.add_message(request, messages.INFO, _("The product has been added to the comparison"))
