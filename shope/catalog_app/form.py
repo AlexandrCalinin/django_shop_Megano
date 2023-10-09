@@ -1,4 +1,9 @@
+"""Формы приложения Каталог"""
 from django import forms
+
+from django.utils.translation import gettext_lazy as _
+
+from .models import Rewiew
 
 
 class CartEditForm(forms.Form):
@@ -11,3 +16,21 @@ class CartEditForm(forms.Form):
 
     class Meta:
         fields = ['product', 'product_name', 'image', 'count', 'amount', 'seller']
+
+
+class ReviewForm(forms.ModelForm):
+    """Форма отзывов"""
+
+    text = forms.CharField(widget=forms.Textarea(
+        attrs={'class': 'form-textarea',
+               'id': 'review',
+               'name': 'review',
+               'placeholder': 'Отзыв'}))
+
+    class Meta:
+        model = Rewiew
+        fields = [
+            'text',
+            'user',
+            'product'
+        ]
