@@ -13,7 +13,6 @@ from django.utils.http import urlsafe_base64_encode
 from django.views.generic import FormView
 
 from core.utils.add_product_to_cart import AddProductToCart
-from .models import User
 from .forms import UserRegisterForm, ResetPasswordForm, SetNewPasswordForm, UserLoginForm
 from core.utils.injector import configure_inject
 from interface.auth_interface import IAuth
@@ -47,13 +46,10 @@ class RegisterView(FormView):
             'form': form
         }
 
-
-
         return render(request, self.template_name, context)
 
     @staticmethod
     def send_link_to_verify_email(user):
-        print(settings.DOCKER)
         verify_link = reverse_lazy('auth_app:verify_email', args=[user.email, user.activation_key])
         subject = f'Для активации учетной записи {user.username} пройдите по ссылке'
         message = f'Для подтверждения учетной записи {user.username} перейдите по ссылке' \

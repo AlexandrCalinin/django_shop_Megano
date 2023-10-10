@@ -1,5 +1,6 @@
 {% extends 'core/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content_body %}
     <div class="Middle Middle_top">
         <div class="Section">
@@ -51,18 +52,18 @@
                                         <img class="btn-icon"
                                              src="{% static '/assets/img/icons/card/cart_white.svg' %}"
                                              alt="cart_white.svg">
-                                        <span class="btn-content">Купить</span>
+                                        <span class="btn-content">{% trans "Buy" %}</span>
                                     </a>
                                 </div>
                                 <div class="my_modal" id="modal_open">
                                     <div class="my_modal-dialog">
                                         <div class="my_modal-content">
                                             <div class="my_modal-header">
-                                                <p class="my_modal-title">Поздравляем!</p>
-                                                <a class="close" href="#" title="Закрыть модальное окно">×</a>
+                                                <p class="my_modal-title">{% trans "Сongratulations" %}!</p>
+                                                <a class="close" href="#" title={% trans "Close the window" %}>×</a>
                                             </div>
                                             <div class="my_modal-body">
-                                                <p>Товар успешно добавлен в корзину!</p>
+                                                <p>{% trans "Product has been added to the cart" %}!</p>
                                             </div>
                                         </div>
                                     </div>
@@ -70,7 +71,7 @@
                             </div>
                             <div class="ProductCard-footer">
                                 <div class="ProductCard-tags">
-                                    <strong class="ProductCard-tagsTitle">Тэги:
+                                    <strong class="ProductCard-tagsTitle">{% trans "Tags" %}:
                                         {% for product_tag in product.tag.all %}
                                             {% if product_tag == product.tag.all|last %}
                                             </strong><a href="#">{{ product_tag }}</a>
@@ -85,16 +86,16 @@
                 <div class="Tabs Tabs_default">
                     <div class="Tabs-links">
                         <a class="Tabs-link_ACTIVE Tabs-link" href="#description">
-                            <span>Описание</span>
+                            <span>{% trans "Description" %}</span>
                         </a>
                         <a class="Tabs-link" href="#sellers">
-                            <span>Продавцы</span>
+                            <span>{% trans "Sellers" %}</span>
                         </a>
                         <a class="Tabs-link" href="#addit">
-                            <span>Характеристика</span>
+                            <span>{% trans "Characteristics" %}</span>
                         </a>
                         <a class="Tabs-link" href="#reviews">
-                            <span>Отзывы (3)</span>
+                            <span>{% trans "reviews" %} ({{ reviews.all.count }})</span>
                         </a>
                     </div>
                     <div class="Tabs-wrap">
@@ -108,8 +109,8 @@
                             <div class="table">
                                 <table>
                                     <tr>
-                                        <th>Характеристика</th>
-                                        <th>Значение</th>
+                                        <th>{% trans "Chatacteristic" %}</th>
+                                        <th>{% trans "Value" %}</th>
                                     </tr>
                                     {% if characteristics %}
                                         {% for i_chatacteristic in characteristics.all %}
@@ -136,21 +137,21 @@
                                                                 <img class="btn-icon"
                                                                      src="{% static '/assets/img/icons/card/cart_white.svg' %}"
                                                                      alt="cart_white.svg">
-                                                                <span class="btn-content">Купить</span>
+                                                                <span class="btn-content">{% trans "Buy" %}</span>
                                                             </a>
                                                         </div>
                                                     </div>
                                                     <div class="row-block">
                                                         <div class="Order-info Order-info_delivery">
-                                                            <div class="Order-infoType">Тип доставки:</div>
-                                                            <div class="Order-infoContent">Обычная доставка</div>
+                                                            <div class="Order-infoType">{% trans "Delivery" %}:</div>
+                                                            <div class="Order-infoContent">{% trans "Custom delivery" %}</div>
                                                         </div>
                                                         <div class="Order-info Order-info_pay">
-                                                            <div class="Order-infoType">Оплата:</div>
-                                                            <div class="Order-infoContent">Онлайн картой</div>
+                                                            <div class="Order-infoType">{% trans "Payment" %}:</div>
+                                                            <div class="Order-infoContent">{% trans "Cart" %}</div>
                                                         </div>
                                                         <div class="Order-info">
-                                                            <div class="Order-infoType">Стоимость:</div>
+                                                            <div class="Order-infoType">{% trans "Price" %}:</div>
                                                             <div class="Order-infoContent">
                                                                 <span class="Order-price">{{ i_seller.product_seller__price }}</span>
                                                             </div>
@@ -175,35 +176,39 @@
                         </div>
                         <div class="Tabs-block" id="reviews">
                             <header class="Section-header">
-                                <h3 class="Section-title">1 отзыв</h3>
+                                <h3 class="Section-title">{{ reviews.all.count }} {% trans "Review" %}</h3>
                             </header>
                             <div class="Comments">
-                                <div class="Comment">
-                                    <div class="Comment-column Comment-column_pict">
-                                        <div class="Comment-avatar"></div>
-                                    </div>
-                                    <div class="Comment-column">
-                                        <header class="Comment-header">
-                                            <div>
-                                                <strong class="Comment-title">Александра Бровина</strong><span class="Comment-date">Декабрь 25&#32;&#32;/&#32;&#32;2017&#32;&#32;/&#32;&#32;22:50</span>
-                                            </div>
-                                        </header>
-                                        <div class="Comment-content">
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit doli. Aenean commodo ligula eget dolor. Aenean massa. Cumtipsu sociis natoque penatibus et magnis dis parturient montesti, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eutu, pretiumem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justotuio, rhoncus ut loret, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus element semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae.
+                                {% for i_review in  reviews %}
+                                    <div class="Comment">
+                                        <div class="Comment-column Comment-column_pict">
+                                            <div class="Comment-avatar"></div>
+                                        </div>
+                                        <div class="Comment-column">
+                                            <header class="Comment-header">
+                                                <div>
+                                                    <strong class="Comment-title">{{ i_review.user.middle_name }}</strong>
+                                                    <span class="Comment-date">{{ i_review.created_at }}</span>
+                                                </div>
+                                            </header>
+                                            <div class="Comment-content">{{ i_review.text }}</div>
                                         </div>
                                     </div>
-                                </div>
+                                {% endfor %}
                             </div>
                             <header class="Section-header Section-header_product">
-                                <h3 class="Section-title">Добавить отзыв</h3>
+                                <h3 class="Section-title">{% trans "New review" %}</h3>
                             </header>
                             <div class="Tabs-addComment">
-                                <form class="form" action="#" method="post">
+                                <form class="form" action="" method="post">
+                                    {% csrf_token %}
                                     <div class="form-group">
-                                        <textarea class="form-textarea" id="review" name="review" placeholder="Отзыв"></textarea>
+                                        {{ review_form.text }}
+                                        <input name='user' hidden value={{ request.user.id }}>
+                                        <input name='product' hidden value= {{ product.id }}>
                                     </div>
                                     <div class="form-group">
-                                        <button class="btn btn_muted" type="submit">Отправить отзыв</button>
+                                        <button class="btn btn_muted" type="submit">{% trans "Add" %}</button>
                                     </div>
                                 </form>
                             </div>

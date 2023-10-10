@@ -21,7 +21,7 @@
 
 # rule for load data
     python manage.py migrate
-    python fixtures_loader.py
+    python manage.py import_fixtures (-f filename -e email (не обязательные аргументы))
 
 # running Celery
     pip install -r requirements.txt
@@ -35,3 +35,6 @@
 # Admin
     admin@mail.ru (почта)
     admin    (пароль)
+
+# Add permissions for sellers
+    python manage.py seller_permissions

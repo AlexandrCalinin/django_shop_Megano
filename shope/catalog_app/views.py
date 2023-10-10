@@ -1,7 +1,7 @@
 """Catalog app views"""
 from django.contrib import messages
 from django.http import JsonResponse, HttpRequest
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 
@@ -34,7 +34,10 @@ from interface.product_viewed_interface import IProductViewed
 
 from interface.catalog_filter_interface import ICatalogFilter
 from interface.seller_interface import ISeller
-from core.models.price import Price
+from interface.review_interface import IReview
+
+
+from catalog_app.form import ReviewForm
 
 
 configure_inject()
@@ -45,6 +48,7 @@ class ProductDetailView(DetailView):
     _characteristics: ICharacteristicProduct = inject.attr(ICharacteristicProduct)
     _sellers_of_product: IProduct = inject.attr(IProduct)
     _price_of_seller: ISeller = inject.attr(ISeller)
+    _review: IReview = inject.attr(IReview)
 
     model = Product
     template_name = 'catalog_app/product.html'
@@ -60,11 +64,13 @@ class ProductDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         """get_context_data"""
-        contex = super().get_context_data(**kwargs)
-        contex['characteristics'] = self._characteristics.get_by_product(_product=self.object)
+        context = super().get_context_data(**kwargs)
+        context['characteristics'] = self._characteristics.get_by_product(_product=self.object)
+        context['review_form'] = ReviewForm()
+        context['reviews'] = self._review.get_by_product(self.kwargs['product_id'])
         sellers = []
         min_price = 0
-        for i_seller in self._sellers_of_product.get_sellers_of_product((self.kwargs['product_id'])):
+        for i_seller in self._sellers_of_product.get_sellers_of_product(self.kwargs['product_id']):
             price = self._price_of_seller.get_last_price_of_product(
                 i_seller['price__seller'],
                 self.kwargs['product_id']
@@ -73,25 +79,22 @@ class ProductDetailView(DetailView):
             if (price['product_seller__price'] < min_price) or min_price == 0:
                 min_price = price['product_seller__price']
 
-        contex['sellers'] = sellers
-        contex['min_price'] = min_price
+        context['sellers'] = sellers
+        context['min_price'] = min_price
+        return context
 
-        latest_prices = Product.objects.filter(pk=1).annotate(
-            latest_price=Max('price__date')
-        ).annotate(
-            latest_price_value=Subquery(
-                Price.objects.filter(
-                    product=OuterRef('pk'),
-                    date=F('product__price__date')
-                ).values('price')[:1]
-            )
-        ).annotate(
-            price_count=Count('price')
-        ).filter(price_count__gt=0).annotate(product_seller=F('price__seller__id'))
+    def post(self, request, product_id):
+        """Метод post для добавление отзыва"""
+        review_form = ReviewForm(request.POST)
+        if review_form.is_valid():
+            review_form.save()
+            return redirect(self.request.path)
 
-        for i_price in latest_prices:
-            print(f'{i_price} - {i_price.latest_price_value} -  {i_price.product_seller}')
-        return contex
+        context = {
+            'review_form': review_form,
+        }
+
+        return render(request, self.template_name, context=context)
 
 
 class CatalogListView(ListView):
