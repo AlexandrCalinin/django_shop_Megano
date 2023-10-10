@@ -171,7 +171,7 @@
                           </a>
                           <form id="comparison-add" class="Card-btn comparison-add" action="{% url 'add_comparison' product_id=product.id %}" method="post">
                             {% csrf_token %}
-                            <button id="compare_btn" class="Card-btn btn_reset compare_btn" type="submit" data-product_id="{{ product.id }}">
+                            <button class="Card-btn btn_reset compare_btn" type="submit" data-product_id="{{ product.id }}">
                               <div class="ProductCard-cartElement">
                                 <a class="Card-btn" href="#modal_open">
                                   <img src="{% static 'assets/img/icons/card/change.svg' %}" alt="change.svg">
