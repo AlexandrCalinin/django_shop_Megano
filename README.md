@@ -21,8 +21,7 @@
 
 # rule for load data
     python manage.py migrate
-    python manage.py createsuperuser
-    python fixtures_loader.py
+    python manage.py import_fixtures (-f filename -e email (не обязательные аргументы))
 
 # running Celery
     pip install -r requirements.txt
