@@ -3,6 +3,10 @@ from django.http import JsonResponse, HttpRequest
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 
+# кеширование
+from django.utils.cache import get_cache_key
+from django.core.cache import cache
+
 import inject
 
 from django.http import HttpResponseRedirect
@@ -85,6 +89,7 @@ class ProductDetailView(DetailView):
         review_form = ReviewForm(request.POST)
         if review_form.is_valid():
             review_form.save()
+            cache.set(get_cache_key(request), None)
             return redirect(self.request.path)
 
         context = {
