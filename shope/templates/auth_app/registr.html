@@ -21,6 +21,16 @@
                     {{ form.last_name }}
                 </div>
             </div>
+            <div class="form-error">
+                {% if form.first_name.errors %}
+                    {{ form.first_name.errors }}
+                {% endif %}
+            </div>
+            <div class="form-error">
+                {% if form.last_name.errors %}
+                    {{ form.last_name.errors }}
+                {% endif %}
+            </div>
             <div class="row">
                 <div class="custom-form-edit">
                     {{ form.username }}
@@ -28,6 +38,16 @@
                 <div class="custom-form-edit">
                     {{ form.email }}
                 </div>
+            </div>
+            <div class="form-error">
+                {% if form.username.errors %}
+                    {{ form.username.errors }}
+                {% endif %}
+            </div>
+            <div class="form-error">
+                {% if form.email.errors %}
+                    {{ form.email.errors }}
+                {% endif %}
             </div>
             <div class="row">
                 <div class="custom-form-edit">
@@ -37,8 +57,17 @@
                     {{ form.password2 }}
                 </div>
             </div>
+            <div class="form-error">
+                {% if form.password1.errors %}
+                    {{ form.password1.errors }}
+                {% endif %}
+            </div>
+            <div class="form-error">
+                {% if form.password2.errors %}
+                    {{ form.password2.errors }}
+                {% endif %}
+            </div>
         </div>
-
         <input type="submit" value="Зарегистрироваться"/>
     </form>
 
