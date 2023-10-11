@@ -1,5 +1,5 @@
 import json
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.generic import TemplateView, View
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -23,13 +23,10 @@ class CreatePaymentView(View):
 
 class SuccessPaymentView(View):
     """Успешная оплата заказа."""
-    template_name = 'pay_app/success.html'
-    _order: IOrder = inject.attr(IOrder)
 
     def get(self, request, pk):
         OrderPayment().pay_notifications(pk)
-
-        return render(request, self.template_name, {})
+        return redirect('order_app:one-order', pk)
 
 
 class SuccessApiView(APIView):
