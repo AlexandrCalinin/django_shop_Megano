@@ -14,5 +14,12 @@ class SellerAdmin(admin.ModelAdmin):
 class PriceAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Price._meta.fields]
 
+    def get_queryset(self, request):
+        queryset = super(PriceAdmin, self).get_queryset(request=request)
+        if request.user.is_superuser:
+            return queryset
+        else:
+            return queryset.filter(seller__user=request.user)
+
 
 admin.site.register(Seller, SellerAdmin)
