@@ -173,30 +173,29 @@
                             {% csrf_token %}
                             <button class="Card-btn btn_reset compare_btn" type="submit" data-product_id="{{ product.id }}">
                               <div class="ProductCard-cartElement">
-                                <a class="Card-btn" href="#modal_open">
+                                <a class="Card-btn" href="#">
                                   <img src="{% static 'assets/img/icons/card/change.svg' %}" alt="change.svg">
                                 </a>
                               </div>
-                              <div class="my_modal" id="modal_open">
-                                <div class="my_modal-dialog">
-                                  <div class="my_modal-content">
-                                    <div class="my_modal-header">
-                                      <p class="my_modal-title">Поздравляем!</p>
-                                      <a class="close" href="#" title="Закрыть модальное окно">×</a>
-                                    </div>
-                                    <div class="my_modal-body">
-                                      <p>Товар успешно добавлен к сравнению!</p>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
+{#                              <div class="my_modal" id="modal_open">#}
+{#                                <div class="my_modal-dialog">#}
+{#                                  <div class="my_modal-content">#}
+{#                                    <div class="my_modal-header">#}
+{#                                      <p class="my_modal-title">Поздравляем!</p>#}
+{#                                      <a class="close" href="#" title="Закрыть модальное окно">×</a>#}
+{#                                    </div>#}
+{#                                    <div class="my_modal-body">#}
+{#                                      <p>Товар успешно добавлен к сравнению!</p>#}
+{#                                    </div>#}
+{#                                  </div>#}
+{#                                </div>#}
+{#                              </div>#}
                             </button>
                           </form>
                         </div>
                       </div>
                     </div>
                 </div>
-
               {% endfor %}
             </div>
         </div>

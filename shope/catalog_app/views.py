@@ -155,21 +155,8 @@ class ComparisonView(TemplateView):
     template_name = 'catalog_app/comparison.html'
 
 
-def add_comparison(request, product_id):
-    return_dict = dict()
-    session_key = request.session.session_key
-    product_id = product_id
-    return_dict['session_key'] = session_key
-    return_dict['product_id'] = product_id
-    # self._create_compare_product.create_compare_product(_product_id=product_id, _session_key=session_key)
-    CompareProduct.objects.create(product_id=product_id, session_key=session_key)
-    messages.add_message(request, messages.INFO, _("The product has been added to the comparison"))
-    print(session_key, product_id)
-    return JsonResponse(return_dict)
-
-
 class AddComparisonView(View):
-    _create_compare_product: ICompareProduct = inject.attr(ICompareProduct)
+    _compare_product: ICompareProduct = inject.attr(ICompareProduct)
 
     def post(self, request, *args, **kwargs):
         return_dict = dict()
@@ -177,12 +164,15 @@ class AddComparisonView(View):
         product_id = kwargs.get('product_id')
         return_dict['session_key'] = session_key
         return_dict['product_id'] = product_id
-        print("return_dict", return_dict['product_id'])
-        print(request.POST)
-        # self._create_compare_product.create_compare_product(_product_id=product_id, _session_key=session_key)
-        CompareProduct.objects.create(product_id=product_id, session_key=session_key)
-        messages.add_message(request, messages.INFO, _("The product has been added to the comparison"))
-        # print(session_key, product_id)
+        if len(self._compare_product.get_compare_product_list(_session_key=session_key)) > 1:
+            return_dict['message'] = _("Too much products to the comparison!")
+            return JsonResponse(return_dict)
+        if self._compare_product.get_compare_product_list(_session_key=session_key) and not self._compare_product.possible_compare_product(_product_id=product_id, _session_key=session_key):
+            return_dict['message'] = _("The product have no common characteristics!")
+            return JsonResponse(return_dict)
+        self._compare_product.create_compare_product(_product_id=product_id, _session_key=session_key)
+        return_dict['message'] = _("The product has been added to the comparison")
+        # messages.add_message(request, messages.INFO, _("The product has been added to the comparison"))
         # return redirect(self.request.path)
         # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         return JsonResponse(return_dict)
