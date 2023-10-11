@@ -51,3 +51,7 @@ class CartRepository(ICart):
         """Создать корзину"""
         return Cart.objects.create(user=_user)
 
+    @beartype
+    def exists(self, _user: User) -> bool:
+        """проверяем, что корзина существует и она не пустая"""
+        return Cart.objects.filter(user=_user, is_active=True).exists()

@@ -4,8 +4,9 @@ from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 
 # кеширование
-from django.utils.cache import get_cache_key
+from django.utils.cache import get_cache_key, learn_cache_key
 from django.core.cache import cache
+from django.core.cache import caches
 
 import inject
 
@@ -42,6 +43,26 @@ from catalog_app.form import ReviewForm
 
 
 configure_inject()
+
+
+# def invalidate_cache(path=''):
+#     request = HttpRequest()
+#     request.META = {'SERVER_NAME': 'localhost', 'SERVER_PORT': 8000}
+#     request.LANGUAGE_CODE = 'en-us'
+#     request.path = path
+
+#     try:
+#         cache_key = get_cache_key(request)
+#         if cache_key:
+#             if cache.has_key(cache_key):
+#                 cache.delete(cache_key)
+#                 return (True, 'successfully invalidated')
+#             else:
+#                 return (False, 'cache_key does not exist in cache')
+#         else:
+#             raise ValueError('failed to create cache_key')
+#     except (ValueError, Exception) as e:
+#         return (False, e)
 
 
 class ProductDetailView(DetailView):
@@ -82,6 +103,7 @@ class ProductDetailView(DetailView):
 
         context['sellers'] = sellers
         context['min_price'] = min_price
+
         return context
 
     def post(self, request, product_id):
