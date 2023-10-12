@@ -39,11 +39,12 @@ class Image(BaseModel):
 
 class Product(BaseModel):
     """Модель товара"""
-    title = models.CharField(max_length=255, verbose_name=_('title  '))
+    title = models.CharField(max_length=255, verbose_name=_('title'))
     description = models.TextField(blank=True, verbose_name=_('description'))
     name = models.CharField(max_length=255, verbose_name=_('name'))
     image = models.ManyToManyField('Image', related_name='image_to_product', verbose_name=_('image'))
     tag = TaggableManager()
+    number_of_sales = models.IntegerField(default=0, blank=True, null=False, verbose_name=_('number_of_sales'))
     category = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name=_('category'))
     is_limited = models.BooleanField(default=True, verbose_name=_('limited'))
     is_delivery = models.BooleanField(default=True, verbose_name=_('delivery'))

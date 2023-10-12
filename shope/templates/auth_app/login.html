@@ -9,20 +9,18 @@
     <div class="clear"></div>
     <form action="{% url 'auth_app:login' %}" method="post">
         {% csrf_token %}
-             <div class="col-md-6">
-                <div class="form-group">
-                    <label class="small mb-1" for="{{ form.username.id_for_label }}">Введите почту</label>
-                    {{ form.username }}
-                </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form.username }}
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="small mb-1" for="{{ form.password.id_for_label }}">Введите пароль</label>
-                    {{ form.password }}
-                </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form.password }}
             </div>
+        </div>
         <div>
-            <input type="submit" value="Войти" />
+            <input type="submit" value="Войти"/>
         </div>
         <a class="forgot-label" href="{% url 'auth_app:e-mail' %}">{% translate 'Забыли пароль?' %}</a>
         <a class="registr" href="{% url 'auth_app:register' %}">
