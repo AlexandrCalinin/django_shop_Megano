@@ -1,0 +1,17 @@
+2023-10-12 09:21:03,596 INFO 00_user.json was uploaded
+2023-10-12 09:21:05,502 INFO 01_category.json was uploaded
+2023-10-12 09:21:07,439 INFO 03_image.json was uploaded
+2023-10-12 09:21:09,333 INFO 05_tag.json was uploaded
+2023-10-12 09:21:11,255 INFO 07_taggeditem.json was uploaded
+2023-10-12 09:21:13,224 INFO 09_product.json was uploaded
+2023-10-12 09:21:15,151 INFO 11_seller.json was uploaded
+2023-10-12 09:21:17,049 INFO 12_price.json was uploaded
+2023-10-12 09:21:18,940 INFO 13_discount_product.json was uploaded
+2023-10-12 09:21:20,848 INFO 15_discount_product_group.json was uploaded
+2023-10-12 09:21:22,768 INFO 17_cart_sale.json was uploaded
+2023-10-12 09:21:24,658 INFO 19_banner.json was uploaded
+2023-10-12 09:21:26,580 INFO 21_slider.json was uploaded
+2023-10-12 09:21:28,476 INFO 22_cart.json was uploaded
+2023-10-12 09:21:30,393 INFO 22_characteristic_type.json was uploaded
+2023-10-12 09:21:32,300 INFO 23_characteristic_value.json was uploaded
+2023-10-12 09:21:34,215 INFO 24_characteristic_product.json was uploaded

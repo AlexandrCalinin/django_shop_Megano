@@ -158,6 +158,16 @@ class AddProductToCartView(TemplateView):
 
 class ComparisonView(TemplateView):
     template_name = 'catalog_app/comparison.html'
+    _compare_product: ICompareProduct = inject.attr(ICompareProduct)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        session_key = self.request.session.session_key
+        if not session_key:
+            self.request.session.save()
+            session_key = self.request.session.session_key
+        context['compare_list'] = self._compare_product.get_compare_product_list(_session_key=session_key)
+        return context
 
 
 class AddComparisonView(View):
@@ -166,13 +176,17 @@ class AddComparisonView(View):
     def post(self, request, *args, **kwargs):
         return_dict = dict()
         session_key = request.session.session_key
+        if not session_key:
+            request.session.save()
+            session_key = request.session.session_key
         product_id = kwargs.get('product_id')
         return_dict['session_key'] = session_key
         return_dict['product_id'] = product_id
         if len(self._compare_product.get_compare_product_list(_session_key=session_key)) > 1:
             return_dict['message'] = _("Too much products to the comparison!")
             return JsonResponse(return_dict)
-        if self._compare_product.get_compare_product_list(_session_key=session_key) and not self._compare_product.possible_compare_product(_product_id=product_id, _session_key=session_key):
+        if self._compare_product.get_compare_product_list(_session_key=session_key) and \
+                not self._compare_product.possible_compare_product(_product_id=product_id, _session_key=session_key):
             return_dict['message'] = _("The product have no common characteristics!")
             return JsonResponse(return_dict)
         self._compare_product.create_compare_product(_product_id=product_id, _session_key=session_key)

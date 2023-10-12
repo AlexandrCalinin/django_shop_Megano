@@ -10,7 +10,10 @@ class CompareProductRepository(ICompareProduct):
     @beartype
     def get_compare_product_list(self, _session_key: str) -> QuerySet[CompareProduct]:
         """Вернуть кверисет продуктов для сравнения"""
-        return CompareProduct.objects.filter(session_key=_session_key)
+        return CompareProduct.objects.filter(session_key=_session_key).prefetch_related(
+            'product__category__characteristictype_set',
+            'product__characteristics'
+        )
 
     @beartype
     def create_compare_product(self, _product_id: int, _session_key: str) -> None:
