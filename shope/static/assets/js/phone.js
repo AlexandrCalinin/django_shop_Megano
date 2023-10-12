@@ -1,9 +1,9 @@
-const el_phone = document.getElementById('phone');
-const maskOptions = {
-    mask: '+7(000)000-00-00',
-    lazy: false
-};
-const mask = IMask(el_phone, maskOptions);
+IMask(
+    document.getElementById('phone'),
+    {
+        mask: '+{7}(000)000-00-00'
+    }
+)
 
 const el_name = document.getElementById("name");
 document.getElementById("user-name").textContent = el_name.value;
@@ -11,6 +11,7 @@ el_name.oninput = function () {
     document.getElementById("user-name").textContent = el_name.value;
 };
 
+const el_phone = document.getElementById("phone");
 document.getElementById("user-phone").textContent = el_phone.value;
 el_phone.oninput = function () {
     document.getElementById("user-phone").textContent = el_phone.value;

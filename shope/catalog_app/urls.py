@@ -12,6 +12,7 @@ from .views import (
     ChangeListProductViewedView, ProductViewedView
 )
 
+
 urlpatterns = [
     path('comparison/', TestComparisonView.as_view(), name="comparison"),
 

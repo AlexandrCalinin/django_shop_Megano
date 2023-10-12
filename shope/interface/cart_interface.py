@@ -34,4 +34,7 @@ class ICart:
         """Создать корзину"""
         pass
 
-
+    @abstractmethod
+    def exists(self, _user: User) -> bool:
+        """проверяем, что корзина существует и она не пустая"""
+        pass
