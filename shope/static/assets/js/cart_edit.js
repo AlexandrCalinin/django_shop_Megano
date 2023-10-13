@@ -75,11 +75,15 @@ $('.Card-hover').on('click', 'a[class="Card-btn"]', function(){
 
     var product_id = $(this).parents('.Card').attr('id')
     var product_count = 1
-    var amount = $(this).attr('value')
+    var amount = $(this).data('value')
     var seller = $(this).attr('id')
     var product_name = $(this).attr('name')
     var image = $(this).parents('.Card').children('.Card-picture').attr('name')
+    console.log(product_id)
+    console.log(amount)
     console.log(seller)
+    console.log(product_name)
+    console.log(image)
 
     cart_add(product_id, product_name, image, product_count, amount, seller)
 })
