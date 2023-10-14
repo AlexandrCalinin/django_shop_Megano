@@ -39,11 +39,12 @@ class Image(BaseModel):
 
 class Product(BaseModel):
     """Модель товара"""
-    title = models.CharField(max_length=255, verbose_name=_('title  '))
+    title = models.CharField(max_length=255, verbose_name=_('title'))
     description = models.TextField(blank=True, verbose_name=_('description'))
     name = models.CharField(max_length=255, verbose_name=_('name'))
     image = models.ManyToManyField('Image', related_name='image_to_product', verbose_name=_('image'))
     tag = TaggableManager()
+    number_of_sales = models.IntegerField(default=0, blank=True, null=False, verbose_name=_('number_of_sales'))
     category = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name=_('category'))
     is_limited = models.BooleanField(default=True, verbose_name=_('limited'))
     is_delivery = models.BooleanField(default=True, verbose_name=_('delivery'))
@@ -136,8 +137,8 @@ class CartSale(DiscountBaseModel):
 
 class Rewiew(BaseModel):
     """Модель отзывов"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('rewiew'))
-    text = models.CharField(max_length=255, verbose_name=_('text'))
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('author'))
+    text = models.TextField(verbose_name=_('text'))
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('product'))
 
     def __str__(self):
@@ -146,6 +147,7 @@ class Rewiew(BaseModel):
     class Meta:
         verbose_name = _('rewiew')
         verbose_name_plural = _('reviews')
+        ordering = ['created_at']
 
 
 ###############################################################

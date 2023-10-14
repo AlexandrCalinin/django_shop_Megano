@@ -1,5 +1,8 @@
-from django.shortcuts import render
+import json
+from django.shortcuts import redirect, render
 from django.views.generic import TemplateView, View
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from core.utils.payment import OrderPayment
 
 from order_app.models import Order
@@ -12,18 +15,28 @@ class CreatePaymentView(View):
     template_name = 'pay_app/new_payment.html'
 
     def get(self, request, pk):
-        context = {'confirmation_t': OrderPayment(pk).new_order_pay(),
+        context = {'confirmation_t': OrderPayment().new_order_pay(pk),
                    'pk': pk}
 
         return render(request, self.template_name, context)
 
 
-class SaccessPaymentView(View):
+class SuccessPaymentView(View):
     """Успешная оплата заказа."""
-    template_name = 'pay_app/success.html'
-    _order: IOrder = inject.attr(IOrder)
 
     def get(self, request, pk):
-        OrderPayment(pk).pay_notifications()
+        OrderPayment().pay_notifications(pk)
+        return redirect('order_app:one-order', pk)
 
-        return render(request, self.template_name, {})
+
+class SuccessApiView(APIView):
+    """Получить уведомление о платеже с yookassa API"""
+
+    def post(self, request):
+        """post"""
+
+        if OrderPayment().pay_api_notifications(request.data):
+            return Response(status=200)
+
+        else:
+            return Response(status=404)

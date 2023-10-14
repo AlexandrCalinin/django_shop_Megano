@@ -10,7 +10,9 @@ from .models import (Product,
                      CartSale,
                      CharacteristicType,
                      CharacteristicValue,
-                     CharacteristicProduct, ProductViewed,
+                     CharacteristicProduct,
+                     ProductViewed,
+                     Rewiew,
                      )
 
 
@@ -80,3 +82,15 @@ class CharacteristicProductAdmin(admin.ModelAdmin):
 admin.site.register(CharacteristicProduct, CharacteristicProductAdmin)
 admin.site.register(CharacteristicType, CharacteristicTypeAdmin)
 admin.site.register(CharacteristicValue, ChatacteristicValueAdmin)
+
+###############################################################
+#  ОТЗЫВ
+###############################################################
+
+
+class RewiewAdmin(admin.ModelAdmin):
+    """Rewiew admin"""
+    pass
+
+
+admin.site.register(Rewiew, RewiewAdmin)

@@ -21,8 +21,7 @@
 
 # rule for load data
     python manage.py migrate
-    python manage.py createsuperuser
-    python fixtures_loader.py
+    python manage.py import_fixtures (-f filename -e email (не обязательные аргументы))
 
 # running Celery
     pip install -r requirements.txt
@@ -32,3 +31,10 @@
     docker compose up -d --build - сборка перед стартом контейнеров
     docker compose up -d - запуск контейнеров (-d для запуска в фоне)
     docker compose down - остановка контейнеров
+
+# Admin
+    admin@mail.ru (почта)
+    admin    (пароль)
+
+# Add permissions for sellers
+    python manage.py seller_permissions

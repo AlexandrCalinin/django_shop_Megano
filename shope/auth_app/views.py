@@ -13,7 +13,6 @@ from django.utils.http import urlsafe_base64_encode
 from django.views.generic import FormView
 
 from core.utils.add_product_to_cart import AddProductToCart
-from .models import User
 from .forms import UserRegisterForm, ResetPasswordForm, SetNewPasswordForm, UserLoginForm
 from core.utils.injector import configure_inject
 from interface.auth_interface import IAuth
@@ -33,25 +32,25 @@ class RegisterView(FormView):
     def post(self, request, *args, **kwargs):
         form = self.form_class(data=request.POST)
         email = request.POST['email']
-        if form.is_valid():
-            user = form.save()
-            self.add_product_to_cart.create_cart_and_cartitem(user, request)
-            if self.send_link_to_verify_email(user=user):
-                return HttpResponseRedirect(reverse('auth_app:confirm-email'))
+        try:
+            if form.is_valid():
+                user = form.save()
+                self.add_product_to_cart.create_cart_and_cartitem(user, request)
+                if self.send_link_to_verify_email(user=user):
+                    return HttpResponseRedirect(reverse('auth_app:confirm-email'))
+                else:
+                    self._user.delete_user_by_email(_email=email)
+                    raise Exception
             else:
-                self._user.delete_user_by_email(_email=email)
-        else:
-            self._user.delete_user_by_email(_email=email)
-
-        context = {
-            'form': form
-        }
-
-        return render(request, self.template_name, context)
+                raise Exception
+        except Exception:
+            context = {
+                'form': form
+            }
+            return render(request, self.template_name, context)
 
     @staticmethod
     def send_link_to_verify_email(user):
-        print(settings.DOCKER)
         verify_link = reverse_lazy('auth_app:verify_email', args=[user.email, user.activation_key])
         subject = f'Для активации учетной записи {user.username} пройдите по ссылке'
         message = f'Для подтверждения учетной записи {user.username} перейдите по ссылке' \
@@ -82,13 +81,6 @@ class UserLoginView(LoginView):
     form_class = UserLoginForm
     template_name = 'auth_app/login.html'
     redirect_authenticated_user = True
-
-    def form_valid(self, form: UserLoginForm):
-        """
-        Метод, вызываемый при валидации формы
-        """
-        super().form_valid(form)
-        return HttpResponseRedirect(self.get_success_url())
 
 
 class ForgotPasswordView(SuccessMessageMixin, PasswordResetView):

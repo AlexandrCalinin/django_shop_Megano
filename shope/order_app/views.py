@@ -5,7 +5,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 import inject
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
@@ -16,9 +16,14 @@ from interface.cart_interface import ICart
 from order_app.models import Order, OrderItem
 from profile_app.forms import EditProfileForm, EditUserForm
 from order_app.forms import CreateOrderForm
+from .utils import CartMixin
 
 
 configure_inject()
+
+
+class EmptyCart(TemplateView):
+    template_name = 'order_app/empty-cart.html'
 
 
 class HistoryOrderView(LoginRequiredMixin, ListView):
@@ -41,17 +46,17 @@ class DetailOrderView(DetailView):
     _order: IOrder = inject.attr(IOrder)
     _order_item = inject.attr(IOrderItem)
 
-    def get_queryset(self):
-        pk = self.kwargs.get('pk')
-        return self._order.get_by_pk(pk)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['order_items'] = self._order_item.get_by_order(self.get_object())  # type: ignore
         return context
 
+    def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
 
-class CreateOrderView(LoginRequiredMixin, CreateView):
+        return redirect('pay_app:new-pay', self.kwargs.get('pk'))
+
+
+class CreateOrderView(LoginRequiredMixin, CartMixin, CreateView):
     """Создание заказа"""
     template_name = 'order_app/order.html'
     context_object_name = 'order'
@@ -93,9 +98,12 @@ class CreateOrderView(LoginRequiredMixin, CreateView):
             bulk_list = [OrderItem(order=order_obj, **i_cart_list) for i_cart_list in cart_list]
             self._order_items.bulk_create(bulk_list)
 
-            return redirect('order_app:one-order', order_obj.pk)
+            return redirect('pay_app:new-pay', order_obj.pk)
         else:
+            cart = self._cart.get_active_by_user(request.user)
             context = {
+                'cart': cart,
+                'total_amount': self._cart.total_amount(cart),
                 'form': form,
                 'user_form': user_form,
                 'profile_form': profile_form

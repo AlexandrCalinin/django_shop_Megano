@@ -30,3 +30,8 @@ class ICatalogFilter:
     def get_filtered_products_by_category(self, _category_id: str) -> QuerySet[Product]:
         """Получить отфильтрованные по категории продукты"""
         pass
+
+    @abstractmethod
+    def get_filtered_products_by_char(self, _char_id: str) -> QuerySet[Product]:
+        """Получить отфильтрованные по Характеристике продукты"""
+        pass

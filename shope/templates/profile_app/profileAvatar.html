@@ -5,12 +5,13 @@
         <div class="Middle-top">
             <div class="wrap">
                 <div class="Middle-header">
-                    <h1 class="Middle-title">Профиль
-                    </h1>
+                    <h1 class="Middle-title">{% trans "Profile" %}</h1>
                     <ul class="breadcrumbs Middle-breadcrumbs">
-                        <li class="breadcrumbs-item"><a href="{% url 'home' %}">home</a>
+                        <li class="breadcrumbs-item">
+                            <a href="{% url 'home' %}">{% trans "Home" %}</a>
                         </li>
-                        <li class="breadcrumbs-item breadcrumbs-item_current"><span>Профиль</span>
+                        <li class="breadcrumbs-item breadcrumbs-item_current">
+                            <span>{% trans "Profile" %}</span>
                         </li>
                     </ul>
                 </div>
@@ -21,19 +22,21 @@
                 <div class="Section-column">
                     <div class="Section-columnSection">
                         <header class="Section-header">
-                            <strong class="Section-title">Навигация
-                            </strong>
+                            <strong class="Section-title">{% trans "Navigation" %}</strong>
                         </header>
                         <div class="Section-columnContent">
                             <div class="NavigateProfile">
                                 <ul class="menu menu_vt">
-                                    <li class="menu-item"><a class="menu-link" href="{% url 'account' profile_id=profile_id %}">Личный кабинет</a>
+                                    <li class="menu-item">
+                                        <a class="menu-link" href="{% url 'account' profile_id=profile_id %}">Личный кабинет</a>
                                     </li>
-                                    <li class="menu-item"><a class="menu-link" href="{% url 'profile' profile_id=profile_id %}">Профиль</a>
+                                    <li class="menu-item">
+                                        <a class="menu-link" href="{% url 'profile' profile_id=profile_id %}">Профиль</a>
                                     </li>
-                                    <li class="menu-item"><a class="menu-link" href="{% url 'historyorder' profile_id=profile_id %}">История заказов</a>
+                                    <li class="menu-item">
+                                        <a class="menu-link"
+                                           href="{% url 'historyorder' profile_id=profile_id %}">История заказов</a>
                                     </li>
-
                                 </ul>
                             </div>
                         </div>
@@ -45,47 +48,60 @@
                             <div class="row">
                                 <div class="row-block">
                                     <div class="form-group">
-                                        <label class="form-label" for="avatar">Аватар
-                                        </label>
+                                        <label class="form-label" for="avatar">{% trans "Avatar" %}</label>
                                         <div class="Profile-avatar">
-                                            <div class="Profile-img"><img src="{% static 'assets/img/content/home/card.jpg' %}" alt="card.jpg">
+                                            <div class="Profile-img">
+                                                <img src="{% static 'assets/img/content/home/card.jpg' %}" alt="card.jpg">
                                             </div>
-                                            <label class="Profile-fileLabel" for="avatar">Выберите аватар
-                                            </label>
+                                            <label class="Profile-fileLabel" for="avatar">{% trans "Choose avatar" %}</label>
                                             <input class="Profile-file form-input" id="avatar" name="avatar" type="file">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="name">ФИО
-                                        </label>
-                                        <input class="form-input" id="name" name="name" type="text" value="Иванов Иван Иванович">
+                                        <label class="form-label" for="name">ФИО</label>
+                                        <input class="form-input"
+                                               id="name"
+                                               name="name"
+                                               type="text"
+                                               value="Иванов Иван Иванович">
                                     </div>
                                 </div>
                                 <div class="row-block">
                                     <div class="form-group">
-                                        <label class="form-label" for="phone">Телефон
-                                        </label>
-                                        <input class="form-input" id="phone" name="phone" type="text" value="+70000000000">
+                                        <label class="form-label" for="phone">Телефон</label>
+                                        <input class="form-input"
+                                               id="phone"
+                                               name="phone"
+                                               type="text"
+                                               value="+70000000000">
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="mail">E-mail
-                                        </label>
-                                        <input class="form-input" id="mail" name="mail" type="text" value="send@test.test">
+                                        <label class="form-label" for="mail">E-mail</label>
+                                        <input class="form-input"
+                                               id="mail"
+                                               name="mail"
+                                               type="text"
+                                               value="send@test.test">
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="password">Пароль
-                                        </label>
-                                        <input class="form-input" id="password" name="password" type="password" placeholder="Тут можно изменить пароль">
+                                        <label class="form-label" for="password">Пароль</label>
+                                        <input class="form-input"
+                                               id="password"
+                                               name="password"
+                                               type="password"
+                                               placeholder="Тут можно изменить пароль">
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="passwordReply">Подтверждение пароля
-                                        </label>
-                                        <input class="form-input" id="passwordReply" name="passwordReply" type="password" placeholder="Введите пароль повторно">
+                                        <label class="form-label" for="passwordReply">Подтверждение пароля</label>
+                                        <input class="form-input"
+                                               id="passwordReply"
+                                               name="passwordReply"
+                                               type="password"
+                                               placeholder="Введите пароль повторно">
                                     </div>
                                     <div class="form-group">
                                         <div class="Profile-btn">
-                                            <button class="btn btn_success" type="submit">Сохранить
-                                            </button>
+                                            <button class="btn btn_success" type="submit">Сохранить</button>
                                         </div>
                                     </div>
                                 </div>

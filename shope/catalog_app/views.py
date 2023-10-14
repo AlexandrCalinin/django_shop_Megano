@@ -1,6 +1,12 @@
 """Catalog app views"""
 from django.http import JsonResponse, HttpRequest
+from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
+
+# кеширование
+from django.utils.cache import get_cache_key, learn_cache_key
+from django.core.cache import cache
+from django.core.cache import caches
 
 import inject
 
@@ -14,25 +20,53 @@ from django.db.models import Max, Count, Subquery, F, OuterRef
 from core.utils.injector import configure_inject
 from interface.cart_sale_interface import ICartSale
 from interface.category_interface import ICategory
+from interface.product_interface import IProduct
 from interface.discount_product_group_interface import IDiscountProductGroup
 from interface.discount_product_interface import IDiscountProduct
 
 from interface.characteristic_interface import ICharacteristicProduct
-from catalog_app.models import DiscountProduct, DiscountProductGroup, CartSale, ProductViewed
+from catalog_app.models import DiscountProduct, DiscountProductGroup, CartSale
 from catalog_app.models import Product
 
 from interface.product_viewed_interface import IProductViewed
 
 from interface.catalog_filter_interface import ICatalogFilter
-from core.models.price import Price
+from interface.seller_interface import ISeller
+from interface.review_interface import IReview
+
+
+from catalog_app.form import ReviewForm
 
 
 configure_inject()
 
 
+# def invalidate_cache(path=''):
+#     request = HttpRequest()
+#     request.META = {'SERVER_NAME': 'localhost', 'SERVER_PORT': 8000}
+#     request.LANGUAGE_CODE = 'en-us'
+#     request.path = path
+
+#     try:
+#         cache_key = get_cache_key(request)
+#         if cache_key:
+#             if cache.has_key(cache_key):
+#                 cache.delete(cache_key)
+#                 return (True, 'successfully invalidated')
+#             else:
+#                 return (False, 'cache_key does not exist in cache')
+#         else:
+#             raise ValueError('failed to create cache_key')
+#     except (ValueError, Exception) as e:
+#         return (False, e)
+
+
 class ProductDetailView(DetailView):
     """Детальная страница продукта"""
     _characteristics: ICharacteristicProduct = inject.attr(ICharacteristicProduct)
+    _sellers_of_product: IProduct = inject.attr(IProduct)
+    _price_of_seller: ISeller = inject.attr(ISeller)
+    _review: IReview = inject.attr(IReview)
 
     model = Product
     template_name = 'catalog_app/product.html'
@@ -48,25 +82,39 @@ class ProductDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         """get_context_data"""
-        contex = super().get_context_data(**kwargs)
-        contex['characteristics'] = self._characteristics.get_by_product(_product=self.object)
-
-        latest_prices = Product.objects.filter(pk=self.kwargs.get('product_id')).annotate(
-            latest_price=Max('price__date')
-        ).annotate(
-            latest_price_value=Subquery(
-                Price.objects.filter(
-                    product=OuterRef('pk'),
-                    date=F('product__price__date')
-                ).values('price')[:1]
+        context = super().get_context_data(**kwargs)
+        context['characteristics'] = self._characteristics.get_by_product(_product=self.object)
+        context['review_form'] = ReviewForm()
+        context['reviews'] = self._review.get_by_product(self.kwargs['product_id'])
+        sellers = []
+        min_price = 0
+        for i_seller in self._sellers_of_product.get_sellers_of_product(self.kwargs['product_id']):
+            price = self._price_of_seller.get_last_price_of_product(
+                i_seller['price__seller'],
+                self.kwargs['product_id']
             )
-        ).annotate(
-            price_count=Count('price')
-        ).filter(price_count__gt=0)
+            sellers.append(price)
+            if (price['product_seller__price'] < min_price) or min_price == 0:
+                min_price = price['product_seller__price']
 
-        for i_price in latest_prices:
-            print(f'{i_price} - {i_price.latest_price_value}')
-        return contex
+        context['sellers'] = sellers
+        context['min_price'] = min_price
+
+        return context
+
+    def post(self, request, product_id):
+        """Метод post для добавление отзыва"""
+        review_form = ReviewForm(request.POST)
+        if review_form.is_valid():
+            review_form.save()
+            cache.set(get_cache_key(request), None)
+            return redirect(self.request.path)
+
+        context = {
+            'review_form': review_form,
+        }
+
+        return render(request, self.template_name, context=context)
 
 
 class CatalogListView(ListView):
@@ -82,7 +130,10 @@ class CatalogListView(ListView):
             if self.request.GET.get('category') is not None:
                 category_id = self.request.GET.get('category')
                 return self._filter.get_filtered_products_by_category(category_id)
-            if self.request.GET.get('tag') is not None:
+            elif self.request.GET.get('char') is not None:
+                char_id = self.request.GET.get('char')
+                return self._filter.get_filtered_products_by_char(char_id)
+            elif self.request.GET.get('tag') is not None:
                 tag_name = self.request.GET.get('tag')
                 return self._filter.filter_by_tag(tag_name)
             elif self.request.GET.get('sort') is not None:

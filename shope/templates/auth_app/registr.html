@@ -11,43 +11,63 @@
     <div class="clear"></div>
     <form action="{% url 'auth_app:register' %}" method="post">
         {% csrf_token %}
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="small mb-1" for="{{ form.first_name.id_for_label }}">Имя</label>
-                {{ form.first_name }}
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="small mb-1" for="{{ form.last_name.id_for_label }}">Фамилия</label>
-                {{ form.last_name }}
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="small mb-1" for="{{ form.email.id_for_label }}">Почта</label>
-                {{ form.email }}
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="small mb-1" for="{{ form.username.id_for_label }}">Имя пользователя</label>
-                {{ form.username }}
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="small mb-1" for="{{ form.password1.id_for_label }}">Введите пароль</label>
-                {{ form.password1 }}
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="small mb-1" for="{{ form.password2.id_for_label }}">Повторите ввод пароля</label>
-                {{ form.password2 }}
-            </div>
-        </div>
 
+        <div class="container">
+            <div class="row">
+                <div class="custom-form-edit">
+                    {{ form.first_name }}
+                </div>
+                <div class="custom-form-edit">
+                    {{ form.last_name }}
+                </div>
+            </div>
+            <div class="form-error">
+                {% if form.first_name.errors %}
+                    {{ form.first_name.errors }}
+                {% endif %}
+            </div>
+            <div class="form-error">
+                {% if form.last_name.errors %}
+                    {{ form.last_name.errors }}
+                {% endif %}
+            </div>
+            <div class="row">
+                <div class="custom-form-edit">
+                    {{ form.username }}
+                </div>
+                <div class="custom-form-edit">
+                    {{ form.email }}
+                </div>
+            </div>
+            <div class="form-error">
+                {% if form.username.errors %}
+                    {{ form.username.errors }}
+                {% endif %}
+            </div>
+            <div class="form-error">
+                {% if form.email.errors %}
+                    {{ form.email.errors }}
+                {% endif %}
+            </div>
+            <div class="row">
+                <div class="custom-form-edit">
+                    {{ form.password1 }}
+                </div>
+                <div class="custom-form-edit">
+                    {{ form.password2 }}
+                </div>
+            </div>
+            <div class="form-error">
+                {% if form.password1.errors %}
+                    {{ form.password1.errors }}
+                {% endif %}
+            </div>
+            <div class="form-error">
+                {% if form.password2.errors %}
+                    {{ form.password2.errors }}
+                {% endif %}
+            </div>
+        </div>
         <input type="submit" value="Зарегистрироваться"/>
     </form>
 

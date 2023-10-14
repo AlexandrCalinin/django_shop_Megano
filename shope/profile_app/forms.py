@@ -39,9 +39,13 @@ class EditUserForm(UserChangeForm):
 class EditProfileForm(forms.ModelForm):
     """Форма редактирования профайла пользователя"""
     phone = PhoneNumberField(label=_('Phone'),
+                             required=True,
                              widget=forms.TextInput(
                                  attrs={'class': 'form-input',
-                                        'id': 'phone'}))
+                                        'id': 'phone',
+                                        'name': 'phone',
+                                        'data-validate': 'require'
+                                        }))
 
     avatar = forms.ImageField(label=_('Avatar'),
                               widget=forms.FileInput(

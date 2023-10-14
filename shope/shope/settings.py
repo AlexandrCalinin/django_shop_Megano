@@ -65,6 +65,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'debug_toolbar',
+    'rest_framework',
     'auth_app',
     'core',
     'taggit',
@@ -86,6 +88,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'shope.urls'
@@ -102,6 +105,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'core.utils.context_processors.cart_processor',
+                'core.utils.context_processors.get_category_list',
             ],
         },
     },
@@ -154,6 +158,10 @@ FIXTURE_DIRS = [
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+INTERNAL_IPS = [
+    '127.0.0.1'
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -198,3 +206,6 @@ LOGIN_REDIRECT_URL = '/'
 LOGIN_ERROR_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/auth/login'
+
+# Payment
+SUCCESS_PAYMENT = 'succeeded'

@@ -1,9 +1,11 @@
 import random
 
 from beartype import beartype
-from django.db.models import QuerySet, Sum, Q, Avg, Min, Max, F, FloatField, OuterRef, Subquery
+
+from django.db.models import QuerySet, Sum, Avg, Min, Max, FloatField, Subquery, OuterRef
 from django.db.models import Func
 from django.db.models.functions import Cast
+
 
 from catalog_app.models import Product
 from core.models import Price
@@ -12,7 +14,7 @@ from interface.product_interface import IProduct
 
 class Round(Func):
     function = 'ROUND'
-    template = '%(function)s(%(expressions)s, 0)'
+    template = '%(function)s(%(expressions)s, 2)'
 
 
 class ProductRepository(IProduct):
@@ -41,14 +43,20 @@ class ProductRepository(IProduct):
     def get_product_limit_list(self, const: int) -> QuerySet[Product]:
         """Вернуть кверисет лимитированых продуктов"""
         qs = Product.objects.filter(is_active=True, is_limited=True).annotate(
-            min_price=Round(Min('price__price')),
-            max_price=Round(Max('price__price')),
-            value=Round(Avg('price__price'))
+            min_price=Round(Cast(Min('price__price'), output_field=FloatField())),
+            max_price=Round(Cast(Max('price__price'), output_field=FloatField())),
+            value=Round(Cast(Avg('price__price'), output_field=FloatField()))
         )
         if len(qs) > const:
             const_num_list = random.sample([product.pk for product in qs], const)
             qs = qs.filter(product__id__in=const_num_list)
         return qs
+
+    @beartype
+    def get_sellers_of_product(self, _pk: int) -> list:
+        """Получить список продавцов, которые продают данный продукт"""
+        distinct = list(Product.objects.filter(pk=_pk).values('price__seller').distinct())
+        return distinct
 
     @beartype
     def get_by_id(self, product: str) -> Product:
