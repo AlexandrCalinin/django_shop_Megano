@@ -1,13 +1,13 @@
 """Catalog app views"""
+
 from django.http import JsonResponse, HttpRequest
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
+from django.urls import reverse
 
 # кеширование
-from django.utils.cache import get_cache_key, learn_cache_key
+from django.utils.cache import get_cache_key
 from django.core.cache import cache
-from django.core.cache import caches
-
 import inject
 
 from django.http import HttpResponseRedirect
@@ -45,24 +45,30 @@ from catalog_app.form import ReviewForm
 configure_inject()
 
 
-# def invalidate_cache(path=''):
+# def invalidate_cache(path='', *args, namespace=None):
 #     request = HttpRequest()
-#     request.META = {'SERVER_NAME': 'localhost', 'SERVER_PORT': 8000}
+#     request.META = {
+#         'SERVER_NAME': '127.0.0.1',
+#         'SERVER_PORT': 8000}
 #     request.LANGUAGE_CODE = 'en-us'
-#     request.path = path
+#     if namespace:
+#         path = namespace + ":" + path
+#     request.path = reverse(path, args=args)
+
+#     request.method = 'GET'
 
 #     try:
 #         cache_key = get_cache_key(request)
 #         if cache_key:
 #             if cache.has_key(cache_key):
 #                 cache.delete(cache_key)
-#                 return (True, 'successfully invalidated')
+#                 return True
 #             else:
-#                 return (False, 'cache_key does not exist in cache')
+#                 return False
 #         else:
 #             raise ValueError('failed to create cache_key')
 #     except (ValueError, Exception) as e:
-#         return (False, e)
+#         return False
 
 
 class ProductDetailView(DetailView):
@@ -111,7 +117,6 @@ class ProductDetailView(DetailView):
         review_form = ReviewForm(request.POST)
         if review_form.is_valid():
             review_form.save()
-            cache.set(get_cache_key(request), None)
             return redirect(self.request.path)
 
         context = {
