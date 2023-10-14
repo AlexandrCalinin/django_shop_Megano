@@ -66,13 +66,10 @@ class CatalogFilterRepository:
 
     @beartype
     def filter_by_sort(self, sort: Any) -> QuerySet[Product]:
-        sort_dict = {
-            '1': 'popularity',
-            '2': 'min_price',
-            '3': 'rewiew',
-            '4': 'created_at',
-        }
-        return self.queryset.order_by(sort_dict[sort])
+        if sort == "min_price":
+            return self.queryset.order_by(sort)
+        else:
+            return self.queryset.order_by(f"-{sort}")
 
     @beartype
     def get_filtered_products_by_category(self, _category_id: str) -> QuerySet[Product]:

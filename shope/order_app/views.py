@@ -96,6 +96,8 @@ class CreateOrderView(LoginRequiredMixin, CartMixin, CreateView):
             self._cart.save(cart)
             cart_list = self._cart.model_to_list(cart)
             bulk_list = [OrderItem(order=order_obj, **i_cart_list) for i_cart_list in cart_list]
+            for item in bulk_list:
+                print(item)
             self._order_items.bulk_create(bulk_list)
 
             return redirect('pay_app:new-pay', order_obj.pk)
