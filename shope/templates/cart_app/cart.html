@@ -13,7 +13,10 @@
 
                         <div class="Cart-product" id="{{ item.product.id }}">
                                 <div class="Cart-block Cart-block_row">
-                                    <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="#"><img class="Cart-img" src="/media/{{ item.product.image.first }}" alt="card.jpg" /></a>
+                                    <div class="Cart-block Cart-block_pict">
+                                        <a class="Cart-pict" href="#">
+                                            <img class="Cart-img" src="{{ item.product.image.all.0.image.url }}" alt="card.jpg" />
+                                        </a>
                                 </div>
                                 <div class="Cart-block Cart-block_info"><a class="Cart-title" href="#">{{ item.product.title }}</a>
                                     <div class="Cart-desc">{{ item.product.description| truncatechars:30 }}
@@ -44,7 +47,7 @@
 
 
                                 <div class="Cart-block Cart-block_row">
-                                    <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="#"><img class="Cart-img" src="/media/{{ item.image }}" alt="card.jpg" /></a>
+                                    <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="#"><img class="Cart-img" src="{{ item.image }}" alt="card.jpg" /></a>
                                 </div>
                                 <div class="Cart-block Cart-block_info"><a class="Cart-title" href="#">{{ item.product_name }}</a>
                                     <div class="Cart-desc">
@@ -86,8 +89,6 @@
         </div>
     </body>
 
-    <script src="{% static '/assets/plg/jQuery/jquery-3.7.0.min.js' %}"></script>
-    <script src="{% static '/assets/js/cart_edit.js' %}"></script>
 {% endblock content_body %}
 
 

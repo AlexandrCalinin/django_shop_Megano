@@ -15,25 +15,25 @@ class CartListView(ListView):
 
 
 class ChangeCountProductView(TemplateView):
+    add_product_to_cart = AddProductToCart()
 
     def post(self, request):
         if request.headers['X-Requested-With'] == 'XMLHttpRequest':
 
             form = ChangeCountForm(request.POST)
-            add_product_to_cart = AddProductToCart()
 
             if form.is_valid():
                 if request.user.is_authenticated:
-                    product_amount = add_product_to_cart.change_count_product_in_cart(request.user, **form.cleaned_data)
+                    product_amount = self.add_product_to_cart.change_count_product_in_cart(request.user, **form.cleaned_data)
                 else:
-                    product_amount = add_product_to_cart.change_count_for_anonymous(request, **form.cleaned_data)
+                    product_amount = self.add_product_to_cart.change_count_for_anonymous(request, **form.cleaned_data)
 
                 cart_edit = render_to_string('includes/card_edit.html',
                                              request=request)
 
                 count_change = render_to_string('includes/price_product_in_cart.html',
                                                 context={'item': product_amount},
-                                               request=request)
+                                                request=request)
 
                 total_amount = render_to_string('includes/total_amount_in_cart.html', request=request)
 
@@ -44,6 +44,7 @@ class ChangeCountProductView(TemplateView):
 
 class AddProductToCartView(TemplateView):
     add_product_to_cart = AddProductToCart()
+
     def post(self, request: HttpRequest):
         if request.headers['X-Requested-With'] == 'XMLHttpRequest':
             form = CartEditForm(data=request.POST)
@@ -63,11 +64,13 @@ class AddProductToCartView(TemplateView):
 
 
 class DeleteCartItemView(TemplateView):
+    add_product_to_cart = AddProductToCart()
+
     def post(self, request):
         form = DeleteForm(request.POST)
         if form.is_valid():
-            add_product_to_cart = AddProductToCart()
-            add_product_to_cart.remove_product_from_cart(form.cleaned_data['product'], self.request)
+
+            self.add_product_to_cart.remove_product_from_cart(form.cleaned_data['product'], self.request)
 
             cart_edit = render_to_string('includes/card_edit.html',
                                          request=request)

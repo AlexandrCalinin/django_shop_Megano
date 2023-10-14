@@ -18,7 +18,11 @@ var csrf = $('meta[name="csrf-token"]').attr('content');
 
     dataType: 'json',
     success: (data) => {
+
     $('.CartBlock-block').html(data.result)
+    Swal.fire({title: 'Товар добавлен в корзину!', confirmButtonColor: '#0041c2',
+
+})
     },
     error: (error) => {
     console.log(error)}
@@ -61,7 +65,7 @@ var csrf = $('meta[name="csrf-token"]').attr('content');
     success: (data) => {
     $('.CartBlock-block').html(data.cart)
     $('.Cart-block.Cart-block_total').html(data.total_amount)
-    $('.Cart-product[id="' + product_id  + '"' ).first().remove()
+    $('.Cart-product[id="' + product_id  + '"' ).remove()
     console.log($('.Cart-product[id="' + product_id  + '"' ).first())
     },
     error: (error) => {
@@ -79,11 +83,6 @@ $('.Card-hover').on('click', 'a[class="Card-btn"]', function(){
     var seller = $(this).attr('id')
     var product_name = $(this).attr('name')
     var image = $(this).parents('.Card').children('.Card-picture').attr('name')
-    console.log(product_id)
-    console.log(amount)
-    console.log(seller)
-    console.log(product_name)
-    console.log(image)
 
     cart_add(product_id, product_name, image, product_count, amount, seller)
 })
@@ -121,20 +120,6 @@ $('.Cart-block.Cart-block_delete').on('click', 'a[class="Cart-delete"]', functio
    product_delete(product_id)
 })
 
-//$('.Card-hover').on('click', 'a[class="Card-btn"]', function(){
-//   // Обработка нажатия на кнопку добавления товара в корзину на главной странице
-//
-//    var product_id = $(this).parents('.Card').attr('id')
-//    var product_count = 1
-//    var amount = $(this).attr('value')
-//    var seller = $(this).attr('id')
-//    var product_name = $(this).attr('name')
-//    var image = $(this).parents('.Card').children('.Card-picture').attr('name')
-//
-//
-//    cart_add(product_id, product_name, image, product_count, amount, seller)
-//})
-//
 //$('.Card-hover').on('click', 'a[class="Card-btn"]', function(){
 //   // Обработка нажатия на кнопку добавления товара в корзину на детальной странице продукта
 //
