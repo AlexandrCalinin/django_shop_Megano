@@ -2,7 +2,7 @@ import random
 
 from beartype import beartype
 
-from django.db.models import QuerySet, Sum, Avg, Min, Max, FloatField, Subquery, OuterRef
+from django.db.models import QuerySet, Sum, Avg, Min, Max, FloatField, Subquery, OuterRef, F
 from django.db.models import Func
 from django.db.models.functions import Cast
 

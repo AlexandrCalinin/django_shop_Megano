@@ -48,7 +48,7 @@ class AddProductToCartView(TemplateView):
     def post(self, request: HttpRequest):
         if request.headers['X-Requested-With'] == 'XMLHttpRequest':
             form = CartEditForm(data=request.POST)
-
+            print(request.POST)
             if form.is_valid():
 
                 if request.user.is_authenticated:

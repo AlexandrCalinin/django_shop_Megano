@@ -61,7 +61,8 @@ class AddProductToCart:
                     int(request.session["cart"][product]['count']) + int(product_count)
 
                 request.session["cart"][product]['amount'] = \
-                    float(request.session["cart"][product]['amount']) + float(request.session["cart"][product]['price'])
+                    float(request.session["cart"][product]['amount']) + float(amount)
+
         else:
             request.session["cart"] = {}
             request.session["cart"][product] = product_info
