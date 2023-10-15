@@ -41,6 +41,8 @@ from interface.review_interface import IReview
 
 from catalog_app.form import ReviewForm
 
+from core.utils.cache import get_cache_value
+
 
 configure_inject()
 
@@ -82,33 +84,48 @@ class ProductDetailView(DetailView):
     template_name = 'catalog_app/product.html'
     context_object_name = 'product'
     pk_url_kwarg = 'product_id'
+    _CACHE_TIME = get_cache_value('DETAIL_PRODUCT')
 
     def get_queryset(self):
         """get querysert"""
-        return Product.objects.prefetch_related(
-            'image',
-            'tag',
-        )
+        key = 'PRODUCTS'
+        qs = cache.get(key)
+        if not qs:
+            qs = Product.objects.all()
+            cache.set(key, qs, self._CACHE_TIME)
+        return qs
 
     def get_context_data(self, **kwargs):
         """get_context_data"""
-        context = super().get_context_data(**kwargs)
-        context['characteristics'] = self._characteristics.get_by_product(_product=self.object)
-        context['review_form'] = ReviewForm()
-        context['reviews'] = self._review.get_by_product(self.kwargs['product_id'])
-        sellers = []
-        min_price = 0
-        for i_seller in self._sellers_of_product.get_sellers_of_product(self.kwargs['product_id']):
-            price = self._price_of_seller.get_last_price_of_product(
-                i_seller['price__seller'],
-                self.kwargs['product_id']
-            )
-            sellers.append(price)
-            if (price['product_seller__price'] < min_price) or min_price == 0:
-                min_price = price['product_seller__price']
+        key = 'DETAIL_PRODUCT:' + str(self.kwargs['product_id'])
 
-        context['sellers'] = sellers
-        context['min_price'] = min_price
+        context = cache.get(key)
+
+        if not context:
+            context = {}
+            context = super().get_context_data(**kwargs)
+            context['characteristics'] = self._characteristics.get_by_product(_product=self.object)
+            context['reviews'] = self._review.get_by_product(self.kwargs['product_id'])
+            sellers = []
+            min_price = {'price': 0,
+                         'seller': None}
+            for i_seller in self._sellers_of_product.get_sellers_of_product(self.kwargs['product_id']):
+                price = self._price_of_seller.get_last_price_of_product(
+                    i_seller['price__seller'],
+                    self.kwargs['product_id']
+                )
+                sellers.append(price)
+                if (price['product_seller__price'] < min_price['price']) or min_price['price'] == 0:
+                    min_price['price'] = price['product_seller__price']
+                    min_price['seller'] = price['pk']
+
+            context['sellers'] = sellers
+            context['min_price'] = min_price
+
+            cache.set(key, context, self._CACHE_TIME)
+
+        context['review_form'] = ReviewForm()
+        context['cache_time'] = self._CACHE_TIME
 
         return context
 
