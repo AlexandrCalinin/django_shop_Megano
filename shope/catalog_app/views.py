@@ -127,8 +127,8 @@ class CatalogListView(ListView):
         return super().get(request, **kwargs)
 
     def get_queryset(self):
-        global query
         try:
+            global query
             if self.request.GET.get('category') is not None:
                 category_id = self.request.GET.get('category')
                 query = self._filter.get_filtered_products_by_category(category_id)
@@ -138,8 +138,10 @@ class CatalogListView(ListView):
             elif self.request.GET.get('tag') is not None:
                 tag_name = self.request.GET.get('tag')
                 query = self._filter.filter_by_tag(tag_name)
-            elif (self.request.GET.get('in_stock') or self.request.GET.get('free_delivery') or self.request.GET.get(
-                    'price') or self.request.GET.get('title')):
+            elif self.request.GET.get('sort') is not None:
+                sort = self.request.GET.get('sort')
+                return self._filter.filter_by_sort(sort, query)
+            else:
                 is_limited = True if self.request.GET.get('in_stock') else False
                 free_delivery = True if self.request.GET.get('free_delivery') else False
                 if self.request.GET.get('price'):
@@ -149,14 +151,10 @@ class CatalogListView(ListView):
                 product_name = self.request.GET.get('title')
                 query = self._filter.get_filtered_products(product_name, free_delivery,
                                                            is_limited, product_min_price, product_max_price)
+            return query
+
         except MultiValueDictKeyError:
             return Product.objects.prefetch_related('image', 'tag')
-        finally:
-            if self.request.GET.get('sort') is not None:
-                sort = self.request.GET.get('sort')
-                return self._filter.filter_by_sort(sort, query)
-            else:
-                return query
 
 
 class AddProductToCartView(TemplateView):

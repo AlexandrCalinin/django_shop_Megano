@@ -67,7 +67,6 @@ class CatalogFilterRepository:
     @beartype
     def filter_by_sort(self, sort: str, query: QuerySet[Product]) -> QuerySet[Product]:
         if sort == "min_price":
-            print(query)
             return query.order_by(sort)
         else:
             return query.order_by(f"-{sort}")
