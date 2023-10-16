@@ -30,7 +30,7 @@ class CartRepository(ICart):
         cart = Cart.objects.annotate(
             total_amount=Sum('cartitems__amount', default=0)
         ).get(pk=model.pk)
-        return Decimal(cart.total_amount)
+        return Decimal(round(cart.total_amount, 2))
 
     @beartype
     def model_to_list(self, model: Cart) -> Optional[list]:

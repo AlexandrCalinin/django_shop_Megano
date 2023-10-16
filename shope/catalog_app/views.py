@@ -24,7 +24,6 @@ from interface.product_interface import IProduct
 from interface.discount_product_group_interface import IDiscountProductGroup
 from interface.discount_product_interface import IDiscountProduct
 
-
 from .form import CartEditForm
 
 from core.utils.add_product_to_cart import AddProductToCart
@@ -38,9 +37,7 @@ from interface.catalog_filter_interface import ICatalogFilter
 from interface.seller_interface import ISeller
 from interface.review_interface import IReview
 
-
 from catalog_app.form import ReviewForm
-
 from core.utils.cache import get_cache_value
 
 
@@ -153,18 +150,19 @@ class CatalogListView(ListView):
 
     def get_queryset(self):
         try:
+            global query
             if self.request.GET.get('category') is not None:
                 category_id = self.request.GET.get('category')
-                return self._filter.get_filtered_products_by_category(category_id)
+                query = self._filter.get_filtered_products_by_category(category_id)
             elif self.request.GET.get('char') is not None:
                 char_id = self.request.GET.get('char')
-                return self._filter.get_filtered_products_by_char(char_id)
+                query = self._filter.get_filtered_products_by_char(char_id)
             elif self.request.GET.get('tag') is not None:
                 tag_name = self.request.GET.get('tag')
-                return self._filter.filter_by_tag(tag_name)
+                query = self._filter.filter_by_tag(tag_name)
             elif self.request.GET.get('sort') is not None:
                 sort = self.request.GET.get('sort')
-                return self._filter.filter_by_sort(sort)
+                return self._filter.filter_by_sort(sort, query)
             else:
                 is_limited = True if self.request.GET.get('in_stock') else False
                 free_delivery = True if self.request.GET.get('free_delivery') else False
@@ -173,8 +171,9 @@ class CatalogListView(ListView):
                 else:
                     product_min_price, product_max_price = None, None
                 product_name = self.request.GET.get('title')
-                return self._filter.get_filtered_products(product_name, free_delivery,
-                                                          is_limited, product_min_price, product_max_price)
+                query = self._filter.get_filtered_products(product_name, free_delivery,
+                                                           is_limited, product_min_price, product_max_price)
+            return query
 
         except MultiValueDictKeyError:
             return Product.objects.prefetch_related('image', 'tag')
