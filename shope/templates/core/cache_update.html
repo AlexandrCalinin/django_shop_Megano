@@ -2,11 +2,16 @@
 {% load i18n %}
 {% load static %}
 {% block content_body %}
-    <div>
+    <style>
+    .cache-update { 
+     padding: 40px; 
+    }
+    </style>
+    <div class="cache-update">
         <form action="" method="post">
             <h1>{% trans "Edit cache value" %} ( {{ key }} )</h1>
-            {{ form.as_p }}
-            <button type="submit">
+            {{ form.value }}
+            <button class="btn btn_primary btn_lg" type="submit">
                 {% trans "Save" %}
                 {% csrf_token %}
             </button>
