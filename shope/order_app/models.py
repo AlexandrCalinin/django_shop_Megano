@@ -44,7 +44,7 @@ class Order(BaseModel):
     amount = models.DecimalField(verbose_name=_('order amount'),
                                  default=Decimal('0.0'),
                                  decimal_places=2,
-                                 max_digits=10)
+                                 max_digits=15)
 
     payment_id = models.CharField(max_length=200, blank=True, null=True)
 
