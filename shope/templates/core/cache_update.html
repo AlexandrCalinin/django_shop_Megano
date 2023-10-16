@@ -1,0 +1,7 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+{% load static %}
+{% block content_body %}
+    <h1>{% trans "Edit cache value" %} ( {{ key }} )</h1>
+    {{ form.as_p }}
+{% endblock content_body %}

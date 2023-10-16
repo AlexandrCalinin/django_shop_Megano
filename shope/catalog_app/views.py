@@ -6,7 +6,6 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 
 # кеширование
-from django.utils.cache import get_cache_key
 from django.core.cache import cache
 import inject
 

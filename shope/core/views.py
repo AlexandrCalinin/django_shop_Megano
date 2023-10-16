@@ -1,12 +1,16 @@
 import datetime
 import random
+from django.shortcuts import render
 import inject
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View, UpdateView
 
+from core.models.cache_setup import CacheSetup
+from core.utils.cache import cache_values_list
 from core.utils.injector import configure_inject
 from interface.banner_interface import IBanner
 from interface.product_interface import IProduct
 from interface.slider_interface import ISlider
+
 
 configure_inject()
 
@@ -34,4 +38,28 @@ class AboutView(TemplateView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        return context
+
+
+class SetupAdminView(View):
+    """Страница административных настроек"""
+    template_name = 'core/setup-admin.html'
+
+    def get(self, request, **kwargs):
+        """Get"""
+        context = {
+            'cache_data': cache_values_list(),
+        }
+        return render(request, self.template_name, context)
+
+
+class CacheUpdateView(UpdateView):
+    """Обновление данных кеша"""
+    model = CacheSetup
+    fields = ['value']
+    template_name = 'core/cache_update.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["key"] = self.object.key
         return context
