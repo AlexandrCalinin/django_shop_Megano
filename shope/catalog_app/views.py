@@ -1,13 +1,13 @@
 """Catalog app views"""
+
 from django.http import JsonResponse, HttpRequest
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
+from django.urls import reverse
 
 # кеширование
-from django.utils.cache import get_cache_key, learn_cache_key
+from django.utils.cache import get_cache_key
 from django.core.cache import cache
-from django.core.cache import caches
-
 import inject
 
 from django.http import HttpResponseRedirect
@@ -41,28 +41,36 @@ from interface.review_interface import IReview
 
 from catalog_app.form import ReviewForm
 
+from core.utils.cache import get_cache_value
+
 
 configure_inject()
 
 
-# def invalidate_cache(path=''):
+# def invalidate_cache(path='', *args, namespace=None):
 #     request = HttpRequest()
-#     request.META = {'SERVER_NAME': 'localhost', 'SERVER_PORT': 8000}
+#     request.META = {
+#         'SERVER_NAME': '127.0.0.1',
+#         'SERVER_PORT': 8000}
 #     request.LANGUAGE_CODE = 'en-us'
-#     request.path = path
+#     if namespace:
+#         path = namespace + ":" + path
+#     request.path = reverse(path, args=args)
+
+#     request.method = 'GET'
 
 #     try:
 #         cache_key = get_cache_key(request)
 #         if cache_key:
 #             if cache.has_key(cache_key):
 #                 cache.delete(cache_key)
-#                 return (True, 'successfully invalidated')
+#                 return True
 #             else:
-#                 return (False, 'cache_key does not exist in cache')
+#                 return False
 #         else:
 #             raise ValueError('failed to create cache_key')
 #     except (ValueError, Exception) as e:
-#         return (False, e)
+#         return False
 
 
 class ProductDetailView(DetailView):
@@ -76,33 +84,48 @@ class ProductDetailView(DetailView):
     template_name = 'catalog_app/product.html'
     context_object_name = 'product'
     pk_url_kwarg = 'product_id'
+    _CACHE_TIME = get_cache_value('DETAIL_PRODUCT')
 
     def get_queryset(self):
         """get querysert"""
-        return Product.objects.prefetch_related(
-            'image',
-            'tag',
-        )
+        key = 'PRODUCTS'
+        qs = cache.get(key)
+        if not qs:
+            qs = Product.objects.all()
+            cache.set(key, qs, self._CACHE_TIME)
+        return qs
 
     def get_context_data(self, **kwargs):
         """get_context_data"""
-        context = super().get_context_data(**kwargs)
-        context['characteristics'] = self._characteristics.get_by_product(_product=self.object)
-        context['review_form'] = ReviewForm()
-        context['reviews'] = self._review.get_by_product(self.kwargs['product_id'])
-        sellers = []
-        min_price = 0
-        for i_seller in self._sellers_of_product.get_sellers_of_product(self.kwargs['product_id']):
-            price = self._price_of_seller.get_last_price_of_product(
-                i_seller['price__seller'],
-                self.kwargs['product_id']
-            )
-            sellers.append(price)
-            if (price['product_seller__price'] < min_price) or min_price == 0:
-                min_price = price['product_seller__price']
+        key = 'DETAIL_PRODUCT:' + str(self.kwargs['product_id'])
 
-        context['sellers'] = sellers
-        context['min_price'] = min_price
+        context = cache.get(key)
+
+        if not context:
+            context = {}
+            context = super().get_context_data(**kwargs)
+            context['characteristics'] = self._characteristics.get_by_product(_product=self.object)
+            context['reviews'] = self._review.get_by_product(self.kwargs['product_id'])
+            sellers = []
+            min_price = {'price': 0,
+                         'seller': None}
+            for i_seller in self._sellers_of_product.get_sellers_of_product(self.kwargs['product_id']):
+                price = self._price_of_seller.get_last_price_of_product(
+                    i_seller['price__seller'],
+                    self.kwargs['product_id']
+                )
+                sellers.append(price)
+                if (price['product_seller__price'] < min_price['price']) or min_price['price'] == 0:
+                    min_price['price'] = price['product_seller__price']
+                    min_price['seller'] = price['pk']
+
+            context['sellers'] = sellers
+            context['min_price'] = min_price
+
+            cache.set(key, context, self._CACHE_TIME)
+
+        context['review_form'] = ReviewForm()
+        context['cache_time'] = self._CACHE_TIME
 
         return context
 
@@ -111,7 +134,6 @@ class ProductDetailView(DetailView):
         review_form = ReviewForm(request.POST)
         if review_form.is_valid():
             review_form.save()
-            cache.set(get_cache_key(request), None)
             return redirect(self.request.path)
 
         context = {

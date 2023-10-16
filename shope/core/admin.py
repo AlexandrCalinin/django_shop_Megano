@@ -2,7 +2,7 @@
 
 
 from django.contrib import admin
-from .models import Seller, Price
+from .models import Seller, Price, CacheSetup
 
 
 class SellerAdmin(admin.ModelAdmin):
@@ -23,3 +23,11 @@ class PriceAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Seller, SellerAdmin)
+
+
+class CacheSetupAdmin(admin.ModelAdmin):
+    """CacheSetup  admin"""
+    pass
+
+
+admin.site.register(CacheSetup, CacheSetupAdmin)
