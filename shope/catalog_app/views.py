@@ -83,7 +83,6 @@ class ProductDetailView(DetailView):
     template_name = 'catalog_app/product.html'
     context_object_name = 'product'
     pk_url_kwarg = 'product_id'
-    _CACHE_TIME = get_cache_value('DETAIL_PRODUCT')
 
     def get_queryset(self):
         """get querysert"""
@@ -91,12 +90,13 @@ class ProductDetailView(DetailView):
         qs = cache.get(key)
         if not qs:
             qs = Product.objects.all()
-            cache.set(key, qs, self._CACHE_TIME)
+            cache.set(key, qs, get_cache_value('DETAIL_PRODUCT'))
         return qs
 
     def get_context_data(self, **kwargs):
         """get_context_data"""
         key = 'DETAIL_PRODUCT:' + str(self.kwargs['product_id'])
+        cache_time = get_cache_value('DETAIL_PRODUCT')
 
         context = cache.get(key)
 
@@ -121,10 +121,10 @@ class ProductDetailView(DetailView):
             context['sellers'] = sellers
             context['min_price'] = min_price
 
-            cache.set(key, context, self._CACHE_TIME)
+            cache.set(key, context, cache_time)
 
         context['review_form'] = ReviewForm()
-        context['cache_time'] = self._CACHE_TIME
+        context['cache_time'] = cache_time
 
         return context
 
