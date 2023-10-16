@@ -13,4 +13,4 @@ class CharacteristicRepository(ICharacteristicProduct):
     def get_by_product(self, _product: Product) -> QuerySet[CharacteristicProduct]:
         """Получить характеристики по продукту."""
 
-        return CharacteristicProduct.objects.filter(product=_product)
+        return CharacteristicProduct.objects.filter(product=_product).select_related('characteristic_value')
