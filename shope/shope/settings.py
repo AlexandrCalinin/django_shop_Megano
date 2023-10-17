@@ -209,3 +209,30 @@ LOGIN_URL = '/auth/login'
 
 # Payment
 SUCCESS_PAYMENT = 'succeeded'
+
+# cache parameters
+SERVER_NAME = '127.0.0.1'
+SERVER_PORT = 8000
+
+
+def make_key(key, key_prefix, version):
+    """получить ключ кеша"""
+    return key
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'shope_cache'),
+        'KEY_FUNCTION': make_key
+    }
+}
+
+# парметры по умолчания времени кеширования
+CACHE_VALUES = {
+    'DEFAULT': 86400,  # время кешировния по умолчанию
+    'CATEGORY': 86400,  # время кеширования каталога
+    'DETAIL_PRODUCT': 86400,  # время кеширования детальной страницы продукта
+    'TOP_PRODUCT': 86400,  # время кеширования детальной страницы продукта
+    'CATALOG': 86400  # время кеширования каталога
+}

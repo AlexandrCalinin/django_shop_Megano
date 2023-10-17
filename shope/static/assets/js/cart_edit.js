@@ -47,7 +47,8 @@ var csrf = $('meta[name="csrf-token"]').attr('content');
     $('.Cart-block.Cart-block_total').html(data.total_amount)
     },
     error: (error) => {
-    console.log(error)}
+
+    }
     });
 
 };
@@ -66,7 +67,7 @@ var csrf = $('meta[name="csrf-token"]').attr('content');
     $('.CartBlock-block').html(data.cart)
     $('.Cart-block.Cart-block_total').html(data.total_amount)
     $('.Cart-product[id="' + product_id  + '"' ).remove()
-    console.log($('.Cart-product[id="' + product_id  + '"' ).first())
+
     },
     error: (error) => {
     console.log(error)}
@@ -87,7 +88,7 @@ $('.Card-hover').on('click', 'a[class="Card-btn"]', function(){
     cart_add(product_id, product_name, image, product_count, amount, seller)
 })
 
-$('#amount').on('click', 'button[class="Amount-add"]', function(){
+$('div[name="amount-cart"]').on('click', 'button[class="Amount-add"]', function(){
     // Обработка нажатия на кнопку добавления кол-ва товаров в корзине
     var count_product = $(this).parent('.Amount').children('.Amount-input.form-input').attr('value')
     $(this).parent('.Amount').children('.Amount-input.form-input').attr('value', parseInt(count_product) + 1)
@@ -96,17 +97,15 @@ $('#amount').on('click', 'button[class="Amount-add"]', function(){
     var product_id = $(this).parents(".Cart-product").attr("id")
     var count = 1
     var seller = $(this).attr('name')
-    console.log(count_product)
 
     cart_edit(product_id, count, seller)
 })
 
-$('#amount').on('click', 'button[class="Amount-remove"]', function(){
+$('div[name="amount-cart"]').on('click', 'button[class="Amount-remove"]', function(){
     // Обработка нажатия на кнопку уменьшения кол-ва товаров в корзине
     var count_product = $(this).parent('.Amount').children('.Amount-input.form-input').attr('value')
     $(this).parent('.Amount').children('.Amount-input.form-input').attr('value', parseInt(count_product) - 1)
     var count_product = $(this).parent('.Amount').children('.Amount-input.form-input').attr('value')
-console.log(count_product)
     var product_id = $(this).parents(".Cart-product").attr("id")
     var count = -1
     var seller = $(this).parent('.Amount').children('.Amount-add').attr('name')
@@ -135,14 +134,14 @@ $('#1').on('click', 'a[class="btn btn_primary"]', function(){
     var seller = $(this).attr('id')
     var product_name = $(this).attr('name')
     var image = $('.ProductCard-pict').attr('href')
-    console.log('product', product_id)
-    console.log('count', product_count)
-    console.log('amount', amount)
-    console.log('seller', seller)
-    console.log('name', product_name)
-    console.log('image', image)
+    if(product_count == 0){
+        Swal.fire({title: 'Выберите кол-во товаров!', confirmButtonColor: '#0041c2'})
+    }
+    else{
+        cart_add(product_id, product_name, image, product_count, amount, seller)
+    }
 
-    cart_add(product_id, product_name, image, product_count, amount, seller)
+
 })
 
 $('div[name="add-product-to"]').on('click', 'a[class="btn btn_primary"]', function(){
@@ -154,12 +153,7 @@ $('div[name="add-product-to"]').on('click', 'a[class="btn btn_primary"]', functi
     var seller = $(this).data('seller')
     var product_name = $(this).data('name')
     var image = $('.ProductCard-pict').attr('href')
-    console.log('product', product_id)
-    console.log('count', product_count)
-    console.log('amount', amount)
-    console.log('seller', seller)
-    console.log('name', product_name)
-    console.log('image', image)
+
 
     cart_add(product_id, product_name, image, product_count, amount, seller)
 })

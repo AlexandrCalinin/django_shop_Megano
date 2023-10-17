@@ -26,6 +26,8 @@ class AddProductToCart:
         product_id, product_name, image, product_count, amount, seller_id = kwargs.values()
 
         cart = self._cart.get_active_by_user(_user=user)
+        if not cart:
+            cart = self._cart.create_cart(user)
         product = Product.objects.get(id=product_id)
         seller = Seller.objects.get(id=seller_id)
 
@@ -123,12 +125,15 @@ class AddProductToCart:
         request.session.modified = True
         return request.session["cart"][product]
 
-    def get_list_in_cart(self, request) -> CartItem:
+    def get_list_in_cart(self, request) -> CartItem or None:
         """
         получить список товаров в корзине
         """
+
         if request.user.is_authenticated:
             cart = self._cart.get_active_by_user(_user=request.user)
+            if not cart:
+                return None
             return self._cartitem.get_by_cart_id(_cart=cart)
         else:
             products = request.session['cart']
@@ -161,7 +166,7 @@ class AddProductToCart:
             amount = 0
             for item in products.values():
                 count += int(item['count'])
-                amount += int(item['count']) * float(item['price'])
+                amount += float(item['amount'])
 
             return round(amount, 2), round(count, 2)
 
@@ -179,7 +184,7 @@ class AddProductToCart:
             products = request.session['cart']
             for item, value in products.items():
 
-                product = self._product.get_by_id(product_id=item)
+                product = self._product.get_by_id(product=item)
                 seller = Seller.objects.get(pk=value['seller'])
 
                 count = value['count']

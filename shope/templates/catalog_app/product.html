@@ -1,7 +1,9 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% load i18n %}
+{% load cache %}
 {% block content_body %}
+    {% cache cache_time detail_product product.id %}
     <div class="Middle Middle_top">
         <div class="Section">
             <div class="wrap">
@@ -34,7 +36,7 @@
                                 <h2 class="ProductCard-title">{{ product.title }}</h2>
                                 <div class="ProductCard-info">
                                     <div class="ProductCard-cost">
-                                        <div class="ProductCard-price">{{ min_price }}</div>
+                                        <div class="ProductCard-price">{{ min_price.price }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +50,7 @@
                                     </div>
                                 </div>
                                 <div class="ProductCard-cartElement" id="1">
-                                    <a class="btn btn_primary"  data-value="{{ min_price }}" id="4{{seller}}" name="{{product.name}}">
+                                    <a class="btn btn_primary"  data-value="{{ min_price.price }}" id="4{{seller}}" name="{{product.name}}">
                                         <img class="btn-icon"
                                              src="{% static '/assets/img/icons/card/cart_white.svg' %}"
                                              alt="cart_white.svg">
@@ -133,7 +135,7 @@
                                                     <div class="row-block">
                                                         <a class="Order-title" href="">{{ i_seller.name }}</a>
                                                         <div class="ProductCard-cartElement" name="add-product-to" style="margin-top: 10px;">
-                                                            <a class="btn btn_primary" data-value="{{ i_seller.product_seller__price }}" data-seller="{{i_seller.product_seller}}" data-name="{{product.name}}">
+                                                            <a class="btn btn_primary" data-value="{{ i_seller.product_seller__price }}" data-seller="{{i_seller.pk}}" data-name="{{product.name}}">
                                                                 <img class="btn-icon"
                                                                     src="{% static '/assets/img/icons/card/cart_white.svg' %}"
                                                                     alt="cart_white.svg">
@@ -219,4 +221,5 @@
         </div>
     </div>
 </div>
+{% endcache %}
 {% endblock content_body %}
