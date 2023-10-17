@@ -1,10 +1,11 @@
 from django.urls import path
-from django.views.decorators.cache import cache_page
 
-from .views import *
+from core.views import BaseView, AboutView, SetupAdminView, CacheUpdateView
 
 
 urlpatterns = [
-    path('', cache_page(24 * 60 * 24)(BaseView.as_view()), name='home'),
+    path('', BaseView.as_view(), name='home'),
     path('about/', AboutView.as_view(), name='about'),
+    path('setup-admin/', SetupAdminView.as_view(), name='setup-admin'),
+    path('edit-cache/<int:pk>/', CacheUpdateView.as_view(), name='edit-cache')
 ]

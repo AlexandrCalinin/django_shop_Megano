@@ -54,3 +54,24 @@ def get_cache_value(cache_value: str) -> int:
                   )
 
     return cache_data.value
+
+
+def delete_cache_setup():
+    for i_key in settings.CACHE_VALUES.keys():
+        if cache.get(i_key):
+            cache.delete(i_key)
+
+
+def cache_values_list():
+    """Получить все настройки для кеша"""
+    cache_list = []
+    for i_key in settings.CACHE_VALUES.keys():
+        cache_obj = CacheSetup.objects.get_or_create(
+            key=i_key,
+            defaults={'key': i_key,
+                      'value': settings.CACHE_VALUES[i_key]}
+        )
+
+        cache_list.append(cache_obj[0])
+
+    return cache_list
