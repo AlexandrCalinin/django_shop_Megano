@@ -164,7 +164,7 @@
                       <strong class="Card-title">
                         <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
                           {% csrf_token %}
-                          <button class=" btn_reset" href="{% url 'product' product_id=product.id %}" type="submit">{{ product.title }}</button>
+                          <button class=" btn_reset" href="{% url 'product' product_id=product.id %}" type="submit">{{ product.title|truncatechars:48 }}</button>
                         </form>
                       </strong>
                       <div class="Card-description">

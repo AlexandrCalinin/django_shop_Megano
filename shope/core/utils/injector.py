@@ -8,6 +8,7 @@ from interface.discount_interface import IDiscountBaseModel
 from interface.discount_product_group_interface import IDiscountProductGroup
 from interface.discount_product_interface import IDiscountProduct
 from interface.order_interface import IOrder
+from interface.price_interface import IPrice
 
 from interface.product_interface import IProduct
 from interface.product_viewed_interface import IProductViewed
@@ -23,6 +24,7 @@ from interface.auth_interface import IAuth
 
 from repositories.order_repositories import OrderRepository
 from repositories.auth_repositories import AuthRepository
+from repositories.price_repositories import PriceRepository
 from repositories.product_repositories import ProductRepository
 from repositories.product_viewed_repositories import ProductViewedRepository
 
@@ -71,6 +73,7 @@ BINDS = (
     (ISeller, SellerRepository),
     (IReview, ReviewRepository),
     (ICompareProduct, CompareProductRepository),
+    (IPrice, PriceRepository),
 )
 
 

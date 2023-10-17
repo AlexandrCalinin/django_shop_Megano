@@ -26,20 +26,20 @@ class CompareProductRepository(ICompareProduct):
         # duration_in_microseconds = Cast(today - date, output_field=IntegerField())
         # new = qs.annotate(product_price=Min(F('product__price__price')), duration=Min(duration_in_microseconds))
 
-        min_price_subquery = Price.objects.filter(product=OuterRef('pk')).values('product').annotate(
-            min_value=Min('price')
-        ).values('min_value')[:1]
-        min_price_seller_subquery = Price.objects.filter(
-            product=OuterRef('pk'), price=OuterRef('min_price')
-        ).values('seller_id')[:1]
-        queryset = qs.annotate(
-            min_price=Subquery(min_price_subquery.values('min_value'), output_field=FloatField()),
-            min_price_seller_id=Subquery(min_price_seller_subquery)
-        ).filter(min_price__gt=0)
-        for i in min_price_subquery:
-            print(i, i.created_at, i.duration)
+        # min_price_subquery = Price.objects.filter(product=OuterRef('pk')).values('product').annotate(
+        #     min_value=Min('price')
+        # ).values('min_value')[:1]
+        # min_price_seller_subquery = Price.objects.filter(
+        #     product=OuterRef('pk'), price=OuterRef('min_price')
+        # ).values('seller_id')[:1]
+        # queryset = qs.annotate(
+        #     min_price=Subquery(min_price_subquery.values('min_value'), output_field=FloatField()),
+        #     min_price_seller_id=Subquery(min_price_seller_subquery)
+        # ).filter(min_price__gt=0)
+        # for i in min_price_subquery:
+        #     print(i, i.created_at, i.duration)
 
-        return queryset
+        return qs
 
     @beartype
     def create_compare_product(self, _product_id: int, _session_key: str) -> None:

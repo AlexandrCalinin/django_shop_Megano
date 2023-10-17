@@ -21,6 +21,7 @@ from core.utils.injector import configure_inject
 from interface.cart_sale_interface import ICartSale
 from interface.category_interface import ICategory
 from interface.compare_product_interface import ICompareProduct
+from interface.price_interface import IPrice
 from interface.product_interface import IProduct
 from interface.discount_product_group_interface import IDiscountProductGroup
 from interface.discount_product_interface import IDiscountProduct
@@ -200,6 +201,7 @@ class AddProductToCartView(TemplateView):
 class ComparisonView(TemplateView):
     template_name = 'catalog_app/comparison.html'
     _compare_product: ICompareProduct = inject.attr(ICompareProduct)
+    _price_seller: IPrice = inject.attr(IPrice)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -208,6 +210,7 @@ class ComparisonView(TemplateView):
             self.request.session.save()
             session_key = self.request.session.session_key
         context['compare_list'] = self._compare_product.get_compare_product_list(_session_key=session_key)
+        context['price_seller_list'] = self._price_seller.get_last_minprice_dct(_product_id_lst=[i.product.id for i in context['compare_list']])
         return context
 
 
