@@ -87,7 +87,8 @@ $('.Card-hover').on('click', 'a[class="Card-btn"]', function(){
     cart_add(product_id, product_name, image, product_count, amount, seller)
 })
 
-$('#amount').on('click', 'button[class="Amount-add"]', function(){
+$('div[name="amount-cart"]').on('click', 'button[class="Amount-add"]', function(){
+    console.log('work')
     // Обработка нажатия на кнопку добавления кол-ва товаров в корзине
     var count_product = $(this).parent('.Amount').children('.Amount-input.form-input').attr('value')
     $(this).parent('.Amount').children('.Amount-input.form-input').attr('value', parseInt(count_product) + 1)
@@ -101,7 +102,7 @@ $('#amount').on('click', 'button[class="Amount-add"]', function(){
     cart_edit(product_id, count, seller)
 })
 
-$('#amount').on('click', 'button[class="Amount-remove"]', function(){
+$('div[name="amount-cart"]').on('click', 'button[class="Amount-remove"]', function(){
     // Обработка нажатия на кнопку уменьшения кол-ва товаров в корзине
     var count_product = $(this).parent('.Amount').children('.Amount-input.form-input').attr('value')
     $(this).parent('.Amount').children('.Amount-input.form-input').attr('value', parseInt(count_product) - 1)
