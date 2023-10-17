@@ -138,7 +138,7 @@
                                     <div class="Cart-total">
                                         <div class="Cart-block Cart-block_total">
                                             <strong class="Cart-title">{% trans "Amount" %}:</strong><span class="Cart-price">{{ total_amount| floatformat:2 }}</span>
-                                            <input name='amount'hidden value={{ total_amount }}>
+                                            <input name='amount'hidden value={{ total_amount| floatformat:2 }}>
                                         </div>
                                         <div class="Cart-block">
                                             <button class="btn btn_primary btn_lg" type="submit">{% trans "Pay" %}</button>

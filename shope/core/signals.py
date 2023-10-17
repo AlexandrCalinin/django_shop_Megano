@@ -6,7 +6,8 @@ from django.core.cache.utils import make_template_fragment_key
 from core.utils.cache import delete_cache_setup
 
 from core.models.cache_setup import CacheSetup
-from catalog_app.models import Rewiew, Product, Category
+from catalog_app.models import Rewiew, Product, Category, Banner
+from order_app.models import OrderItem
 from .utils.cache import invalidate_cache
 
 
@@ -52,5 +53,26 @@ def category_change(sender, instance, **kwargs):
     Удаляем кеш категории из контекст-процессора"""
 
     key = 'CATEGORY_LIST'
+    if cache.get(key):
+        cache.delete(key)
+
+
+@receiver(post_save, sender=Banner)
+def banner_change(sender, instance, **kwargs):
+    """Изменение  банера.
+    Удаляем кеш банера"""
+
+    key = 'BANNER_LIST'
+    if cache.get(key):
+        cache.delete(key)
+
+
+@receiver(post_save, sender=OrderItem)
+@receiver(post_save, sender=Product)
+def top_product_change(sender, instance, **kwargs):
+    """Отслеживаем изменениен продукта и изменение заказа.
+    Удаляем кеш топ-товаров"""
+
+    key = 'TOP_PRODUCT_LIST'
     if cache.get(key):
         cache.delete(key)

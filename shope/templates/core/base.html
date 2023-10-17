@@ -149,8 +149,10 @@ block
                        alt="loon-icon.svg" />
                 </button>
                 <div class="dropdown-content">
-                  <a class="dropdown-content-a" href="{% url 'account' %}">Личный кабинет</a>
-                  <a class="dropdown-content-a" href="../profile/account">Административный раздел</a>
+                  <a class="dropdown-content-a" href="{% url 'account' %}">{% trans 'Personal account' %}</a>
+                  {% if request.user.is_superuser %}
+                    <a class="dropdown-content-a" href="{% url 'setup-admin' %}">{% trans 'Setup page' %}</a>
+                  {% endif %}
                   <a class="dropdown-content-a" href="../profile/account">{% trans 'Sign out' %}</a>
                 </div>
               </div>
