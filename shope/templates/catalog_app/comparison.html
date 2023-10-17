@@ -69,7 +69,12 @@
           </div>
           <div class="ProductCard-info">
             <div class="ProductCard-cost">
-              <div class="ProductCard-price">$55.00
+              <div class="ProductCard-price">
+                {% for object in price_seller_list %}
+                  {% if object.product_id == product.product.id %}
+                    ${{ object.price }}
+                  {% endif %}
+                {% endfor %}
               </div>
             </div>
           </div>

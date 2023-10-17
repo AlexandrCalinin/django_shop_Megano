@@ -15,16 +15,21 @@ class PriceRepository(IPrice):
 
     @beartype
     def get_last_minprice_dct(self, _product_id_lst: List):
-        """Получить последнюю цену продукта"""
-        qs = Price.objects.filter(product_id__in=_product_id_lst).values(
-            'product_id', 'pk', 'price', 'seller', dure=Cast(today - F('seller__created_at'), output_field=IntegerField()))
+        """Получить последнюю цену продавца продукта и минимальную цену продукта, если продавцов больше одного"""
+        qs = Price.objects.filter(is_active=True, product_id__in=_product_id_lst).values(
+            'product_id', 'price', 'seller', duration=Cast(today - Cast(F('created_at'), output_field=DateTimeField()
+                                                                        ), output_field=IntegerField())
+        )
         price_dict = dict()
         for dct in qs:
-            last_date = dct['dure']
+            last_date = dct['duration']
+            min_price = dct['price']
             if not price_dict.get(dct['product_id'], None):
                 price_dict[dct['product_id']] = dct
-            elif last_date < price_dict[dct['product_id']]['dure']:
-                pass
+            elif (last_date < price_dict[dct['product_id']]['duration']) &\
+                    (price_dict[dct['product_id']]['seller'] == dct['seller']):
+                price_dict[dct['product_id']] = dct
+            elif min_price < price_dict[dct['product_id']]['price']:
+                price_dict[dct['product_id']] = dct
 
-        print(qs)
-        return qs
+        return [val for key, val in price_dict.items()]
