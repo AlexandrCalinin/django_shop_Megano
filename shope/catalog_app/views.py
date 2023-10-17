@@ -1,14 +1,13 @@
 """Catalog app views"""
 from django.contrib import messages
+from django.utils.translation import gettext as _
 from django.http import JsonResponse, HttpRequest
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
-from django.utils.translation import gettext as _
+from django.urls import reverse
 
 # кеширование
-from django.utils.cache import get_cache_key
 from django.core.cache import cache
-
 import inject
 
 from django.http import HttpResponseRedirect
@@ -26,7 +25,6 @@ from interface.product_interface import IProduct
 from interface.discount_product_group_interface import IDiscountProductGroup
 from interface.discount_product_interface import IDiscountProduct
 
-
 from .form import CartEditForm
 
 from core.utils.add_product_to_cart import AddProductToCart
@@ -40,11 +38,37 @@ from interface.catalog_filter_interface import ICatalogFilter
 from interface.seller_interface import ISeller
 from interface.review_interface import IReview
 
-
 from catalog_app.form import ReviewForm
+from core.utils.cache import get_cache_value
 
 
 configure_inject()
+
+
+# def invalidate_cache(path='', *args, namespace=None):
+#     request = HttpRequest()
+#     request.META = {
+#         'SERVER_NAME': '127.0.0.1',
+#         'SERVER_PORT': 8000}
+#     request.LANGUAGE_CODE = 'en-us'
+#     if namespace:
+#         path = namespace + ":" + path
+#     request.path = reverse(path, args=args)
+
+#     request.method = 'GET'
+
+#     try:
+#         cache_key = get_cache_key(request)
+#         if cache_key:
+#             if cache.has_key(cache_key):
+#                 cache.delete(cache_key)
+#                 return True
+#             else:
+#                 return False
+#         else:
+#             raise ValueError('failed to create cache_key')
+#     except (ValueError, Exception) as e:
+#         return False
 
 
 class ProductDetailView(DetailView):
@@ -61,30 +85,46 @@ class ProductDetailView(DetailView):
 
     def get_queryset(self):
         """get querysert"""
-        return Product.objects.prefetch_related(
-            'image',
-            'tag',
-        )
+        key = 'PRODUCTS'
+        qs = cache.get(key)
+        if not qs:
+            qs = Product.objects.all()
+            cache.set(key, qs, get_cache_value('DETAIL_PRODUCT'))
+        return qs
 
     def get_context_data(self, **kwargs):
         """get_context_data"""
-        context = super().get_context_data(**kwargs)
-        context['characteristics'] = self._characteristics.get_by_product(_product=self.object)
-        context['review_form'] = ReviewForm()
-        context['reviews'] = self._review.get_by_product(self.kwargs['product_id'])
-        sellers = []
-        min_price = 0
-        for i_seller in self._sellers_of_product.get_sellers_of_product(self.kwargs['product_id']):
-            price = self._price_of_seller.get_last_price_of_product(
-                i_seller['price__seller'],
-                self.kwargs['product_id']
-            )
-            sellers.append(price)
-            if (price['product_seller__price'] < min_price) or min_price == 0:
-                min_price = price['product_seller__price']
+        key = 'DETAIL_PRODUCT:' + str(self.kwargs['product_id'])
+        cache_time = get_cache_value('DETAIL_PRODUCT')
 
-        context['sellers'] = sellers
-        context['min_price'] = min_price
+        context = cache.get(key)
+
+        if not context:
+            context = {}
+            context = super().get_context_data(**kwargs)
+            context['characteristics'] = self._characteristics.get_by_product(_product=self.object)
+            context['reviews'] = self._review.get_by_product(self.kwargs['product_id'])
+            sellers = []
+            min_price = {'price': 0,
+                         'seller': None}
+            for i_seller in self._sellers_of_product.get_sellers_of_product(self.kwargs['product_id']):
+                price = self._price_of_seller.get_last_price_of_product(
+                    i_seller['price__seller'],
+                    self.kwargs['product_id']
+                )
+                sellers.append(price)
+                if (price['product_seller__price'] < min_price['price']) or min_price['price'] == 0:
+                    min_price['price'] = price['product_seller__price']
+                    min_price['seller'] = price['pk']
+
+            context['sellers'] = sellers
+            context['min_price'] = min_price
+
+            cache.set(key, context, cache_time)
+
+        context['review_form'] = ReviewForm()
+        context['cache_time'] = cache_time
+
         return context
 
     def post(self, request, product_id):
@@ -92,7 +132,6 @@ class ProductDetailView(DetailView):
         review_form = ReviewForm(request.POST)
         if review_form.is_valid():
             review_form.save()
-            cache.set(get_cache_key(request), None)
             return redirect(self.request.path)
 
         context = {
@@ -112,18 +151,19 @@ class CatalogListView(ListView):
 
     def get_queryset(self):
         try:
+            global query
             if self.request.GET.get('category') is not None:
                 category_id = self.request.GET.get('category')
-                return self._filter.get_filtered_products_by_category(category_id)
+                query = self._filter.get_filtered_products_by_category(category_id)
             elif self.request.GET.get('char') is not None:
                 char_id = self.request.GET.get('char')
-                return self._filter.get_filtered_products_by_char(char_id)
+                query = self._filter.get_filtered_products_by_char(char_id)
             elif self.request.GET.get('tag') is not None:
                 tag_name = self.request.GET.get('tag')
-                return self._filter.filter_by_tag(tag_name)
+                query = self._filter.filter_by_tag(tag_name)
             elif self.request.GET.get('sort') is not None:
                 sort = self.request.GET.get('sort')
-                return self._filter.filter_by_sort(sort)
+                return self._filter.filter_by_sort(sort, query)
             else:
                 is_limited = True if self.request.GET.get('in_stock') else False
                 free_delivery = True if self.request.GET.get('free_delivery') else False
@@ -132,8 +172,9 @@ class CatalogListView(ListView):
                 else:
                     product_min_price, product_max_price = None, None
                 product_name = self.request.GET.get('title')
-                return self._filter.get_filtered_products(product_name, free_delivery,
-                                                          is_limited, product_min_price, product_max_price)
+                query = self._filter.get_filtered_products(product_name, free_delivery,
+                                                           is_limited, product_min_price, product_max_price)
+            return query
 
         except MultiValueDictKeyError:
             return Product.objects.prefetch_related('image', 'tag')

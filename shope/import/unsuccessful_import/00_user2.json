@@ -45,7 +45,7 @@
   },
   {
     "model": "auth_app.user",
-    "pk": 30,
+    "pk": 3,
     "fields": {
       "password": "pbkdf2_sha256$600000$C8kmBx8SMWN3SfUjr27Rcq$D0mI2gvZhqrv2zJc5yBJpS7dtCse+NWFonORVKbZuuI=",
       "last_login": "2023-09-09T07:07:45Z",

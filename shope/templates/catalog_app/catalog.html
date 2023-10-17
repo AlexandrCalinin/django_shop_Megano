@@ -71,7 +71,8 @@
                                 <div class="buttons">
                                     {% unique_tags as unique_tags %}
                                     {% for tag in unique_tags %}
-                                        <button class="btn btn_default btn_sm" name="tag" value="{{ tag.name }}">{{ tag.name }}</button>
+                                        <button class="btn btn_default btn_sm" name="tag"
+                                                value="{{ tag.name }}">{{ tag.name }}</button>
                                     {% endfor %}
                                 </div>
                             </form>
@@ -83,10 +84,10 @@
                         <div class="Sort-title">Сортировать по:</div>
                         <form action="{% url 'catalog' %}" method="get">
                             <div class="Sort-variants">
-                                <button class="btn btn_default btn_sm" name="sort" value="1">Популярности</button>
-                                <button class="btn btn_default btn_sm" name="sort" value="2">Цене</button>
-                                <button class="btn btn_default btn_sm" name="sort" value="3">Отзывам</button>
-                                <button class="btn btn_default btn_sm" name="sort" value="4">Новизне</button>
+                                <button class="btn btn_default btn_sm" name="sort" value="number_of_sales">Популярности</button>
+                                <button class="btn btn_default btn_sm" name="sort" value="min_price">Цене</button>
+                                <button class="btn btn_default btn_sm" name="sort" value="rewiew">Отзывам</button>
+                                <button class="btn btn_default btn_sm" name="sort" value="created_at">Новизне</button>
                             </div>
                         </form>
                     </div>
@@ -95,46 +96,45 @@
                             {% for product in object_list %}
 
                                 <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
-                                {% csrf_token %}
+                                    {% csrf_token %}
                                     <div class="Card" id="{{ product.id }}">
-                                        <button class="Card-picture btn_reset" name="{{ product.image.all.0.image.url }}"  type="submit">
-                                        <img
-                                        src="{{ product.image.all.0.image.url }}"
-                                        alt="{{ product.image.all.0.image.name }}">
-                                </button>
+                                        <button class="Card-picture btn_reset"
+                                                name="{{ product.image.all.0.image.url }}" type="submit">
+                                            <img
+                                                    src="{{ product.image.all.0.image.url }}"
+                                                    alt="{{ product.image.all.0.image.name }}">
+                                        </button>
 
-                                    <div class="Card-content">
-                                         <strong class="Card-title">
-                                            <button class=" btn_reset"  type="submit">
-                                                {{ product.title }}
-                                            </button>
-                                        </strong>
+                                        <div class="Card-content">
+                                            <strong class="Card-title">
+                                                <button class=" btn_reset" type="submit">
+                                                    {{ product.title|truncatechars:48 }}
+                                                </button>
+                                            </strong>
 
-                                        <div class="Card-description">
-                                            <div class="Card-cost">
-                                                <span class="Card-price">{{ product.min_price|floatformat:"0" }}₽</span>
-                                            </div>
-                                            {% for product_tag in product.tag.all %}
-                                                {% if product.tag.all|length == 1 %}
-                                                    <div class="Card-category">{{ product_tag }}</div>
-                                                {% else %}
-                                                    {% if product_tag == product.tag.all.last %}
+                                            <div class="Card-description">
+                                                <div class="Card-cost">
+                                                    <span class="Card-price">{{ product.min_price|floatformat:"0" }}₽</span>
+                                                </div>
+                                                {% for product_tag in product.tag.all %}
+                                                    {% if product.tag.all|length == 1 %}
                                                         <div class="Card-category">{{ product_tag }}</div>
                                                     {% else %}
-                                                        <div class="Card-category">{{ product_tag }},</div>
+                                                        {% if product_tag == product.tag.all.last %}
+                                                            <div class="Card-category">{{ product_tag }}</div>
+                                                        {% else %}
+                                                            <div class="Card-category">{{ product_tag }},</div>
+                                                        {% endif %}
                                                     {% endif %}
-                                                {% endif %}
-                                            {% endfor %}
-                                            <div class="Card-hover">
-                                                <a class="Card-btn" name="{{product.title}}" value="{{ product.min_price }}" id="2" href="#">
-                                                    <img src="{% static '/assets/img/icons/card/cart.svg' %}" alt="cart.svg">
-                                                </a>
-                                                <a class="Card-btn" href="compare.html">
-                                                    <img src="{% static 'assets/img/icons/card/change.svg' %}" alt="change.svg">
-                                                </a>
+                                                {% endfor %}
+                                                <div class="Card-hover">
+                                                    <a class="Card-btn" name="{{ product.title }}"
+                                                       value="{{ product.min_price }}" id="2" href="#">
+                                                        <img src="{% static '/assets/img/icons/card/cart.svg' %}"
+                                                             alt="cart.svg"></a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
                                     </div>
                                 </form>
                             {% endfor %}

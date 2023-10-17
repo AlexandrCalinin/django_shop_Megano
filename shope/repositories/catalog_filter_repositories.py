@@ -60,19 +60,16 @@ class CatalogFilterRepository:
                     return self.queryset.filter(min_price__range=(product_min_price, product_max_price))
 
     @beartype
-    def filter_by_tag(self, tag_name: Any) -> QuerySet[Product]:
+    def filter_by_tag(self, tag_name: str) -> QuerySet[Product]:
         tags = Tag.objects.filter(slug=tag_name).values_list('name', flat=True)
         return self.queryset.filter(tag__name__in=tags)
 
     @beartype
-    def filter_by_sort(self, sort: Any) -> QuerySet[Product]:
-        sort_dict = {
-            '1': 'popularity',
-            '2': 'min_price',
-            '3': 'rewiew',
-            '4': 'created_at',
-        }
-        return self.queryset.order_by(sort_dict[sort])
+    def filter_by_sort(self, sort: str, query: QuerySet[Product]) -> QuerySet[Product]:
+        if sort == "min_price":
+            return query.order_by(sort)
+        else:
+            return query.order_by(f"-{sort}")
 
     @beartype
     def get_filtered_products_by_category(self, _category_id: str) -> QuerySet[Product]:

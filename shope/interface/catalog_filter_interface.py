@@ -17,12 +17,12 @@ class ICatalogFilter:
         pass
 
     @abstractmethod
-    def filter_by_tag(self, tag: Any) -> QuerySet[Product]:
+    def filter_by_tag(self, tag: str) -> QuerySet[Product]:
         """Получить отфильтрованные продукты по тегам"""
         pass
 
     @abstractmethod
-    def filter_by_sort(self, sort: Any) -> QuerySet[Product]:
+    def filter_by_sort(self, sort: str, query: QuerySet[Product]) -> QuerySet[Product]:
         """Получить отфильтрованные продукты по критериям сортировки"""
         pass
 
