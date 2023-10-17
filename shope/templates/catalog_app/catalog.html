@@ -84,10 +84,10 @@
                         <div class="Sort-title">Сортировать по:</div>
                         <form action="{% url 'catalog' %}" method="get">
                             <div class="Sort-variants">
-                                <button class="btn btn_default btn_sm" name="sort" value="1">Популярности</button>
-                                <button class="btn btn_default btn_sm" name="sort" value="2">Цене</button>
-                                <button class="btn btn_default btn_sm" name="sort" value="3">Отзывам</button>
-                                <button class="btn btn_default btn_sm" name="sort" value="4">Новизне</button>
+                                <button class="btn btn_default btn_sm" name="sort" value="number_of_sales">Популярности</button>
+                                <button class="btn btn_default btn_sm" name="sort" value="min_price">Цене</button>
+                                <button class="btn btn_default btn_sm" name="sort" value="rewiew">Отзывам</button>
+                                <button class="btn btn_default btn_sm" name="sort" value="created_at">Новизне</button>
                             </div>
                         </form>
                     </div>

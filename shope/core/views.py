@@ -1,7 +1,12 @@
 import datetime
 import random
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.contrib import messages
+from django.urls import reverse_lazy
+from django.core.cache import cache
+from django.utils.translation import gettext_lazy as _
 import inject
+
 from django.views.generic import TemplateView, View, UpdateView
 
 from core.models.cache_setup import CacheSetup
@@ -10,6 +15,8 @@ from core.utils.injector import configure_inject
 from interface.banner_interface import IBanner
 from interface.product_interface import IProduct
 from interface.slider_interface import ISlider
+
+from core.forms import CacheSetupForm
 
 
 configure_inject()
@@ -44,6 +51,7 @@ class AboutView(TemplateView):
 class SetupAdminView(View):
     """Страница административных настроек"""
     template_name = 'core/setup-admin.html'
+    _SUCCESS_MESSAGE = _('The cache has been cleared')
 
     def get(self, request, **kwargs):
         """Get"""
@@ -52,12 +60,19 @@ class SetupAdminView(View):
         }
         return render(request, self.template_name, context)
 
+    def post(self, request):
+        """Post"""
+        cache.clear()
+        messages.success(self.request, self._SUCCESS_MESSAGE)
+        return redirect(self.request.path)
+
 
 class CacheUpdateView(UpdateView):
     """Обновление данных кеша"""
     model = CacheSetup
-    fields = ['value']
+    form_class = CacheSetupForm
     template_name = 'core/cache_update.html'
+    success_url = reverse_lazy('setup-admin')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
