@@ -19,26 +19,6 @@ class CompareProductRepository(ICompareProduct):
             'product__category__characteristictype_set',
             'product__characteristics'
         )
-        # lst = [i.product.id for i in qs]
-        # print([i.product.id for i in qs])
-        # today = Cast(timezone.now().date(), output_field=DateTimeField())
-        # date = F('product__price__created_at')
-        # duration_in_microseconds = Cast(today - date, output_field=IntegerField())
-        # new = qs.annotate(product_price=Min(F('product__price__price')), duration=Min(duration_in_microseconds))
-
-        # min_price_subquery = Price.objects.filter(product=OuterRef('pk')).values('product').annotate(
-        #     min_value=Min('price')
-        # ).values('min_value')[:1]
-        # min_price_seller_subquery = Price.objects.filter(
-        #     product=OuterRef('pk'), price=OuterRef('min_price')
-        # ).values('seller_id')[:1]
-        # queryset = qs.annotate(
-        #     min_price=Subquery(min_price_subquery.values('min_value'), output_field=FloatField()),
-        #     min_price_seller_id=Subquery(min_price_seller_subquery)
-        # ).filter(min_price__gt=0)
-        # for i in min_price_subquery:
-        #     print(i, i.created_at, i.duration)
-
         return qs
 
     @beartype
@@ -54,3 +34,8 @@ class CompareProductRepository(ICompareProduct):
         if qs:
             return True
         return False
+
+    @beartype
+    def delete_compare_product_by_id(self, _compare_product_id: int, _session_key: str) -> None:
+        """Удалить продукт из списка сравнения"""
+        CompareProduct.objects.get(id=_compare_product_id, session_key=_session_key).delete()

@@ -13,6 +13,7 @@ from core.models.cache_setup import CacheSetup
 from core.utils.cache import cache_values_list
 from core.utils.injector import configure_inject
 from interface.banner_interface import IBanner
+from interface.price_interface import IPrice
 from interface.product_interface import IProduct
 from interface.slider_interface import ISlider
 
@@ -27,6 +28,7 @@ class BaseView(TemplateView):
     _products: IProduct = inject.attr(IProduct)
     _slider_list: ISlider = inject.attr(ISlider)
     _banner_list: IBanner = inject.attr(IBanner)
+    _price_seller: IPrice = inject.attr(IPrice)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -37,6 +39,10 @@ class BaseView(TemplateView):
         context['tomorrow_day'] = (datetime.date.today() + datetime.timedelta(days=2)).strftime('%d.%m.%Y')
         context['slider_list'] = self._slider_list.get_slider_list(const=3)
         context['banner_list'] = self._banner_list.get_banner_list(const=3)
+        lst = list(context['product_top_list']) + context['product_limited_list']
+        lst.append(context['offer_day'])
+        context['price_seller_list'] = self._price_seller.get_last_minprice_dct(
+            _product_id_lst=[i.id for i in lst])
         return context
 
 

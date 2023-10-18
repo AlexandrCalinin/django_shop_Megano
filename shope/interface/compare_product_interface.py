@@ -21,3 +21,8 @@ class ICompareProduct:
     def possible_compare_product(self, _product_id: int, _session_key: str) -> bool:
         """Проверить возможность сравнения"""
         pass
+
+    @abstractmethod
+    def delete_compare_product_by_id(self, _compare_product_id: int, _session_key: str) -> None:
+        """Удалить продукт из списка сравнения"""
+        pass

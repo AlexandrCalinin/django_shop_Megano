@@ -17,6 +17,17 @@
               <div class="ProductCard-photo">
                 <img src="{{ product.product.image.all.0.image.url }}" alt="bigGoods.png">
               </div>
+              <form class="Card-btn" action="{% url 'comparison' %}" method="post" >
+                {% csrf_token %}
+                <button class="Card-btn btn_reset compare_btn" type="submit">
+                  <input class="visually-hidden" name="compare_id" value="{{ product.id }}">
+                  <div class="ProductCard-cartElement">
+                    <a class="Card-btn" href="#">
+                      <img src="{% static 'assets/img/icons/card/cart.svg' %}" alt="cart.svg">
+                    </a>
+                  </div>
+                </button>
+              </form>
             </div>
 
             <div class="Tabs Tabs_default">

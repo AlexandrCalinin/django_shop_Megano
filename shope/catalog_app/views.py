@@ -14,7 +14,7 @@ from django.http import HttpResponseRedirect
 from django.views import View
 
 from django.utils.datastructures import MultiValueDictKeyError
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, DeleteView
 from django.db.models import Max, Count, Subquery, F, OuterRef
 
 from core.utils.injector import configure_inject
@@ -213,6 +213,14 @@ class ComparisonView(TemplateView):
         context['price_seller_list'] = self._price_seller.get_last_minprice_dct(_product_id_lst=[i.product.id for i in context['compare_list']])
         return context
 
+    def post(self, request, *args, **kwargs):
+        session_key = self.request.session.session_key
+        self._compare_product.delete_compare_product_by_id(
+            _session_key=session_key,
+            _compare_product_id=int(request.POST.get('compare_id'))
+        )
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 
 class AddComparisonView(View):
     _compare_product: ICompareProduct = inject.attr(ICompareProduct)
@@ -235,9 +243,6 @@ class AddComparisonView(View):
             return JsonResponse(return_dict)
         self._compare_product.create_compare_product(_product_id=product_id, _session_key=session_key)
         return_dict['message'] = _("The product has been added to the comparison")
-        # messages.add_message(request, messages.INFO, _("The product has been added to the comparison"))
-        # return redirect(self.request.path)
-        # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         return JsonResponse(return_dict)
 
 
