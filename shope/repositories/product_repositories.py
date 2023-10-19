@@ -65,4 +65,4 @@ class ProductRepository(IProduct):
     @beartype
     def get_by_id(self, product: str) -> Product:
         """Получить продукт по id"""
-        return Product.objects.get(product)
+        return Product.objects.get(id=product)

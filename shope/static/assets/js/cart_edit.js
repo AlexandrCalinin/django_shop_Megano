@@ -6,7 +6,7 @@ function cart_add(product_id, product_name, image, product_count, amount, seller
 
 var csrf = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
-    url: '/cart/cart/add',
+    url: '/cart/add',
     type: 'POST',
     headers: {"X-CSRFToken": csrf},
     data: {'product': product_id,
@@ -35,7 +35,7 @@ function cart_edit(product_id, count, seller){
 
 var csrf = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
-    url: 'cart/change',
+    url: '/cart/change',
     type: 'POST',
     headers: {"X-CSRFToken": csrf},
     data: {'product': product_id, 'count': count, 'seller': seller},
@@ -58,7 +58,7 @@ function product_delete(product_id){
 
 var csrf = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
-    url: 'cart/delete',
+    url: '/cart/delete',
     type: 'POST',
     headers: {"X-CSRFToken": csrf},
     data: {'product': product_id},
@@ -102,7 +102,7 @@ $('div[name="amount-cart"]').on('click', 'button[class="Amount-add"]', function(
     cart_edit(product_id, count, seller)
 })
 
-$('#amount').on('click', 'button[class="Amount-remove"]', function(){
+$('div[name="amount-cart"]').on('click', 'button[class="Amount-remove"]', function(){
     // Обработка нажатия на кнопку уменьшения кол-ва товаров в корзине
     var count_product = $(this).parent('.Amount').children('.Amount-input.form-input').attr('value')
     $(this).parent('.Amount').children('.Amount-input.form-input').attr('value', parseInt(count_product) - 1)

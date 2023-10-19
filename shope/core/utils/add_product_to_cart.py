@@ -10,6 +10,7 @@ from interface.cartitem_interface import ICartItem
 from interface.cart_interface import ICart
 from interface.product_interface import IProduct
 from interface.price_interface import IPrice
+from interface.seller_interface import ISeller
 
 configure_inject()
 
@@ -19,6 +20,7 @@ class AddProductToCart:
     _cartitem: ICartItem = inject.attr(ICartItem)
     _product: IProduct = inject.attr(IProduct)
     _price: IPrice = inject.attr(IPrice)
+    _seller: ISeller = inject.attr(ISeller)
 
     def add_product_to_cart(self, user: User, **kwargs) -> None:
         """добавить товар в корзину"""
@@ -28,8 +30,8 @@ class AddProductToCart:
         cart = self._cart.get_active_by_user(_user=user)
         if not cart:
             cart = self._cart.create_cart(user)
-        product = Product.objects.get(id=product_id)
-        seller = Seller.objects.get(id=seller_id)
+        product = self._product.get_by_id(product_id)
+        seller = self._seller.get_by_id(seller_id)
 
         if self._cartitem.get_by_product_id(_product=product_id, _cart=cart):
             self.change_count_product_in_cart(user=user,
