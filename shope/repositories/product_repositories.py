@@ -1,13 +1,14 @@
 import random
-from typing import Any
+
 from beartype import beartype
 
-from django.db.models import QuerySet, Sum, Q, Avg, Min, Max, FloatField
+from django.db.models import QuerySet, Sum, Avg, Min, Max, FloatField, Subquery, OuterRef, F, Q
 from django.db.models import Func
 from django.db.models.functions import Cast
 
 
 from catalog_app.models import Product
+from core.models import Price
 from interface.product_interface import IProduct
 
 
@@ -22,16 +23,25 @@ class ProductRepository(IProduct):
         """Вернуть кверисет популярных продуктов"""
         qs = Product.objects.filter(is_active=True, orderitem__count__gte=1).annotate(
             qty=Sum('orderitem__count'),
-            value=Round(Cast(Min('price__price'), output_field=FloatField()))
+            min_price=Round(Cast(Min('price__price'), output_field=FloatField())),
+            seller_id=F('price__seller_id')
         ).order_by('-qty')[:const]
         if len(qs) < const:
             qs = Product.objects.filter(~Q(id__in=qs), is_active=True, price__price__gte=1).annotate(
                 value=Round(Cast(Min('price__price'), output_field=FloatField())),
-                # product_seller=
-
             )[:const - 0]
-            # for p in qs:
-            #     print(p, p.product_seller)
+
+            min_price_subquery = Price.objects.filter(product=OuterRef('pk')).values('product').annotate(
+                min_value=Min('price')
+            ).values('min_value')[:1]
+            min_price_seller_subquery = Price.objects.filter(
+                product=OuterRef('pk'), price=OuterRef('min_price')
+            ).values('seller_id')[:1]
+            qs = Product.objects.annotate(
+                min_price=Subquery(min_price_subquery.values('min_value'), output_field=FloatField()),
+                min_price_seller_id=Subquery(min_price_seller_subquery)
+            ).filter(min_price__gt=0)[:const - 0]
+
         return qs
 
     def get_product_limit_list(self, const: int) -> QuerySet[Product]:
@@ -51,3 +61,8 @@ class ProductRepository(IProduct):
         """Получить список продавцов, которые продают данный продукт"""
         distinct = list(Product.objects.filter(pk=_pk).values('price__seller').distinct())
         return distinct
+
+    @beartype
+    def get_by_id(self, product: str) -> Product:
+        """Получить продукт по id"""
+        return Product.objects.get(id=product)

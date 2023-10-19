@@ -22,3 +22,8 @@ class IProduct:
     def get_sellers_of_product(self, _pk: int) -> list:
         """Получить список продавцов, которые продают данный продукт"""
         pass
+
+    @abstractmethod
+    def get_by_id(self, product) -> Product:
+        """Получить продукт по id"""
+        pass

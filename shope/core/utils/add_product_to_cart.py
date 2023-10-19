@@ -1,13 +1,16 @@
 import inject
-
-from cart_app.models import CartItem
-from catalog_app.models import Product
-from core.models import Seller, Price
 from core.utils.injector import configure_inject
 
 from auth_app.models import User
+from cart_app.models import CartItem
+from catalog_app.models import Product
+from core.models import Seller, Price
+
 from interface.cartitem_interface import ICartItem
 from interface.cart_interface import ICart
+from interface.product_interface import IProduct
+from interface.price_interface import IPrice
+from interface.seller_interface import ISeller
 
 configure_inject()
 
@@ -15,6 +18,9 @@ configure_inject()
 class AddProductToCart:
     _cart: ICart = inject.attr(ICart)
     _cartitem: ICartItem = inject.attr(ICartItem)
+    _product: IProduct = inject.attr(IProduct)
+    _price: IPrice = inject.attr(IPrice)
+    _seller: ISeller = inject.attr(ISeller)
 
     def add_product_to_cart(self, user: User, **kwargs) -> None:
         """добавить товар в корзину"""
@@ -22,8 +28,10 @@ class AddProductToCart:
         product_id, product_name, image, product_count, amount, seller_id = kwargs.values()
 
         cart = self._cart.get_active_by_user(_user=user)
-        product = Product.objects.get(id=product_id)
-        seller = Seller.objects.get(id=seller_id)
+        if not cart:
+            cart = self._cart.create_cart(user)
+        product = self._product.get_by_id(product_id)
+        seller = self._seller.get_by_id(seller_id)
 
         if self._cartitem.get_by_product_id(_product=product_id, _cart=cart):
             self.change_count_product_in_cart(user=user,
@@ -57,7 +65,8 @@ class AddProductToCart:
                     int(request.session["cart"][product]['count']) + int(product_count)
 
                 request.session["cart"][product]['amount'] = \
-                    float(request.session["cart"][product]['amount']) + float(request.session["cart"][product]['price'])
+                    float(request.session["cart"][product]['amount']) + float(amount)
+
         else:
             request.session["cart"] = {}
             request.session["cart"][product] = product_info
@@ -75,7 +84,6 @@ class AddProductToCart:
             del request.session['cart'][product]
             request.session.modified = True
 
-
     def change_count_product_in_cart(self, user, **kwargs):
         """
         изменить кол-во товаров в корзине
@@ -83,8 +91,8 @@ class AddProductToCart:
         cart = self._cart.get_active_by_user(_user=user)
         product, count, seller = kwargs.values()
 
-        price = Price.objects.filter(product=product,
-                                     seller=seller).last()
+        price = self._price.get_by_product_and_seller(product_id=product,
+                                                      seller_id=seller)
 
         product_i = self._cartitem.get_by_product_id(_product=product,
                                                      _cart=cart)
@@ -110,7 +118,7 @@ class AddProductToCart:
             int(request.session["cart"][product]['count']) + int(get_count)
 
         if get_count == '1':
-            request.session["cart"][product]['amount'] =\
+            request.session["cart"][product]['amount'] = \
                 float(request.session["cart"][product]['amount']) + float(request.session["cart"][product]['price'])
         else:
             request.session["cart"][product]['amount'] = \
@@ -119,12 +127,15 @@ class AddProductToCart:
         request.session.modified = True
         return request.session["cart"][product]
 
-    def get_list_in_cart(self, request) -> CartItem:
+    def get_list_in_cart(self, request) -> CartItem or None:
         """
         получить список товаров в корзине
         """
+
         if request.user.is_authenticated:
             cart = self._cart.get_active_by_user(_user=request.user)
+            if not cart:
+                return None
             return self._cartitem.get_by_cart_id(_cart=cart)
         else:
             products = request.session['cart']
@@ -157,7 +168,7 @@ class AddProductToCart:
             amount = 0
             for item in products.values():
                 count += int(item['count'])
-                amount += int(item['count']) * float(item['price'])
+                amount += float(item['amount'])
 
             return round(amount, 2), round(count, 2)
 
@@ -171,14 +182,20 @@ class AddProductToCart:
         else:
             cart = self._cart.get_active_by_user(_user=user)
 
+        if 'cart' in request.session:
+            products = request.session['cart']
+            for item, value in products.items():
 
-        # if 'cart' in request.session:
-        #     products = request.session['cart']
-        #     for item, value in request.session['cart'].items():
-        #         product = Product.objects.get(pk=item)
-        #         Seller.objects.get(pk=int(value['seller']))
-        #         CartItem.objects.create(cart_id=cart, product=product, count=value['count'], amount=value['amount'])
-        #     #CartItem.objects.bulk_create([CartItem(cart_id=cart, product=item['product'],
-        #                                           # count=item['count'], amount=item['amount'],
-        #                                           # seller=item['seller']) for item in products.values()])
-        #     products.clear()
+                product = self._product.get_by_id(product=item)
+                seller = Seller.objects.get(pk=value['seller'])
+
+                count = value['count']
+                amount = value['amount']
+
+                self._cartitem.create_cartitem(_cart=cart,
+                                               _product=product,
+                                               _count=count,
+                                               _amount=amount,
+                                               _seller=seller)
+
+            products.clear()

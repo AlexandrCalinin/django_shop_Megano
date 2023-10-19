@@ -14,7 +14,12 @@ today = Cast(timezone.now().date(), output_field=DateTimeField())
 class PriceRepository(IPrice):
 
     @beartype
-    def get_last_minprice_dct(self, _product_id_lst: List) -> List[Dict] | None:
+    def save(self, model: Price) -> None:
+        """Сохранить цену"""
+        model.save()
+
+    @beartype
+    def get_last_minprice_dct(self, _product_id_lst) -> List[Dict] | None:
         """Получить последнюю цену продавца продукта и минимальную цену продукта, если продавцов больше одного"""
         qs = Price.objects.filter(is_active=True, product_id__in=_product_id_lst).values(
             'product_id', 'price', 'seller', duration=Cast(today - Cast(F('created_at'), output_field=DateTimeField()
@@ -33,3 +38,9 @@ class PriceRepository(IPrice):
                 price_dict[dct['product_id']] = dct
 
         return [val for key, val in price_dict.items()]
+
+    @beartype
+    def get_by_product_and_seller(self, product_id: str, seller_id) -> Price:
+        """Получить цену по продукту и продавцу"""
+        return Price.objects.filter(product=product_id,
+                                    seller=seller_id).last()
