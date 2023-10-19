@@ -27,6 +27,10 @@ class ProductRepository(IProduct):
             seller_id=F('price__seller_id')
         ).order_by('-qty')[:const]
         if len(qs) < const:
+            qs = Product.objects.filter(~Q(id__in=qs), is_active=True, price__price__gte=1).annotate(
+                value=Round(Cast(Min('price__price'), output_field=FloatField())),
+            )[:const - 0]
+
             min_price_subquery = Price.objects.filter(product=OuterRef('pk')).values('product').annotate(
                 min_value=Min('price')
             ).values('min_value')[:1]

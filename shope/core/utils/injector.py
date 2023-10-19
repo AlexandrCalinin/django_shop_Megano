@@ -3,10 +3,12 @@ import inject
 from interface.banner_interface import IBanner
 from interface.cart_sale_interface import ICartSale
 from interface.category_interface import ICategory
+from interface.compare_product_interface import ICompareProduct
 from interface.discount_interface import IDiscountBaseModel
 from interface.discount_product_group_interface import IDiscountProductGroup
 from interface.discount_product_interface import IDiscountProduct
 from interface.order_interface import IOrder
+from interface.price_interface import IPrice
 
 from interface.product_interface import IProduct
 from interface.product_viewed_interface import IProductViewed
@@ -14,6 +16,7 @@ from interface.slider_interface import ISlider
 from repositories.banner_repositories import BannerRepository
 from repositories.cart_sale_repositories import CartSaleRepository
 from repositories.category_repositories import CategoryRepository
+from repositories.compare_product_repositories import CompareProductRepository
 from repositories.discount_product_group_repositories import DiscountProductGroupRepository
 from repositories.discount_product_repositories import DiscountProductRepository
 from repositories.discount_repositories import DiscountBaseModelRepository
@@ -21,6 +24,7 @@ from interface.auth_interface import IAuth
 
 from repositories.order_repositories import OrderRepository
 from repositories.auth_repositories import AuthRepository
+from repositories.price_repositories import PriceRepository
 from repositories.product_repositories import ProductRepository
 from repositories.product_viewed_repositories import ProductViewedRepository
 
@@ -48,9 +52,6 @@ from repositories.seller_repositories import SellerRepository
 from interface.review_interface import IReview
 from repositories.reivew_repositories import ReviewRepository
 
-from interface.price_interface import IPrice
-from repositories.price_repositories import PriceRepository
-
 BINDS = (
     (IOrder, OrderRepository),
     (IDiscountBaseModel, DiscountBaseModelRepository),
@@ -71,6 +72,7 @@ BINDS = (
     (ICartItem, CartItemRepository),
     (ISeller, SellerRepository),
     (IReview, ReviewRepository),
+    (ICompareProduct, CompareProductRepository),
     (IPrice, PriceRepository),
 )
 
