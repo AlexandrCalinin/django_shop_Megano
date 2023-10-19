@@ -2,7 +2,7 @@
 from typing import Any
 
 from beartype import beartype
-from django.db.models import QuerySet, OuterRef, Min, Subquery, Count
+from django.db.models import QuerySet, OuterRef, Min, Subquery, Count, F, FloatField
 from taggit.models import Tag
 
 from catalog_app.models import Product
@@ -11,11 +11,15 @@ from core.models.price import Price
 
 class CatalogFilterRepository:
     """Класс-интерфейс фильтрации товаров"""
-    min_prices = Price.objects.filter(product=OuterRef('pk'), ).annotate(
+    min_price_subquery = Price.objects.filter(product=OuterRef('pk')).values('product').annotate(
         min_value=Min('price')
     ).values('min_value')[:1]
+    min_price_seller_subquery = Price.objects.filter(
+        product=OuterRef('pk'), price=OuterRef('min_price')
+    ).values('seller_id')[:1]
     queryset = Product.objects.annotate(
-        min_price=Subquery(min_prices)
+        min_price=Subquery(min_price_subquery.values('min_value'), output_field=FloatField()),
+        min_price_seller_id=Subquery(min_price_seller_subquery)
     ).filter(min_price__gt=0)
 
     @beartype

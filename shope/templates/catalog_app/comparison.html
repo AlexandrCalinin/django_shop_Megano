@@ -1,185 +1,107 @@
 {% extends 'core/base.html' %}
+{% load i18n %}
 {% load static %}
 
-<body class="Site">
-    {% block content_body %}
-        <div class="Middle">
-            <div class="wrap">
-                <div class="Product">
-                    <div class="ProductCard">
-                        <div class="ProductCard-desc">
-                            <div class="ProductCard-header">
-                                <h2 class="ProductCard-title">Irbis NB270
-                                </h2>
-                                <div class="ProductCard-look">
-                                    <div class="ProductCard-photo">
-                                        <img src="{% static '/assets/img/content/home/bigGoods.png' %}" alt="bigGoods.png" />
-                                    </div>
-                                </div>
 
-                                <div class="Tabs Tabs_default">
-                                    <div class="Tabs-wrap">
-                                        <div class="Tabs-block" id="description">
-                                            <div class="table">
-                                                <table>
-                                                    <tr>
-                                                        <th class="hed">Характеристика</th>
-                                                        <th class="hed">Значение</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>Общие параметры</b></td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="comparis">Тип</td>
-                                                        <td class="comparis">Ноутбук</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Модель</td>
-                                                        <td>Irbis NB270</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Год релиза</td>
-                                                        <td>2019</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>Экран</b></td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Диагональ экрана (дюйм)</td>
-                                                        <td>14.1"</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Разрешение экрана</td>
-                                                        <td>Full HD (1920x1080)</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="comparis">Плотность пикселей</td>
-                                                        <td class="comparis">156 ppi</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>Система</b></td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="comparis">Операционная система</td>
-                                                        <td class="comparis">Android</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Версия ОС </td>
-                                                        <td>Android 10 Go</td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="ProductCard-info">
-                                <div class="ProductCard-cost">
-                                    <div class="ProductCard-price">$55.00
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="ProductCard-cart">
-
-                                <div class="ProductCard-cartElement"><a class="btn btn_primary" href="../cart/cart.html"><img class="btn-icon" src="{% static '/assets/img/icons/card/cart_white.svg' %}" alt="cart_white.svg" /><span class="btn-content">Добавить в корзину</span></a>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="ProductCard-desc">
-                            <div class="ProductCard-header">
-                                <h2 class="ProductCard-title">Irbis HG70
-                                </h2>
-                                <div class="ProductCard-look">
-                                    <div class="ProductCard-photo">
-                                        <img src="{% static '/assets/img/content/home/bigGoods2.jpg' %}" alt="bigGoods2.jpg" />
-                                    </div>
-                                </div>
-
-                                <div class="Tabs Tabs_default">
-                                    <div class="Tabs-wrap">
-                                        <div class="Tabs-block" id="description">
-                                            <div class="table">
-
-                                                <table>
-                                                    <tr>
-                                                        <th>Характеристика</th>
-                                                        <th>Значение</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>Общие параметры</b></td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="comparis">Тип</td>
-                                                        <td class="comparis">Ноутбук</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Модель</td>
-                                                        <td>Irbis HG70</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Год релиза</td>
-                                                        <td>2013</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>Экран</b></td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Диагональ экрана (дюйм)</td>
-                                                        <td>14.1"</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Разрешение экрана</td>
-                                                        <td>Full HD (1920x1080)</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="comparis">Плотность пикселей</td>
-                                                        <td class="comparis">156 ppi</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>Система</b></td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="comparis">Операционная система</td>
-                                                        <td class="comparis">Android</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Версия ОС </td>
-                                                        <td>Android 7</td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="ProductCard-info">
-                                <div class="ProductCard-cost">
-                                    <div class="ProductCard-price">$55.00
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="ProductCard-cart">
-
-                                <div class="ProductCard-cartElement"><a class="btn btn_primary" href="../cart/cart.html"><img class="btn-icon" src="{% static '/assets/img/icons/card/cart_white.svg' %}" alt="cart_white.svg" /><span class="btn-content">Добавить в корзину</span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+{% block content_body %}
+<div class="Middle">
+  <div class="wrap">
+    <div class="Product">
+      <div class="ProductCard">
+        {% for product in compare_list %}
+        <div class="ProductCard-desc">
+          <div class="ProductCard-header">
+            <h2 class="ProductCard-title ProductCard-title-custom">{{ product.product.title }}
+            </h2>
+            <div class="ProductCard-look">
+              <div class="ProductCard-photo ProductCard-photo-custom">
+                <img src="{{ product.product.image.all.0.image.url }}" alt="bigGoods.png">
+              </div>
+              <form class="Card-btn delete-btn" action="{% url 'comparison' %}" method="post" >
+                {% csrf_token %}
+                <button class="Card-btn btn_reset compare_btn" type="submit">
+                  <input class="visually-hidden" name="compare_id" value="{{ product.id }}">
+                  <div class="ProductCard-cartElement">
+                    <a class="Card-btn" href="#">
+                      <img src="{% static 'assets/img/icons/card/delete.svg' %}" alt="cart.svg">
+                    </a>
+                  </div>
+                </button>
+              </form>
             </div>
-        </div>
-    {% endblock content_body%}
-</body>
 
-</html>
+            <div class="Tabs Tabs_default">
+              <div class="Tabs-wrap">
+                <div class="Tabs-block" id="description">
+                  <div class="table">
+                    <table class="tableSection">
+                      <tr>
+                        <th class="hed">{% trans 'Characteristic' %}</th>
+                        <th class="hed">{% trans 'Value' %}</th>
+                      </tr>
+                      <tr>
+                        <td><b>{% trans 'General parameters' %}</b></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td class="comparis">{% trans 'Type' %}</td>
+                        <td class="comparis">{{ product.product.category.title }}</td>
+                      </tr>
+                      <tr class="table-line-custom" >
+                        <td class="tableSection">{% trans 'Model' %}</td>
+                        <td class="tableSection">{{ product.product.name }}</td>
+                      </tr>
+
+                      {% for char in product.product.category.characteristictype_set.all %}
+
+                        <tr>
+                          <td>{{ char.name }}</td>
+                          {% for value in product.product.characteristics.all %}
+                            {% if char.id == value.characteristic_value.characteristic_type.id%}
+                              <td>{{ value.characteristic_value.value }}</td>
+                            {% endif %}
+                          {% endfor %}
+                        </tr>
+
+                      {% endfor %}
+
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+          <div class="ProductCard-info">
+            <div class="ProductCard-cost">
+              <div class="ProductCard-price">
+                {% for object in price_seller_list %}
+                  {% if object.product_id == product.product.id %}
+                    ${{ object.price }}
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <div class="ProductCard-cart">
+
+            <div class="ProductCard-cartElement">
+              {% for object in price_seller_list %}
+              {% if object.product_id == product.product.id %}
+              <a class="btn btn_primary" href="../cart/cart.html" id="{{ object.seller }}">
+                <img class="btn-icon" src="{% static '/assets/img/icons/card/cart_white.svg' %}" alt="cart_white.svg">
+                <span class="btn-content">{% trans 'Add to Cart' %}</span>
+              </a>
+              {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content_body%}
