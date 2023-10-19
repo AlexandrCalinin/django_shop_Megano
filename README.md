@@ -40,4 +40,4 @@
     python manage.py seller_permissions
 
 # Add tags to products
-    python manage.py create_characteristics
+    python manage.py add_tags_to_product_cards
