@@ -1,5 +1,6 @@
 """Catalog app views"""
-
+from django.contrib import messages
+from django.utils.translation import gettext as _
 from django.http import JsonResponse, HttpRequest
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
@@ -13,12 +14,14 @@ from django.http import HttpResponseRedirect
 from django.views import View
 
 from django.utils.datastructures import MultiValueDictKeyError
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, DeleteView
 from django.db.models import Max, Count, Subquery, F, OuterRef
 
 from core.utils.injector import configure_inject
 from interface.cart_sale_interface import ICartSale
 from interface.category_interface import ICategory
+from interface.compare_product_interface import ICompareProduct
+from interface.price_interface import IPrice
 from interface.product_interface import IProduct
 from interface.discount_product_group_interface import IDiscountProductGroup
 from interface.discount_product_interface import IDiscountProduct
@@ -27,7 +30,7 @@ from .form import CartEditForm
 
 from core.utils.add_product_to_cart import AddProductToCart
 from interface.characteristic_interface import ICharacteristicProduct
-from catalog_app.models import DiscountProduct, DiscountProductGroup, CartSale
+from catalog_app.models import DiscountProduct, DiscountProductGroup, CartSale, ProductViewed, CompareProduct
 from catalog_app.models import Product
 
 from interface.product_viewed_interface import IProductViewed
@@ -195,8 +198,57 @@ class AddProductToCartView(TemplateView):
                 return JsonResponse({'result': result})
 
 
-class TestComparisonView(TemplateView):
+class ComparisonView(TemplateView):
     template_name = 'catalog_app/comparison.html'
+    _compare_product: ICompareProduct = inject.attr(ICompareProduct)
+    _price_seller: IPrice = inject.attr(IPrice)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        session_key = self.request.session.session_key
+        if not session_key:
+            self.request.session.save()
+            session_key = self.request.session.session_key
+        context['compare_list'] = self._compare_product.get_compare_product_list(_session_key=session_key)
+        context['price_seller_list'] = self._price_seller.get_last_minprice_dct(
+            _product_id_lst=[i.product.id for i in context['compare_list']])
+        return context
+
+    def post(self, request, *args, **kwargs):
+        session_key = self.request.session.session_key
+        self._compare_product.delete_compare_product_by_id(
+            _session_key=session_key,
+            _compare_product_id=int(request.POST.get('compare_id'))
+        )
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+class AddComparisonView(View):
+    _compare_product: ICompareProduct = inject.attr(ICompareProduct)
+
+    def post(self, request, *args, **kwargs):
+        return_dict = dict()
+        session_key = request.session.session_key
+        if not session_key:
+            request.session.save()
+            session_key = request.session.session_key
+        product_id = kwargs.get('product_id')
+        return_dict['session_key'] = session_key
+        return_dict['product_id'] = product_id
+        compare_list = self._compare_product.get_compare_product_list(_session_key=session_key)
+        if len(compare_list) > 1:
+            return_dict['message'] = _("Too much products to the comparison!")
+            return JsonResponse(return_dict)
+        if compare_list and compare_list[0].product.id == product_id:
+            return_dict['message'] = _("The product was already added!")
+            return JsonResponse(return_dict)
+        if self._compare_product.get_compare_product_list(_session_key=session_key) and \
+                not self._compare_product.possible_compare_product(_product_id=product_id, _session_key=session_key):
+            return_dict['message'] = _("The product have no common characteristics!")
+            return JsonResponse(return_dict)
+        self._compare_product.create_compare_product(_product_id=product_id, _session_key=session_key)
+        return_dict['message'] = _("The product has been added to the comparison!")
+        return JsonResponse(return_dict)
 
 
 class SaleView(TemplateView):
