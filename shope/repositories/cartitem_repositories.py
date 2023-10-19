@@ -39,4 +39,4 @@ class CartItemRepository(ICartItem):
 
     def delete_product(self, _product: str) -> None:
         """Удалить объект"""
-        CartItem.objects.filter(product=_product).first().delete()
+        CartItem.objects.filter(product=_product).delete()

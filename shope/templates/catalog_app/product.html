@@ -7,7 +7,7 @@
     <div class="Middle Middle_top">
         <div class="Section">
             <div class="wrap">
-                <div class="Product">
+                <div class="Product" id="{{product.id}}">
                     <div class="ProductCard">
                         {% if product.image %}
                             <div class="ProductCard-look">
@@ -49,8 +49,8 @@
                                         <button class="Amount-add" type="button"></button>
                                     </div>
                                 </div>
-                                <div class="ProductCard-cartElement">
-                                    <a class="btn btn_primary" href="#modal_open">
+                                <div class="ProductCard-cartElement" id="1">
+                                    <a class="btn btn_primary"  data-value="{{ min_price.price }}" data-seller="{{min_price.seller}}" data-name="{{product.name}}">
                                         <img class="btn-icon"
                                              src="{% static '/assets/img/icons/card/cart_white.svg' %}"
                                              alt="cart_white.svg">
@@ -62,7 +62,7 @@
                                         <div class="my_modal-content">
                                             <div class="my_modal-header">
                                                 <p class="my_modal-title">{% trans "Сongratulations" %}!</p>
-                                                <a class="close" href="#" title={% trans "Close the window" %}>×</a>
+                                                <a class="close" href="#" title='{% trans "Close the window" %}'></a>
                                             </div>
                                             <div class="my_modal-body">
                                                 <p>{% trans "Product has been added to the cart" %}!</p>
@@ -134,11 +134,11 @@
                                                 <div class="row">
                                                     <div class="row-block">
                                                         <a class="Order-title" href="">{{ i_seller.name }}</a>
-                                                        <div class="ProductCard-cartElement" style="margin-top: 10px;">
-                                                            <a class="btn btn_primary" href="#modal_open">
+                                                        <div class="ProductCard-cartElement" name="add-product-to" style="margin-top: 10px;">
+                                                            <a class="btn btn_primary" data-value="{{ i_seller.product_seller__price }}" data-seller="{{i_seller.pk}}" data-name="{{product.name}}">
                                                                 <img class="btn-icon"
-                                                                     src="{% static '/assets/img/icons/card/cart_white.svg' %}"
-                                                                     alt="cart_white.svg">
+                                                                    src="{% static '/assets/img/icons/card/cart_white.svg' %}"
+                                                                    alt="cart_white.svg">
                                                                 <span class="btn-content">{% trans "Buy" %}</span>
                                                             </a>
                                                         </div>

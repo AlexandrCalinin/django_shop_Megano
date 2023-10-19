@@ -87,10 +87,14 @@
           <div class="ProductCard-cart">
 
             <div class="ProductCard-cartElement">
-              <a class="btn btn_primary" href="../cart/cart.html">
+              {% for object in price_seller_list %}
+              {% if object.product_id == product.product.id %}
+              <a class="btn btn_primary" href="../cart/cart.html" id="{{ object.seller }}">
                 <img class="btn-icon" src="{% static '/assets/img/icons/card/cart_white.svg' %}" alt="cart_white.svg">
                 <span class="btn-content">{% trans 'Add to Cart' %}</span>
               </a>
+              {% endif %}
+              {% endfor %}
             </div>
           </div>
 

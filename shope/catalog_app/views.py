@@ -1,10 +1,8 @@
 """Catalog app views"""
-from django.contrib import messages
+
 from django.utils.translation import gettext as _
-from django.http import JsonResponse, HttpRequest
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
-from django.template.loader import render_to_string
-from django.urls import reverse
 
 # кеширование
 from django.core.cache import cache
@@ -14,8 +12,7 @@ from django.http import HttpResponseRedirect
 from django.views import View
 
 from django.utils.datastructures import MultiValueDictKeyError
-from django.views.generic import TemplateView, ListView, DetailView, DeleteView
-from django.db.models import Max, Count, Subquery, F, OuterRef
+from django.views.generic import TemplateView, ListView, DetailView
 
 from core.utils.injector import configure_inject
 from interface.cart_sale_interface import ICartSale
@@ -26,11 +23,8 @@ from interface.product_interface import IProduct
 from interface.discount_product_group_interface import IDiscountProductGroup
 from interface.discount_product_interface import IDiscountProduct
 
-from .form import CartEditForm
-
-from core.utils.add_product_to_cart import AddProductToCart
 from interface.characteristic_interface import ICharacteristicProduct
-from catalog_app.models import DiscountProduct, DiscountProductGroup, CartSale, ProductViewed, CompareProduct
+from catalog_app.models import DiscountProduct, DiscountProductGroup, CartSale
 from catalog_app.models import Product
 
 from interface.product_viewed_interface import IProductViewed
@@ -146,9 +140,19 @@ class CatalogListView(ListView):
     """Каталог"""
     template_name = 'catalog_app/catalog.html'
     _filter: ICatalogFilter = inject.attr(ICatalogFilter)
+    _price_seller: IPrice = inject.attr(IPrice)
 
     def get(self, request, **kwargs):
         return super().get(request, **kwargs)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        qs = self.get_queryset().values('id')
+
+        context['price_seller_list'] = self._price_seller.get_last_minprice_dct(
+            _product_id_lst=qs)
+
+        return context
 
     def get_queryset(self):
         try:
@@ -179,23 +183,6 @@ class CatalogListView(ListView):
 
         except MultiValueDictKeyError:
             return Product.objects.prefetch_related('image', 'tag')
-
-
-class AddProductToCartView(TemplateView):
-
-    def post(self, request: HttpRequest):
-        if request.headers['X-Requested-With'] == 'XMLHttpRequest':
-            form = CartEditForm(data=request.POST)
-
-            if form.is_valid():
-                add = AddProductToCart()
-                if request.user.is_authenticated:
-                    add.add_product_to_cart(request.user, **form.cleaned_data, )
-                else:
-                    add.add_product_for_anonymous_user(request, **form.cleaned_data)
-
-                result = render_to_string('includes/card_edit.html', request=request)
-                return JsonResponse({'result': result})
 
 
 class ComparisonView(TemplateView):

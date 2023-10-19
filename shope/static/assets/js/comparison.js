@@ -16,7 +16,7 @@
         cache: true,
         success: function (data) {
           console.log('OK');
-          swal(data.message)
+          Swal.fire({title: data.message, confirmButtonColor: '#0041c2'})
         },
         error: function () {
           console.log("error")

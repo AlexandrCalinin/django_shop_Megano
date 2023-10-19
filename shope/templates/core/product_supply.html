@@ -143,10 +143,10 @@
           </header>
             <div class="Cards">
               {% for product in product_top_list %}
-                <div class="Card hide_md hide_1450">
+                <div class="Card hide_md hide_1450" id="{{product.id}}">
                   <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
                     {% csrf_token %}
-                    <button class="Card-picture btn_reset" href="{% url 'product' product_id=product.id %}" type="submit">
+                    <button class="Card-picture btn_reset" data-name="{{ product.image.all.0.image.url }}" href="{% url 'product' product_id=product.id %}" type="submit">
                       {% if product.image %}
                         <img src="{{ product.image.all.0.image.url }}" alt="{{ product.image.all.0.image.name }}">
                       {% endif %}
@@ -179,9 +179,13 @@
                           {% endfor %}
                         </div>
                         <div class="Card-hover">
-                          <a class="Card-btn" href="#">
-                            <img src="{% static 'assets/img/icons/card/cart.svg' %}" alt="cart.svg">
-                          </a>
+                          {% for object in price_seller_list %}
+                            {% if object.product_id == product.id %}
+                            <a class="Card-btn cart-btn" href="#" data-value="{{object.price}}" data-seller="{{ object.seller }}" data-name="{{product.title}}">
+                              <img src="{% static 'assets/img/icons/card/cart.svg' %}" alt="cart.svg">
+                            </a>
+                            {% endif %}
+                          {% endfor %}
                           <form class="Card-btn comparison-add" action="{% url 'add_comparison' product_id=product.id %}" method="post">
                             {% csrf_token %}
                             <button class="Card-btn btn_reset compare_btn" type="submit" data-product_id="{{ product.id }}">
@@ -253,9 +257,13 @@
                             {% endfor %}
                           </div>
                           <div class="Card-hover">
-                            <a class="Card-btn" href="#">
-                              <img src="{% static 'assets/img/icons/card/cart.svg' %}" alt="cart.svg">
-                            </a>
+                            {% for object in price_seller_list %}
+                                {% if object.product_id == product.id %}
+                              <a class="Card-btn cart-btn" href="#" data-seller="{{ object.seller }}">
+                                <img src="{% static 'assets/img/icons/card/cart.svg' %}" alt="cart.svg">
+                              </a>
+                            {% endif %}
+                              {% endfor %}
                             <form class="Card-btn comparison-add" action="{% url 'add_comparison' product_id=product.id %}" method="post">
                               {% csrf_token %}
                               <button class="Card-btn btn_reset compare_btn" type="submit" data-product_id="{{ product.id }}">

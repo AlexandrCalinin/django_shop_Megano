@@ -25,6 +25,7 @@ configure_inject()
 class RegisterView(FormView):
     form_class = UserRegisterForm
     _user: IAuth = inject.attr(IAuth)
+    add_product_to_cart = AddProductToCart()
     template_name = "auth_app/registr.html"
     success_url = reverse_lazy('auth_app:login')
 
@@ -34,8 +35,7 @@ class RegisterView(FormView):
         try:
             if form.is_valid():
                 user = form.save()
-                add_product_to_cart = AddProductToCart()
-                add_product_to_cart.create_cart_and_cartitem(user, request)
+                self.add_product_to_cart.create_cart_and_cartitem(user, request)
                 if self.send_link_to_verify_email(user=user):
                     return HttpResponseRedirect(reverse('auth_app:confirm-email'))
                 else:
