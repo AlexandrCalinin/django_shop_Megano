@@ -1,4 +1,4 @@
-from typing import Any, List
+from beartype.typing import List, Dict
 from beartype import beartype
 from django.db.models import DateTimeField, IntegerField, F
 from django.db.models.functions import Cast
@@ -14,7 +14,7 @@ today = Cast(timezone.now().date(), output_field=DateTimeField())
 class PriceRepository(IPrice):
 
     @beartype
-    def get_last_minprice_dct(self, _product_id_lst: List):
+    def get_last_minprice_dct(self, _product_id_lst: List) -> List[Dict] | None:
         """Получить последнюю цену продавца продукта и минимальную цену продукта, если продавцов больше одного"""
         qs = Price.objects.filter(is_active=True, product_id__in=_product_id_lst).values(
             'product_id', 'price', 'seller', duration=Cast(today - Cast(F('created_at'), output_field=DateTimeField()

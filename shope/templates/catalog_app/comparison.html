@@ -11,19 +11,19 @@
         {% for product in compare_list %}
         <div class="ProductCard-desc">
           <div class="ProductCard-header">
-            <h2 class="ProductCard-title">{{ product.product.title }}
+            <h2 class="ProductCard-title ProductCard-title-custom">{{ product.product.title }}
             </h2>
             <div class="ProductCard-look">
-              <div class="ProductCard-photo">
+              <div class="ProductCard-photo ProductCard-photo-custom">
                 <img src="{{ product.product.image.all.0.image.url }}" alt="bigGoods.png">
               </div>
-              <form class="Card-btn" action="{% url 'comparison' %}" method="post" >
+              <form class="Card-btn delete-btn" action="{% url 'comparison' %}" method="post" >
                 {% csrf_token %}
                 <button class="Card-btn btn_reset compare_btn" type="submit">
                   <input class="visually-hidden" name="compare_id" value="{{ product.id }}">
                   <div class="ProductCard-cartElement">
                     <a class="Card-btn" href="#">
-                      <img src="{% static 'assets/img/icons/card/cart.svg' %}" alt="cart.svg">
+                      <img src="{% static 'assets/img/icons/card/delete.svg' %}" alt="cart.svg">
                     </a>
                   </div>
                 </button>
@@ -34,7 +34,7 @@
               <div class="Tabs-wrap">
                 <div class="Tabs-block" id="description">
                   <div class="table">
-                    <table>
+                    <table class="tableSection">
                       <tr>
                         <th class="hed">{% trans 'Characteristic' %}</th>
                         <th class="hed">{% trans 'Value' %}</th>
@@ -47,17 +47,12 @@
                         <td class="comparis">{% trans 'Type' %}</td>
                         <td class="comparis">{{ product.product.category.title }}</td>
                       </tr>
-                      <tr>
-                        <td>{% trans 'Model' %}</td>
-                        <td>{{ product.product.name }}</td>
+                      <tr class="table-line-custom" >
+                        <td class="tableSection">{% trans 'Model' %}</td>
+                        <td class="tableSection">{{ product.product.name }}</td>
                       </tr>
 
                       {% for char in product.product.category.characteristictype_set.all %}
-
-<!--                        <tr>-->
-<!--                          <td class="comparis">Плотность пикселей</td>-->
-<!--                          <td class="comparis">156 ppi</td>-->
-<!--                        </tr>-->
 
                         <tr>
                           <td>{{ char.name }}</td>
@@ -94,7 +89,7 @@
             <div class="ProductCard-cartElement">
               <a class="btn btn_primary" href="../cart/cart.html">
                 <img class="btn-icon" src="{% static '/assets/img/icons/card/cart_white.svg' %}" alt="cart_white.svg">
-                <span class="btn-content">Добавить в корзину</span>
+                <span class="btn-content">{% trans 'Add to Cart' %}</span>
               </a>
             </div>
           </div>

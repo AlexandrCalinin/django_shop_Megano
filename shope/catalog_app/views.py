@@ -210,7 +210,8 @@ class ComparisonView(TemplateView):
             self.request.session.save()
             session_key = self.request.session.session_key
         context['compare_list'] = self._compare_product.get_compare_product_list(_session_key=session_key)
-        context['price_seller_list'] = self._price_seller.get_last_minprice_dct(_product_id_lst=[i.product.id for i in context['compare_list']])
+        context['price_seller_list'] = self._price_seller.get_last_minprice_dct(
+            _product_id_lst=[i.product.id for i in context['compare_list']])
         return context
 
     def post(self, request, *args, **kwargs):
@@ -234,15 +235,19 @@ class AddComparisonView(View):
         product_id = kwargs.get('product_id')
         return_dict['session_key'] = session_key
         return_dict['product_id'] = product_id
-        if len(self._compare_product.get_compare_product_list(_session_key=session_key)) > 1:
+        compare_list = self._compare_product.get_compare_product_list(_session_key=session_key)
+        if len(compare_list) > 1:
             return_dict['message'] = _("Too much products to the comparison!")
+            return JsonResponse(return_dict)
+        if compare_list and compare_list[0].product.id == product_id:
+            return_dict['message'] = _("The product was already added!")
             return JsonResponse(return_dict)
         if self._compare_product.get_compare_product_list(_session_key=session_key) and \
                 not self._compare_product.possible_compare_product(_product_id=product_id, _session_key=session_key):
             return_dict['message'] = _("The product have no common characteristics!")
             return JsonResponse(return_dict)
         self._compare_product.create_compare_product(_product_id=product_id, _session_key=session_key)
-        return_dict['message'] = _("The product has been added to the comparison")
+        return_dict['message'] = _("The product has been added to the comparison!")
         return JsonResponse(return_dict)
 
 
