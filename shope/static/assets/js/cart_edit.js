@@ -102,7 +102,7 @@ $('div[name="amount-cart"]').on('click', 'button[class="Amount-add"]', function(
     cart_edit(product_id, count, seller)
 })
 
-$('div[name="amount-cart"]').on('click', 'button[class="Amount-remove"]', function(){
+$('#amount').on('click', 'button[class="Amount-remove"]', function(){
     // Обработка нажатия на кнопку уменьшения кол-ва товаров в корзине
     var count_product = $(this).parent('.Amount').children('.Amount-input.form-input').attr('value')
     $(this).parent('.Amount').children('.Amount-input.form-input').attr('value', parseInt(count_product) - 1)
