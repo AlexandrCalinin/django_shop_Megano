@@ -38,3 +38,6 @@
 
 # Add permissions for sellers
     python manage.py seller_permissions
+
+# Add tags to products
+    python manage.py create_characteristics
