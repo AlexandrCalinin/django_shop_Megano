@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block content_body %}
-    <body class="Site">
         <div class="Middle Middle_top">
             <div class="Section">
                 <div class="wrap">
@@ -74,7 +73,7 @@
                         {% endfor %}
                         {% endif %}
                         </form>
-                    </div>
+
                     <div class="Cart-total">
                         {% include 'includes/total_amount_in_cart.html' %}
                         {% if user.is_authenticated %}
@@ -83,11 +82,10 @@
                             <div class="Cart-block"><a class="btn btn_success btn_lg" href="{% url 'auth_app:register' %}">Регистрация</a></div>
                         {% endif %}
                     </div>
-
+                    </div>
 
             </div>
         </div>
-    </body>
 
 {% endblock content_body %}
 

@@ -20,7 +20,7 @@ var csrf = $('meta[name="csrf-token"]').attr('content');
     success: (data) => {
 
     $('.CartBlock-block').html(data.result)
-    Swal.fire({title: 'Товар добавлен в корзину!', confirmButtonColor: '#0041c2',
+    Swal.fire({title: data.message, confirmButtonColor: '#0041c2',
 
 })
     },
@@ -75,15 +75,16 @@ var csrf = $('meta[name="csrf-token"]').attr('content');
 
 };
 
-$('.Card-hover').on('click', 'a[class="Card-btn"]', function(){
-   // Обработка нажатия на кнопку добавления товара в корзину в каталоге
+$('.Card-hover').on('click', 'a[class="Card-btn cart-btn"]', function(){
+   // Обработка нажатия на кнопку добавления товара в корзину на главной странице
 
     var product_id = $(this).parents('.Card').attr('id')
     var product_count = 1
     var amount = $(this).data('value')
-    var seller = $(this).attr('id')
-    var product_name = $(this).attr('name')
-    var image = $(this).parents('.Card').children('.Card-picture').attr('name')
+    var seller = $(this).data('seller')
+    var product_name = $(this).data('name')
+    var image = $(this).parents('.Card').children('form').children('.Card-picture').data('name')
+
 
     cart_add(product_id, product_name, image, product_count, amount, seller)
 })
@@ -131,8 +132,8 @@ $('#1').on('click', 'a[class="btn btn_primary"]', function(){
     var product_id = $('.Product').attr('id')
     var product_count = $('.Amount-input.form-input').attr('value')
     var amount = $(this).data('value')
-    var seller = $(this).attr('id')
-    var product_name = $(this).attr('name')
+    var seller = $(this).data('seller')
+    var product_name = $(this).data('name')
     var image = $('.ProductCard-pict').attr('href')
     if(product_count == 0){
         Swal.fire({title: 'Выберите кол-во товаров!', confirmButtonColor: '#0041c2'})
@@ -145,7 +146,7 @@ $('#1').on('click', 'a[class="btn btn_primary"]', function(){
 })
 
 $('div[name="add-product-to"]').on('click', 'a[class="btn btn_primary"]', function(){
-   // Обработка нажатия на кнопку добавления товара в корзину на детальной странице продукта
+   // Обработка нажатия на кнопку добавления товара в корзину на детальной странице продукта c продацами
 
     var product_id = $('.Product').attr('id')
     var product_count = $('.Amount-input.form-input').attr('value')

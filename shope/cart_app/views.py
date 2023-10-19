@@ -5,6 +5,8 @@ from django.views.generic import ListView, TemplateView
 from .form import ChangeCountForm, DeleteForm, CartEditForm
 from core.utils.add_product_to_cart import AddProductToCart
 
+from django.utils.translation import gettext as _
+
 
 class CartListView(ListView):
     template_name = 'cart_app/cart.html'
@@ -56,11 +58,15 @@ class AddProductToCartView(TemplateView):
                 else:
                     self.add_product_to_cart.add_product_for_anonymous_user(request, **form.cleaned_data)
 
+                message = _('The product has been added to the cart')
+
                 result = render_to_string('includes/card_edit.html', request=request)
-                return JsonResponse({'result': result})
+
+                return JsonResponse({'result': result, 'message': message})
+
             else:
-                print("форма не прошла")
-                return JsonResponse({'result': 0})
+                message_error = _("Something went wrong")
+                return JsonResponse({'message': message_error})
 
 
 class DeleteCartItemView(TemplateView):
