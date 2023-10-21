@@ -12,7 +12,6 @@ class Migration(migrations.Migration):
     dependencies = [
         ('core', '0003_alter_price_product'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('catalog_app', '0004_remove_banner_category_min_price'),
     ]
 
     operations = [

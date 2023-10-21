@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('catalog_app', '0005_alter_rewiew_options_alter_rewiew_text_and_more'),
+        ('catalog_app', '0003_alter_rewiew_options_and_more'),
     ]
 
     operations = [

@@ -1,0 +1,22 @@
+[
+  {
+    "model": "catalog_app.discountproductgroup",
+    "pk": 1,
+    "fields": {
+      "created_at": "2023-09-11T11:10:05.245Z",
+      "updated_at": "2023-09-11T11:10:05.245Z",
+      "is_active": true,
+      "name": "Купи с телек с наушниками со скидкой",
+      "priority": 1,
+      "value": 5,
+      "data_start": "2023-09-20",
+      "data_end": "2023-09-20",
+      "description": "Купи с телек с наушниками со скидкой. Торопись!\r\nТолько 20 сентября! \r\nКлассные наушники с телеком обойдутся со скидкой в 5 %",
+      "image": "images/2023/09/11/sale-pic.png",
+      "product": [
+        1,
+        6
+      ]
+    }
+  }
+]
