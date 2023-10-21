@@ -1,11 +1,8 @@
 """Тестирование order_app"""
 
-import os
 from django.test import TestCase
 from django.urls import reverse
 from django.conf import settings
-
-from django import setup
 
 from core.enums import PayType, DeliveryType
 
@@ -27,10 +24,6 @@ from .utils_test import (
     delete_cart_items
 
 )
-
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'shope.settings')
-setup()
 
 
 class OrdersListViewTestCase(TestCase):
@@ -65,6 +58,7 @@ class OrdersListViewTestCase(TestCase):
         )
 
     def test_orders_list_not_authenticated(self):
+        """Проверяем что аутентификацию пользователя"""
 
         self.client.logout()
         response = self.client.get(reverse('order_app:history-order'))
@@ -118,17 +112,13 @@ class CreateOrderTestCase(TestCase):
             password='1q2w3e4r+',
             middle_name='Test Test'
         )
-
         cls.cart = create_cart(cls.user)
         cls.categories = create_categories_list()
         cls.products = create_products_list(cls.categories)
-        print('cart', cls.cart)
         cls.seller = create_seller(cls.user)
-        print('seller', cls.seller)
         cls.cart_items = create_cart_items(cls.products,
                                            cls.cart,
                                            cls.seller)
-        print('cart_items', cls.cart_items)
         cls.order_data = {
             'user': cls.user.pk,
             'city': 'Test sity',
@@ -154,15 +144,15 @@ class CreateOrderTestCase(TestCase):
         self.client.force_login(self.user)
 
     def test_create_order(self):
+        """
+        Проверка создания заказа
+        Заказ должен быть создан
+        Перенаправление на страницу оплаты
+        """
 
         response = self.client.post(
             reverse('order_app:create-order'),
-            self.order_data
-        )
-        print(response)
+            self.order_data)
 
-        print('Order', Order.objects.filter(user=self.user))
-        # self.assertTrue(
-        #     Order.objects.filter(**self.order_data).exists()
-        # )
-        return True
+        self.assertTrue(Order.objects.filter(user=self.user).exists())
+        self.assertEqual(response.status_code, 302)

@@ -106,7 +106,9 @@ class ProductDetailView(DetailView):
             sellers = []
             min_price = {'price': 0,
                          'seller': None}
-            for i_seller in self._sellers_of_product.get_sellers_of_product(self.kwargs['product_id']):
+            qs_sellers = self._sellers_of_product.get_sellers_of_product(self.kwargs['product_id'])
+
+            for i_seller in qs_sellers:
                 price = self._price_of_seller.get_last_price_of_product(
                     i_seller['price__seller'],
                     self.kwargs['product_id']

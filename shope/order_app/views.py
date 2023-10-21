@@ -89,11 +89,6 @@ class CreateOrderView(LoginRequiredMixin, CartMixin, CreateView):
 
         valid_list = [form.is_valid(), user_form.is_valid(), profile_form.is_valid()]
 
-        print('form from view', form)
-        print('form is valid', form.is_valid())
-        print('errors form', form.errors)
-        print('errors user_form', user_form.errors)
-        print('errors profile_form', profile_form.errors)
         if all(valid_list):
             order_obj = form.save()
             user_form.save()
