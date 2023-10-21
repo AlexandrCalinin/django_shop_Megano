@@ -2,7 +2,7 @@
 from typing import Any
 
 from beartype import beartype
-from django.db.models import QuerySet, OuterRef, Min, Subquery, F, FloatField
+from django.db.models import QuerySet, OuterRef, Min, Subquery, Count, F, FloatField
 from taggit.models import Tag
 
 from catalog_app.models import Product
@@ -72,6 +72,9 @@ class CatalogFilterRepository:
     def filter_by_sort(self, sort: str, query: QuerySet[Product]) -> QuerySet[Product]:
         if sort == "min_price":
             return query.order_by(sort)
+        elif sort == "rewiew":
+            query = query.annotate(review_quantity=Count('rewiew')).all()
+            return query.order_by('-review_quantity')
         else:
             return query.order_by(f"-{sort}")
 
