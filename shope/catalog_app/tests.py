@@ -2,17 +2,19 @@
 
 from django.test import TestCase
 from django.urls import reverse
+from django.core.cache import cache
 
 from catalog_app.models import Product, Category
 
 
 class ProfileTestCase(TestCase):
-    """Тесты оплаты заказа"""
+    """Тесты профайла"""
 
     @classmethod
     def setUpClass(cls) -> None:
         cls.category = Category.objects.create(
             title='test category'
+            # image='/img/icons/allDep.svg'
         )
         cls.product = Product.objects.create(
             title='test category',
@@ -24,6 +26,7 @@ class ProfileTestCase(TestCase):
     def tearDownClass(cls) -> None:
         cls.product.delete()
         cls.category.delete()
+        cache.clear()
 
     def test_detail_product_view(self):
         """Тест получение страницы профайла"""

@@ -3,6 +3,7 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.conf import settings
+from django.core.cache import cache
 
 from core.enums import PayType, DeliveryType
 
@@ -42,6 +43,7 @@ class OrdersListViewTestCase(TestCase):
     def tearDownClass(cls) -> None:
         delete_orders_list(cls.orders)
         cls.user.delete()
+        cache.clear()
 
     def setUp(self) -> None:
         self.client.force_login(self.user)
@@ -81,6 +83,7 @@ class OrderDetailsViewTestCase(TestCase):
     def tearDownClass(cls) -> None:
         cls.user.delete()
         delete_orders_list(cls.orders)
+        cache.clear()
 
     def setUp(self) -> None:
         self.client.force_login(self.user)

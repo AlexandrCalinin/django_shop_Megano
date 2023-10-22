@@ -2,6 +2,7 @@
 
 from django.test import TestCase
 from django.urls import reverse
+from django.core.cache import cache
 
 from auth_app.models import User
 
@@ -20,6 +21,7 @@ class ProfileTestCase(TestCase):
     @classmethod
     def tearDownClass(cls) -> None:
         cls.user.delete()
+        cache.clear()
 
     def setUp(self) -> None:
         self.client.force_login(self.user)
