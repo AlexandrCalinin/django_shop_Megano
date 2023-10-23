@@ -47,21 +47,28 @@
       <div class="wrap">
         <div class="BannersHome">
           {% for banner in banner_list %}
-            <a class="BannersHomeBlock" href="#">
-              <div class="BannersHomeBlock-row">
-                <div class="BannersHomeBlock-block">
-                  <strong class="BannersHomeBlock-title">{{ banner.category.title }}
-                  </strong>
-                  <div class="BannersHomeBlock-content">
-                    {% trans 'from' %}&#32;<span class="BannersHomeBlock-price">{{ banner.min_price }}</span>
+{#          <div class="BannersHomeBlock">#}
+            <form class="BannersHomeBlock BannersHomeBlock-form" action="{% url 'catalog' %}" method="get">
+
+                <button class="BannersHomeBlock btn_reset banner-btn" href="#" name="category"
+                                                value="{{ banner.category.id }}">
+                  <div class="BannersHomeBlock-row">
+                    <div class="BannersHomeBlock-block">
+                      <strong class="BannersHomeBlock-title">{{ banner.category.title }}
+                      </strong>
+                      <div class="BannersHomeBlock-content">
+                        {% trans 'from' %}&#32;<span class="BannersHomeBlock-price">{{ banner.min_price }}</span>
+                      </div>
+                    </div>
+                    <div class="BannersHomeBlock-block">
+                      <div class="BannersHomeBlock-img"><img src="{{ banner.image.url }}" alt="videoca.png">
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="BannersHomeBlock-block">
-                  <div class="BannersHomeBlock-img"><img src="{{ banner.image.url }}" alt="videoca.png">
-                  </div>
-                </div>
-              </div>
-            </a>
+                </button>
+
+            </form>
+{#          </div>#}
           {% endfor %}
         </div>
       </div>

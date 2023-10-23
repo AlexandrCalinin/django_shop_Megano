@@ -14,6 +14,21 @@
   border: 0;
 }
 
+.banner-btn {
+  cursor: pointer;
+  background: #f3f4f9;
+  color: #424650;
+  border: 0;
+}
+
+.BannersHomeBlock-form {
+  padding: 0;
+}
+
+.BannersHomeBlock-form:not(:last-child) {
+  margin-right: 34px;
+}
+
 .delete-btn {
   position: absolute;
   top: -15px;
