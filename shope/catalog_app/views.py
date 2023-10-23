@@ -36,34 +36,13 @@ from interface.review_interface import IReview
 from catalog_app.form import ReviewForm
 from core.utils.cache import get_cache_value
 
+from core.utils.cache_key import (
+    DETAIL_PRODUCT_KEY,
+    PRODUCTS_KEY,
+)
+
 
 configure_inject()
-
-
-# def invalidate_cache(path='', *args, namespace=None):
-#     request = HttpRequest()
-#     request.META = {
-#         'SERVER_NAME': '127.0.0.1',
-#         'SERVER_PORT': 8000}
-#     request.LANGUAGE_CODE = 'en-us'
-#     if namespace:
-#         path = namespace + ":" + path
-#     request.path = reverse(path, args=args)
-
-#     request.method = 'GET'
-
-#     try:
-#         cache_key = get_cache_key(request)
-#         if cache_key:
-#             if cache.has_key(cache_key):
-#                 cache.delete(cache_key)
-#                 return True
-#             else:
-#                 return False
-#         else:
-#             raise ValueError('failed to create cache_key')
-#     except (ValueError, Exception) as e:
-#         return False
 
 
 class ProductDetailView(DetailView):
@@ -80,7 +59,7 @@ class ProductDetailView(DetailView):
 
     def get_queryset(self):
         """get querysert"""
-        key = 'PRODUCTS'
+        key = PRODUCTS_KEY
         qs = cache.get(key)
         if not qs:
             qs = Product.objects.all()
@@ -89,7 +68,7 @@ class ProductDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         """get_context_data"""
-        key = 'DETAIL_PRODUCT:' + str(self.kwargs['product_id'])
+        key = DETAIL_PRODUCT_KEY + str(self.kwargs['product_id'])
         cache_time = get_cache_value('DETAIL_PRODUCT')
 
         context = cache.get(key)

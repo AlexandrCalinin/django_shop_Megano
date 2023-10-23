@@ -8,7 +8,13 @@ from core.utils.cache import delete_cache_setup
 from core.models.cache_setup import CacheSetup
 from catalog_app.models import Rewiew, Product, Category, Banner
 from order_app.models import OrderItem
-from .utils.cache import invalidate_cache
+from .utils.cache_key import (
+    DETAIL_PRODUCT_KEY,
+    CATEGORY_LIST_KEY,
+    BANNER_LIST_KEY,
+    TOP_PRODUCT_LIST_KEY,
+    PRODUCTS_KEY
+)
 
 
 @receiver(post_save, sender=CacheSetup)
@@ -24,7 +30,7 @@ def review_change(sender, instance, **kwargs):
     """ Создание отзыва.
     Удаляем кеш детальной страницы продукта на странице которого создан отзыв"""
     # invalidate_cache('product', instance.product_id)
-    key = 'DETAIL_PRODUCT:' + str(instance.product_id)
+    key = DETAIL_PRODUCT_KEY + str(instance.product_id)
     if cache.get(key):
         cache.delete(key)
 
@@ -36,11 +42,14 @@ def review_change(sender, instance, **kwargs):
 @receiver(post_save, sender=Product)
 def product_change(sender, instance, **kwargs):
     """Изменение продукта.
-    Удаляем кеш детальной страницы продукта на странице которого создан отзыв"""
+    Удаляем кеш продукта"""
 
-    key = 'DETAIL_PRODUCT:' + str(instance.pk)
+    key = DETAIL_PRODUCT_KEY + str(instance.pk)
     if cache.get(key):
         cache.delete(key)
+
+    if cache.get(PRODUCTS_KEY):
+        cache.delete(PRODUCTS_KEY)
 
     key = make_template_fragment_key('detail_product', (instance.pk,))
     if key:
@@ -52,9 +61,8 @@ def category_change(sender, instance, **kwargs):
     """Изменение категории.
     Удаляем кеш категории из контекст-процессора"""
 
-    key = 'CATEGORY_LIST'
-    if cache.get(key):
-        cache.delete(key)
+    if cache.get(CATEGORY_LIST_KEY):
+        cache.delete(CATEGORY_LIST_KEY)
 
 
 @receiver(post_save, sender=Banner)
@@ -62,9 +70,8 @@ def banner_change(sender, instance, **kwargs):
     """Изменение  банера.
     Удаляем кеш банера"""
 
-    key = 'BANNER_LIST'
-    if cache.get(key):
-        cache.delete(key)
+    if cache.get(BANNER_LIST_KEY):
+        cache.delete(BANNER_LIST_KEY)
 
 
 @receiver(post_save, sender=OrderItem)
@@ -73,6 +80,5 @@ def top_product_change(sender, instance, **kwargs):
     """Отслеживаем изменениен продукта и изменение заказа.
     Удаляем кеш топ-товаров"""
 
-    key = 'TOP_PRODUCT_LIST'
-    if cache.get(key):
-        cache.delete(key)
+    if cache.get(TOP_PRODUCT_LIST_KEY):
+        cache.delete(TOP_PRODUCT_LIST_KEY)

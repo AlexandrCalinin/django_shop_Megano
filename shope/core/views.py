@@ -20,6 +20,10 @@ from interface.slider_interface import ISlider
 
 from core.forms import CacheSetupForm
 
+from .utils.cache_key import (
+    TOP_PRODUCT_LIST_KEY,
+)
+
 
 configure_inject()
 
@@ -42,7 +46,7 @@ class BaseView(TemplateView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['product_top_list'] = cache.get_or_set('TOP_PRODUCT_LIST',
+        context['product_top_list'] = cache.get_or_set(TOP_PRODUCT_LIST_KEY,
                                                        self._products.get_product_top_list(const=8),
                                                        get_cache_value('TOP_PRODUCT'))
         context['product_limited_list'] = list(self._products.get_product_limit_list(const=17))
