@@ -60,6 +60,8 @@ class ProductRepository(IProduct):
     def get_sellers_of_product(self, _pk: int) -> list:
         """Получить список продавцов, которые продают данный продукт"""
         distinct = list(Product.objects.filter(pk=_pk).values('price__seller').distinct())
+        if distinct[0]['price__seller'] is None:
+            return []
         return distinct
 
     @beartype

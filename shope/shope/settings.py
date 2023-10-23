@@ -53,8 +53,9 @@ else:
 
 STATIC_URL = '/static/'
 
-ALLOWED_HOSTS = ["*"]
+# ALLOWED_HOSTS = ["*"]
 
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver']
 # Application definition
 
 INSTALLED_APPS = [
@@ -234,5 +235,7 @@ CACHE_VALUES = {
     'CATEGORY': 86400,  # время кеширования каталога
     'DETAIL_PRODUCT': 86400,  # время кеширования детальной страницы продукта
     'TOP_PRODUCT': 86400,  # время кеширования детальной страницы продукта
-    'CATALOG': 86400  # время кеширования каталога
+    'CATALOG': 86400,  # время кеширования каталога
+    'BANNER': 600,  # время кеширования банера
+
 }

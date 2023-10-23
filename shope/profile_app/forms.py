@@ -48,6 +48,7 @@ class EditProfileForm(forms.ModelForm):
                                         }))
 
     avatar = forms.ImageField(label=_('Avatar'),
+                              required=False,
                               widget=forms.FileInput(
                                   attrs={'class': 'Profile-file form-input',
                                          'id': 'avatar',

@@ -24,16 +24,18 @@ class CreateOrderForm(forms.ModelForm):
                                          'data-validate': 'require'}))
 
     delivery_type = forms.CharField(label=_('Delivery type'),
+                                    required=False,
                                     widget=forms.RadioSelect(choices=DeliveryType.choices,
                                                              attrs={'class': 'toggle-box',
                                                                     'onchange': 'deliveryChange(this);',
-                                                                    'data-validate': 'require'}))
+                                                                    }))
 
     pay_type = forms.CharField(label=_('Pay type'),
+                               required=False,
                                widget=forms.RadioSelect(choices=PayType.choices,
                                                         attrs={'class': 'toggle-box',
                                                                'onchange': 'payChange(this);',
-                                                               'data-validate': 'require'}))
+                                                               }))
 
     class Meta:
         """Meta Class"""
@@ -42,6 +44,7 @@ class CreateOrderForm(forms.ModelForm):
             'city',
             'address',
             'delivery_type',
+            'pay_type',
             'user',
             'amount'
         ]

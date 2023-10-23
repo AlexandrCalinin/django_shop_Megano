@@ -7,3 +7,6 @@ __pycache__/
 ._*
 *.sqlite3
 shope/db.sqlite3
+*.log
+.venv
+shope_cache/
