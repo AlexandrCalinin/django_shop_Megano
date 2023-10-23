@@ -15,6 +15,7 @@ Including another URLconf
 """
 
 import debug_toolbar
+from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.urls import path, include
 
@@ -35,6 +36,18 @@ urlpatterns = [
     path('order/', include('order_app.urls')),
     path('pay/', include('pay_app.urls')),
 ]
+urlpatterns += i18n_patterns(
+    path('admin/', admin.site.urls),
+
+    path('', include('core.urls')),
+    path('profile/', include('profile_app.urls')),
+
+    path('auth/', include("auth_app.urls")),
+    path('catalog/', include('catalog_app.urls')),
+    path('cart/', include('cart_app.urls')),
+    path('order/', include('order_app.urls')),
+    path('pay/', include('pay_app.urls')),
+)
 
 
 if settings.DEBUG:
