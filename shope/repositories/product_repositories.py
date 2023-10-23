@@ -25,7 +25,7 @@ class ProductRepository(IProduct):
             qty=Sum('orderitem__count'),
             min_price=Round(Cast(Min('price__price'), output_field=FloatField())),
             seller_id=F('price__seller_id')
-        ).order_by('-qty')[:const]
+        ).order_by('-qty')[:const].prefetch_related('discountproduct_set')
         if len(qs) < const:
             qs = Product.objects.filter(~Q(id__in=qs), is_active=True, price__price__gte=1).annotate(
                 value=Round(Cast(Min('price__price'), output_field=FloatField())),
@@ -40,7 +40,7 @@ class ProductRepository(IProduct):
             qs = Product.objects.annotate(
                 min_price=Subquery(min_price_subquery.values('min_value'), output_field=FloatField()),
                 min_price_seller_id=Subquery(min_price_seller_subquery)
-            ).filter(min_price__gt=0)[:const - 0]
+            ).filter(min_price__gt=0)[:const - 0].prefetch_related('discountproduct_set')
 
         return qs
 
@@ -54,7 +54,7 @@ class ProductRepository(IProduct):
         if len(qs) > const:
             const_num_list = random.sample([product.pk for product in qs], const)
             qs = qs.filter(product__id__in=const_num_list)
-        return qs
+        return qs.prefetch_related('discountproduct_set')
 
     @beartype
     def get_sellers_of_product(self, _pk: int) -> list:

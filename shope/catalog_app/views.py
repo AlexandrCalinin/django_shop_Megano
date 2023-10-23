@@ -15,6 +15,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 from django.views.generic import TemplateView, ListView, DetailView
 
 from core.utils.injector import configure_inject
+from core.utils.product_discount import ProductDiscount
 from interface.cart_sale_interface import ICartSale
 from interface.category_interface import ICategory
 from interface.compare_product_interface import ICompareProduct
@@ -100,7 +101,7 @@ class ProductDetailView(DetailView):
 
         context['review_form'] = ReviewForm()
         context['cache_time'] = cache_time
-
+        print(ProductDiscount().get_all_discount_on_product(self.object.id))
         return context
 
     def post(self, request, product_id):
