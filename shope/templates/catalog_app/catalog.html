@@ -95,7 +95,7 @@
                         {% if object_list %}
                             {% for product in object_list %}
 
-                                    <div class="Card" id="{{ product.id }}">
+                                    <div class="Card" data-product="{{ product.id }}">
 
                                         <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
                                         {% csrf_token %}
