@@ -11,3 +11,8 @@ class IDiscountProductGroup:
     def get_list(self) -> QuerySet[DiscountProductGroup]:
         """Получить кверисет скидок на группу продуктов"""
         pass
+
+    @abstractmethod
+    def possible_get_discount(self, _product_id_list: [int]) -> bool:
+        """Вернуть возможность применения скидки"""
+        pass

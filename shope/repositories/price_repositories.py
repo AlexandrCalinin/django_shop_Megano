@@ -41,7 +41,6 @@ class PriceRepository(IPrice):
             max_sale = 0
             if sales:
                 for sale in sales:
-                    print(sale, sale.value)
                     if sale.value > max_sale:
                         max_sale = sale.value
                 current = dct['discount_price']
