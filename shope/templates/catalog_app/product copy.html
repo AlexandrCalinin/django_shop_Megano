@@ -1,5 +1,6 @@
 {% extends 'core/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content_body %}
     <div class="Middle Middle_top">
         <div class="Section">
@@ -31,7 +32,7 @@
                 </div>
                 <div class="ProductCard-desc">
                     <div class="ProductCard-header">
-                        <h2 class="ProductCard-title">Barand New Phone Smart Busines</h2>
+                        <h2 class="ProductCard-title">{% trans 'Barand New Phone Smart Busines' %}</h2>
                         <div class="ProductCard-info">
                             <div class="ProductCard-cost">
                                 <div class="ProductCard-price">$55.00</div>
@@ -58,18 +59,18 @@
                                 <img class="btn-icon"
                                      src="{% static '/assets/img/icons/card/cart_white.svg' %}"
                                      alt="cart_white.svg">
-                                <span class="btn-content">Купить</span>
+                                <span class="btn-content">{% trans 'Купить' %}</span>
                             </a>
                         </div>
                         <div class="my_modal" id="modal_open">
                             <div class="my_modal-dialog">
                                 <div class="my_modal-content">
                                     <div class="my_modal-header">
-                                        <p class="my_modal-title">Поздравляем!</p>
+                                        <p class="my_modal-title">{% trans 'Поздравляем' %}!</p>
                                         <a class="close" href="#" title="Закрыть модальное окно">×</a>
                                     </div>
                                     <div class="my_modal-body">
-                                        <p>Товар успешно добавлен в корзину!</p>
+                                        <p>{% trans 'Товар успешно добавлен в корзину!' %}</p>
                                     </div>
                                 </div>
                             </div>
@@ -77,7 +78,7 @@
                     </div>
                     <div class="ProductCard-footer">
                         <div class="ProductCard-tags">
-                            <strong class="ProductCard-tagsTitle">Тэги:</strong><a href="#">Аксессуары</a>,<a href="#">Дизайн</a>,<a href="#">Игры</a>
+                            <strong class="ProductCard-tagsTitle">{% trans 'Тэги' %}:</strong><a href="#">{% trans 'Аксессуары' %}</a>,<a href="#">{% trans 'Дизайн' %}</a>,<a href="#">{% trans 'Игры' %}</a>
                         </div>
                     </div>
                 </div>
@@ -85,21 +86,21 @@
             <div class="Tabs Tabs_default">
                 <div class="Tabs-links">
                     <a class="Tabs-link_ACTIVE Tabs-link" href="#description">
-                        <span>Описание</span>
+                        <span>{% trans 'Описание' %}</span>
                     </a>
                     <a class="Tabs-link" href="#sellers">
-                        <span>Продавцы</span>
+                        <span>{% trans 'Продавцы' %}</span>
                     </a>
                     <a class="Tabs-link" href="#addit">
-                        <span>Характеристика</span>
+                        <span>{% trans 'Характеристика' %}</span>
                     </a>
                     <a class="Tabs-link" href="#reviews">
-                        <span>Отзывы (3)</span>
+                        <span>{% trans 'Отзывы' %} (3)</span>
                     </a>
                 </div>
                 <div class="Tabs-wrap">
                     <div class="Tabs-block" id="description">
-                        <h2>Megano Store Hystory</h2>
+                        <h2>{% trans 'Megano Store Hystory' %}</h2>
                         <p>
                             Lorem ipsum dolor sit amet, consectetuer&#32;
                             <strong>adipiscing</strong>&#32;elit doli. Aenean commodo ligula eget dolor. Aenean massa.&#32;<a href="#">Cumtipsu</a>&#32;sociis natoque penatibus et magnis dis parturient montesti, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eutu, pretiumem.
@@ -121,12 +122,12 @@
                         <div class="table">
                             <table>
                                 <tr>
-                                    <th>Характеристика</th>
-                                    <th>Значение</th>
+                                    <th>{% trans 'Характеристика' %}</th>
+                                    <th>{% trans 'Значение' %}</th>
                                 </tr>
                                 <tr>
-                                    <td>Тип устройства</td>
-                                    <td>Ноутбук</td>
+                                    <td>{% trans 'Тип устройства' %}</td>
+                                    <td>{% trans 'Ноутбук' %}</td>
                                 </tr>
                             </table>
                         </div>
@@ -138,27 +139,27 @@
                                     <div class="Order-personal">
                                         <div class="row">
                                             <div class="row-block">
-                                                <a class="Order-title" href="{% url 'order_app:one-order' %}">Ситилинк</a>
+                                                <a class="Order-title" href="{% url 'order_app:one-order' %}">{% trans 'Ситилинк' %}</a>
                                                 <div class="ProductCard-cartElement" style="margin-top: 10px;">
                                                     <a class="btn btn_primary" href="#modal_open">
                                                         <img class="btn-icon"
                                                              src="{% static '/assets/img/icons/card/cart_white.svg' %}"
                                                              alt="cart_white.svg">
-                                                        <span class="btn-content">Купить</span>
+                                                        <span class="btn-content">{% trans 'Купить' %}</span>
                                                     </a>
                                                 </div>
                                             </div>
                                             <div class="row-block">
                                                 <div class="Order-info Order-info_delivery">
-                                                    <div class="Order-infoType">Тип доставки:</div>
-                                                    <div class="Order-infoContent">Обычная доставка</div>
+                                                    <div class="Order-infoType">{% trans 'Тип доставки' %}:</div>
+                                                    <div class="Order-infoContent">{% trans 'Обычная доставка' %}</div>
                                                 </div>
                                                 <div class="Order-info Order-info_pay">
-                                                    <div class="Order-infoType">Оплата:</div>
-                                                    <div class="Order-infoContent">Онлайн картой</div>
+                                                    <div class="Order-infoType">{% trans 'Оплата' %}:</div>
+                                                    <div class="Order-infoContent">{% trans 'Онлайн картой' %}</div>
                                                 </div>
                                                 <div class="Order-info">
-                                                    <div class="Order-infoType">Стоимость:</div>
+                                                    <div class="Order-infoType">{% trans 'Стоимость' %}:</div>
                                                     <div class="Order-infoContent">
                                                         <span class="Order-price">200.99$</span>
                                                     </div>
@@ -171,27 +172,27 @@
                                     <div class="Order-personal">
                                         <div class="row">
                                             <div class="row-block">
-                                                <a class="Order-title" href="{% url 'order_app:one-order' %}">ДНС</a>
+                                                <a class="Order-title" href="{% url 'order_app:one-order' %}">{% trans 'ДНС' %}</a>
                                                 <div class="ProductCard-cartElement" style="margin-top: 10px;">
                                                     <a class="btn btn_primary" href="#modal_open">
                                                         <img class="btn-icon"
                                                              src="{% static '/assets/img/icons/card/cart_white.svg' %}"
                                                              alt="cart_white.svg">
-                                                        <span class="btn-content">Купить</span>
+                                                        <span class="btn-content">{% trans 'Купить' %}</span>
                                                     </a>
                                                 </div>
                                             </div>
                                             <div class="row-block">
                                                 <div class="Order-info Order-info_delivery">
-                                                    <div class="Order-infoType">Тип доставки:</div>
-                                                    <div class="Order-infoContent">Обычная доставка</div>
+                                                    <div class="Order-infoType">{% trans 'Тип доставки' %}:</div>
+                                                    <div class="Order-infoContent">{% trans 'Обычная доставка' %}</div>
                                                 </div>
                                                 <div class="Order-info Order-info_pay">
-                                                    <div class="Order-infoType">Оплата:</div>
-                                                    <div class="Order-infoContent">Онлайн картой</div>
+                                                    <div class="Order-infoType">{% trans 'Обычная доставка' %}:</div>
+                                                    <div class="Order-infoContent">{% trans 'Оплата' %}</div>
                                                 </div>
                                                 <div class="Order-info">
-                                                    <div class="Order-infoType">Стоимость:</div>
+                                                    <div class="Order-infoType">{% trans 'Онлайн картой' %}:</div>
                                                     <div class="Order-infoContent">
                                                         <span class="Order-price">100.99$</span>
                                                     </div>
@@ -204,27 +205,27 @@
                                     <div class="Order-personal">
                                         <div class="row">
                                             <div class="row-block">
-                                                <a class="Order-title" href="{% url 'order_app:one-order' %}">Эльдорадо</a>
+                                                <a class="Order-title" href="{% url 'order_app:one-order' %}">{% trans 'Стоимость' %}</a>
                                                 <div class="ProductCard-cartElement" style="margin-top: 10px;">
                                                     <a class="btn btn_primary" href="#modal_open">
                                                         <img class="btn-icon"
                                                              src="{% static '/assets/img/icons/card/cart_white.svg' %}"
                                                              alt="cart_white.svg">
-                                                        <span class="btn-content">Купить</span>
+                                                        <span class="btn-content">{% trans 'Эльдорадо' %}</span>
                                                     </a>
                                                 </div>
                                             </div>
                                             <div class="row-block">
                                                 <div class="Order-info Order-info_delivery">
-                                                    <div class="Order-infoType">Тип доставки:</div>
-                                                    <div class="Order-infoContent">Обычная доставка</div>
+                                                    <div class="Order-infoType">{% trans 'Тип доставки' %}:</div>
+                                                    <div class="Order-infoContent">{% trans 'Обычная доставка' %}</div>
                                                 </div>
                                                 <div class="Order-info Order-info_pay">
-                                                    <div class="Order-infoType">Оплата:</div>
-                                                    <div class="Order-infoContent">Онлайн картой</div>
+                                                    <div class="Order-infoType">{% trans 'Оплата' %}:</div>
+                                                    <div class="Order-infoContent">{% trans 'Онлайн картой' %}</div>
                                                 </div>
                                                 <div class="Order-info">
-                                                    <div class="Order-infoType">Стоимость:</div>
+                                                    <div class="Order-infoType">{% trans 'Стоимость' %}:</div>
                                                     <div class="Order-infoContent">
                                                         <span class="Order-price">20.00$</span>
                                                     </div>
@@ -254,7 +255,7 @@
                                     </div>
                                     <div class="Tabs-block" id="reviews">
                                         <header class="Section-header">
-                                            <h3 class="Section-title">1 отзыв</h3>
+                                            <h3 class="Section-title">{% trans '1 отзыв' %}</h3>
                                         </header>
                                         <div class="Comments">
                                             <div class="Comment">
@@ -264,7 +265,7 @@
                                                 <div class="Comment-column">
                                                     <header class="Comment-header">
                                                         <div>
-                                                            <strong class="Comment-title">Александра Бровина</strong><span class="Comment-date">Декабрь 25&#32;&#32;/&#32;&#32;2017&#32;&#32;/&#32;&#32;22:50</span>
+                                                            <strong class="Comment-title">{% trans 'Александра ' %}</strong><span class="Comment-date">{% trans 'Бровина' %}&#32;&#32;/&#32;&#32;2017&#32;&#32;/&#32;&#32;22:50</span>
                                                         </div>
                                                     </header>
                                                     <div class="Comment-content">
@@ -274,7 +275,7 @@
                                             </div>
                                         </div>
                                         <header class="Section-header Section-header_product">
-                                            <h3 class="Section-title">Добавить отзыв</h3>
+                                            <h3 class="Section-title">{% trans 'Декабрь 25' %}</h3>
                                         </header>
                                         <div class="Tabs-addComment">
                                             <form class="form" action="#" method="post">
@@ -282,7 +283,7 @@
                                                     <textarea class="form-textarea" id="review" name="review" placeholder="Отзыв"></textarea>
                                                 </div>
                                                 <div class="form-group">
-                                                    <button class="btn btn_muted" type="submit">Отправить отзыв</button>
+                                                    <button class="btn btn_muted" type="submit">{% trans 'Добавить отзыв' %}</button>
                                                 </div>
                                             </form>
                                         </div>

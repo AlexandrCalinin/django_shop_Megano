@@ -1,5 +1,6 @@
 {% extends 'auth/base-auth.html' %}
+{% load i18n %}
 
 {% block content %}
-    <h1>В ходе регистрации что-то пошло не так...</h1>
+    <h1>{% trans 'В ходе регистрации что-то пошло не так...' %}</h1>
 {% endblock %}
