@@ -122,7 +122,7 @@
                                                 <div class="Card-cost">
                                                     {% for object in price_seller_list %}
                                                         {% if object.product_id == product.id %}
-                                                        <span class="Card-price">{{ object.price|floatformat:"0" }}₽</span>
+                                                        <span class="Card-price">{{ object.price|floatformat:"2" }}₽</span>
                                                         {% endif %}
                                                     {% endfor %}
                                                 </div>
@@ -145,6 +145,16 @@
                                                             </a>
                                                         {% endif %}
                                                     {% endfor %}
+                                                  <form class="Card-btn comparison-add" action="{% url 'add_comparison' product_id=product.id %}" method="post">
+                                                    {% csrf_token %}
+                                                    <button class="Card-btn btn_reset compare_btn" type="submit" data-product_id="{{ product.id }}">
+                                                      <div class="ProductCard-cartElement">
+                                                        <a class="Card-btn" href="#">
+                                                          <img src="{% static 'assets/img/icons/card/change.svg' %}" alt="change.svg">
+                                                        </a>
+                                                      </div>
+                                                    </button>
+                                                  </form>
                                                 </div>
                                             </div>
                                         </div>
