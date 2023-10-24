@@ -22,7 +22,7 @@
         {% for i_cache_data in  cache_data %}
             <div>
                 {{ i_cache_data.key }}
-                {{ i_cache_data.value }} sec.|
+                {{ i_cache_data.value }} |
                 <a href="{% url 'edit-cache' i_cache_data.pk %}">{% trans "edit" %}</a>
             </div>
         {% endfor %}
