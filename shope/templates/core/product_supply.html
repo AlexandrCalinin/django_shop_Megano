@@ -47,21 +47,28 @@
       <div class="wrap">
         <div class="BannersHome">
           {% for banner in banner_list %}
-            <a class="BannersHomeBlock" href="#">
-              <div class="BannersHomeBlock-row">
-                <div class="BannersHomeBlock-block">
-                  <strong class="BannersHomeBlock-title">{{ banner.category.title }}
-                  </strong>
-                  <div class="BannersHomeBlock-content">
-                    {% trans 'from' %}&#32;<span class="BannersHomeBlock-price">{{ banner.min_price }}</span>
+{#          <div class="BannersHomeBlock">#}
+            <form class="BannersHomeBlock BannersHomeBlock-form" action="{% url 'catalog' %}" method="get">
+
+                <button class="BannersHomeBlock btn_reset banner-btn" href="#" name="category"
+                                                value="{{ banner.category.id }}">
+                  <div class="BannersHomeBlock-row">
+                    <div class="BannersHomeBlock-block">
+                      <strong class="BannersHomeBlock-title">{{ banner.category.title }}
+                      </strong>
+                      <div class="BannersHomeBlock-content">
+                        {% trans 'from' %}&#32;<span class="BannersHomeBlock-price">{{ banner.min_price }}</span>
+                      </div>
+                    </div>
+                    <div class="BannersHomeBlock-block">
+                      <div class="BannersHomeBlock-img"><img src="{{ banner.image.url }}" alt="videoca.png">
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="BannersHomeBlock-block">
-                  <div class="BannersHomeBlock-img"><img src="{{ banner.image.url }}" alt="videoca.png">
-                  </div>
-                </div>
-              </div>
-            </a>
+                </button>
+
+            </form>
+{#          </div>#}
           {% endfor %}
         </div>
       </div>
@@ -109,25 +116,25 @@
                       <div class="CountDown-block">
                         <div class="CountDown-wrap">
                           <div class="CountDown-days">
-                          </div><span class="CountDown-label">days</span>
+                          </div><span class="CountDown-label">{% trans 'days' %}</span>
                         </div>
                       </div>
                       <div class="CountDown-block">
                         <div class="CountDown-wrap">
                           <div class="CountDown-hours">
-                          </div><span class="CountDown-label">hours</span>
+                          </div><span class="CountDown-label">{% trans 'hours' %}</span>
                         </div>
                       </div>
                       <div class="CountDown-block">
                         <div class="CountDown-wrap">
                           <div class="CountDown-minutes">
-                          </div><span class="CountDown-label">mins</span>
+                          </div><span class="CountDown-label">{% trans 'mins' %}</span>
                         </div>
                       </div>
                       <div class="CountDown-block">
                         <div class="CountDown-wrap">
                           <div class="CountDown-secs">
-                          </div><span class="CountDown-label">secs</span>
+                          </div><span class="CountDown-label">{% trans 'secs' %}</span>
                         </div>
                       </div>
                     </div>
@@ -143,12 +150,14 @@
           </header>
             <div class="Cards">
               {% for product in product_top_list %}
-                <div class="Card hide_md hide_1450" id="{{product.id}}">
+
+                <div class="Card hide_md hide_1450" data-product="{{product.id}}">
                   {% if product.discountproduct_set.exists or product.category.discountproduct_set.exists %}
                     <div class="Card-btn delete-btn">
                       <img height="40" width="40" src="{% static 'assets/img/icons/card/discount.svg' %}" alt="cart.svg">
                     </div>
                   {% endif %}
+
                   <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
                     {% csrf_token %}
                     <button class="Card-picture btn_reset" data-name="{{ product.image.all.0.image.url }}" href="{% url 'product' product_id=product.id %}" type="submit">
@@ -226,7 +235,7 @@
               {% for product in product_limited_list %}
                 <div class="Slider-item">
                   <div class="Slider-content">
-                    <div class="Card">
+                    <div class="Card" data-product="{{product.id}}">
                       {% if product.discountproduct_set.exists or product.category.discountproduct_set.exists %}
                         <div class="Card-btn delete-btn">
                           <img height="40" width="40" src="{% static 'assets/img/icons/card/discount.svg' %}" alt="cart.svg">
@@ -234,7 +243,7 @@
                       {% endif %}
                       <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
                         {% csrf_token %}
-                        <button class="Card-picture btn_reset" href="{% url 'product' product_id=product.id %}" type="submit">
+                        <button class="Card-picture btn_reset" data-name="{{ product.image.all.0.image.url }}" href="{% url 'product' product_id=product.id %}" type="submit">
                           {% if product.image %}
                             <img src="{{ product.image.all.0.image.url }}" alt="card.jpg">
                           {% endif %}
@@ -269,7 +278,7 @@
                           <div class="Card-hover">
                             {% for object in price_seller_list %}
                                 {% if object.product_id == product.id %}
-                              <a class="Card-btn cart-btn" href="#" data-seller="{{ object.seller }}">
+                              <a class="Card-btn cart-btn" href="#" data-value="{{object.price}}" data-seller="{{ object.seller }}" data-name="{{product.title}}">
                                 <img src="{% static 'assets/img/icons/card/cart.svg' %}" alt="cart.svg">
                               </a>
                             {% endif %}

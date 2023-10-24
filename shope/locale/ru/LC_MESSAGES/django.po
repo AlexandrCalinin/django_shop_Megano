@@ -1,0 +1,1158 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-22 11:04+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\auth_app\models.py:13 .\cart_app\models.py:16 .\catalog_app\models.py:226
+#: .\core\models\seller.py:14 .\order_app\models.py:16
+#: .\profile_app\models.py:34
+msgid "user"
+msgstr ""
+
+#: .\auth_app\models.py:14
+msgid "users"
+msgstr ""
+
+#: .\auth_app\models.py:21 .\profile_app\forms.py:22
+#: .\templates\order_app\oneorder.html:28
+msgid "Full name"
+msgstr ""
+
+#: .\cart_app\models.py:20 .\templates\catalog_app\product.html:153
+msgid "Cart"
+msgstr ""
+
+#: .\cart_app\models.py:33
+msgid "cart"
+msgstr ""
+
+#: .\cart_app\models.py:37
+msgid "CartItem"
+msgstr ""
+
+#: .\cart_app\views.py:60
+msgid "The product has been added to the cart"
+msgstr ""
+
+#: .\cart_app\views.py:67
+msgid "Something went wrong"
+msgstr ""
+
+#: .\catalog_app\models.py:13 .\catalog_app\models.py:42
+msgid "title"
+msgstr ""
+
+#: .\catalog_app\models.py:15 .\catalog_app\models.py:29
+#: .\catalog_app\models.py:35 .\catalog_app\models.py:45
+#: .\catalog_app\models.py:67 .\catalog_app\models.py:81
+#: .\catalog_app\models.py:94 .\catalog_app\models.py:109
+#: .\catalog_app\models.py:123
+msgid "image"
+msgstr ""
+
+#: .\catalog_app\models.py:22 .\catalog_app\models.py:48
+#: .\catalog_app\models.py:80 .\catalog_app\models.py:96
+#: .\catalog_app\models.py:166
+msgid "category"
+msgstr ""
+
+#: .\catalog_app\models.py:23
+msgid "categories"
+msgstr ""
+
+#: .\catalog_app\models.py:36
+msgid "images"
+msgstr ""
+
+#: .\catalog_app\models.py:43 .\catalog_app\models.py:66
+#: .\core\models\base_discount.py:14
+msgid "description"
+msgstr ""
+
+#: .\catalog_app\models.py:44 .\catalog_app\models.py:160
+#: .\core\models\seller.py:9
+msgid "name"
+msgstr ""
+
+#: .\catalog_app\models.py:47
+msgid "number_of_sales"
+msgstr ""
+
+#: .\catalog_app\models.py:49
+msgid "limited"
+msgstr ""
+
+#: .\catalog_app\models.py:50
+msgid "delivery"
+msgstr ""
+
+#: .\catalog_app\models.py:56 .\catalog_app\models.py:64
+#: .\catalog_app\models.py:95 .\catalog_app\models.py:110
+#: .\catalog_app\models.py:142 .\catalog_app\models.py:204
+#: .\catalog_app\models.py:227 .\catalog_app\models.py:241
+#: .\core\models\base_item.py:14 .\core\models\price.py:13
+msgid "product"
+msgstr ""
+
+#: .\catalog_app\models.py:57
+msgid "products"
+msgstr ""
+
+#: .\catalog_app\models.py:73
+msgid "slider"
+msgstr ""
+
+#: .\catalog_app\models.py:74
+msgid "sliders"
+msgstr ""
+
+#: .\catalog_app\models.py:87
+msgid "banner"
+msgstr ""
+
+#: .\catalog_app\models.py:88
+msgid "banners"
+msgstr ""
+
+#: .\catalog_app\models.py:102
+msgid "product discount"
+msgstr ""
+
+#: .\catalog_app\models.py:103
+msgid "product discounts"
+msgstr ""
+
+#: .\catalog_app\models.py:116
+msgid "group of product discount"
+msgstr ""
+
+#: .\catalog_app\models.py:117
+msgid "group of product discounts"
+msgstr ""
+
+#: .\catalog_app\models.py:125
+msgid "amount of products for a success discount"
+msgstr ""
+
+#: .\catalog_app\models.py:127
+msgid "quantity of products for a success discount"
+msgstr ""
+
+#: .\catalog_app\models.py:133
+msgid "cart discount"
+msgstr ""
+
+#: .\catalog_app\models.py:134
+msgid "cart discounts"
+msgstr ""
+
+#: .\catalog_app\models.py:140
+msgid "author"
+msgstr ""
+
+#: .\catalog_app\models.py:141
+msgid "text"
+msgstr ""
+
+#: .\catalog_app\models.py:148
+msgid "rewiew"
+msgstr ""
+
+#: .\catalog_app\models.py:149 .\templates\catalog_app\product.html:100
+msgid "reviews"
+msgstr ""
+
+#: .\catalog_app\models.py:171
+msgid "type characteristic of product"
+msgstr ""
+
+#: .\catalog_app\models.py:172
+msgid "types characteristic of product"
+msgstr ""
+
+#: .\catalog_app\models.py:183
+msgid "type of characteristic"
+msgstr ""
+
+#: .\catalog_app\models.py:186
+msgid "value"
+msgstr ""
+
+#: .\catalog_app\models.py:192
+msgid "characteristic value"
+msgstr ""
+
+#: .\catalog_app\models.py:193
+msgid "characteristic values"
+msgstr ""
+
+#: .\catalog_app\models.py:210
+msgid "value of characteristic"
+msgstr ""
+
+#: .\catalog_app\models.py:216
+msgid "characteristic of product"
+msgstr ""
+
+#: .\catalog_app\models.py:217
+msgid "characteristics of product"
+msgstr ""
+
+#: .\catalog_app\models.py:233
+msgid "viewed product"
+msgstr ""
+
+#: .\catalog_app\models.py:234
+msgid "viewed products"
+msgstr ""
+
+#: .\catalog_app\models.py:240
+msgid "session key"
+msgstr ""
+
+#: .\catalog_app\models.py:247
+msgid "product for comparison"
+msgstr ""
+
+#: .\catalog_app\models.py:248
+msgid "products for comparison"
+msgstr ""
+
+#: .\catalog_app\views.py:227
+msgid "Too much products to the comparison!"
+msgstr ""
+
+#: .\catalog_app\views.py:230
+msgid "The product was already added!"
+msgstr ""
+
+#: .\catalog_app\views.py:234
+msgid "The product have no common characteristics!"
+msgstr ""
+
+#: .\catalog_app\views.py:237
+msgid "The product has been added to the comparison!"
+msgstr ""
+
+#: .\core\enums\delivery_type_enum.py:10
+msgid "express delivery"
+msgstr ""
+
+#: .\core\enums\delivery_type_enum.py:11
+msgid "reqular delivery"
+msgstr ""
+
+#: .\core\enums\order_status_enum.py:10
+msgid "is not paid"
+msgstr ""
+
+#: .\core\enums\order_status_enum.py:11
+msgid "is paid"
+msgstr ""
+
+#: .\core\enums\order_status_enum.py:12
+msgid "is delivered"
+msgstr ""
+
+#: .\core\enums\order_status_enum.py:13
+msgid "is closed"
+msgstr ""
+
+#: .\core\enums\pay_type_enum.py:10
+msgid "bank card"
+msgstr ""
+
+#: .\core\enums\pay_type_enum.py:11
+msgid "spb"
+msgstr ""
+
+#: .\core\forms.py:11 .\templates\catalog_app\comparison.html:40
+#: .\templates\catalog_app\product.html:115
+msgid "Value"
+msgstr ""
+
+#: .\core\models\base_discount.py:9
+msgid "discount name"
+msgstr ""
+
+#: .\core\models\base_discount.py:10
+msgid "priority"
+msgstr ""
+
+#: .\core\models\base_discount.py:11
+msgid "sale value"
+msgstr ""
+
+#: .\core\models\base_discount.py:12
+msgid "date of discount start"
+msgstr ""
+
+#: .\core\models\base_discount.py:13
+msgid "date of discount end"
+msgstr ""
+
+#: .\core\models\base_item.py:15 .\core\models\price.py:16
+#: .\core\models\seller.py:20
+msgid "seller"
+msgstr ""
+
+#: .\core\models\base_item.py:16
+msgid "count product"
+msgstr ""
+
+#: .\core\models\base_item.py:17
+msgid "amount"
+msgstr ""
+
+#: .\core\models\base_model.py:7
+msgid "creation time"
+msgstr ""
+
+#: .\core\models\base_model.py:8
+msgid "updated time"
+msgstr ""
+
+#: .\core\models\base_model.py:9
+msgid "active"
+msgstr ""
+
+#: .\core\models\cache_setup.py:9
+msgid "cache key"
+msgstr ""
+
+#: .\core\models\cache_setup.py:12
+msgid "cache value"
+msgstr ""
+
+#: .\core\models\price.py:10
+msgid "product's price"
+msgstr ""
+
+#: .\core\models\price.py:24
+msgid "price"
+msgstr ""
+
+#: .\core\models\price.py:25
+msgid "prices"
+msgstr ""
+
+#: .\core\models\seller.py:21
+msgid "sellers"
+msgstr ""
+
+#: .\core\utils\exception.py:10
+msgid "The value of discount is more than the maximum! Max value is 99"
+msgstr ""
+
+#: .\core\views.py:60
+msgid "The cache has been cleared"
+msgstr ""
+
+#: .\order_app\forms.py:12 .\templates\order_app\oneorder.html:46
+msgid "City"
+msgstr ""
+
+#: .\order_app\forms.py:19 .\templates\order_app\oneorder.html:50
+msgid "Address"
+msgstr ""
+
+#: .\order_app\forms.py:26
+msgid "Delivery type"
+msgstr ""
+
+#: .\order_app\forms.py:32
+msgid "Pay type"
+msgstr ""
+
+#: .\order_app\models.py:20
+msgid "city"
+msgstr ""
+
+#: .\order_app\models.py:23
+msgid "address"
+msgstr ""
+
+#: .\order_app\models.py:26
+msgid "payment type"
+msgstr ""
+
+#: .\order_app\models.py:32
+msgid "delivery type"
+msgstr ""
+
+#: .\order_app\models.py:38
+msgid "status"
+msgstr ""
+
+#: .\order_app\models.py:44
+msgid "order amount"
+msgstr ""
+
+#: .\order_app\models.py:53 .\order_app\models.py:59 .\order_app\models.py:70
+msgid "order"
+msgstr ""
+
+#: .\order_app\models.py:54
+msgid "orders"
+msgstr ""
+
+#: .\order_app\models.py:61 .\templates\core\product_supply.html:56
+msgid "from"
+msgstr ""
+
+#: .\order_app\models.py:75
+msgid "OrderItem"
+msgstr ""
+
+#: .\profile_app\forms.py:13 .\templates\core\base.html:287
+msgid "Email"
+msgstr ""
+
+#: .\profile_app\forms.py:41 .\templates\core\base.html:285
+#: .\templates\order_app\oneorder.html:32
+msgid "Phone"
+msgstr ""
+
+#: .\profile_app\forms.py:50 .\templates\profile_app\profileAvatar.html:51
+msgid "Avatar"
+msgstr ""
+
+#: .\profile_app\forms.py:68
+msgid "New password"
+msgstr ""
+
+#: .\profile_app\forms.py:74
+msgid "You can change your password"
+msgstr ""
+
+#: .\profile_app\forms.py:78 .\profile_app\forms.py:84
+msgid "Confirm password"
+msgstr ""
+
+#: .\profile_app\models.py:22
+msgid "phone"
+msgstr ""
+
+#: .\profile_app\models.py:28
+msgid "avatar"
+msgstr ""
+
+#: .\profile_app\models.py:42
+msgid "user's profile"
+msgstr ""
+
+#: .\profile_app\models.py:43
+msgid "user's profiles"
+msgstr ""
+
+#: .\profile_app\views.py:28
+msgid "Your profile has been updated"
+msgstr ""
+
+#: .\shope\settings.py:158
+msgid "English"
+msgstr ""
+
+#: .\shope\settings.py:159
+msgid "Russian"
+msgstr ""
+
+#: .\templates\auth_app\base-auth.html:10 .\templates\core\base.html:6
+msgid "Megano"
+msgstr ""
+
+#: .\templates\auth_app\base-auth.html:54 .\templates\auth_app\e-mail.html:20
+#: .\templates\auth_app\login.html:7 .\templates\auth_app\registr.html:76
+msgid "Вход"
+msgstr ""
+
+#: .\templates\auth_app\base-auth.html:55 .\templates\auth_app\login.html:27
+#: .\templates\auth_app\registr.html:8 .\templates\cart_app\cart.html:82
+msgid "Регистрация"
+msgstr ""
+
+#: .\templates\auth_app\base-auth.html:82
+msgid "Навигация"
+msgstr ""
+
+#: .\templates\auth_app\base-auth.html:85
+msgid "Главная"
+msgstr ""
+
+#: .\templates\auth_app\base-auth.html:87
+msgid "Каталог"
+msgstr ""
+
+#: .\templates\auth_app\base-auth.html:89
+msgid "Сравнение"
+msgstr ""
+
+#: .\templates\auth_app\base-auth.html:91
+#: .\templates\profile_app\profileAvatar.html:34
+msgid "Профиль"
+msgstr ""
+
+#: .\templates\auth_app\base-auth.html:97
+msgid "Контакты"
+msgstr ""
+
+#: .\templates\auth_app\base-auth.html:99
+#: .\templates\profile_app\profileAvatar.html:71
+msgid "Телефон"
+msgstr ""
+
+#: .\templates\auth_app\base-auth.html:99
+msgid "Почта"
+msgstr ""
+
+#: .\templates\auth_app\change_password_error.html:5
+msgid "В ходе сброса пароля что-то пошло не так"
+msgstr ""
+
+#: .\templates\auth_app\change_password_success.html:5
+msgid "Перейдите на почту, чтобы продолжить сброс пароля"
+msgstr ""
+
+#: .\templates\auth_app\confirm-email.html:5
+msgid ""
+"Пожалуйста, перейдите на почту и подтвердите свой email для завершения "
+"регистрации"
+msgstr ""
+
+#: .\templates\auth_app\e-mail.html:7
+msgid "Восстановление пароля (1/2)"
+msgstr ""
+
+#: .\templates\auth_app\e-mail.html:8
+msgid ""
+"Для восстановления пароля введите адрес электронной почты, на которую "
+"зарегистрирована учетная запись"
+msgstr ""
+
+#: .\templates\auth_app\login.html:25
+msgid "Забыли пароль?"
+msgstr ""
+
+#: .\templates\auth_app\password_reset.html:7
+msgid "Восстановление пароля (2/2)"
+msgstr ""
+
+#: .\templates\auth_app\password_reset.html:8
+msgid "Придумайте новый пароль для учетной записи"
+msgstr ""
+
+#: .\templates\auth_app\registration-error.html:5
+msgid "В ходе регистрации что-то пошло не так..."
+msgstr ""
+
+#: .\templates\auth_app\verify-email.html:5
+msgid "Вы успешно подтвердили свой email!"
+msgstr ""
+
+#: .\templates\cart_app\cart.html:42
+msgid "Корзина пуста"
+msgstr ""
+
+#: .\templates\cart_app\cart.html:80
+msgid "Оформить заказ"
+msgstr ""
+
+#: .\templates\catalog_app\catalog.html:14
+#: .\templates\catalog_app\catalog.html:60
+msgid "Фильтр"
+msgstr ""
+
+#: .\templates\catalog_app\catalog.html:30
+msgid "Цена"
+msgstr ""
+
+#: .\templates\catalog_app\catalog.html:48
+msgid "Только товары в наличии"
+msgstr ""
+
+#: .\templates\catalog_app\catalog.html:55
+msgid "С бесплатной доставкой"
+msgstr ""
+
+#: .\templates\catalog_app\catalog.html:68
+msgid "Популярные тэги"
+msgstr ""
+
+#: .\templates\catalog_app\catalog.html:85
+msgid "Сортировать по:"
+msgstr ""
+
+#: .\templates\catalog_app\catalog.html:88
+msgid "Популярности"
+msgstr ""
+
+#: .\templates\catalog_app\catalog.html:89
+msgid "Цене"
+msgstr ""
+
+#: .\templates\catalog_app\catalog.html:90
+msgid "Отзывам"
+msgstr ""
+
+#: .\templates\catalog_app\catalog.html:91
+msgid "Новизне"
+msgstr ""
+
+#: .\templates\catalog_app\catalog.html:155
+msgid "Товаров по Вашему запросу нет."
+msgstr ""
+
+#: .\templates\catalog_app\comparison.html:39
+msgid "Characteristic"
+msgstr ""
+
+#: .\templates\catalog_app\comparison.html:43
+msgid "General parameters"
+msgstr ""
+
+#: .\templates\catalog_app\comparison.html:47
+msgid "Type"
+msgstr ""
+
+#: .\templates\catalog_app\comparison.html:51
+msgid "Model"
+msgstr ""
+
+#: .\templates\catalog_app\comparison.html:94
+msgid "Add to Cart"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:35
+msgid "Barand New Phone Smart Busines"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:62 copy.html:148 copy.html:181
+msgid "Купить"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:69
+msgid "Поздравляем"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:73
+msgid "Товар успешно добавлен в корзину!"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:81
+msgid "Тэги"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:81
+msgid "Аксессуары"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:81
+msgid "Дизайн"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:81
+msgid "Игры"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:89
+msgid "Описание"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:92
+msgid "Продавцы"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:95 copy.html:125
+msgid "Характеристика"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:98
+msgid "Отзывы"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:103
+#: .\templates\core\about.html:123
+msgid "Megano Store Hystory"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:126
+msgid "Значение"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:129
+msgid "Тип устройства"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:130
+msgid "Ноутбук"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:142
+msgid "Ситилинк"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:154 copy.html:187 copy.html:220
+msgid "Тип доставки"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:155 copy.html:188 copy.html:191
+#: copy.html:221 .\templates\order_app\order.html:117
+msgid "Обычная доставка"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:158 copy.html:192 copy.html:224
+msgid "Оплата"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:159 copy.html:195 copy.html:225
+#: .\templates\order_app\order.html:129
+msgid "Онлайн картой"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:162 copy.html:208 copy.html:228
+msgid "Стоимость"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:175
+msgid "ДНС"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:214
+msgid "Эльдорадо"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:258
+msgid "1 отзыв"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:268
+msgid "Александра "
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:268
+msgid "Бровина"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:278
+msgid "Декабрь 25"
+msgstr ""
+
+#: .\templates\catalog_app\product copy.html:286
+msgid "Добавить отзыв"
+msgstr ""
+
+#: .\templates\catalog_app\product.html:57
+#: .\templates\catalog_app\product.html:142
+msgid "Buy"
+msgstr ""
+
+#: .\templates\catalog_app\product.html:64
+msgid "Сongratulations"
+msgstr ""
+
+#: .\templates\catalog_app\product.html:65
+msgid "Close the window"
+msgstr ""
+
+#: .\templates\catalog_app\product.html:68
+msgid "Product has been added to the cart"
+msgstr ""
+
+#: .\templates\catalog_app\product.html:76
+msgid "Tags"
+msgstr ""
+
+#: .\templates\catalog_app\product.html:91
+msgid "Description"
+msgstr ""
+
+#: .\templates\catalog_app\product.html:94
+msgid "Sellers"
+msgstr ""
+
+#: .\templates\catalog_app\product.html:97
+msgid "Characteristics"
+msgstr ""
+
+#: .\templates\catalog_app\product.html:114
+msgid "Chatacteristic"
+msgstr ""
+
+#: .\templates\catalog_app\product.html:148
+#: .\templates\includes\order-information.html:14
+#: .\templates\order_app\oneorder.html:42
+msgid "Delivery"
+msgstr ""
+
+#: .\templates\catalog_app\product.html:149
+msgid "Custom delivery"
+msgstr ""
+
+#: .\templates\catalog_app\product.html:152
+#: .\templates\includes\order-information.html:18
+#: .\templates\order_app\oneorder.html:54
+msgid "Payment"
+msgstr ""
+
+#: .\templates\catalog_app\product.html:156
+msgid "Price"
+msgstr ""
+
+#: .\templates\catalog_app\product.html:181
+msgid "Review"
+msgstr ""
+
+#: .\templates\catalog_app\product.html:202
+msgid "New review"
+msgstr ""
+
+#: .\templates\catalog_app\product.html:213
+msgid "Add"
+msgstr ""
+
+#: .\templates\catalog_app\product_viewed.html:12
+#: .\templates\catalog_app\sale.html:12
+#: .\templates\catalog_app\sale_detail.html:12 .\templates\core\about.html:14
+#: .\templates\core\base.html:124 .\templates\core\base.html:269
+#: .\templates\profile_app\profileAvatar.html:11
+msgid "Home"
+msgstr ""
+
+#: .\templates\catalog_app\product_viewed.html:14
+msgid "Viewed products"
+msgstr ""
+
+#: .\templates\catalog_app\sale.html:14
+#: .\templates\catalog_app\sale_detail.html:14 .\templates\core\base.html:130
+msgid "Sales"
+msgstr ""
+
+#: .\templates\catalog_app\sale_detail.html:16
+msgid "Sale detail"
+msgstr ""
+
+#: .\templates\core\about.html:11
+msgid "About Megano"
+msgstr ""
+
+#: .\templates\core\about.html:16
+msgid "About us"
+msgstr ""
+
+#: .\templates\core\about.html:30
+msgid "Shipping & Returns"
+msgstr ""
+
+#: .\templates\core\about.html:32
+msgid "World wide shipping"
+msgstr ""
+
+#: .\templates\core\about.html:42
+msgid "Money Back"
+msgstr ""
+
+#: .\templates\core\about.html:44
+msgid "Guaranted payments"
+msgstr ""
+
+#: .\templates\core\about.html:54
+msgid "Support Policy"
+msgstr ""
+
+#: .\templates\core\about.html:56
+msgid "Fast support team"
+msgstr ""
+
+#: .\templates\core\about.html:66
+msgid "Quality Guarantee"
+msgstr ""
+
+#: .\templates\core\about.html:68
+msgid "Best guaranted items"
+msgstr ""
+
+#: .\templates\core\about.html:75
+msgid "Follow Us"
+msgstr ""
+
+#: .\templates\core\about.html:101
+msgid "Why Choose Megano?"
+msgstr ""
+
+#: .\templates\core\base.html:90 .\templates\core\base.html:158
+msgid "Sign out"
+msgstr ""
+
+#: .\templates\core\base.html:92
+msgid "Sign in"
+msgstr ""
+
+#: .\templates\core\base.html:93
+msgid "Register"
+msgstr ""
+
+#: .\templates\core\base.html:127
+msgid "About"
+msgstr ""
+
+#: .\templates\core\base.html:131 .\templates\core\base.html:272
+msgid "Catalog"
+msgstr ""
+
+#: .\templates\core\base.html:134 .\templates\core\base.html:275
+msgid "Comparison"
+msgstr ""
+
+#: .\templates\core\base.html:139
+msgid "Viewed"
+msgstr ""
+
+#: .\templates\core\base.html:154 .\templates\profile_app\profileAvatar.html:31
+msgid "Личный кабинет"
+msgstr ""
+
+#: .\templates\core\base.html:156
+msgid "Административный раздел"
+msgstr ""
+
+#: .\templates\core\base.html:176
+msgid "Показать навигацию"
+msgstr ""
+
+#: .\templates\core\base.html:190
+msgid "All categories"
+msgstr ""
+
+#: .\templates\core\base.html:243
+msgid "Поиск"
+msgstr ""
+
+#: .\templates\core\base.html:266 .\templates\includes\navbar-profile1.html:7
+#: .\templates\order_app\historyorder.html:12
+#: .\templates\profile_app\account.html:12
+#: .\templates\profile_app\profile.html:11
+#: .\templates\profile_app\profileAvatar.html:25
+msgid "Navigation"
+msgstr ""
+
+#: .\templates\core\base.html:278
+msgid "Account"
+msgstr ""
+
+#: .\templates\core\base.html:283
+msgid "Contacts"
+msgstr ""
+
+#: .\templates\core\cache_update.html:12
+msgid "Edit cache value"
+msgstr ""
+
+#: .\templates\core\cache_update.html:15
+#: .\templates\profile_app\profile.html:80
+msgid "Save"
+msgstr ""
+
+#: .\templates\core\product_supply.html:23
+msgid "Look at this"
+msgstr ""
+
+#: .\templates\core\product_supply.html:74
+msgid "LIMITED OFFERS"
+msgstr ""
+
+#: .\templates\core\product_supply.html:112
+msgid "days"
+msgstr ""
+
+#: .\templates\core\product_supply.html:118
+msgid "hours"
+msgstr ""
+
+#: .\templates\core\product_supply.html:124
+msgid "mins"
+msgstr ""
+
+#: .\templates\core\product_supply.html:130
+msgid "secs"
+msgstr ""
+
+#: .\templates\core\product_supply.html:141
+msgid "Popular products"
+msgstr ""
+
+#: .\templates\core\product_supply.html:213
+msgid "LIMITED EDITION"
+msgstr ""
+
+#: .\templates\core\setup-admin.html:21
+msgid "Setup admin panel"
+msgstr ""
+
+#: .\templates\core\setup-admin.html:26
+msgid "edit"
+msgstr ""
+
+#: .\templates\core\setup-admin.html:31
+msgid "Cache reset all"
+msgstr ""
+
+#: .\templates\core\setup-admin.html:32
+msgid "reset"
+msgstr ""
+
+#: .\templates\includes\navbar-profile1.html:13
+#: .\templates\order_app\historyorder.html:18
+#: .\templates\profile_app\account.html:18
+#: .\templates\profile_app\profile.html:17
+msgid "Dashboard"
+msgstr ""
+
+#: .\templates\includes\navbar-profile1.html:16
+#: .\templates\order_app\historyorder.html:21
+#: .\templates\profile_app\account.html:21
+#: .\templates\profile_app\profile.html:20
+#: .\templates\profile_app\profileAvatar.html:8
+#: .\templates\profile_app\profileAvatar.html:14
+msgid "Profile"
+msgstr ""
+
+#: .\templates\includes\navbar-profile1.html:19
+#: .\templates\includes\order-information.html:9
+#: .\templates\order_app\historyorder.html:24
+#: .\templates\profile_app\account.html:24
+#: .\templates\profile_app\profile.html:23
+msgid "History"
+msgstr ""
+
+#: .\templates\includes\order-information.html:6
+#: .\templates\order_app\oneorder.html:10
+msgid "Order"
+msgstr ""
+
+#: .\templates\includes\order-information.html:7
+msgid "date"
+msgstr ""
+
+#: .\templates\includes\order-information.html:22
+#: .\templates\order_app\oneorder.html:70 .\templates\order_app\order.html:140
+msgid "Amount"
+msgstr ""
+
+#: .\templates\includes\order-information.html:26
+#: .\templates\order_app\oneorder.html:58
+msgid "Status"
+msgstr ""
+
+#: .\templates\includes\total_amount_in_cart.html:4
+msgid "Итого"
+msgstr ""
+
+#: .\templates\order_app\empty-cart.html:5
+msgid "Cart is empty"
+msgstr ""
+
+#: .\templates\order_app\oneorder.html:24
+msgid "Date"
+msgstr ""
+
+#: .\templates\order_app\oneorder.html:77 .\templates\order_app\order.html:144
+msgid "Pay"
+msgstr ""
+
+#: .\templates\order_app\order.html:12
+msgid "Progress"
+msgstr ""
+
+#: .\templates\order_app\order.html:18 .\templates\order_app\order.html:39
+msgid "Step 1. User's settings"
+msgstr ""
+
+#: .\templates\order_app\order.html:21 .\templates\order_app\order.html:66
+msgid "Step 2. Delivery"
+msgstr ""
+
+#: .\templates\order_app\order.html:24 .\templates\order_app\order.html:85
+msgid "Step 3. Payment"
+msgstr ""
+
+#: .\templates\order_app\order.html:27 .\templates\order_app\order.html:94
+msgid "Step 4. Confirmation"
+msgstr ""
+
+#: .\templates\order_app\order.html:61 .\templates\order_app\order.html:80
+#: .\templates\order_app\order.html:89
+msgid "Next"
+msgstr ""
+
+#: .\templates\order_app\order.html:103
+msgid "Иванов Иван Иванович"
+msgstr ""
+
+#: .\templates\order_app\order.html:121
+msgid "Москва"
+msgstr ""
+
+#: .\templates\order_app\order.html:125
+msgid "Ул. Академика Арцимовича, д. 10, кв. 10"
+msgstr ""
+
+#: .\templates\pay_app\success.html:5
+msgid "Order is paid"
+msgstr ""
+
+#: .\templates\profile_app\account.html:43
+msgid "Edit"
+msgstr ""
+
+#: .\templates\profile_app\account.html:51
+msgid "You havn't had orders yet"
+msgstr ""
+
+#: .\templates\profile_app\profile.html:47
+msgid "add photo"
+msgstr ""
+
+#: .\templates\profile_app\profileAvatar.html:38
+msgid "История заказов"
+msgstr ""
+
+#: .\templates\profile_app\profileAvatar.html:56
+msgid "Choose avatar"
+msgstr ""
+
+#: .\templates\profile_app\profileAvatar.html:61
+msgid "ФИО"
+msgstr ""
+
+#: .\templates\profile_app\profileAvatar.html:79
+msgid "E-mail"
+msgstr ""
+
+#: .\templates\profile_app\profileAvatar.html:87
+msgid "Пароль"
+msgstr ""
+
+#: .\templates\profile_app\profileAvatar.html:95
+msgid "Подтверждение пароля"
+msgstr ""
+
+#: .\templates\profile_app\profileAvatar.html:104
+msgid "Сохранить"
+msgstr ""

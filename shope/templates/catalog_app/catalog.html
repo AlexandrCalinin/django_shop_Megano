@@ -1,6 +1,7 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% load unique_tags %}
+{% load i18n %}
 
 <body class="Site">
 {% block content_body %}
@@ -10,7 +11,7 @@
                 <div class="Section-column">
                     <div class="Section-columnSection">
                         <header class="Section-header">
-                            <strong class="Section-title">Фильтр</strong>
+                            <strong class="Section-title">{% trans 'Фильтр' %}</strong>
                         </header>
                         <div class="Section-columnContent">
                             <form class="form" action="{% url 'catalog' %}" method="get">
@@ -26,7 +27,7 @@
                                                name="price"
                                                type="text">
                                         <div class="range-price">
-                                            Цена:&#32;
+                                            {% trans 'Цена' %}:&#32;
                                             <div class="rangePrice"></div>
                                         </div>
                                     </div>
@@ -44,19 +45,19 @@
                                 <div class="form-group">
                                     <label class="toggle">
                                         <input type="checkbox" name="in_stock">
-                                        <span class="toggle-box"></span><span class="toggle-text">Только товары в наличии</span>
+                                        <span class="toggle-box"></span><span class="toggle-text">{% trans 'Только товары в наличии' %}</span>
                                     </label>
                                 </div>
                                 <div class="form-group">
                                     <label class="toggle">
                                         <input type="checkbox" name="free_delivery">
                                         <span class="toggle-box"></span><span
-                                            class="toggle-text">С бесплатной доставкой</span>
+                                            class="toggle-text">{% trans 'С бесплатной доставкой' %}</span>
                                     </label>
                                 </div>
                                 <div class="form-group">
                                     <div class="buttons">
-                                        <button type="submit" class="btn btn_square btn_dark btn_narrow">Фильтр</button>
+                                        <button type="submit" class="btn btn_square btn_dark btn_narrow">{% trans 'Фильтр' %}</button>
                                     </div>
                                 </div>
                             </form>
@@ -64,7 +65,7 @@
                     </div>
                     <div class="Section-columnSection">
                         <header class="Section-header">
-                            <strong class="Section-title">Популярные тэги</strong>
+                            <strong class="Section-title">{% trans 'Популярные тэги' %}</strong>
                         </header>
                         <div class="Section-columnContent">
                             <form action="{% url 'catalog' %}" method="get">
@@ -81,13 +82,13 @@
                 </div>
                 <div class="Section-content">
                     <div class="Sort">
-                        <div class="Sort-title">Сортировать по:</div>
+                        <div class="Sort-title">{% trans 'Сортировать по:' %}</div>
                         <form action="{% url 'catalog' %}" method="get">
                             <div class="Sort-variants">
-                                <button class="btn btn_default btn_sm" name="sort" value="number_of_sales">Популярности</button>
-                                <button class="btn btn_default btn_sm" name="sort" value="min_price">Цене</button>
-                                <button class="btn btn_default btn_sm" name="sort" value="rewiew">Отзывам</button>
-                                <button class="btn btn_default btn_sm" name="sort" value="created_at">Новизне</button>
+                                <button class="btn btn_default btn_sm" name="sort" value="number_of_sales">{% trans 'Популярности' %}</button>
+                                <button class="btn btn_default btn_sm" name="sort" value="min_price">{% trans 'Цене' %}</button>
+                                <button class="btn btn_default btn_sm" name="sort" value="rewiew">{% trans 'Отзывам' %}</button>
+                                <button class="btn btn_default btn_sm" name="sort" value="created_at">{% trans 'Новизне' %}</button>
                             </div>
                         </form>
                     </div>
@@ -95,7 +96,7 @@
                         {% if object_list %}
                             {% for product in object_list %}
 
-                                    <div class="Card" id="{{ product.id }}">
+                                    <div class="Card" data-product="{{ product.id }}">
                                         {% if product.discountproduct_set.exists or product.category.discountproduct_set.exists %}
                                             <div class="Card-btn delete-btn">
                                               <img height="40" width="40" src="{% static 'assets/img/icons/card/discount.svg' %}" alt="cart.svg">
@@ -126,7 +127,9 @@
                                                 <div class="Card-cost">
                                                     {% for object in price_seller_list %}
                                                         {% if object.product_id == product.id %}
-                                                        <span class="Card-price">{{ object.discount_price|floatformat:"0" }}₽</span>
+
+                                                        <span class="Card-price">{{ object.discount_price|floatformat:"2" }}₽</span>
+
                                                         {% endif %}
                                                     {% endfor %}
                                                 </div>
@@ -149,6 +152,16 @@
                                                             </a>
                                                         {% endif %}
                                                     {% endfor %}
+                                                  <form class="Card-btn comparison-add" action="{% url 'add_comparison' product_id=product.id %}" method="post">
+                                                    {% csrf_token %}
+                                                    <button class="Card-btn btn_reset compare_btn" type="submit" data-product_id="{{ product.id }}">
+                                                      <div class="ProductCard-cartElement">
+                                                        <a class="Card-btn" href="#">
+                                                          <img src="{% static 'assets/img/icons/card/change.svg' %}" alt="change.svg">
+                                                        </a>
+                                                      </div>
+                                                    </button>
+                                                  </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -156,7 +169,7 @@
                                     </div>
                             {% endfor %}
                         {% else %}
-                            <h2>Товаров по Вашему запросу нет.</h2>
+                            <h2>{% trans 'Товаров по Вашему запросу нет.' %}</h2>
                         {% endif %}
                     </div>
                     <div class="Pagination">

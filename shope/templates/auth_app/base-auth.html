@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 
 {% load static %}
@@ -9,7 +7,7 @@
 
 
 <head>
-    <title>Megano</title>
+    <title>{% trans 'Megano' %}</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -53,8 +51,8 @@
                     </div>
                     <nav class="row-block">
                         <div class="row ControlPanel-rowSplit">
-                            <div class="row-block"><a class="ControlPanel-title" href="{% url 'auth_app:login' %}">{% translate 'Вход' %}</a>
-                                <a class="ControlPanel-title" href="{% url 'auth_app:register' %}">{% translate 'Регистрация' %}</a>
+                            <div class="row-block"><a class="ControlPanel-title" href="{% url 'auth_app:login' %}">{% trans 'Вход' %}</a>
+                                <a class="ControlPanel-title" href="{% url 'auth_app:register' %}">{% trans 'Регистрация' %}</a>
                             </div>
                         </div>
                     </nav>
@@ -68,18 +66,11 @@
                 </div>
             </div>
 
-
-
-
-
-
             <div class="wrapper">
                 {% block content %}
                 {% endblock content %}
             </div>
-
         </div>
-
     </main>
 
     <footer class="Footer">
@@ -88,24 +79,24 @@
                 <div class="row-block"><a class="logo Footer-logo" href="{% url 'home' %}"><img class="logo-image" src="{% static 'assets/img/logo_footer.png' %}" alt="logo_footer.png" /></a>
                 </div>
                 <div class="row-block">
-                    <strong class="Footer-title">{% translate 'Навигация' %}
+                    <strong class="Footer-title">{% trans 'Навигация' %}
                     </strong>
                     <ul class="menu menu_vt Footer-menu">
-                        <li class="menu-item"><a class="menu-link" href="{% url 'home' %}">{% translate 'Главная' %}</a>
+                        <li class="menu-item"><a class="menu-link" href="{% url 'home' %}">{% trans 'Главная' %}</a>
                         </li>
-                        <li class="menu-item"><a class="menu-link" href="{% url 'catalog' %}">{% translate 'Каталог' %}</a>
+                        <li class="menu-item"><a class="menu-link" href="{% url 'catalog' %}">{% trans 'Каталог' %}</a>
                         </li>
-                        <li class="menu-item"><a class="menu-link" href="{% url 'comparison' %}">{% translate 'Сравнение' %}</a>
+                        <li class="menu-item"><a class="menu-link" href="{% url 'comparison' %}">{% trans 'Сравнение' %}</a>
                         </li>
-                        <li class="menu-item"><a class="menu-link" href="{% url 'account' %}">{% translate 'Профиль' %}</a>
+                        <li class="menu-item"><a class="menu-link" href="{% url 'account' %}">{% trans 'Профиль' %}</a>
                         </li>
 
                     </ul>
                 </div>
                 <div class="row-block">
-                    <strong class="Footer-title">{% translate 'Контакты' %}
+                    <strong class="Footer-title">{% trans 'Контакты' %}
                     </strong>
-                    <p>{% translate 'Телефон' %}: 8.800.200.600<br>{% translate 'Почта' %}: xxx@meg.com<br>
+                    <p>{% trans 'Телефон' %}: 8.800.200.600<br>{% trans 'Почта' %}: xxx@meg.com<br>
                     </p>
                     <ul class="menu menu_img menu_smallImg Footer-menuSoc">
                         <li class="menu-item"><a class="menu-link" target="_blank" href="https://www.facebook.com/"><img src="{% static 'assets/img/icons/socialFooter/fb.svg' %}" alt="fb.svg" /></a>

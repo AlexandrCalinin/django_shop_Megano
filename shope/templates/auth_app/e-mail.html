@@ -4,8 +4,8 @@
 
 {% block content %}
     <div class="header">
-        <h3 class="sign-in">{% translate 'Восстановление пароля (1/2)' %}</h3>
-        <h5>{% translate 'Для восстановления пароля введите адрес электронной почты, на которую зарегистрирована учетная запись' %}</h5>
+        <h3 class="sign-in">{% trans 'Восстановление пароля (1/2)' %}</h3>
+        <h5>{% trans 'Для восстановления пароля введите адрес электронной почты, на которую зарегистрирована учетная запись' %}</h5>
     </div>
 
     <form action="{% url 'auth_app:e-mail' %}" method="post">
@@ -17,7 +17,7 @@
             <input type="submit" value="Получить проверочный код">
         </div>
         <a class="registr" href="{% url 'auth_app:login' %}">
-            {% translate 'Вход' %}
+            {% trans 'Вход' %}
         </a>
     </form>
 {% endblock content %}

@@ -78,7 +78,7 @@ var csrf = $('meta[name="csrf-token"]').attr('content');
 $('.Card-hover').on('click', 'a[class="Card-btn cart-btn"]', function(){
    // Обработка нажатия на кнопку добавления товара в корзину на главной странице
 
-    var product_id = $(this).parents('.Card').attr('id')
+    var product_id = $(this).parents('.Card').data('product')
     var product_count = 1
     var amount = $(this).data('value')
     var seller = $(this).data('seller')
@@ -174,4 +174,18 @@ $('.Amount').on('click', 'button[class="Amount-remove"]', function(){
     var count_product = $(this).parent('.Amount').children('.Amount-input.form-input').attr('value')
 
 
+})
+
+
+$('.ProductCard-cartElement').on('click', 'a[class="btn btn_primary"]', function(){
+   // Обработка нажатия на кнопку добавления товара в корзину на странице сравнения
+
+    var product_id = $(this).data('product')
+    var product_count = 1
+    var amount = $(this).data('value')
+    var seller = $(this).data('seller')
+    var product_name = $(this).data('name')
+    var image = $(this).data('image')
+
+    cart_add(product_id, product_name, image, product_count, amount, seller)
 })
