@@ -96,6 +96,11 @@
                             {% for product in object_list %}
 
                                     <div class="Card" id="{{ product.id }}">
+                                        {% if product.discountproduct_set.exists or product.category.discountproduct_set.exists %}
+                                            <div class="Card-btn delete-btn">
+                                              <img height="40" width="40" src="{% static 'assets/img/icons/card/discount.svg' %}" alt="cart.svg">
+                                            </div>
+                                        {% endif %}
 
                                         <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
                                         {% csrf_token %}
@@ -121,7 +126,7 @@
                                                 <div class="Card-cost">
                                                     {% for object in price_seller_list %}
                                                         {% if object.product_id == product.id %}
-                                                        <span class="Card-price">{{ object.price|floatformat:"0" }}₽</span>
+                                                        <span class="Card-price">{{ object.discount_price|floatformat:"0" }}₽</span>
                                                         {% endif %}
                                                     {% endfor %}
                                                 </div>
