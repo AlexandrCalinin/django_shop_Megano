@@ -4,13 +4,14 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.core.cache import cache
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.utils.translation import gettext_lazy as _
 import inject
 
 from django.views.generic import TemplateView, View, UpdateView
 
 from core.models.cache_setup import CacheSetup
-from core.utils.cache import cache_values_list
+from core.utils.cache import cache_values_list, get_cache_value
 from core.utils.injector import configure_inject
 from interface.banner_interface import IBanner
 from interface.price_interface import IPrice
@@ -19,8 +20,21 @@ from interface.slider_interface import ISlider
 
 from core.forms import CacheSetupForm
 
+from .utils.cache_key import (
+    TOP_PRODUCT_LIST_KEY,
+)
+
 
 configure_inject()
+
+
+class PassSuperuserMixin(UserPassesTestMixin):
+    """Класс-миксин проверки что текущий пользователь суперюзер"""
+
+    def test_func(self) -> bool | None:
+        if self.request.user.is_superuser:
+            return True
+        return False
 
 
 class BaseView(TemplateView):
@@ -32,7 +46,9 @@ class BaseView(TemplateView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['product_top_list'] = self._products.get_product_top_list(const=8)
+        context['product_top_list'] = cache.get_or_set(TOP_PRODUCT_LIST_KEY,
+                                                       self._products.get_product_top_list(const=8),
+                                                       get_cache_value('TOP_PRODUCT'))
         context['product_limited_list'] = list(self._products.get_product_limit_list(const=17))
         context['offer_day'] = context['product_limited_list'].pop(random.randint(
             0, len(context['product_limited_list']) - 1))
@@ -54,7 +70,7 @@ class AboutView(TemplateView):
         return context
 
 
-class SetupAdminView(View):
+class SetupAdminView(PassSuperuserMixin, View):
     """Страница административных настроек"""
     template_name = 'core/setup-admin.html'
     _SUCCESS_MESSAGE = _('The cache has been cleared')
@@ -73,7 +89,7 @@ class SetupAdminView(View):
         return redirect(self.request.path)
 
 
-class CacheUpdateView(UpdateView):
+class CacheUpdateView(PassSuperuserMixin, UpdateView):
     """Обновление данных кеша"""
     model = CacheSetup
     form_class = CacheSetupForm

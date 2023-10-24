@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv, find_dotenv
 from pathlib import Path
 
@@ -53,8 +54,9 @@ else:
 
 STATIC_URL = '/static/'
 
-ALLOWED_HOSTS = ["*"]
+# ALLOWED_HOSTS = ["*"]
 
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver']
 # Application definition
 
 INSTALLED_APPS = [
@@ -148,6 +150,11 @@ USE_L10N = True
 
 USE_TZ = True
 
+LANGUAGES = [
+    ('en', _('English')),
+    ('ru', _('Russian'))
+]
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -234,5 +241,7 @@ CACHE_VALUES = {
     'CATEGORY': 86400,  # время кеширования каталога
     'DETAIL_PRODUCT': 86400,  # время кеширования детальной страницы продукта
     'TOP_PRODUCT': 86400,  # время кеширования детальной страницы продукта
-    'CATALOG': 86400  # время кеширования каталога
+    'CATALOG': 86400,  # время кеширования каталога
+    'BANNER': 600,  # время кеширования банера
+
 }

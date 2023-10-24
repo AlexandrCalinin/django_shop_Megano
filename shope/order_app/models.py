@@ -75,4 +75,4 @@ class OrderItem(BaseModelItem):
         verbose_name = _('OrderItem')
 
     def __str__(self):
-        return self.product
+        return f'{self.order} - {self.product}'

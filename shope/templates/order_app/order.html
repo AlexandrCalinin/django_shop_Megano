@@ -100,7 +100,7 @@
                                         <div class="row-block">
                                             <div class="Order-info">
                                                 <div class="Order-infoType">{{ user_form.middle_name.label }}:</div>
-                                                <div class="Order-infoContent"id="user-name">Иванов Иван Иванович</div>
+                                                <div class="Order-infoContent"id="user-name">{% trans 'Иванов Иван Иванович' %}</div>
                                             </div>
                                             <div class="Order-info">
                                                 <div class="Order-infoType">{{ profile_form.phone.label }}:</div>
@@ -114,19 +114,19 @@
                                         <div class="row-block">
                                             <div class="Order-info Order-info_delivery">
                                                 <div class="Order-infoType">{{ form.delivery_type.label }}:</div>
-                                                <div class="Order-infoContent" id="order-delivery">Обычная доставка</div>
+                                                <div class="Order-infoContent" id="order-delivery">{% trans 'Обычная доставка' %}</div>
                                             </div>
                                             <div class="Order-info">
                                                 <div class="Order-infoType">{{ form.city.label }}:</div>
-                                                <div class="Order-infoContent" id="order-city">Москва</div>
+                                                <div class="Order-infoContent" id="order-city">{% trans 'Москва' %}</div>
                                             </div>
                                             <div class="Order-info">
                                                 <div class="Order-infoType">{{ form.address.label }}:</div>
-                                                <div class="Order-infoContent" id="order-address">Ул. Академика Арцимовича, д. 10, кв. 10</div>
+                                                <div class="Order-infoContent" id="order-address">{% trans 'Ул. Академика Арцимовича, д. 10, кв. 10' %}</div>
                                             </div>
                                             <div class="Order-info Order-info_pay">
                                                 <div class="Order-infoType">{{ form.pay_type.label }}:</div>
-                                                <div class="Order-infoContent" id="order-pay">Онлайн картой</div>
+                                                <div class="Order-infoContent" id="order-pay">{% trans 'Онлайн картой' %}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -138,7 +138,7 @@
                                     <div class="Cart-total">
                                         <div class="Cart-block Cart-block_total">
                                             <strong class="Cart-title">{% trans "Amount" %}:</strong><span class="Cart-price">{{ total_amount| floatformat:2 }}</span>
-                                            <input name='amount'hidden value={{ total_amount }}>
+                                            <input name='amount'hidden value={{ total_amount| floatformat:2 }}>
                                         </div>
                                         <div class="Cart-block">
                                             <button class="btn btn_primary btn_lg" type="submit">{% trans "Pay" %}</button>

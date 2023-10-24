@@ -3,7 +3,7 @@
 {% load i18n %}
 <html lang="ru">
 <head>
-    <title>Megano</title>
+    <title>{% trans 'Megano' %}</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport"
@@ -151,9 +151,9 @@ block
                                  alt="loon-icon.svg"/>
                         </button>
                         <div class="dropdown-content">
-                            <a class="dropdown-content-a" href="{% url 'account' %}">Личный кабинет</a>
+                            <a class="dropdown-content-a" href="{% url 'account' %}">{% trans 'Личный кабинет' %}</a>
                             {% if user.is_staff %}
-                                <a class="dropdown-content-a" href="../profile/account">Административный раздел</a>
+                                <a class="dropdown-content-a" href="../profile/account">{% trans 'Административный раздел' %}</a>
                             {% endif %}
                             <a class="dropdown-content-a" href="{% url 'auth_app:logout' %}">{% trans 'Sign out' %}</a>
                         </div>
@@ -173,7 +173,7 @@ block
     </div>
     <div class="row-block Header-trigger">
         <a class="menuTrigger" href="#navigate">
-            <div class="menuTrigger-content">Показать навигацию</div>
+            <div class="menuTrigger-content">{% trans 'Показать навигацию' %}</div>
             <span></span><span></span><span></span>
         </a>
     </div>
@@ -240,7 +240,7 @@ block
                                placeholder="NVIDIA GeForce RTX 3060">
                         <button class="search-button" id="search" type="submit" name="search">
                             <img src="{% static 'assets/img/icons/search.svg' %}" alt="search.svg">
-                            Поиск
+                            {% trans 'Поиск' %}
                         </button>
                     </form>
                 </div>
@@ -282,9 +282,9 @@ block
             <div class="row-block">
                 <strong class="Footer-title">{% trans 'Contacts' %}</strong>
                 <p>
-                    Phone: 8.800.200.600
+                    {% trans 'Phone' %}: 8.800.200.600
                     <br>
-                    Email: xxx@meg.com
+                    {% trans 'Email' %}: xxx@meg.com
                     <br>
                 </p>
                 <ul class="menu menu_img menu_smallImg Footer-menuSoc">

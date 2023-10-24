@@ -12,7 +12,12 @@ class Category(BaseModel):
     """Модель категории"""
     title = models.CharField(max_length=255, verbose_name=_('title'))
     image = models.FileField(
-        upload_to="images/%Y/%m/%d", validators=[FileExtensionValidator(['svg'])], verbose_name=_('image')
+        null=True,
+        blank=True,
+        upload_to="images/%Y/%m/%d",
+        validators=[FileExtensionValidator(['svg'])],
+        verbose_name=_('image'),
+        default='/img/icons/allDep.svg'
     )
 
     def __str__(self):
