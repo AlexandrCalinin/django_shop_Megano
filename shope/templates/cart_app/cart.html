@@ -1,5 +1,6 @@
 {% extends 'core/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content_body %}
         <div class="Middle Middle_top">
@@ -38,12 +39,11 @@
 
                         {% endfor %}
                         {% else %}
-                        <h1>Корзина пуста</h1>
+                        <h1>{% trans 'Корзина пуста' %}</h1>
                         {% endif %}
                         {% else%}
                         {% for item in items %}
                         <div class="Cart-product" id="{{ item.product }}">
-
 
                                 <div class="Cart-block Cart-block_row">
                                     <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="#"><img class="Cart-img" src="{{ item.image }}" alt="card.jpg" /></a>
@@ -77,9 +77,9 @@
                     <div class="Cart-total">
                         {% include 'includes/total_amount_in_cart.html' %}
                         {% if user.is_authenticated %}
-                            <div class="Cart-block"><a class="btn btn_success btn_lg" href="../order/order.html">Оформить заказ</a></div>
+                            <div class="Cart-block"><a class="btn btn_success btn_lg" href="../order/order.html">{% trans 'Оформить заказ' %}</a></div>
                         {% else %}
-                            <div class="Cart-block"><a class="btn btn_success btn_lg" href="{% url 'auth_app:register' %}">Регистрация</a></div>
+                            <div class="Cart-block"><a class="btn btn_success btn_lg" href="{% url 'auth_app:register' %}">{% trans 'Регистрация' %}</a></div>
                         {% endif %}
                     </div>
                     </div>

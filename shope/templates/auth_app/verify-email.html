@@ -1,5 +1,6 @@
 {% extends 'auth_app/base-auth.html' %}
+{% load i18n %}
 
 {% block content %}
-    <h1>Вы успешно подтвердили свой email!</h1>
+    <h1>{% trans 'Вы успешно подтвердили свой email!' %}</h1>
 {% endblock %}

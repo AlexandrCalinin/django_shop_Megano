@@ -28,14 +28,14 @@
                             <div class="NavigateProfile">
                                 <ul class="menu menu_vt">
                                     <li class="menu-item">
-                                        <a class="menu-link" href="{% url 'account' profile_id=profile_id %}">Личный кабинет</a>
+                                        <a class="menu-link" href="{% url 'account' profile_id=profile_id %}">{% trans 'Личный кабинет' %}</a>
                                     </li>
                                     <li class="menu-item">
-                                        <a class="menu-link" href="{% url 'profile' profile_id=profile_id %}">Профиль</a>
+                                        <a class="menu-link" href="{% url 'profile' profile_id=profile_id %}">{% trans 'Профиль' %}</a>
                                     </li>
                                     <li class="menu-item">
                                         <a class="menu-link"
-                                           href="{% url 'historyorder' profile_id=profile_id %}">История заказов</a>
+                                           href="{% url 'historyorder' profile_id=profile_id %}">{% trans 'История заказов' %}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -58,7 +58,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="name">ФИО</label>
+                                        <label class="form-label" for="name">{% trans 'ФИО' %}</label>
                                         <input class="form-input"
                                                id="name"
                                                name="name"
@@ -68,7 +68,7 @@
                                 </div>
                                 <div class="row-block">
                                     <div class="form-group">
-                                        <label class="form-label" for="phone">Телефон</label>
+                                        <label class="form-label" for="phone">{% trans 'Телефон' %}</label>
                                         <input class="form-input"
                                                id="phone"
                                                name="phone"
@@ -76,7 +76,7 @@
                                                value="+70000000000">
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="mail">E-mail</label>
+                                        <label class="form-label" for="mail">{% trans 'E-mail' %}</label>
                                         <input class="form-input"
                                                id="mail"
                                                name="mail"
@@ -84,7 +84,7 @@
                                                value="send@test.test">
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="password">Пароль</label>
+                                        <label class="form-label" for="password">{% trans 'Пароль' %}</label>
                                         <input class="form-input"
                                                id="password"
                                                name="password"
@@ -92,7 +92,7 @@
                                                placeholder="Тут можно изменить пароль">
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="passwordReply">Подтверждение пароля</label>
+                                        <label class="form-label" for="passwordReply">{% trans 'Подтверждение пароля' %}</label>
                                         <input class="form-input"
                                                id="passwordReply"
                                                name="passwordReply"
@@ -101,7 +101,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="Profile-btn">
-                                            <button class="btn btn_success" type="submit">Сохранить</button>
+                                            <button class="btn btn_success" type="submit">{% trans 'Сохранить' %}</button>
                                         </div>
                                     </div>
                                 </div>
