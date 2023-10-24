@@ -21,10 +21,6 @@ const el_email = document.getElementById("mail");
 document.getElementById("user-email").textContent = el_email.value;
 
 
-function deliveryChange(src) {
-    document.getElementById("order-delivery").textContent = src.value
-}
-
 function payChange(src) {
     document.getElementById("order-pay").textContent = src.value
 }
@@ -38,3 +34,28 @@ const el_address = document.getElementById("address");
 el_address.oninput = function () {
     document.getElementById("order-address").textContent = el_address.value;
 };
+
+
+function deliveryChange(src) {
+    document.getElementById("order-delivery").textContent = src.value
+    var csrf = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+        // url: "{% url 'order_app:delivery-type' %}",
+        url: "/order/delivery-type/",
+        type: 'POST',
+        headers: { "X-CSRFToken": csrf },
+        data: { 'delivery_type': src.value },
+        success: function (responce) {
+            document.getElementById("order-cost-delivery").textContent = responce.cost_delivery
+            document.getElementById("Cart-price").textContent = responce.total_amount
+            document.getElementById("Total-amount-value").value = responce.total_amount
+        },
+
+        error: function (responce) {
+            alert('error')
+        }
+
+    }
+    )
+}
+

@@ -1,9 +1,10 @@
 """Order views"""
 
 from typing import Any
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.views import View
 import inject
 from django.views.generic import ListView, DetailView, CreateView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -16,6 +17,8 @@ from interface.cart_interface import ICart
 from order_app.models import Order, OrderItem
 from profile_app.forms import EditProfileForm, EditUserForm
 from order_app.forms import CreateOrderForm
+from core.utils.cache import get_cache_value
+from core.enums import DeliveryType
 from .utils import CartMixin
 
 
@@ -115,3 +118,29 @@ class CreateOrderView(LoginRequiredMixin, CartMixin, CreateView):
             }
 
         return render(request, self.template_name, context=context)
+
+
+class DeliveryTypeView(View):
+    """Изменение способа доставки"""
+    _cart = inject.attr(ICart)
+
+    def post(self, request: HttpRequest, *args: str, **kwargs: Any):
+
+        delivery_type = request.POST['delivery_type']
+        min_amount = get_cache_value('MIN_AMOUNT_FOR_FREE_DELIVERY')
+        cost_delivery = get_cache_value('COST_DELIVERY')
+
+        cart = self._cart.get_active_by_user(self.request.user)
+        total_amount = self._cart.total_amount(cart)
+        if total_amount < min_amount and delivery_type == DeliveryType.EXPRESS.name:
+            total_amount = total_amount + cost_delivery
+
+        else:
+            cost_delivery = 0
+
+        response = {
+            'total_amount': total_amount,
+            'cost_delivery': cost_delivery,
+        }
+
+        return JsonResponse(data=response, status=201)
