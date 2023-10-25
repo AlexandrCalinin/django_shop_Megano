@@ -2,6 +2,7 @@ from django.http import JsonResponse, HttpRequest
 from django.template.loader import render_to_string
 from django.views.generic import ListView, TemplateView
 
+from core.utils.product_discount import ProductDiscount
 from .form import ChangeCountForm, DeleteForm, CartEditForm
 from core.utils.add_product_to_cart import AddProductToCart
 
@@ -14,6 +15,12 @@ class CartListView(ListView):
 
     def get_queryset(self):
         return AddProductToCart().get_list_in_cart(self.request)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        ProductDiscount().get_priority_discount(cart_item_qs=self.get_queryset())
+        print('корзина', self.get_queryset())
+        return context
 
 
 class ChangeCountProductView(TemplateView):

@@ -16,11 +16,15 @@ class ProductDiscount:
         """
         return self._product_sales.get_list_by_id(_id=product_id)
 
-    def get_priority_discount(self, product_id_list):
+    def get_priority_discount(self, cart_item_qs):
         """
         получить приоритетную скидку на указанный список товаров или на один товар
         """
-        if self._product_group_sales.possible_get_discount(_product_id_list=product_id_list):
+        cat_id_qs = cart_item_qs.values('product__category__id')
+        cat_id_lst = [dct['product__category__id'] for dct in cat_id_qs]
+        dct = self._product_group_sales.possible_get_discount(_cat_id_list=cat_id_lst)
+        print(dct)
+        if dct:
             pass
 
     def calculate_price_with_discount(self):

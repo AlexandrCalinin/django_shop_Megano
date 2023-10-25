@@ -1,5 +1,7 @@
 from abc import abstractmethod
+from typing import Optional
 
+from beartype.typing import Dict
 from django.db.models import QuerySet
 
 from catalog_app.models import DiscountProductGroup
@@ -13,6 +15,6 @@ class IDiscountProductGroup:
         pass
 
     @abstractmethod
-    def possible_get_discount(self, _product_id_list: [int]) -> bool:
+    def possible_get_discount(self, _cat_id_list: list) -> Optional[Dict]:
         """Вернуть возможность применения скидки"""
         pass

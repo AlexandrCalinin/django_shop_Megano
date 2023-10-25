@@ -1,7 +1,10 @@
-from beartype import beartype
-from django.db.models import QuerySet
+from typing import Optional
 
-from catalog_app.models import DiscountProductGroup
+from beartype import beartype
+from beartype.typing import Dict
+from django.db.models import QuerySet, Count
+
+from catalog_app.models import DiscountProductGroup, Category
 from interface.discount_product_group_interface import IDiscountProductGroup
 
 
@@ -13,12 +16,18 @@ class DiscountProductGroupRepository(IDiscountProductGroup):
         return DiscountProductGroup.objects.all()
 
     @beartype
-    def possible_get_discount(self, _product_id_list: [int]) -> bool:
+    def possible_get_discount(self, _cat_id_list: list) -> Optional[Dict]:
         """Вернуть возможность применения скидки"""
-        qs = DiscountProductGroup.objects.filter(category__product__id__in=_product_id_list)
-        if not qs:
-            return False
-        else:
-            for sale in qs:
-                for cat in sale.category.all():
-                    print('cat', cat)
+        qs_cats = Category.objects.filter(discountproductgroup__category__in=_cat_id_list)
+        qs = qs_cats.filter(id__in=_cat_id_list).distinct()
+        dct = dict()
+        flag = False
+        for cat in qs:
+            sale = DiscountProductGroup.objects.get(category__id=cat.id)
+            if sale:
+                dct[sale.id] = dct.get(sale.id, 0) + 1
+                if dct[sale.id] > 1:
+                    flag = True
+        if flag:
+            return dct
+        return None
