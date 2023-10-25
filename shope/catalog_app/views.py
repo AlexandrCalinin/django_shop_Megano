@@ -122,6 +122,7 @@ class CatalogListView(ListView):
     template_name = 'catalog_app/catalog.html'
     _filter: ICatalogFilter = inject.attr(ICatalogFilter)
     _price_seller: IPrice = inject.attr(IPrice)
+    paginate_by = 6
 
     def get(self, request, **kwargs):
         return super().get(request, **kwargs)

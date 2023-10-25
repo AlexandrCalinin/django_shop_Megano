@@ -43,7 +43,7 @@ class CatalogFilterRepository:
                                             min_price__range=(product_min_price, product_max_price))
 
             else:
-                return self.queryset.filter(title__icontains=product_name,
+                return self.queryset.filter(title__icontains=product_name.title(),
                                             min_price__range=(product_min_price, product_max_price))
         else:
             if free_delivery and is_limited:

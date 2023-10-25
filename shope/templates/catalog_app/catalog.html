@@ -45,7 +45,8 @@
                                 <div class="form-group">
                                     <label class="toggle">
                                         <input type="checkbox" name="in_stock">
-                                        <span class="toggle-box"></span><span class="toggle-text">{% trans 'Только товары в наличии' %}</span>
+                                        <span class="toggle-box"></span><span
+                                            class="toggle-text">{% trans 'Только товары в наличии' %}</span>
                                     </label>
                                 </div>
                                 <div class="form-group">
@@ -57,7 +58,8 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="buttons">
-                                        <button type="submit" class="btn btn_square btn_dark btn_narrow">{% trans 'Фильтр' %}</button>
+                                        <button type="submit"
+                                                class="btn btn_square btn_dark btn_narrow">{% trans 'Фильтр' %}</button>
                                     </div>
                                 </div>
                             </form>
@@ -85,10 +87,14 @@
                         <div class="Sort-title">{% trans 'Сортировать по:' %}</div>
                         <form action="{% url 'catalog' %}" method="get">
                             <div class="Sort-variants">
-                                <button class="btn btn_default btn_sm" name="sort" value="number_of_sales">{% trans 'Популярности' %}</button>
-                                <button class="btn btn_default btn_sm" name="sort" value="min_price">{% trans 'Цене' %}</button>
-                                <button class="btn btn_default btn_sm" name="sort" value="rewiew">{% trans 'Отзывам' %}</button>
-                                <button class="btn btn_default btn_sm" name="sort" value="created_at">{% trans 'Новизне' %}</button>
+                                <button class="btn btn_default btn_sm" name="sort"
+                                        value="number_of_sales">{% trans 'Популярности' %}</button>
+                                <button class="btn btn_default btn_sm" name="sort"
+                                        value="min_price">{% trans 'Цене' %}</button>
+                                <button class="btn btn_default btn_sm" name="sort"
+                                        value="rewiew">{% trans 'Отзывам' %}</button>
+                                <button class="btn btn_default btn_sm" name="sort"
+                                        value="created_at">{% trans 'Новизне' %}</button>
                             </div>
                         </form>
                     </div>
@@ -96,70 +102,77 @@
                         {% if object_list %}
                             {% for product in object_list %}
 
-                                    <div class="Card" data-product="{{ product.id }}">
+                                <div class="Card" data-product="{{ product.id }}">
 
-                                        <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
+                                    <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
                                         {% csrf_token %}
-                                            <button class="Card-picture btn_reset"
-                                                    data-name="{{ product.image.all.0.image.url }}" type="submit">
-                                                <img
-                                                        src="{{ product.image.all.0.image.url }}"
-                                                        alt="{{ product.image.all.0.image.name }}">
-                                            </button>
+                                        <button class="Card-picture btn_reset"
+                                                data-name="{{ product.image.all.0.image.url }}" type="submit">
+                                            <img
+                                                    src="{{ product.image.all.0.image.url }}"
+                                                    alt="{{ product.image.all.0.image.name }}">
+                                        </button>
+                                    </form>
+
+                                    <div class="Card-content">
+                                        <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
+                                            {% csrf_token %}
+                                            <strong class="Card-title">
+                                                <button class=" btn_reset" type="submit">
+                                                    {{ product.title|truncatechars:48 }}
+                                                </button>
+                                            </strong>
                                         </form>
 
-                                        <div class="Card-content">
-                                            <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
-                                                {% csrf_token %}
-                                                <strong class="Card-title">
-                                                    <button class=" btn_reset" type="submit">
-                                                        {{ product.title|truncatechars:48 }}
-                                                    </button>
-                                                </strong>
-                                            </form>
-
-                                            <div class="Card-description">
-                                                <div class="Card-cost">
-                                                    {% for object in price_seller_list %}
-                                                        {% if object.product_id == product.id %}
-                                                        <span class="Card-price">{{ object.price|floatformat:"2" }}₽</span>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </div>
-                                                {% for product_tag in product.tag.all %}
-                                                    {% if product.tag.all|length == 1 %}
-                                                        <div class="Card-category">{{ product_tag }}</div>
-                                                    {% else %}
-                                                        {% if product_tag == product.tag.all.last %}
-                                                            <div class="Card-category">{{ product_tag }}</div>
-                                                        {% else %}
-                                                            <div class="Card-category">{{ product_tag }},</div>
-                                                        {% endif %}
+                                        <div class="Card-description">
+                                            <div class="Card-cost">
+                                                {% for object in price_seller_list %}
+                                                    {% if object.product_id == product.id %}
+                                                        <span class="Card-price">{{ object.price|floatformat:"2" }}$</span>
                                                     {% endif %}
                                                 {% endfor %}
-                                                <div class="Card-hover">
-                                                    {% for object in price_seller_list %}
-                                                        {% if object.product_id == product.id %}
-                                                            <a class="Card-btn cart-btn" data-name="{{product.title}}" data-value="{{ object.price }}" data-seller="{{ object.seller}}">
-                                                                <img src="{% static '/assets/img/icons/card/cart.svg' %}" alt="cart.svg">
-                                                            </a>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                  <form class="Card-btn comparison-add" action="{% url 'add_comparison' product_id=product.id %}" method="post">
-                                                    {% csrf_token %}
-                                                    <button class="Card-btn btn_reset compare_btn" type="submit" data-product_id="{{ product.id }}">
-                                                      <div class="ProductCard-cartElement">
-                                                        <a class="Card-btn" href="#">
-                                                          <img src="{% static 'assets/img/icons/card/change.svg' %}" alt="change.svg">
+                                            </div>
+                                            {% for product_tag in product.tag.all %}
+                                                {% if product.tag.all|length == 1 %}
+                                                    <div class="Card-category">{{ product_tag }}</div>
+                                                {% else %}
+                                                    {% if product_tag == product.tag.all.last %}
+                                                        <div class="Card-category">{{ product_tag }}</div>
+                                                    {% else %}
+                                                        <div class="Card-category">{{ product_tag }},</div>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            <div class="Card-hover">
+                                                {% for object in price_seller_list %}
+                                                    {% if object.product_id == product.id %}
+                                                        <a class="Card-btn cart-btn" data-name="{{ product.title }}"
+                                                           data-value="{{ object.price }}"
+                                                           data-seller="{{ object.seller }}">
+                                                            <img src="{% static '/assets/img/icons/card/cart.svg' %}"
+                                                                 alt="cart.svg">
                                                         </a>
-                                                      </div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <form class="Card-btn comparison-add"
+                                                      action="{% url 'add_comparison' product_id=product.id %}"
+                                                      method="post">
+                                                    {% csrf_token %}
+                                                    <button class="Card-btn btn_reset compare_btn" type="submit"
+                                                            data-product_id="{{ product.id }}">
+                                                        <div class="ProductCard-cartElement">
+                                                            <a class="Card-btn" href="#">
+                                                                <img src="{% static 'assets/img/icons/card/change.svg' %}"
+                                                                     alt="change.svg">
+                                                            </a>
+                                                        </div>
                                                     </button>
-                                                  </form>
-                                                </div>
+                                                </form>
                                             </div>
                                         </div>
-
                                     </div>
+
+                                </div>
                             {% endfor %}
                         {% else %}
                             <h2>{% trans 'Товаров по Вашему запросу нет.' %}</h2>
@@ -167,15 +180,30 @@
                     </div>
                     <div class="Pagination">
                         <div class="Pagination-ins">
-                            <a class="Pagination-element Pagination-element_prev" href="#">
-                                <img src="{% static '/assets/img/icons/prevPagination.svg' %}" alt="prevPagination.svg">
-                            </a><a class="Pagination-element Pagination-element_current" href="#"><span
-                                class="Pagination-text">1</span></a><a class="Pagination-element" href="#"><span
-                                class="Pagination-text">2</span></a><a class="Pagination-element" href="#"><span
-                                class="Pagination-text">3</span></a><a
-                                class="Pagination-element Pagination-element_prev" href="#">
-                            <img src="{% static '/assets/img/icons/nextPagination.svg' %}" alt="nextPagination.svg">
-                        </a>
+                            {% if page_obj.has_previous %}
+                                <a class="Pagination-element Pagination-element_prev"
+                                   href="?page={{ page_obj.previous_page_number }}">
+                                <img src="{% static '/assets/img/icons/prevPagination.svg' %}"
+                                     alt="prevPagination.svg">
+                            {% endif %}
+                            </a>
+                            {% for i_page in paginator.page_range %}
+                                {% if i_page == page_obj.number %}
+                                    <a class="Pagination-element Pagination-element_current"
+                                       href="?page={{ i_page }}">
+                                        <span class="Pagination-text">{{ i_page }}</span></a>
+                                {% else %}
+                                    <a class="Pagination-element" href="?page={{ i_page }}">
+                                        <span class="Pagination-text">{{ i_page }}</span></a>
+                                {% endif %}
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                                <a class="Pagination-element Pagination-element_prev"
+                                   href="?page={{ page_obj.next_page_number }}">
+                                    <img src="{% static '/assets/img/icons/nextPagination.svg' %}"
+                                         alt="nextPagination.svg">
+                                </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
