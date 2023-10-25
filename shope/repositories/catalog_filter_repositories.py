@@ -30,21 +30,24 @@ class CatalogFilterRepository:
 
         if product_name is not None:
             if free_delivery and is_limited:
-                return self.queryset.filter(title__icontains=product_name, is_delivery=free_delivery,
+                return self.queryset.filter(title__icontains=product_name.title(), is_delivery=free_delivery,
                                             is_active=is_limited,
                                             min_price__range=(product_min_price, product_max_price))
 
             elif free_delivery:
-                return self.queryset.filter(title__icontains=product_name, is_delivery=free_delivery,
+                return self.queryset.filter(title__icontains=product_name.title(), is_delivery=free_delivery,
                                             min_price__range=(product_min_price, product_max_price))
 
             elif is_limited:
-                return self.queryset.filter(title__icontains=product_name, is_active=is_limited,
+                return self.queryset.filter(title__icontains=product_name.title(), is_active=is_limited,
+                                            min_price__range=(product_min_price, product_max_price))
+
+            elif product_name and product_min_price or product_max_price:
+                return self.queryset.filter(title__icontains=product_name.title(),
                                             min_price__range=(product_min_price, product_max_price))
 
             else:
-                return self.queryset.filter(title__icontains=product_name.title(),
-                                            min_price__range=(product_min_price, product_max_price))
+                return self.queryset.filter(title__icontains=product_name.title())
         else:
             if free_delivery and is_limited:
                 return self.queryset.filter(is_delivery=free_delivery, is_active=is_limited,
