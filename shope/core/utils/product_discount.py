@@ -22,10 +22,10 @@ class ProductDiscount:
         """
         cat_id_qs = cart_item_qs.values('product__category__id')
         cat_id_lst = [dct['product__category__id'] for dct in cat_id_qs]
-        dct = self._product_group_sales.possible_get_discount(_cat_id_list=cat_id_lst)
-        print(dct)
-        if dct:
-            pass
+        dct_group_sales = self._product_group_sales.possible_get_discount(_cat_id_list=cat_id_lst)
+        print(dct_group_sales)
+        if dct_group_sales:
+            return dct_group_sales
 
     def calculate_price_with_discount(self):
         """

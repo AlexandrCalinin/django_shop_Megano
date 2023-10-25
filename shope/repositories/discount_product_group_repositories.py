@@ -25,8 +25,11 @@ class DiscountProductGroupRepository(IDiscountProductGroup):
         for cat in qs:
             sale = DiscountProductGroup.objects.get(category__id=cat.id)
             if sale:
-                dct[sale.id] = dct.get(sale.id, 0) + 1
-                if dct[sale.id] > 1:
+                dct[sale.priority] = dct.get(sale.priority, {sale._meta.model_name: {sale.id: 0}})
+                if not dct[sale.priority][sale._meta.model_name].get(sale.id, None):
+                    dct[sale.priority][sale._meta.model_name] = {sale.id: 0}
+                dct[sale.priority][sale._meta.model_name][sale.id] += 1
+                if dct[sale.priority][sale._meta.model_name][sale.id] > 1:
                     flag = True
         if flag:
             return dct
