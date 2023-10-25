@@ -25,13 +25,15 @@ class AddProductToCart:
     def add_product_to_cart(self, user: User, **kwargs) -> None:
         """добавить товар в корзину"""
 
-        product_id, product_name, image, product_count, amount, seller_id = kwargs.values()
+        product_id, product_name, image, product_count, price, seller_id = kwargs.values()
 
         cart = self._cart.get_active_by_user(_user=user)
         if not cart:
             cart = self._cart.create_cart(user)
         product = self._product.get_by_id(product_id)
         seller = self._seller.get_by_id(seller_id)
+
+        amount = int(product_count) * float(price)
 
         if self._cartitem.get_by_product_id(_product=product_id, _cart=cart):
             self.change_count_product_in_cart(user=user,
@@ -52,9 +54,11 @@ class AddProductToCart:
         """
         product, product_name, image, product_count, amount, seller = kwargs.values()
 
+        summ = int(product_count) * float(amount)
+
         product_info = {'product': product, 'product_name': product_name,
                         'image': image, 'count': product_count,
-                        'amount': amount, 'price': amount, 'seller': seller}
+                        'amount': summ, 'price': amount, 'seller': seller}
 
         if 'cart' in request.session:
 
@@ -65,7 +69,7 @@ class AddProductToCart:
                     int(request.session["cart"][product]['count']) + int(product_count)
 
                 request.session["cart"][product]['amount'] = \
-                    float(request.session["cart"][product]['amount']) + float(amount)
+                    float(request.session["cart"][product]['amount']) + (int(product_count) * float(amount))
 
         else:
             request.session["cart"] = {}
@@ -99,10 +103,16 @@ class AddProductToCart:
 
         product_i.count += int(count)
         if count == '1':
+            print('1')
             product_i.amount += price.price
-        else:
+        elif count == '-1':
+            print('-1')
             product_i.amount -= price.price
-
+        else:
+            print(count,  price.price)
+            product_i.amount += int(count) * price.price
+            s = int(count) * price.price
+            print(s)
         product_i.save()
         return product_i
 

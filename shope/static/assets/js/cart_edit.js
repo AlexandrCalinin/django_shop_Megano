@@ -126,7 +126,7 @@ $('.Cart-block.Cart-block_delete').on('click', 'a[class="Cart-delete"]', functio
    product_delete(product_id)
 })
 
-$('#1').on('click', 'a[class="btn btn_primary"]', function(){
+$('.Product').on('click', 'a[class="btn btn_primary"]', function(){
    // Обработка нажатия на кнопку добавления товара в корзину на детальной странице продукта
 
     var product_id = $('.Product').attr('id')
@@ -141,23 +141,8 @@ $('#1').on('click', 'a[class="btn btn_primary"]', function(){
     else{
         cart_add(product_id, product_name, image, product_count, amount, seller)
     }
-
-
 })
 
-$('div[name="add-product-to"]').on('click', 'a[class="btn btn_primary"]', function(){
-   // Обработка нажатия на кнопку добавления товара в корзину на детальной странице продукта c продацами
-
-    var product_id = $('.Product').attr('id')
-    var product_count = $('.Amount-input.form-input').attr('value')
-    var amount = $(this).data('value')
-    var seller = $(this).data('seller')
-    var product_name = $(this).data('name')
-    var image = $('.ProductCard-pict').attr('href')
-
-
-    cart_add(product_id, product_name, image, product_count, amount, seller)
-})
 
 $('.Amount').on('click', 'button[class="Amount-add"]', function(){
 
@@ -167,17 +152,17 @@ $('.Amount').on('click', 'button[class="Amount-add"]', function(){
 
 })
 
+
 $('.Amount').on('click', 'button[class="Amount-remove"]', function(){
 
     var count_product = $(this).parent('.Amount').children('.Amount-input.form-input').attr('value')
     $(this).parent('.Amount').children('.Amount-input.form-input').attr('value', parseInt(count_product) - 1)
     var count_product = $(this).parent('.Amount').children('.Amount-input.form-input').attr('value')
 
-
 })
 
 
-$('.ProductCard-cartElement').on('click', 'a[class="btn btn_primary"]', function(){
+$('#cart-add').on('click', 'a[class="btn btn_primary"]', function(){
    // Обработка нажатия на кнопку добавления товара в корзину на странице сравнения
 
     var product_id = $(this).data('product')

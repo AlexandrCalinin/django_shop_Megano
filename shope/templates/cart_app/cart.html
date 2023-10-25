@@ -15,10 +15,10 @@
                                 <div class="Cart-block Cart-block_row">
                                     <div class="Cart-block Cart-block_pict">
                                         <a class="Cart-pict" href="#">
-                                            <img class="Cart-img" src="{{ item.product.image.all.0.image.url }}" alt="card.jpg" />
+                                            <img class="Cart-img"  src="{{ item.product.image.all.0.image.url }}" alt="card.jpg" />
                                         </a>
                                 </div>
-                                <div class="Cart-block Cart-block_info"><a class="Cart-title" href="#">{{ item.product.title }}</a>
+                                <div class="Cart-block Cart-block_info"><a class="Cart-title" href="{% url 'product' product_id=product.id %}">{{ item.product.title }}</a>
                                     <div class="Cart-desc">{{ item.product.description| truncatechars:30 }}
                                     </div>
                                 </div>
@@ -48,7 +48,7 @@
                                 <div class="Cart-block Cart-block_row">
                                     <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="#"><img class="Cart-img" src="{{ item.image }}" alt="card.jpg" /></a>
                                 </div>
-                                <div class="Cart-block Cart-block_info"><a class="Cart-title" href="#">{{ item.product_name }}</a>
+                                <div class="Cart-block Cart-block_info"><a class="Cart-title" href="{% url 'product' product_id=item.product %}">{{ item.product_name }}</a>
                                     <div class="Cart-desc">
                                     </div>
                                 </div>
