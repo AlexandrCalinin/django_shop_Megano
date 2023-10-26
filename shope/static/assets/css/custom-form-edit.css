@@ -35,6 +35,14 @@
   right: -15px;
 }
 
+.sale-btn {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  /*overflow: hidden;*/
+  border-radius: 50px;
+}
+
 .ProductCard-title-custom {
   min-height: 77px;
 }
