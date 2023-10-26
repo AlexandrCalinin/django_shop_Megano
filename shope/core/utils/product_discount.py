@@ -21,20 +21,34 @@ class ProductDiscount:
         """
         получить приоритетную скидку на указанный список товаров или на один товар
         """
-        cat_id_qs = cart_item_qs.values('product__category__id')
-        cat_id_lst = [dct['product__category__id'] for dct in cat_id_qs]
-        dct_group_sales = self._product_group_sales.possible_get_discount(_cat_id_list=cat_id_lst)
-        print(dct_group_sales)
-        # if dct_group_sales:
-        #     return dct_group_sales
+        priority = 3
         product_id_qs = cart_item_qs.values('product__id', 'count')
         product_id_lst = [dct['product__id'] for dct in product_id_qs]
-        # total_count = sum(dct['count'] for dct in product_id_qs)
-        total_count = cart_item_qs.aggregate(num=Sum('count'))
-        print(product_id_qs, product_id_lst, total_count)
+        return_dct = dict()
+
+        dct_group_sales = self._product_group_sales.possible_get_discount(_cart_item_qs=cart_item_qs)
+        print(dct_group_sales)
+        if dct_group_sales:
+            priority = min(dct_group_sales)
+            return_dct = dct_group_sales
+
         dct_cart_sale = self._cart_sales.possible_get_discount(_cart_item_qs=cart_item_qs)
-        if dct_cart_sale:
-            return dct_cart_sale
+        print('dct_cart_sale', dct_cart_sale)
+        if dct_cart_sale and priority > dct_cart_sale.priority:
+            priority = dct_cart_sale.priority
+            return_dct = dct_cart_sale
+
+        dct_product_sale = dict()
+        for product_id in product_id_lst:
+            sales = self.get_all_discount_on_product(product_id)
+            if sales:
+                sale = sales.order_by('-value').first()
+                dct_product_sale[sale.priority] = dct_product_sale.get(sale.priority, {product_id: sale})
+                dct_product_sale[sale.priority][product_id] = sale
+        if dct_product_sale and priority >= min(dct_product_sale):
+            return_dct = dct_product_sale
+            print('dct_product_sale', dct_product_sale)
+        return return_dct
 
     def calculate_price_with_discount(self):
         """

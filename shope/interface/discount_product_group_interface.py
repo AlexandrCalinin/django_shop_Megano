@@ -15,6 +15,6 @@ class IDiscountProductGroup:
         pass
 
     @abstractmethod
-    def possible_get_discount(self, _cat_id_list: list) -> Optional[Dict]:
+    def possible_get_discount(self, _cart_item_qs: QuerySet) -> Optional[Dict]:
         """Вернуть возможность применения скидки"""
         pass
