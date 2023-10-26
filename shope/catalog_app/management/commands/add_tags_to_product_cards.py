@@ -9,12 +9,12 @@ from catalog_app.models import Product
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        with open(os.path.abspath('fixtures\\05_tag.json'), 'r') as tag_file:
+        with open(os.path.abspath(os.path.join('fixtures', '05_tag.json')), 'r') as tag_file:
             tag_dict = json.load(tag_file)
             tags = list()
             for data in tag_dict:
                 tags.append(data['fields']['name'])
-            with open(os.path.abspath('fixtures\\07_taggeditem.json'), 'r') as taggeditem_file:
+            with open(os.path.abspath(os.path.join('fixtures', '07_taggeditem.json')), 'r') as taggeditem_file:
                 taggeditem_dict = json.load(taggeditem_file)
                 taggeditem = dict()
                 for data in taggeditem_dict:

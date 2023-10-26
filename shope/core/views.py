@@ -22,6 +22,7 @@ from core.forms import CacheSetupForm
 
 from .utils.cache_key import (
     TOP_PRODUCT_LIST_KEY,
+    BANNER_LIST_KEY,
 )
 
 
@@ -54,7 +55,11 @@ class BaseView(TemplateView):
             0, len(context['product_limited_list']) - 1))
         context['tomorrow_day'] = (datetime.date.today() + datetime.timedelta(days=2)).strftime('%d.%m.%Y')
         context['slider_list'] = self._slider_list.get_slider_list(const=3)
-        context['banner_list'] = self._banner_list.get_banner_list(const=3)
+        context['banner_list'] = cache.get_or_set(BANNER_LIST_KEY,
+                                                  self._banner_list.get_banner_list(const=3),
+                                                  get_cache_value('BANNER')
+                                                  )
+
         lst = list(context['product_top_list']) + context['product_limited_list']
         lst.append(context['offer_day'])
         context['price_seller_list'] = self._price_seller.get_last_minprice_dct(

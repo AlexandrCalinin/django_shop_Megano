@@ -2,43 +2,44 @@
 {% load static %}
 {% load i18n %}
 <html lang="ru">
-<head>
-    <title>{% trans 'Megano' %}</title>
-    <meta name="description" content="Описание страницы">
-    <meta charset="utf-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <link href="{% static 'favicon.ico' %}" rel="shortcut icon">
-    <link rel="preload"
-          href="{% static 'assets/fonts/Roboto/Roboto-Regular.woff' %}"
-          as="font">
-    <link rel="preload"
-          href="{% static 'assets/fonts/Roboto/Roboto-Italic.woff' %}"
-          as="font">
-    <link rel="preload"
-          href="{% static 'assets/fonts/Roboto/Roboto-Bold.woff' %}"
-          as="font">
-    <link rel="preload"
-          href="{% static 'assets/fonts/Roboto/Roboto-Bold_Italic.woff' %}"
-          as="font">
-    <link rel="preload"
-          href="{% static 'assets/fonts/Roboto/Roboto-Light.woff' %}"
-          as="font">
-    <link rel="preload"
-          href="{% static 'assets/fonts/Roboto/Roboto-Light_Italic.woff' %}"
-          as="font">
-    <link rel="stylesheet" href="{% static 'assets/css/fonts.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/basic.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/extra.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/custom-form-edit.css' %}">
-    <script src="{% static 'assets/plg/CountDown/countdown.js' %}"></script>
-    <script src="https://unpkg.com/imask"></script>
-    <!--[if lt IE 9]>
+    <head>
+        <title>{% trans 'Megano' %}</title>
+        <meta name="description" content="Описание страницы">
+        <meta charset="utf-8">
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+        <link href="{% static 'favicon.ico' %}" rel="shortcut icon">
+        <link rel="preload"
+              href="{% static 'assets/fonts/Roboto/Roboto-Regular.woff' %}"
+              as="font">
+        <link rel="preload"
+              href="{% static 'assets/fonts/Roboto/Roboto-Italic.woff' %}"
+              as="font">
+        <link rel="preload"
+              href="{% static 'assets/fonts/Roboto/Roboto-Bold.woff' %}"
+              as="font">
+        <link rel="preload"
+              href="{% static 'assets/fonts/Roboto/Roboto-Bold_Italic.woff' %}"
+              as="font">
+        <link rel="preload"
+              href="{% static 'assets/fonts/Roboto/Roboto-Light.woff' %}"
+              as="font">
+        <link rel="preload"
+              href="{% static 'assets/fonts/Roboto/Roboto-Light_Italic.woff' %}"
+              as="font">
+        <link rel="stylesheet" href="{% static 'assets/css/fonts.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/basic.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/extra.css' %}">
+        <link rel="stylesheet"
+              href="{% static 'assets/css/custom-form-edit.css' %}">
+        <script src="{% static 'assets/plg/CountDown/countdown.js' %}"></script>
+        <script src="https://unpkg.com/imask"></script>
+        <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-    <meta name="csrf-token" content="{{ csrf_token }}">
-</head>
-<body class="Site">
-<!--if lt IE 8
+        <meta name="csrf-token" content="{{ csrf_token }}">
+    </head>
+    <body class="Site">
+        <!--if lt IE 8
 p.error-browser
 | Ваш браузер&nbsp;
 em устарел!&nbsp;
@@ -47,57 +48,57 @@ a(href="http://browsehappy.com/") Выберите новую версию
 | браузера здесь&nbsp;
 | для правильного отображения сайта.
 -->
-<header class="Header">
-    <div class="ControlPanel">
-        <div class="wrap">
-            <div class="row ControlPanel-row">
-                <div class="row-block">
-                    <div class="row ControlPanel-rowSplit">
-                        <div class="row-block hide_700">
-                            <ul class="menu menu_img menu_smallImg ControlPanel-menu">
-                                <li class="menu-item">
-                                    <a class="menu-link" href="#">
-                                        <img src="{% static 'assets/img/icons/socialHeader/tw.svg' %}"
-                                             alt="tw.svg">
-                                    </a>
-                                </li>
-                                <li class="menu-item">
-                                    <a class="menu-link" href="#">
-                                        <img src="{% static 'assets/img/icons/socialHeader/in.svg' %}"
-                                             alt="in.svg">
-                                    </a>
-                                </li>
-                                <li class="menu-item">
-                                    <a class="menu-link" href="#">
-                                        <img src="{% static 'assets/img/icons/socialHeader/pt.svg' %}"
-                                             alt="pt.svg">
-                                    </a>
-                                </li>
-                                <li class="menu-item">
-                                    <a class="menu-link" href="#">
-                                        <img src="{% static 'assets/img/icons/socialHeader/mail.svg' %}"
-                                             alt="mail.svg">
-                                    </a>
-                                </li>
-                            </ul>
+        <header class="Header">
+            <div class="ControlPanel">
+                <div class="wrap">
+                    <div class="row ControlPanel-row">
+                        <div class="row-block">
+                            <div class="row ControlPanel-rowSplit">
+                                <div class="row-block hide_700">
+                                    <ul class="menu menu_img menu_smallImg ControlPanel-menu">
+                                        <li class="menu-item">
+                                            <a class="menu-link" href="#">
+                                                <img src="{% static 'assets/img/icons/socialHeader/tw.svg' %}"
+                                                     alt="tw.svg">
+                                            </a>
+                                        </li>
+                                        <li class="menu-item">
+                                            <a class="menu-link" href="#">
+                                                <img src="{% static 'assets/img/icons/socialHeader/in.svg' %}"
+                                                     alt="in.svg">
+                                            </a>
+                                        </li>
+                                        <li class="menu-item">
+                                            <a class="menu-link" href="#">
+                                                <img src="{% static 'assets/img/icons/socialHeader/pt.svg' %}"
+                                                     alt="pt.svg">
+                                            </a>
+                                        </li>
+                                        <li class="menu-item">
+                                            <a class="menu-link" href="#">
+                                                <img src="{% static 'assets/img/icons/socialHeader/mail.svg' %}"
+                                                     alt="mail.svg">
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
+                        <nav class="row-block">
+                            <div class="row ControlPanel-rowSplit">
+                                <div class="row-block">
+                                    {% if user.is_authenticated %}
+                                        <a class="ControlPanel-title" href="{% url 'auth_app:logout' %}">{% trans 'Sign out' %}</a>
+                                    {% else %}
+                                        <a class="ControlPanel-title" href="{% url 'auth_app:login' %}">{% trans 'Sign in' %}</a>
+                                        <a class="ControlPanel-title" href="{% url 'auth_app:register' %}">{% trans 'Register' %}</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </nav>
                     </div>
                 </div>
-                <nav class="row-block">
-                    <div class="row ControlPanel-rowSplit">
-                        <div class="row-block">
-                            {% if user.is_authenticated %}
-                                <a class="ControlPanel-title" href="{% url 'auth_app:logout' %}">{% trans 'Sign out' %}</a>
-                            {% else %}
-                                <a class="ControlPanel-title" href="{% url 'auth_app:login' %}">{% trans 'Sign in' %}</a>
-                                <a class="ControlPanel-title" href="{% url 'auth_app:register' %}">{% trans 'Register' %}</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </nav>
-            </div>
-        </div>
-        <!--+div.menuModal#navigate
+                <!--+div.menuModal#navigate
 //    +menu([
 //        ['Главная','index.html'],
 //        ['Портфолио','index.html'],
@@ -107,77 +108,76 @@ a(href="http://browsehappy.com/") Выберите новую версию
 
 block
 -->
-    </div>
-    <div class="wrap">
-        <div class="row Header-rowMain">
-            <div class="row-block Header-logo">
-                <a class="logo" href="{% url 'home' %}">
-                    <img class="logo-image"
-                         src="{% static 'assets/img/logo.png' %}"
-                         alt="logo.png"/>
-                </a>
             </div>
-            <nav class="row-block row-block_right Header-menu">
-                <div class="menuModal" id="navigate">
-                    <ul class="menu menu_main">
-                        <li class="menu-item">
-                            <a class="menu-link" href="{% url 'home' %}">{% trans 'Home' %}</a>
-                        </li>
-                        <li class="menu-item">
-                            <a class="menu-link" href="{% url 'about' %}">{% trans 'About' %}</a>
-                        </li>
-                        <li class="menu-item">
-                            <span class="menu-label menu-label_success">{% trans 'Sales' %}</span><a class="menu-link"
-                                                                                                     href="{% url 'catalog' %}">{% trans 'Catalog' %}</a>
-                        </li>
-                        <li class="menu-item">
-                            <a class="menu-link" href="{% url 'comparison' %}">{% trans 'Comparison' %}</a>
-                        </li>
-                        {% if request.user.is_authenticated %}
-                            <li class="menu-item">
-                                <a class="menu-link"
-                                   href="{% url 'viewed_products' user_id=request.user.id %}">{% trans 'Viewed' %}</a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </nav>
-            <div class="row-block">
-                <div class="CartBlock">
-                    <div class="dropdown">
-                        <button class="dropbtn">
-                            <img class="CartBlock-img"
-                                 src="{% static 'assets/img/icons/loon-icon.svg' %}"
-                                 alt="loon-icon.svg"/>
-                        </button>
-                        <div class="dropdown-content">
-                            <a class="dropdown-content-a" href="{% url 'account' %}">{% trans 'Личный кабинет' %}</a>
-                            {% if user.is_staff %}
-                                <a class="dropdown-content-a" href="../profile/account">{% trans 'Административный раздел' %}</a>
-                            {% endif %}
-                            <a class="dropdown-content-a" href="{% url 'auth_app:logout' %}">{% trans 'Sign out' %}</a>
+            <div class="wrap">
+                <div class="row Header-rowMain">
+                    <div class="row-block Header-logo">
+                        <a class="logo" href="{% url 'home' %}">
+                            <img class="logo-image"
+                                 src="{% static 'assets/img/logo.png' %}"
+                                 alt="logo.png" />
+                        </a>
+                    </div>
+                    <nav class="row-block row-block_right Header-menu">
+                        <div class="menuModal" id="navigate">
+                            <ul class="menu menu_main">
+                                <li class="menu-item">
+                                    <a class="menu-link" href="{% url 'home' %}">{% trans 'Home' %}</a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class="menu-link" href="{% url 'about' %}">{% trans 'About' %}</a>
+                                </li>
+                                <li class="menu-item">
+                                    <span class="menu-label menu-label_success">{% trans 'Sales' %}</span><a class="menu-link" href="{% url 'catalog' %}">{% trans 'Catalog' %}</a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class="menu-link" href="{% url 'comparison' %}">{% trans 'Comparison' %}</a>
+                                </li>
+                                {% if request.user.is_authenticated %}
+                                    <li class="menu-item">
+                                        <a class="menu-link"
+                                           href="{% url 'viewed_products' user_id=request.user.id %}">{% trans 'Viewed' %}</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </nav>
+                    <div class="row-block">
+                        <div class="CartBlock">
+                            <div class="dropdown">
+                                <button class="dropbtn">
+                                    <img class="CartBlock-img"
+                                         src="{% static 'assets/img/icons/loon-icon.svg' %}"
+                                         alt="loon-icon.svg" />
+                                </button>
+                                <div class="dropdown-content">
+                                    <a class="dropdown-content-a" href="{% url 'account' %}">{% trans 'Account' %}</a>
+                                    {% if user.is_superuser %}
+                                        <a class="dropdown-content-a" href="{% url 'setup-admin' %}">{% trans 'Admin tools' %}</a>
+                                    {% endif %}
+                                    <a class="dropdown-content-a" href="{% url 'auth_app:logout' %}">{% trans 'Sign out' %}</a>
+                                </div>
+                            </div>
+                            {% include 'includes/card_edit.html' %}
                         </div>
                     </div>
-                    {% include 'includes/card_edit.html' %}
-                </div>
-            </div>
-            <!--            <a class="CartBlock-block" href="">-->
-            <!--              <img class="CartBlock-img"
+                    <!--            <a class="CartBlock-block" href="">-->
+                    <!--              <img class="CartBlock-img"
                    src="{% static 'assets/img/icons/cart.svg' %}"
                    alt="cart.svg">-->
-            <!--              <span class="CartBlock-amount">0</span></a>-->
-            <!--            <div class="CartBlock-block">-->
-            <!--              <span class="CartBlock-price">0.00$</span>-->
-            <!--            </div>-->
+                    <!--              <span class="CartBlock-amount">0</span></a>-->
+                    <!--            <div class="CartBlock-block">-->
+                    <!--              <span class="CartBlock-price">0.00$</span>-->
+                    <!--            </div>-->
+                </div>
+            </div>
+            <div class="row-block Header-trigger">
+                <a class="menuTrigger" href="#navigate">
+                    <div class="menuTrigger-content">{% trans 'Показать навигацию' %}</div>
+                    <span></span><span></span><span></span>
+                </a>
+            </div>
         </div>
-    </div>
-    <div class="row-block Header-trigger">
-        <a class="menuTrigger" href="#navigate">
-            <div class="menuTrigger-content">{% trans 'Показать навигацию' %}</div>
-            <span></span><span></span><span></span>
-        </a>
-    </div>
-    </div>
     </div>
     <div class="Header-searchWrap">
         <div class="wrap">
@@ -199,14 +199,14 @@ block
                                                 href="{% url 'catalog' %}"
                                                 name="category"
                                                 value="{{ category.id }}">
-                                    {% else %}
-                                        <a href="{% url 'sale' %}">
-                                    {% endif %}
-                                    <div class="CategoriesButton-icon">
-                                        <img src="{{ category.image.url }}" alt="1.svg">
-                                    </div>
-                                    <span class="CategoriesButton-text">{{ category.title }}</span>
-                                    </a>
+                                        {% else %}
+                                            <a href="{% url 'sale' %}">
+                                            {% endif %}
+                                            <div class="CategoriesButton-icon">
+                                                <img src="{{ category.image.url }}" alt="1.svg">
+                                            </div>
+                                            <span class="CategoriesButton-text">{{ category.title }}</span>
+                                        </a>
                                     </button>
                                     {% if category.characteristictype_set.exists %}
                                         <a class="CategoriesButton-arrow" href="#"></a>
@@ -232,15 +232,15 @@ block
             </div>
             <div class="Header-search">
                 <div class="search">
-                    <form class="form form_search" action="#" method="post">
+                    <form class="form form_search" action="{% url 'catalog' %}" method="get">
                         <input class="search-input"
                                id="query"
-                               name="query"
+                               name="title"
                                type="text"
                                placeholder="NVIDIA GeForce RTX 3060">
                         <button class="search-button" id="search" type="submit" name="search">
                             <img src="{% static 'assets/img/icons/search.svg' %}" alt="search.svg">
-                            {% trans 'Поиск' %}
+                            {% trans 'Search' %}
                         </button>
                     </form>
                 </div>
@@ -339,6 +339,5 @@ block
 <script src="{% static 'assets/js/comparison.js' %}"></script>
 <script src="{% static 'assets/js/scripts.js' %}"></script>
 <script src="{% static 'assets/js/phone.js' %}"></script>
-
 </body>
 </html>
