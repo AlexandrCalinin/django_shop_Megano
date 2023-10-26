@@ -20,6 +20,11 @@
                                 </div>
                                 <div class="Cart-block Cart-block_info"><a class="Cart-title" href="#">{{ item.product.title }}</a>
                                     <div class="Cart-desc">{{ item.product.description| truncatechars:30 }}
+                                        {% for data in discount_data %}
+                                            {% if data.product_id == item.product.id %}
+                                                {{ data.message }}
+                                            {% endif %}
+                                        {% endfor %}
                                     </div>
                                 </div>
                             {% include 'includes/price_product_in_cart.html' %}

@@ -22,9 +22,7 @@ class CartSaleRepository(ICartSale):
         total_amount = sum([dct['amount'] for dct in qs])
         total_count = _cart_item_qs.aggregate(num=Sum('count'))
         total_count = total_count['num']
-        print(total_amount, total_count)
         sale_qs = self.get_list().filter(quantity__lte=total_count, amount__lte=total_amount).order_by('-value').first()
-        print(sale_qs)
         if not sale_qs:
             return None
         return sale_qs

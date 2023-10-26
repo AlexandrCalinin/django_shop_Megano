@@ -2,7 +2,9 @@ from typing import Optional
 
 from beartype import beartype
 from beartype.typing import Dict
-from django.db.models import QuerySet, Count
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import QuerySet
+from django.utils.translation import gettext as _
 
 from catalog_app.models import DiscountProductGroup, Category
 from interface.discount_product_group_interface import IDiscountProductGroup
@@ -19,13 +21,13 @@ class DiscountProductGroupRepository(IDiscountProductGroup):
     def possible_get_discount(self, _cart_item_qs: QuerySet) -> Optional[Dict]:
         """Вернуть возможность применения скидки"""
         cat_id_qs = _cart_item_qs.values('product__category__id')
-        print('cat_id_qs - категории - товары в корзине', cat_id_qs)
+        # print('cat_id_qs - категории - товары в корзине', cat_id_qs)
         cat_id_lst = [dct['product__category__id'] for dct in cat_id_qs]
-        print('cat_id_lst - категории - товары в корзине', cat_id_lst)
+        # print('cat_id_lst - категории - товары в корзине', cat_id_lst)
         qs_cats = Category.objects.filter(discountproductgroup__category__in=cat_id_lst)
-        print('qs_cats - Все категории входящие в групповую скидку, связанную с категорией в корзине', qs_cats)
+        # print('qs_cats - Все категории входящие в групповую скидку, связанную с категорией в корзине', qs_cats)
         qs = qs_cats.filter(id__in=cat_id_lst).distinct()
-        print('qs - Уникальные категории входящие в корзину и в групповую скидку', qs)
+        # print('qs - Уникальные категории входящие в корзину и в групповую скидку', qs)
         dct = dict()
         flag = False
         for cat in qs:
@@ -37,10 +39,35 @@ class DiscountProductGroupRepository(IDiscountProductGroup):
                 dct[sale.priority][sale._meta.model_name][sale.id] += 1
                 if dct[sale.priority][sale._meta.model_name][sale.id] > 1:
                     flag = True
-        # new_dct = {}
+        new_dct = {}
         if flag:
-            # product_id_qs = _cart_item_qs.values('product__id', 'count')
-            # product_id_lst = [dct['product__id'] for dct in product_id_qs]
+            product_id_qs = _cart_item_qs.values('product__id', 'count')
+            product_id_lst = [dct['product__id'] for dct in product_id_qs]
+            priority = min(list(dct.keys()))
+            new_dct[priority] = {}
+            for product_id in product_id_lst:
+                try:
+                    sale_object = DiscountProductGroup.objects.get(category__product__id=product_id)
+                except ObjectDoesNotExist:
+                    sale_object = None
+                new_dct[priority][product_id] = [sale_object]
+                if sale_object:
+                    new_dct[priority][product_id] = [sale_object, list(sale_object.category.all())]
+                    for cat in list(sale_object.category.all()):
+                        for cat_id in cat_id_lst:
+                            if cat.id == cat_id:
+                                index = new_dct[priority][product_id][1].index(cat)
+                                new_dct[priority][product_id][1][index] = False
+                                break
+                    if all([type(x) is bool for x in new_dct[priority][product_id][1]]):
+                        new_dct[priority][product_id][1].append(_('Discount successfully applied'))
+                    else:
+                        message_cat = '/'
+                        for cat in new_dct[priority][product_id][1]:
+                            if cat:
+                                message_cat = message_cat + cat.title + '/'
+                        new_dct[priority][product_id][1].append(
+                            _(f'To get a discount, add an item from the category {message_cat}'))
 
-            return dct
+            return new_dct
         return None
