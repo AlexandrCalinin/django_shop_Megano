@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="header">
-        <h3 class="sign-in">{% trans 'Вход' %}</h3>
+        <h3 class="sign-in">{% trans 'Enter' %}</h3>
     </div>
     <div class="clear"></div>
     <form action="{% url 'auth_app:login' %}" method="post">
@@ -22,9 +22,9 @@
         <div>
             <input type="submit" value="Войти"/>
         </div>
-        <a class="forgot-label" href="{% url 'auth_app:e-mail' %}">{% trans 'Забыли пароль?' %}</a>
+        <a class="forgot-label" href="{% url 'auth_app:e-mail' %}">{% trans 'Forgot your password?' %}</a>
         <a class="registr" href="{% url 'auth_app:register' %}">
-            {% trans 'Регистрация' %}
+            {% trans 'Registration' %}
         </a>
     </form>
 {% endblock content %}

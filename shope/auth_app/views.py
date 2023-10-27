@@ -11,6 +11,7 @@ from django.urls import reverse_lazy, reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.views.generic import FormView
+from django.utils.translation import gettext_lazy as _
 
 from core.utils.add_product_to_cart import AddProductToCart
 from .forms import UserRegisterForm, ResetPasswordForm, SetNewPasswordForm, UserLoginForm
@@ -119,7 +120,7 @@ class SetNewPasswordView(SuccessMessageMixin, PasswordResetConfirmView):
     form_class = SetNewPasswordForm
     template_name = "auth_app/password_reset.html"
     success_url = reverse_lazy('auth_app:login')
-    success_message = 'Пароль успешно изменен. Можете авторизоваться на сайте.'
+    success_message = _('The password was changed successfully. You can login')
 
 
 class UserLogoutView(LogoutView):
