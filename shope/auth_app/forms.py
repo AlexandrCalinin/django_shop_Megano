@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, SetPa
     UsernameField
 from django import forms
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.utils.translation import gettext_lazy as _
 
 from .models import User
 
@@ -15,12 +16,12 @@ class UserRegisterForm(UserCreationForm):
         model = User
         fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
 
-    username = forms.CharField(max_length=64, widget=forms.TextInput(attrs={'placeholder': 'Имя пользователя'}))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
-    first_name = forms.CharField(max_length=48, widget=forms.TextInput(attrs={'placeholder': 'Имя'}))
-    last_name = forms.CharField(max_length=48, widget=forms.TextInput(attrs={'placeholder': 'Фамилия'}))
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Пароль'}))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Повторите пароль'}))
+    username = forms.CharField(max_length=64, widget=forms.TextInput(attrs={'placeholder': _('Username')}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': _('Email')}))
+    first_name = forms.CharField(max_length=48, widget=forms.TextInput(attrs={'placeholder': _('Name')}))
+    last_name = forms.CharField(max_length=48, widget=forms.TextInput(attrs={'placeholder': _('Lastname')}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': _('Password')}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': _('Repeat password')}))
 
     def save(self, commit=True):
         user = super(UserRegisterForm, self).save()
@@ -39,7 +40,7 @@ class UserLoginForm(AuthenticationForm):
     username = UsernameField(
         widget=forms.TextInput(
             attrs={"autofocus": True,
-                   "placeholder": "e-mail"
+                   "placeholder": _("e-mail")
                    })
     )
     password = forms.CharField(
@@ -57,7 +58,7 @@ class ResetPasswordForm(PasswordResetForm):
     class Meta:
         fields = 'email'
 
-    email = forms.EmailField(max_length=254, widget=forms.EmailInput(attrs={'placeholder': 'Введите email'}))
+    email = forms.EmailField(max_length=254, widget=forms.EmailInput(attrs={'placeholder': _('Email')}))
 
     @staticmethod
     def get_token(user):
@@ -70,5 +71,5 @@ class SetNewPasswordForm(SetPasswordForm):
     class Meta:
         fields = ('new_password1', 'new_password2')
 
-    new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Введите пароль'}))
-    new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Повторите ввод пароля'}))
+    new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': _('Set new password')}))
+    new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': _('Repeat new password')}))
