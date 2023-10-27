@@ -13,7 +13,8 @@ from .utils.cache_key import (
     CATEGORY_LIST_KEY,
     BANNER_LIST_KEY,
     TOP_PRODUCT_LIST_KEY,
-    PRODUCTS_KEY
+    PRODUCTS_KEY,
+    CATALOG_CATEGORY
 )
 
 
@@ -50,6 +51,13 @@ def product_change(sender, instance, **kwargs):
 
     if cache.get(PRODUCTS_KEY):
         cache.delete(PRODUCTS_KEY)
+
+    key = CATALOG_CATEGORY + str(instance.category.pk)
+    if cache.get(key):
+        cache.delete(key)
+
+    if cache.get(CATALOG_CATEGORY):
+        cache.delete(CATALOG_CATEGORY)
 
     key = make_template_fragment_key('detail_product', (instance.pk,))
     if key:
