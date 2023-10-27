@@ -62,8 +62,25 @@ class ProductDiscount:
 
         return new_return_lst
 
-    def calculate_price_with_discount(self):
+    def calculate_price_with_discount(self, cart_item_qs):
         """
         рассчитать цену со скидкой на товар
         """
-        pass
+        return_lst = self.get_priority_discount(cart_item_qs)
+        for key, sale_dct in enumerate(return_lst):
+            for item in cart_item_qs:
+                if item.product.id == sale_dct['product_id']:
+                    return_lst[key]['amount'] = item.amount
+                    sale = 0
+                    if (sale_dct['sale_model'] and 'successfull' in sale_dct['message']) and sale_dct['sale_model'].value:
+                        sale = item.amount * sale_dct['sale_model'].value / 100
+                        print(sale)
+                    elif (sale_dct['sale_model'] and 'successfull' in sale_dct['message']) and sale_dct['sale_model'].amount:
+                        sale = sale_dct['sale_model'].amount / len(sale_dct['sale_model'].category.all())
+                        if sale_dct['sale_model'].fixprice > item.amount - sale:
+                            return_lst[key]['sale_amount'] = sale_dct['sale_model'].fixprice
+                            continue
+                    return_lst[key]['sale_amount'] = item.amount - sale
+                    print(return_lst[key]['sale_amount'])
+
+        return return_lst

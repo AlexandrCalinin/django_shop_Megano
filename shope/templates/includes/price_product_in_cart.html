@@ -1,4 +1,15 @@
 <div class="Cart-block Cart-block_price">
-    <div class="Cart-price">{{ item.amount }}$
+    <div class="Cart-price">
+        <del>{{ item.amount }}$</del>
     </div>
+    {% for sale_dct in discount_data %}
+        {% if item.product.id == sale_dct.product_id %}
+        <div class="Cart-price">
+            {{ sale_dct.sale_amount }}$
+        </div>
+        <div class="Cart-price">
+            {{ sale_dct.message }}
+        </div>
+        {% endif %}
+    {% endfor %}
 </div>

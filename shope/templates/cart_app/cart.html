@@ -8,22 +8,21 @@
                 <form class="form Cart" action="#" method="post">
                     {% if user.is_authenticated %}
                         {% if items %}
-                        {% for item in items %}
-
-                        <div class="Cart-product" id="{{ item.product.id }}">
-                                <div class="Cart-block Cart-block_row">
-                                    <div class="Cart-block Cart-block_pict">
-                                        <a class="Cart-pict" href="#">
-                                            <img class="Cart-img" src="{{ item.product.image.all.0.image.url }}" alt="card.jpg" />
-                                        </a>
-                                </div>
-                                <div class="Cart-block Cart-block_info"><a class="Cart-title" href="#">{{ item.product.title }}</a>
-                                    <div class="Cart-desc">{{ item.product.description| truncatechars:30 }}
-                                        {% for data in discount_data %}
-                                            {% if data.product_id == item.product.id %}
-                                                {{ data.message }}
-                                            {% endif %}
-                                        {% endfor %}
+                            {% for item in items %}
+                                <div class="Cart-product" id="{{ item.product.id }}">
+                                    <div class="Cart-block Cart-block_row">
+                                        <div class="Cart-block Cart-block_pict">
+                                            <a class="Cart-pict" href="#">
+                                                <img class="Cart-img"
+                                                     src="{{ item.product.image.all.0.image.url }}"
+                                                     alt="card.jpg" />
+                                            </a>
+                                        </div>
+                                        <div class="Cart-block Cart-block_info">
+                                            <a class="Cart-title" href="#">{{ item.product.title }}</a>
+                                            <div class="Cart-desc">{{ item.product.description| truncatechars:30 }}</div>
+                                        </div>
+                                        {% include 'includes/price_product_in_cart.html' %}
                                     </div>
                                     <div class="Cart-block Cart-block_amount">
                                         <div class="Cart-amount">
@@ -46,7 +45,7 @@
                                 </div>
                             {% endfor %}
                         {% else %}
-                            <h1>{% trans 'Корзина пуста' %}</h1>
+                            <h1>{% trans 'The cart is empty' %}</h1>
                         {% endif %}
                     {% else %}
                         {% for item in items %}
@@ -96,7 +95,7 @@
                         </div>
                     {% else %}
                         <div class="Cart-block">
-                            <a class="btn btn_success btn_lg" href="{% url 'auth_app:register' %}">{% trans 'Регистрация' %}</a>
+                            <a class="btn btn_success btn_lg" href="{% url 'auth_app:register' %}">{% trans 'Registration' %}</a>
                         </div>
                     {% endif %}
                 </div>
