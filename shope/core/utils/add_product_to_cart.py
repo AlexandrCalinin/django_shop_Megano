@@ -148,8 +148,11 @@ class AddProductToCart:
                 return None
             return self._cartitem.get_by_cart_id(_cart=cart)
         else:
-            products = request.session['cart']
-            return products.values()
+            if 'cart' in request.session:
+                products = request.session['cart']
+                return products.values()
+            else:
+                return None
 
     def get_count_product_in_cart(self, user: User) -> tuple[int, int]:
         """
