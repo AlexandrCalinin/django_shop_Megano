@@ -39,6 +39,7 @@ from core.utils.cache import get_cache_value
 from core.utils.cache_key import (
     DETAIL_PRODUCT_KEY,
     PRODUCTS_KEY,
+    CATALOG_CATEGORY,
 )
 
 
@@ -122,6 +123,7 @@ class CatalogListView(ListView):
     template_name = 'catalog_app/catalog.html'
     _filter: ICatalogFilter = inject.attr(ICatalogFilter)
     _price_seller: IPrice = inject.attr(IPrice)
+    paginate_by = 9
 
     def get(self, request, **kwargs):
         return super().get(request, **kwargs)
@@ -140,7 +142,10 @@ class CatalogListView(ListView):
             global query
             if self.request.GET.get('category') is not None:
                 category_id = self.request.GET.get('category')
-                query = self._filter.get_filtered_products_by_category(category_id)
+                query = cache.get_or_set(CATALOG_CATEGORY + str(category_id),
+                                         self._filter.get_filtered_products_by_category(category_id),
+                                         get_cache_value('CATEGORY')
+                                         )
             elif self.request.GET.get('char') is not None:
                 char_id = self.request.GET.get('char')
                 query = self._filter.get_filtered_products_by_char(char_id)
@@ -158,8 +163,20 @@ class CatalogListView(ListView):
                 else:
                     product_min_price, product_max_price = None, None
                 product_name = self.request.GET.get('title')
-                query = self._filter.get_filtered_products(product_name, free_delivery,
-                                                           is_limited, product_min_price, product_max_price)
+                params = (
+                    product_name,
+                    free_delivery,
+                    is_limited,
+                    product_min_price,
+                    product_max_price)
+
+                if not any(params):
+                    query = cache.get_or_set(CATALOG_CATEGORY,
+                                             self._filter.get_filtered_products(*params),
+                                             get_cache_value('CATEGORY')
+                                             )
+                else:
+                    query = self._filter.get_filtered_products(*params)
             return query
 
         except MultiValueDictKeyError:

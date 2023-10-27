@@ -25,7 +25,7 @@ class ReviewForm(forms.ModelForm):
         attrs={'class': 'form-textarea',
                'id': 'review',
                'name': 'review',
-               'placeholder': 'Отзыв'}))
+               'placeholder': _('Review')}))
 
     class Meta:
         model = Rewiew
