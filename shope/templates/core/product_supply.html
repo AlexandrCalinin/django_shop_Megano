@@ -46,6 +46,7 @@
     <div class="Section">
       <div class="wrap">
         <div class="BannersHome">
+          {% if banner_list %}
           {% for banner in banner_list %}
 {#          <div class="BannersHomeBlock">#}
             <form class="BannersHomeBlock BannersHomeBlock-form" action="{% url 'catalog' %}" method="get">
@@ -70,6 +71,7 @@
             </form>
 {#          </div>#}
           {% endfor %}
+          {% endif %}
         </div>
       </div>
     </div>
@@ -81,6 +83,7 @@
               <strong class="Section-columnTitle">{% trans 'LIMITED OFFERS' %}
               </strong>
             </header>
+            {% if offer_day %}
             <form action="{% url 'change_viewed' product_id=offer_day.id %}" method="post">
               {% csrf_token %}
                 <div class="Card">
@@ -141,6 +144,7 @@
                   </div>
                 </div>
             </form>
+            {% endif %}
           </div>
         </div>
         <div class="Section-content">
@@ -149,6 +153,7 @@
             </h2>
           </header>
             <div class="Cards">
+              {% if product_top_list %}
               {% for product in product_top_list %}
 
                 <div class="Card hide_md hide_1450" data-product="{{product.id}}">
@@ -157,7 +162,7 @@
                       <img height="40" width="40" src="{% static 'assets/img/icons/card/discount.svg' %}" alt="cart.svg">
                     </div>
                   {% endif %}
-
+                  {% if product %}
                   <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
                     {% csrf_token %}
                     <button class="Card-picture btn_reset" data-name="{{ product.image.all.0.image.url }}" href="{% url 'product' product_id=product.id %}" type="submit">
@@ -166,12 +171,15 @@
                       {% endif %}
                     </button>
                   </form>
+                  {% endif %}
                     <div class="Card-content">
                       <strong class="Card-title">
+                        {% if product  %}
                         <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
                           {% csrf_token %}
                           <button class=" btn_reset" href="{% url 'product' product_id=product.id %}" type="submit">{{ product.title|truncatechars:48 }}</button>
                         </form>
+                        {% endif %}
                       </strong>
                       <div class="Card-description">
                         <div class="Card-cost">
@@ -215,6 +223,7 @@
                     </div>
                 </div>
               {% endfor %}
+              {% endif %}
             </div>
         </div>
       </div>
@@ -232,6 +241,7 @@
               </div>
             </header>
             <div class="Slider-box Cards">
+              {% if product_limited_list %}
               {% for product in product_limited_list %}
                 <div class="Slider-item">
                   <div class="Slider-content">
@@ -241,6 +251,7 @@
                           <img height="40" width="40" src="{% static 'assets/img/icons/card/discount.svg' %}" alt="cart.svg">
                         </div>
                       {% endif %}
+                      {% if product  %}
                       <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
                         {% csrf_token %}
                         <button class="Card-picture btn_reset" data-name="{{ product.image.all.0.image.url }}" href="{% url 'product' product_id=product.id %}" type="submit">
@@ -249,6 +260,7 @@
                           {% endif %}
                         </button>
                       </form>
+                      {% endif %}
                       <div class="Card-content">
                         <strong class="Card-title">
                           <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
@@ -300,6 +312,7 @@
                   </div>
                 </div>
               {% endfor %}
+              {% endif %}
             </div>
           </div>
         </div>

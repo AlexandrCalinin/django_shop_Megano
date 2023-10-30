@@ -47,12 +47,14 @@ class BaseView(TemplateView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['offer_day'] = {}
         context['product_top_list'] = cache.get_or_set(TOP_PRODUCT_LIST_KEY,
                                                        self._products.get_product_top_list(const=8),
                                                        get_cache_value('TOP_PRODUCT'))
         context['product_limited_list'] = list(self._products.get_product_limit_list(const=17))
-        context['offer_day'] = context['product_limited_list'].pop(random.randint(
-            0, len(context['product_limited_list']) - 1))
+        if context['product_limited_list']:
+            context['offer_day'] = context['product_limited_list'].pop(random.randint(
+                0, len(context['product_limited_list']) - 1))
         context['tomorrow_day'] = (datetime.date.today() + datetime.timedelta(days=2)).strftime('%d.%m.%Y')
         context['slider_list'] = self._slider_list.get_slider_list(const=3)
         context['banner_list'] = cache.get_or_set(BANNER_LIST_KEY,
@@ -61,7 +63,8 @@ class BaseView(TemplateView):
                                                   )
 
         lst = list(context['product_top_list']) + context['product_limited_list']
-        lst.append(context['offer_day'])
+        if context['offer_day']:
+            lst.append(context['offer_day'])
         context['price_seller_list'] = self._price_seller.get_last_minprice_dct(
             _product_id_lst=[i.id for i in lst])
 

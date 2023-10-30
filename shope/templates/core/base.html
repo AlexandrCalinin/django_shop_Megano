@@ -191,6 +191,7 @@ block
                         <div class="CategoriesButton-arrow"></div>
                     </div>
                     <div class="CategoriesButton-content">
+                        {% if category_list %}
                         {% for category in category_list %}
                             <form action="{% url 'catalog' %}" method="get">
                                 <div class="CategoriesButton-link">
@@ -224,6 +225,7 @@ block
                                 </div>
                             </form>
                         {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
             </div>
