@@ -64,6 +64,7 @@ class BaseView(TemplateView):
         lst.append(context['offer_day'])
         context['price_seller_list'] = self._price_seller.get_last_minprice_dct(
             _product_id_lst=[i.id for i in lst])
+
         return context
 
 

@@ -97,8 +97,8 @@ class Banner(BaseModel):
 class DiscountProduct(DiscountBaseModel):
     """Модель скидки на товар"""
     image = models.ImageField(upload_to="images/%Y/%m/%d", null=True, verbose_name=_('image'))
-    product = models.ForeignKey('Product', on_delete=models.CASCADE, verbose_name=_('product'))
-    category = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name=_('category'))
+    product = models.ForeignKey('Product', blank=True, null=True, on_delete=models.CASCADE, verbose_name=_('product'))
+    category = models.ForeignKey('Category', blank=True, null=True, on_delete=models.CASCADE, verbose_name=_('category'))
 
     def __str__(self):
         return self.name
@@ -112,7 +112,9 @@ class DiscountProduct(DiscountBaseModel):
 class DiscountProductGroup(DiscountBaseModel):
     """Модель скидки на группу товаров"""
     image = models.ImageField(upload_to="images/%Y/%m/%d", null=True, verbose_name=_('image'))
-    product = models.ManyToManyField('product', verbose_name=_('product'))
+    category = models.ManyToManyField('category', verbose_name=_('category as group of products'))
+    amount = models.DecimalField(decimal_places=2, max_digits=7, verbose_name=_('fixed amount of discount'))
+    fixprice = models.DecimalField(decimal_places=2, max_digits=7, default=1, verbose_name=_('fixed amount of price'))
 
     def __str__(self):
         return self.name

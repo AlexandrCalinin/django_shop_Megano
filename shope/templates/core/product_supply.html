@@ -97,7 +97,7 @@
                         <span class="Card-price">
                           {% for object in price_seller_list %}
                             {% if object.product_id == offer_day.id %}
-                              ${{ object.price }}
+                              ${{ object.discount_price }}
                             {% endif %}
                           {% endfor %}
                         </span>
@@ -150,7 +150,14 @@
           </header>
             <div class="Cards">
               {% for product in product_top_list %}
+
                 <div class="Card hide_md hide_1450" data-product="{{product.id}}">
+                  {% if product.discountproduct_set.exists or product.category.discountproduct_set.exists %}
+                    <div class="Card-btn sale-btn">
+                      <img height="40" width="40" src="{% static 'assets/img/icons/card/discount.svg' %}" alt="cart.svg">
+                    </div>
+                  {% endif %}
+
                   <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
                     {% csrf_token %}
                     <button class="Card-picture btn_reset" data-name="{{ product.image.all.0.image.url }}" href="{% url 'product' product_id=product.id %}" type="submit">
@@ -171,7 +178,7 @@
                           <span class="Card-price">
                             {% for object in price_seller_list %}
                               {% if object.product_id == product.id %}
-                                ${{ object.price }}
+                                ${{ object.discount_price }}
                               {% endif %}
                             {% endfor %}
                           </span>
@@ -229,6 +236,11 @@
                 <div class="Slider-item">
                   <div class="Slider-content">
                     <div class="Card" data-product="{{product.id}}">
+                      {% if product.discountproduct_set.exists or product.category.discountproduct_set.exists %}
+                        <div class="Card-btn sale-btn">
+                          <img height="40" width="40" src="{% static 'assets/img/icons/card/discount.svg' %}" alt="cart.svg">
+                        </div>
+                      {% endif %}
                       <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
                         {% csrf_token %}
                         <button class="Card-picture btn_reset" data-name="{{ product.image.all.0.image.url }}" href="{% url 'product' product_id=product.id %}" type="submit">
@@ -249,7 +261,7 @@
                             <span class="Card-price">
                               {% for object in price_seller_list %}
                                 {% if object.product_id == product.id %}
-                                  ${{ object.price }}
+                                  ${{ object.discount_price }}
                                 {% endif %}
                               {% endfor %}
                             </span>
@@ -265,12 +277,12 @@
                           </div>
                           <div class="Card-hover">
                             {% for object in price_seller_list %}
-                                {% if object.product_id == product.id %}
-                              <a class="Card-btn cart-btn" href="#" data-value="{{object.price}}" data-seller="{{ object.seller }}" data-name="{{product.title}}">
-                                <img src="{% static 'assets/img/icons/card/cart.svg' %}" alt="cart.svg">
-                              </a>
-                            {% endif %}
-                              {% endfor %}
+                              {% if object.product_id == product.id %}
+                                <a class="Card-btn cart-btn" href="#" data-value="{{object.price}}" data-seller="{{ object.seller }}" data-name="{{product.title}}">
+                                  <img src="{% static 'assets/img/icons/card/cart.svg' %}" alt="cart.svg">
+                                </a>
+                              {% endif %}
+                            {% endfor %}
                             <form class="Card-btn comparison-add" action="{% url 'add_comparison' product_id=product.id %}" method="post">
                               {% csrf_token %}
                               <button class="Card-btn btn_reset compare_btn" type="submit" data-product_id="{{ product.id }}">

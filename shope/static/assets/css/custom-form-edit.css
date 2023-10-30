@@ -35,6 +35,14 @@
   right: -15px;
 }
 
+.sale-btn {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  /*overflow: hidden;*/
+  border-radius: 50px;
+}
+
 .ProductCard-title-custom {
   min-height: 77px;
 }
@@ -66,9 +74,11 @@ table.tableSection thead {
   width: calc(100% - 16px); /* assuming scrollbar width as 16px */
 }
 
-table.tableSection tr {
+.tableSection {
   width: 100%;
+  height: 130px;
   text-align: left;
-  display: table;
+  display: table-caption;
   table-layout: fixed;
+  overflow-y: scroll;
 }

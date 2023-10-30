@@ -20,7 +20,7 @@ class CatalogFilterRepository:
     queryset = Product.objects.annotate(
         min_price=Subquery(min_price_subquery.values('min_value'), output_field=FloatField()),
         min_price_seller_id=Subquery(min_price_seller_subquery)
-    ).filter(min_price__gt=0)
+    ).filter(min_price__gt=0).prefetch_related('discountproduct_set', 'category__discountproduct_set')
 
     @beartype
     def get_filtered_products(self, product_name: Any,
