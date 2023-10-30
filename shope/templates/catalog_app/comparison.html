@@ -86,7 +86,7 @@
           </div>
           <div class="ProductCard-cart">
 
-            <div class="ProductCard-cartElement">
+            <div class="ProductCard-cartElement" id="cart-add">
               {% for object in price_seller_list %}
               {% if object.product_id == product.product.id %}
               <a class="btn btn_primary" data-product="{{product.id}}" data-seller="{{ object.seller }}" data-name="{{product.product.title}}" data-value="{{object.price}}" data-image="{{ product.product.image.all.0.image.url }}">

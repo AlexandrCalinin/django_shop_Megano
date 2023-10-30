@@ -1,7 +1,5 @@
-from decimal import Decimal
-
 from beartype import beartype
-from django.db.models import Sum, QuerySet, DecimalField
+from django.db.models import Sum, QuerySet
 
 from cart_app.models import CartItem, Cart
 from catalog_app.models import Product
@@ -16,7 +14,7 @@ class CartItemRepository(ICartItem):
         model.save()
 
     @beartype
-    def create_cartitem(self, _cart: Cart, _product: Product, _count: str, _amount: str, _seller: Seller) -> None:
+    def create_cartitem(self, _cart: Cart, _product: Product, _count: int, _amount: float, _seller: Seller) -> None:
         """Создать CartItem"""
         CartItem.objects.create(cart_id=_cart,
                                 product=_product,

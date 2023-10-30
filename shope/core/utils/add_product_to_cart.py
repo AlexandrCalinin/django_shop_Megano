@@ -3,8 +3,7 @@ from core.utils.injector import configure_inject
 
 from auth_app.models import User
 from cart_app.models import CartItem
-from catalog_app.models import Product
-from core.models import Seller, Price
+from core.models import Seller
 
 from interface.cartitem_interface import ICartItem
 from interface.cart_interface import ICart
@@ -25,13 +24,15 @@ class AddProductToCart:
     def add_product_to_cart(self, user: User, **kwargs) -> None:
         """добавить товар в корзину"""
 
-        product_id, product_name, image, product_count, amount, seller_id = kwargs.values()
+        product_id, product_name, image, product_count, price, seller_id = kwargs.values()
 
         cart = self._cart.get_active_by_user(_user=user)
         if not cart:
             cart = self._cart.create_cart(user)
         product = self._product.get_by_id(product_id)
         seller = self._seller.get_by_id(seller_id)
+
+        amount = int(product_count) * float(price)
 
         if self._cartitem.get_by_product_id(_product=product_id, _cart=cart):
             self.change_count_product_in_cart(user=user,
@@ -52,9 +53,11 @@ class AddProductToCart:
         """
         product, product_name, image, product_count, amount, seller = kwargs.values()
 
+        summ = int(product_count) * float(amount)
+
         product_info = {'product': product, 'product_name': product_name,
                         'image': image, 'count': product_count,
-                        'amount': amount, 'price': amount, 'seller': seller}
+                        'amount': summ, 'price': amount, 'seller': seller}
 
         if 'cart' in request.session:
 
@@ -65,7 +68,7 @@ class AddProductToCart:
                     int(request.session["cart"][product]['count']) + int(product_count)
 
                 request.session["cart"][product]['amount'] = \
-                    float(request.session["cart"][product]['amount']) + float(amount)
+                    float(request.session["cart"][product]['amount']) + (int(product_count) * float(amount))
 
         else:
             request.session["cart"] = {}
@@ -89,22 +92,27 @@ class AddProductToCart:
         изменить кол-во товаров в корзине
         """
         cart = self._cart.get_active_by_user(_user=user)
-        product, count, seller = kwargs.values()
+        product_id, count, seller = kwargs.values()
 
-        price = self._price.get_by_product_and_seller(product_id=product,
+        price = self._price.get_by_product_and_seller(product_id=product_id,
                                                       seller_id=seller)
 
-        product_i = self._cartitem.get_by_product_id(_product=product,
-                                                     _cart=cart)
+        product = self._cartitem.get_by_product_id(_product=product_id,
+                                                   _cart=cart)
 
-        product_i.count += int(count)
-        if count == '1':
-            product_i.amount += price.price
+        if count == 'true':
+            product.count += 1
+            product.amount += price.price
+
+        elif count == 'false':
+            product.count -= 1
+            product.amount -= price.price
         else:
-            product_i.amount -= price.price
+            product.count += int(count)
+            product.amount += int(count) * price.price
 
-        product_i.save()
-        return product_i
+        product.save()
+        return product
 
     @staticmethod
     def change_count_for_anonymous(request, **kwargs):
@@ -114,13 +122,16 @@ class AddProductToCart:
 
         product, get_count, seller = kwargs.values()
 
-        request.session["cart"][product]['count'] = \
-            int(request.session["cart"][product]['count']) + int(get_count)
+        if get_count == 'true':
+            request.session["cart"][product]['count'] = \
+                int(request.session["cart"][product]['count']) + 1
 
-        if get_count == '1':
             request.session["cart"][product]['amount'] = \
                 float(request.session["cart"][product]['amount']) + float(request.session["cart"][product]['price'])
-        else:
+        elif get_count == 'false':
+            request.session["cart"][product]['count'] = \
+                int(request.session["cart"][product]['count']) - 1
+
             request.session["cart"][product]['amount'] = \
                 float(request.session["cart"][product]['amount']) - float(request.session["cart"][product]['price'])
 
@@ -138,8 +149,11 @@ class AddProductToCart:
                 return None
             return self._cartitem.get_by_cart_id(_cart=cart)
         else:
-            products = request.session['cart']
-            return products.values()
+            if 'cart' in request.session:
+                products = request.session['cart']
+                return products.values()
+            else:
+                return None
 
     def get_count_product_in_cart(self, user: User) -> tuple[int, int, float]:
         """

@@ -16,7 +16,7 @@ class ICartItem:
         pass
 
     @abstractmethod
-    def create_cartitem(self, _cart: Cart, _product: Product, _count: int, _amount: Decimal, _seller: Seller) -> None:
+    def create_cartitem(self, _cart: Cart, _product: Product, _count: int, _amount:float, _seller: Seller) -> None:
         """Создать CartItem"""
         pass
 

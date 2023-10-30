@@ -60,7 +60,10 @@ class AddProductToCartView(TemplateView):
         if request.headers['X-Requested-With'] == 'XMLHttpRequest':
             form = CartEditForm(data=request.POST)
             if form.is_valid():
+                if request.POST['count'] == '0':
+                    message = _('Select the number of products')
 
+                    return JsonResponse({'message': message})
                 if request.user.is_authenticated:
                     self.add_product_to_cart.add_product_to_cart(request.user, **form.cleaned_data)
                 else:
