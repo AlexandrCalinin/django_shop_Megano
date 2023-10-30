@@ -1,6 +1,8 @@
 from abc import abstractmethod
 from decimal import Decimal
 
+from django.db.models import DecimalField
+
 from cart_app.models import CartItem, Cart
 from catalog_app.models import Product
 from core.models import Seller
@@ -36,4 +38,9 @@ class ICartItem:
     @abstractmethod
     def delete_product(self, _product: str) -> None:
         """Удалить объект"""
+        pass
+
+    @abstractmethod
+    def update(self, _cart_item: CartItem, _sale) -> None:
+        """Обновить данные по итоговой цене и скидке"""
         pass

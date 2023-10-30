@@ -101,7 +101,6 @@ class ProductDetailView(DetailView):
 
         context['review_form'] = ReviewForm()
         context['cache_time'] = cache_time
-
         return context
 
     def post(self, request, product_id):

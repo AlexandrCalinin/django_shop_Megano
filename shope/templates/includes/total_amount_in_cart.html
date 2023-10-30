@@ -3,4 +3,10 @@
 <div class="Cart-block Cart-block_total">
     <strong class="Cart-title">{% trans 'Total' %}:
     </strong><span class="Cart-price">{{amount}}$</span>
+    {% if amount != total_amount %}
+        <br>
+        <div class="Cart-title">
+            {% trans 'Your final benefit was' %}: <span class="Cart-price">{{ discount|floatformat:"2" }}</span>
+        </div>
+    {% endif %}
 </div>

@@ -102,7 +102,12 @@
                         {% if object_list %}
                             {% for product in object_list %}
 
-                                <div class="Card" data-product="{{ product.id }}">
+                                    <div class="Card" data-product="{{ product.id }}">
+                                        {% if product.discountproduct_set.exists or product.category.discountproduct_set.exists %}
+                                            <div class="Card-btn sale-btn">
+                                              <img height="40" width="40" src="{% static 'assets/img/icons/card/discount.svg' %}" alt="cart.svg">
+                                            </div>
+                                        {% endif %}
 
                                     <form action="{% url 'change_viewed' product_id=product.id %}" method="post">
                                         {% csrf_token %}

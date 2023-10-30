@@ -2,6 +2,7 @@ from django.http import JsonResponse, HttpRequest
 from django.template.loader import render_to_string
 from django.views.generic import ListView, TemplateView
 
+from core.utils.product_discount import ProductDiscount
 from .form import ChangeCountForm, DeleteForm, CartEditForm
 from core.utils.add_product_to_cart import AddProductToCart
 
@@ -15,6 +16,13 @@ class CartListView(ListView):
     def get_queryset(self):
         return AddProductToCart().get_list_in_cart(self.request)
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['discount_data'] = ProductDiscount().calculate_price_with_discount(cart_item_qs=self.get_queryset())
+            # print('корзина', context['discount_data'])
+        return context
+
 
 class ChangeCountProductView(TemplateView):
     add_product_to_cart = AddProductToCart()
@@ -26,7 +34,8 @@ class ChangeCountProductView(TemplateView):
 
             if form.is_valid():
                 if request.user.is_authenticated:
-                    product_amount = self.add_product_to_cart.change_count_product_in_cart(request.user, **form.cleaned_data)
+                    product_amount = self.add_product_to_cart.change_count_product_in_cart(request.user,
+                                                                                           **form.cleaned_data)
                 else:
                     product_amount = self.add_product_to_cart.change_count_for_anonymous(request, **form.cleaned_data)
 
@@ -76,8 +85,8 @@ class DeleteCartItemView(TemplateView):
 
     def post(self, request):
         form = DeleteForm(request.POST)
-        if form.is_valid():
 
+        if form.is_valid():
             self.add_product_to_cart.remove_product_from_cart(form.cleaned_data['product'], self.request)
 
             cart_edit = render_to_string('includes/card_edit.html',
@@ -86,5 +95,12 @@ class DeleteCartItemView(TemplateView):
             total_amount = render_to_string('includes/total_amount_in_cart.html',
                                             request=request)
 
+            qs = self.add_product_to_cart.get_list_in_cart(request)
+
+            new_qs = render_to_string('includes/product-in-cart.html',
+                                      context={'items': qs},
+                                      request=request)
+
             return JsonResponse({'cart': cart_edit,
-                                 'total_amount': total_amount})
+                                 'total_amount': total_amount,
+                                 'new_qs': new_qs})

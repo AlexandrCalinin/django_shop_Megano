@@ -50,6 +50,7 @@ class DiscountProductAdmin(admin.ModelAdmin):
 @admin.register(DiscountProductGroup)
 class DiscountProductGroupAdmin(admin.ModelAdmin):
     list_display = [field.name for field in DiscountProductGroup._meta.fields]
+    exclude = ('value',)
 
 
 @admin.register(CartSale)

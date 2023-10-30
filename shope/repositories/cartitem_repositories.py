@@ -1,5 +1,7 @@
+from decimal import Decimal
+
 from beartype import beartype
-from django.db.models import Sum, QuerySet
+from django.db.models import Sum, QuerySet, DecimalField
 
 from cart_app.models import CartItem, Cart
 from catalog_app.models import Product
@@ -35,8 +37,15 @@ class CartItemRepository(ICartItem):
 
     def get_count_amount(self, _cart: Cart) -> CartItem:
         """Получить количество продуктов и сумму"""
-        return CartItem.objects.filter(cart_id=_cart).aggregate(Sum('count'), Sum('amount'))
+        return CartItem.objects.filter(cart_id=_cart).aggregate(Sum('count'), Sum('total_amount'), Sum('discount'))
 
     def delete_product(self, _product: str) -> None:
         """Удалить объект"""
         CartItem.objects.filter(product=_product).delete()
+
+    @beartype
+    def update(self, _cart_item: CartItem, _sale) -> None:
+        """Обновить данные по итоговой цене и скидке"""
+        _cart_item.discount = _sale
+        _cart_item.total_amount = _cart_item.amount - _sale
+        _cart_item.save()

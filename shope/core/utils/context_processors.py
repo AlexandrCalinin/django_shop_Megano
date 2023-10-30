@@ -14,13 +14,13 @@ def cart_processor(request):
 
     if request.user.is_authenticated:
 
-        amount, count = AddProductToCart().get_count_product_in_cart(user=request.user)
-        return {'amount': amount, 'count': count}
+        amount, count, discount = AddProductToCart().get_count_product_in_cart(user=request.user)
+        return {'amount': amount, 'count': count, 'discount': discount}
 
     else:
 
-        amount, count = AddProductToCart().get_count_product_for_anonymous_user(request)
-        return {'amount': amount, 'count': count}
+        amount, count, discount = AddProductToCart().get_count_product_for_anonymous_user(request)
+        return {'amount': amount, 'count': count, 'discount': discount}
 
 
 def get_category_list(request):
