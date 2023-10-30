@@ -93,28 +93,27 @@ class AddProductToCart:
         изменить кол-во товаров в корзине
         """
         cart = self._cart.get_active_by_user(_user=user)
-        product, count, seller = kwargs.values()
+        product_id, count, seller = kwargs.values()
 
-        price = self._price.get_by_product_and_seller(product_id=product,
+        price = self._price.get_by_product_and_seller(product_id=product_id,
                                                       seller_id=seller)
 
-        product_i = self._cartitem.get_by_product_id(_product=product,
-                                                     _cart=cart)
+        product = self._cartitem.get_by_product_id(_product=product_id,
+                                                   _cart=cart)
 
-        product_i.count += int(count)
-        if count == '1':
-            print('1')
-            product_i.amount += price.price
-        elif count == '-1':
-            print('-1')
-            product_i.amount -= price.price
+        if count == 'true':
+            product.count += 1
+            product.amount += price.price
+
+        elif count == 'false':
+            product.count -= 1
+            product.amount -= price.price
         else:
-            print(count,  price.price)
-            product_i.amount += int(count) * price.price
-            s = int(count) * price.price
-            print(s)
-        product_i.save()
-        return product_i
+            product.count += int(count)
+            product.amount += int(count) * price.price
+
+        product.save()
+        return product
 
     @staticmethod
     def change_count_for_anonymous(request, **kwargs):
@@ -124,13 +123,16 @@ class AddProductToCart:
 
         product, get_count, seller = kwargs.values()
 
-        request.session["cart"][product]['count'] = \
-            int(request.session["cart"][product]['count']) + int(get_count)
+        if get_count == 'true':
+            request.session["cart"][product]['count'] = \
+                int(request.session["cart"][product]['count']) + 1
 
-        if get_count == '1':
             request.session["cart"][product]['amount'] = \
                 float(request.session["cart"][product]['amount']) + float(request.session["cart"][product]['price'])
-        else:
+        elif get_count == 'false':
+            request.session["cart"][product]['count'] = \
+                int(request.session["cart"][product]['count']) - 1
+
             request.session["cart"][product]['amount'] = \
                 float(request.session["cart"][product]['amount']) - float(request.session["cart"][product]['price'])
 

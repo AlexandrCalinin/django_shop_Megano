@@ -96,7 +96,7 @@ $('div[name="amount-cart"]').on('click', 'button[class="Amount-add"]', function(
     var count_product = $(this).parent('.Amount').children('.Amount-input.form-input').attr('value')
 
     var product_id = $(this).parents(".Cart-product").attr("id")
-    var count = 1
+    var count = true
     var seller = $(this).attr('name')
 
     cart_edit(product_id, count, seller)
@@ -108,7 +108,7 @@ $('div[name="amount-cart"]').on('click', 'button[class="Amount-remove"]', functi
     $(this).parent('.Amount').children('.Amount-input.form-input').attr('value', parseInt(count_product) - 1)
     var count_product = $(this).parent('.Amount').children('.Amount-input.form-input').attr('value')
     var product_id = $(this).parents(".Cart-product").attr("id")
-    var count = -1
+    var count = false
     var seller = $(this).parent('.Amount').children('.Amount-add').attr('name')
     if(count_product == 0){
         product_delete(product_id)
@@ -135,12 +135,9 @@ $('.Product').on('click', 'a[class="btn btn_primary"]', function(){
     var seller = $(this).data('seller')
     var product_name = $(this).data('name')
     var image = $('.ProductCard-pict').attr('href')
-    if(product_count == 0){
-        Swal.fire({title: 'Выберите кол-во товаров!', confirmButtonColor: '#0041c2'})
-    }
-    else{
-        cart_add(product_id, product_name, image, product_count, amount, seller)
-    }
+
+    cart_add(product_id, product_name, image, product_count, amount, seller)
+
 })
 
 

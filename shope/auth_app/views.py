@@ -31,6 +31,7 @@ class RegisterView(FormView):
     success_url = reverse_lazy('auth_app:login')
 
     def post(self, request, *args, **kwargs):
+
         form = self.form_class(data=request.POST)
         email = request.POST['email']
         try:
