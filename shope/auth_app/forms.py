@@ -19,7 +19,7 @@ class UserRegisterForm(UserCreationForm):
     username = forms.CharField(max_length=64, widget=forms.TextInput(attrs={'placeholder': _('Username')}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': _('Email')}))
     first_name = forms.CharField(max_length=48, widget=forms.TextInput(attrs={'placeholder': _('Name')}))
-    last_name = forms.CharField(max_length=48, widget=forms.TextInput(attrs={'placeholder': _('Lastname')}))
+    last_name = forms.CharField(max_length=48, widget=forms.TextInput(attrs={'placeholder': _('last_name')}))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': _('Password')}))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': _('Repeat password')}))
 
@@ -40,7 +40,8 @@ class UserLoginForm(AuthenticationForm):
     username = UsernameField(
         widget=forms.TextInput(
             attrs={"autofocus": True,
-                   "placeholder": _("e-mail")
+                   "placeholder": _("e-mail"),
+                   "class": "col-md-6"
                    })
     )
     password = forms.CharField(
@@ -49,7 +50,8 @@ class UserLoginForm(AuthenticationForm):
         widget=forms.
         PasswordInput(
             attrs={"autocomplete": "current-password",
-                   "placeholder": "********"
+                   "placeholder": "********",
+                   "class": "col-md-6"
                    })
     )
 

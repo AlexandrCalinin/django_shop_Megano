@@ -80,6 +80,6 @@ class DiscountProductGroupRepository(IDiscountProductGroup):
                                 message_cat = message_cat + cat.title + '/'
                         new_dct[priority][product_id][1].append(False)
                         new_dct[priority][product_id][1].append(
-                            _(f'To get a discount, add an item from the category {message_cat}'))
+                            _('To get a discount, add an item from the category ') + str(message_cat))
             return new_dct
         return None

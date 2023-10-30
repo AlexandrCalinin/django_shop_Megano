@@ -43,7 +43,9 @@ class ProductDiscount:
             return_dct = {dct_cart_sale.priority: {}}
             for product_id in product_id_lst:
                 return_dct[dct_cart_sale.priority][product_id] = [dct_cart_sale, [True, _(
-                    f'Discount on the shopping cart has been applied! Benefit {dct_cart_sale.value} %')]]
+                    'Discount on the shopping cart has been applied! Benefit ') + dct_cart_sale.value + ' %']]
+                # return_dct[dct_cart_sale.priority][product_id] = [dct_cart_sale, [True, _(
+                #     f'Discount on the shopping cart has been applied! Benefit {dct_cart_sale.value} %')]]
 
         dct_product_sale = dict()
         for product_id in product_id_lst:
@@ -52,7 +54,9 @@ class ProductDiscount:
                 sale = sales.order_by('-value').first()
                 dct_product_sale[sale.priority] = dct_product_sale.get(sale.priority, {product_id: sale})
                 dct_product_sale[sale.priority][product_id] = [sale, [True, _(
-                    f'The discount on the product has been applied! Benefit {sale.value} %')]]
+                    'The discount on the product has been applied! Benefit ') + sale.value + ' %']]
+                # dct_product_sale[sale.priority][product_id] = [sale, [True, _(
+                #     f'The discount on the product has been applied! Benefit {sale.value} %')]]
         if dct_product_sale and priority >= min(dct_product_sale):
             priority = min(dct_product_sale)
             for product_id in product_id_lst:

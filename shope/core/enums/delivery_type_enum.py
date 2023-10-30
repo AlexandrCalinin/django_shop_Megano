@@ -8,4 +8,4 @@ from .base_enum import Choices
 class DeliveryType(Choices):
     """Перечисления (виды доставки)"""
     EXPRESS = _('express delivery')
-    REGULAR = _('reqular delivery')
+    REGULAR = _('regular delivery')
