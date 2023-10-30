@@ -66,7 +66,8 @@ var csrf = $('meta[name="csrf-token"]').attr('content');
     success: (data) => {
     $('.CartBlock-block').html(data.cart)
     $('.Cart-block.Cart-block_total').html(data.total_amount)
-    $('.Cart-product[id="' + product_id  + '"' ).remove()
+    $('.form.Cart').html(data.new_qs)
+//    $('.Cart-product[id="' + product_id  + '"' ).remove()
 
     },
     error: (error) => {
