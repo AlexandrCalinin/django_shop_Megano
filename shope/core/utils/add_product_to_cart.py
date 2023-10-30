@@ -58,7 +58,7 @@ class AddProductToCart:
 
         if 'cart' in request.session:
 
-            if not product in request.session["cart"]:  # сохраняем товары в сессию если такого товара нету в корзине
+            if product not in request.session["cart"]:  # сохраняем товары в сессию если такого товара нету в корзине
                 request.session["cart"][product] = product_info
             else:  # если есть то прибаляем ко-во товаров
                 request.session["cart"][product]['count'] = \
@@ -141,20 +141,21 @@ class AddProductToCart:
             products = request.session['cart']
             return products.values()
 
-    def get_count_product_in_cart(self, user: User) -> tuple[int, int]:
+    def get_count_product_in_cart(self, user: User) -> tuple[int, int, float]:
         """
         получить кол-во товаров в корзине
         """
         cart = self._cart.get_active_by_user(_user=user)
         cart_products = self._cartitem.get_count_amount(_cart=cart)
 
-        count, amount = cart_products.values()
+        count, amount, discount = cart_products.values()
 
-        if count == None or amount == None:
+        if not count or not amount:
             count = 0
             amount = 0
+            discount = 0
 
-        return round(amount, 2), count
+        return round(amount, 2), count, discount
 
     @staticmethod
     def get_count_product_for_anonymous_user(request):
@@ -166,18 +167,20 @@ class AddProductToCart:
 
             count = 0
             amount = 0
+            discount = 0
             for item in products.values():
                 count += int(item['count'])
                 amount += float(item['amount'])
+                discount += float(item['discount'])
 
-            return round(amount, 2), round(count, 2)
+            return round(amount, 2), round(count, 2), round(discount, 2)
 
         except KeyError:
-            return 0, 0
+            return 0, 0, 0
 
     def create_cart_and_cartitem(self, user, request) -> None:
         """Создать корзину"""
-        if self._cart.get_active_by_user(_user=user) == None:
+        if not self._cart.get_active_by_user(_user=user):
             cart = self._cart.create_cart(_user=user)
         else:
             cart = self._cart.get_active_by_user(_user=user)

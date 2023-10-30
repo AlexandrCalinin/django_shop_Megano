@@ -18,8 +18,9 @@ class CartListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['discount_data'] = ProductDiscount().calculate_price_with_discount(cart_item_qs=self.get_queryset())
-        print('корзина', context['discount_data'])
+        if self.request.user.is_authenticated:
+            context['discount_data'] = ProductDiscount().calculate_price_with_discount(cart_item_qs=self.get_queryset())
+            print('корзина', context['discount_data'])
         return context
 
 

@@ -27,7 +27,10 @@ class CartItem(BaseModelItem):
     """
     Модель для хранения товаров в корзине.
     """
-
+    discount = models.DecimalField(decimal_places=2, max_digits=7, default=0,
+                                   blank=True, null=True, verbose_name=_('discount'))
+    total_amount = models.DecimalField(decimal_places=2, max_digits=7, default=0,
+                                       blank=True, null=True, verbose_name=_('amount with discount'))
     cart_id = models.ForeignKey(Cart,
                                 on_delete=models.CASCADE,
                                 verbose_name=_('cart'),

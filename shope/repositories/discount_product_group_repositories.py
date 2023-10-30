@@ -42,10 +42,10 @@ class DiscountProductGroupRepository(IDiscountProductGroup):
         new_dct = {}
         if flag:
             product_id_qs = _cart_item_qs.values('product__id', 'count')
-            product_id_lst = [dct['product__id'] for dct in product_id_qs]
+            product_id_cnt_lst = [(dct_prod['product__id'], dct_prod['count']) for dct_prod in product_id_qs]
             priority = min(list(dct.keys()))
             new_dct[priority] = {}
-            for product_id in product_id_lst:
+            for product_id, count in product_id_cnt_lst:
                 try:
                     sale_object = DiscountProductGroup.objects.get(category__product__id=product_id)
                 except ObjectDoesNotExist:
@@ -60,14 +60,16 @@ class DiscountProductGroupRepository(IDiscountProductGroup):
                                 new_dct[priority][product_id][1][index] = False
                                 break
                     if all([type(x) is bool for x in new_dct[priority][product_id][1]]):
+                        new_dct[priority][product_id][1].append(True)
                         new_dct[priority][product_id][1].append(_('Discount successfully applied'))
+                        new_dct[priority][product_id].append({'count': count})
                     else:
                         message_cat = '/'
                         for cat in new_dct[priority][product_id][1]:
                             if cat:
                                 message_cat = message_cat + cat.title + '/'
+                        new_dct[priority][product_id][1].append(False)
                         new_dct[priority][product_id][1].append(
                             _(f'To get a discount, add an item from the category {message_cat}'))
-
             return new_dct
         return None

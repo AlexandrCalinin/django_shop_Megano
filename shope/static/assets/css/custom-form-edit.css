@@ -74,9 +74,11 @@ table.tableSection thead {
   width: calc(100% - 16px); /* assuming scrollbar width as 16px */
 }
 
-table.tableSection tr {
+.tableSection {
   width: 100%;
+  height: 130px;
   text-align: left;
-  display: table;
+  display: table-caption;
   table-layout: fixed;
+  overflow-y: scroll;
 }
