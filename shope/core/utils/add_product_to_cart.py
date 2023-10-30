@@ -3,8 +3,7 @@ from core.utils.injector import configure_inject
 
 from auth_app.models import User
 from cart_app.models import CartItem
-from catalog_app.models import Product
-from core.models import Seller, Price
+from core.models import Seller
 
 from interface.cartitem_interface import ICartItem
 from interface.cart_interface import ICart

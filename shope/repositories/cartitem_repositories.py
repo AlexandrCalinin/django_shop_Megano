@@ -1,7 +1,5 @@
-from decimal import Decimal
-
 from beartype import beartype
-from django.db.models import Sum, QuerySet, DecimalField
+from django.db.models import Sum, QuerySet
 
 from cart_app.models import CartItem, Cart
 from catalog_app.models import Product
