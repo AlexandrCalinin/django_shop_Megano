@@ -26,8 +26,8 @@
                             <input class="Amount-input form-input"
                                    name="amount"
                                    type="text"
-                                   value="{{ item.count }}"/>
-                            <button class="Amount-add" name='{{ item.seller.id }}' type="button"></button>
+                                   value={{item.count}}/>
+                            <button class="Amount-add" name={{item.seller.id}} type="button"></button>
                         </div>
                     </div>
                 </div>
@@ -84,3 +84,5 @@
         <h1>{% trans 'The cart is empty' %}</h1>
     {% endif %}
 {% endif %}
+
+<script src="{% static '/assets/js/cart_edit.js' %}"></script>
