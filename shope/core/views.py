@@ -39,6 +39,7 @@ class PassSuperuserMixin(UserPassesTestMixin):
 
 
 class BaseView(TemplateView):
+    """Представление отображения блоков контента на главной странице"""
     template_name = 'core/product_supply.html'
     _products: IProduct = inject.attr(IProduct)
     _slider_list: ISlider = inject.attr(ISlider)
@@ -72,6 +73,7 @@ class BaseView(TemplateView):
 
 
 class AboutView(TemplateView):
+    """Представление для отображения информации о маркетплейсе"""
     template_name = 'core/about.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):

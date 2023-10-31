@@ -1,3 +1,8 @@
+.card-heigth-auto {
+  min-height: 600px;
+
+}
+
 .custom-form-edit {
   display: inline;
   margin-right: 8px;
