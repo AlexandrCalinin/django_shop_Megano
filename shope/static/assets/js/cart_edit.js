@@ -13,7 +13,7 @@ var csrf = $('meta[name="csrf-token"]').attr('content');
     success: (data) => {
 
     $('.CartBlock-block').html(data.cart)
-    $('.Cart-product[id="' + product_id  + '"' ).children('.Cart-block.Cart-block_row').children('.Cart-block.Cart-block_price').html(data.count_change)
+    $('.form.Cart').html(data.new_qs)
     $('.Cart-block.Cart-block_total').html(data.total_amount)
     },
     error: (error) => {
