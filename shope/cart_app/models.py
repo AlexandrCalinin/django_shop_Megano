@@ -18,6 +18,7 @@ class Cart(BaseModel):
 
     class Meta:
         verbose_name = _('Cart')
+        verbose_name_plural = _('Carts')
 
     def __str__(self):
         return f'{self.pk}-{self.user} - active({self.is_active})'
@@ -38,6 +39,7 @@ class CartItem(BaseModelItem):
 
     class Meta:
         verbose_name = _('CartItem')
+        verbose_name_plural = _('CartItems')
 
     def __str__(self):
         return f'{self.cart_id} - {self.product}'
