@@ -52,8 +52,14 @@ class ChangeCountProductView(TemplateView):
                     context={'discount_data': discount_data}
                 )
 
+                qs = self.add_product_to_cart.get_list_in_cart(request)
+                new_qs = render_to_string('includes/product-in-cart.html',
+                                          context={'items': qs,
+                                                   'discount_data': discount_data},
+                                          request=request)
+
                 return JsonResponse({'cart': cart_edit,
-                                     'count_change': count_change,
+                                     'new_qs': new_qs,
                                      'total_amount': total_amount})
 
 
@@ -66,8 +72,8 @@ class AddProductToCartView(TemplateView):
             if form.is_valid():
                 if request.POST['count'] == '0':
                     message = _('Select the number of products')
-
                     return JsonResponse({'message': message})
+
                 if request.user.is_authenticated:
                     self.add_product_to_cart.add_product_to_cart(request.user, **form.cleaned_data)
                 else:
@@ -99,10 +105,12 @@ class DeleteCartItemView(TemplateView):
             total_amount = render_to_string('includes/total_amount_in_cart.html',
                                             request=request)
 
+            discount_data = ProductDiscount().calculate_price_with_discount(
+                cart_item_qs=self.add_product_to_cart.get_list_in_cart(request))
             qs = self.add_product_to_cart.get_list_in_cart(request)
-
             new_qs = render_to_string('includes/product-in-cart.html',
-                                      context={'items': qs},
+                                      context={'items': qs,
+                                               'discount_data': discount_data},
                                       request=request)
 
             return JsonResponse({'cart': cart_edit,

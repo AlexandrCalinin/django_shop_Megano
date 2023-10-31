@@ -14,7 +14,7 @@
                         </a>
                     </div>
                     <div class="Cart-block Cart-block_info">
-                        <a class="Cart-title" href="#">{{ item.product.title }}</a>
+                        <a class="Cart-title" href="{% url 'product' product_id=item.product.id %}">{{ item.product.title }}</a>
                         <div class="Cart-desc">{{ item.product.description| truncatechars:30 }}</div>
                     </div>
                     {% include 'includes/price_product_in_cart.html' %}
@@ -26,7 +26,7 @@
                             <input class="Amount-input form-input"
                                    name="amount"
                                    type="text"
-                                   value={{item.count}}/>
+                                   value={{item.count}}>
                             <button class="Amount-add" name={{item.seller.id}} type="button"></button>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                         </a>
                     </div>
                     <div class="Cart-block Cart-block_info">
-                        <a class="Cart-title" href="#">{{ item.product_name }}</a>
+                        <a class="Cart-title" href=""{% url 'product' product_id=item.product %}"">{{ item.product_name }}</a>
                         <div class="Cart-desc"></div>
                     </div>
                     <div class="Cart-block Cart-block_price">
@@ -85,4 +85,7 @@
     {% endif %}
 {% endif %}
 
-<script src="{% static '/assets/js/cart_edit.js' %}"></script>
+{% block script %}
+    <script src="{% static '/assets/js/cart_edit.js' %}"></script>
+    <script src="{% static '/assets/js/delete_product_in_cart.js' %}"></script>
+{% endblock script %}

@@ -42,7 +42,7 @@ class AddProductToCart:
         else:
             self._cartitem.create_cartitem(_cart=cart,
                                            _product=product,
-                                           _count=product_count,
+                                           _count=int(product_count),
                                            _amount=amount,
                                            _seller=seller)
 
@@ -53,8 +53,11 @@ class AddProductToCart:
         """
         product, product_name, image, product_count, amount, seller = kwargs.values()
 
-        summ = int(product_count) * float(amount)
-
+        if product_count == 'true':
+            summ = float(amount)
+        else:
+            summ = int(product_count) * float(amount)
+            print(product_count)
         product_info = {'product': product, 'product_name': product_name,
                         'image': image, 'count': product_count,
                         'amount': summ, 'price': amount, 'seller': seller}
@@ -185,7 +188,6 @@ class AddProductToCart:
             for item in products.values():
                 count += int(item['count'])
                 amount += float(item['amount'])
-                discount += float(item['discount'])
 
             return round(amount, 2), round(count, 2), round(discount, 2)
 
@@ -211,7 +213,7 @@ class AddProductToCart:
 
                 self._cartitem.create_cartitem(_cart=cart,
                                                _product=product,
-                                               _count=count,
+                                               _count=int(count),
                                                _amount=amount,
                                                _seller=seller)
 

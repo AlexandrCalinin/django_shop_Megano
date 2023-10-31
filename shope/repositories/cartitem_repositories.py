@@ -20,6 +20,7 @@ class CartItemRepository(ICartItem):
                                 product=_product,
                                 count=_count,
                                 amount=_amount,
+                                total_amount=_amount,
                                 seller=_seller)
 
     @beartype
@@ -35,7 +36,7 @@ class CartItemRepository(ICartItem):
 
     def get_count_amount(self, _cart: Cart) -> CartItem:
         """Получить количество продуктов и сумму"""
-        return CartItem.objects.filter(cart_id=_cart).aggregate(Sum('count'), Sum('total_amount'), Sum('discount'))
+        return CartItem.objects.filter(cart_id=_cart).aggregate(Sum('count'), Sum('amount'), Sum('discount'))
 
     def delete_product(self, _product: str) -> None:
         """Удалить объект"""

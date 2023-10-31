@@ -6,7 +6,12 @@
     {% if amount != total_amount %}
         <br>
         <div class="Cart-title">
-            {% trans 'Your final benefit was' %}: <span class="Cart-price">{{ discount|floatformat:"2" }}</span>
+            {% if user.is_authenticated %}
+
+            {% trans 'Your final benefit was' %}:
+            <span class="Cart-price">{{ discount|floatformat:"2" }}</span>
+            {% endif %}
+
         </div>
     {% endif %}
 </div>
