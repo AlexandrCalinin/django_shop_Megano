@@ -22,7 +22,7 @@
         <div class="Section">
             <div class="wrap">
                 <div class="Cards Cards_blog">
-                    <div class="Card"><a class="Card-picture" href="#"><img src="{{ sale.image.url }}" alt="product.png" /></a>
+                    <div class="card-heigth-auto Card"><a class="Card-picture" href="#"><img src="{{ sale.image.url }}" alt="product.png" /></a>
                         <div class="Card-date">
                             <strong class="Card-date-number">{{ sale.data_start.day }}
                             </strong><span class="Card-date-month">{{ sale.data_start.month }}</span>
@@ -40,6 +40,14 @@
                             </strong>
                             <div class="Card-description">{{ sale.description }}
                             </div>
+                            {% if sale.category.all %}
+                                {% trans 'Category products' %}:
+                            {% for cat in sale.category.all %}
+                                <div class="Card-description">
+                                    {{ cat.title }}
+                                </div>
+                            {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
 

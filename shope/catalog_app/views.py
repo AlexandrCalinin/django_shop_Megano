@@ -182,6 +182,7 @@ class CatalogListView(ListView):
 
 
 class ComparisonView(TemplateView):
+    """Представление для просмотра характеристик товаров, сравнения их с другими товарами со схожими характеристиками"""
     template_name = 'catalog_app/comparison.html'
     _compare_product: ICompareProduct = inject.attr(ICompareProduct)
     _price_seller: IPrice = inject.attr(IPrice)
@@ -207,6 +208,7 @@ class ComparisonView(TemplateView):
 
 
 class AddComparisonView(View):
+    """Представление для обработки удаления, добавления и контроля количества просмотренных товаров"""
     _compare_product: ICompareProduct = inject.attr(ICompareProduct)
 
     def post(self, request, *args, **kwargs):
@@ -234,21 +236,28 @@ class AddComparisonView(View):
         return JsonResponse(return_dict)
 
 
-class SaleView(TemplateView):
+class SaleView(ListView):
+    """Представление для просмотра списка скидок"""
     template_name = 'catalog_app/sale.html'
     _product_sales: IDiscountProduct = inject.attr(IDiscountProduct)
     _product_group_sales: IDiscountProductGroup = inject.attr(IDiscountProductGroup)
     _cart_sales: ICartSale = inject.attr(ICartSale)
+    context_object_name = 'sales'
+
+    def get_queryset(self):
+        queryset = {'product_sales': self._product_sales.get_list(),
+                    'product_group_sales': self._product_group_sales.get_list(),
+                    'cart_sales': self._cart_sales.get_list(),
+                    }
+        return queryset
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['product_sales'] = self._product_sales.get_list()
-        context['product_group_sales'] = self._product_group_sales.get_list()
-        context['cart_sales'] = self._cart_sales.get_list()
         return context
 
 
 class ProductSaleDetailView(DetailView):
+    """Представление для просмотра детализированной информации по скидке на товар или категорию товаров"""
     template_name = 'catalog_app/sale_detail.html'
     model = DiscountProduct
     context_object_name = 'sale'
@@ -256,6 +265,7 @@ class ProductSaleDetailView(DetailView):
 
 
 class ProductGroupSaleDetailView(DetailView):
+    """Представление для просмотра детализированной информации по скидке на группы товаров"""
     template_name = 'catalog_app/sale_detail.html'
     model = DiscountProductGroup
     context_object_name = 'sale'
@@ -263,6 +273,7 @@ class ProductGroupSaleDetailView(DetailView):
 
 
 class CartSaleDetailView(DetailView):
+    """Представление для просмотра детализированной информации по скидке на корзину"""
     template_name = 'catalog_app/sale_detail.html'
     model = CartSale
     context_object_name = 'sale'
@@ -293,11 +304,15 @@ class ChangeListProductViewedView(View):
         return HttpResponseRedirect(f'/catalog/product/{product_id}/')
 
 
-class ProductViewedView(TemplateView):
+class ProductViewedView(ListView):
     """Представление для отображения списка просмотренных товаров"""
     template_name = 'catalog_app/product_viewed.html'
     _category_list: ICategory = inject.attr(ICategory)
     _product_viewed_list: IProductViewed = inject.attr(IProductViewed)
+    paginate_by = 8
+
+    def get_queryset(self):
+        return self._product_viewed_list.get_product_viewed_list(_user_id=self.request.user.id)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
