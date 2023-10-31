@@ -20,7 +20,6 @@ class CartListView(ListView):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
             context['discount_data'] = ProductDiscount().calculate_price_with_discount(cart_item_qs=self.get_queryset())
-            print('корзина', context['discount_data'])
         return context
 
 
@@ -43,9 +42,9 @@ class ChangeCountProductView(TemplateView):
                                              request=request)
                 discount_data = ProductDiscount().calculate_price_with_discount(
                     cart_item_qs=self.add_product_to_cart.get_list_in_cart(request))
-                # count_change = render_to_string('includes/price_product_in_cart.html',
-                #                                 context={'item': product_amount, 'discount_data': discount_data},
-                #                                 request=request)
+                count_change = render_to_string('includes/price_product_in_cart.html',
+                                                context={'item': product_amount, 'discount_data': discount_data},
+                                                request=request)
 
                 total_amount = render_to_string(
                     'includes/total_amount_in_cart.html',
@@ -70,7 +69,6 @@ class AddProductToCartView(TemplateView):
     def post(self, request: HttpRequest):
         if request.headers['X-Requested-With'] == 'XMLHttpRequest':
             form = CartEditForm(data=request.POST)
-            print(request.POST)
             if form.is_valid():
                 if request.POST['count'] == '0':
                     message = _('Select the number of products')

@@ -2,7 +2,7 @@
 
 <div class="Cart-block Cart-block_total">
     <strong class="Cart-title">{% trans 'Total' %}:
-    </strong><span class="Cart-price">{{amount}}$</span>
+    </strong><span class="Cart-price">{{amount|floatformat:"2"}}$</span>
     {% if amount != total_amount %}
         <br>
         <div class="Cart-title">
