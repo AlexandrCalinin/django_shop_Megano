@@ -47,10 +47,8 @@
       <div class="wrap">
         <div class="BannersHome">
           {% if banner_list %}
-          {% for banner in banner_list %}
-{#          <div class="BannersHomeBlock">#}
-            <form class="BannersHomeBlock BannersHomeBlock-form" action="{% url 'catalog' %}" method="get">
-
+            {% for banner in banner_list %}
+              <form class="BannersHomeBlock BannersHomeBlock-form" action="{% url 'catalog' %}" method="get">
                 <button class="BannersHomeBlock btn_reset banner-btn" href="#" name="category"
                                                 value="{{ banner.category.id }}">
                   <div class="BannersHomeBlock-row">
@@ -58,7 +56,7 @@
                       <strong class="BannersHomeBlock-title">{{ banner.category.title }}
                       </strong>
                       <div class="BannersHomeBlock-content">
-                        {% trans 'from' %}&#32;<span class="BannersHomeBlock-price">{{ banner.min_price }}</span>
+                        {% trans 'from' %}&#32;<span class="BannersHomeBlock-price">{{ banner.min_price|floatformat:"2" }}</span>
                       </div>
                     </div>
                     <div class="BannersHomeBlock-block">
@@ -67,10 +65,8 @@
                     </div>
                   </div>
                 </button>
-
-            </form>
-{#          </div>#}
-          {% endfor %}
+              </form>
+            {% endfor %}
           {% endif %}
         </div>
       </div>
@@ -96,11 +92,11 @@
                     </strong>
                     <div class="Card-description">
                       <div class="Card-cost">
-                        <span class="Card-priceOld">{{ offer_day.max_price }}</span>
+                        <span class="Card-priceOld">{{ offer_day.max_price|floatformat:"2" }}</span>
                         <span class="Card-price">
                           {% for object in price_seller_list %}
                             {% if object.product_id == offer_day.id %}
-                              ${{ object.discount_price }}
+                              {{ object.discount_price|floatformat:"2" }}
                             {% endif %}
                           {% endfor %}
                         </span>
@@ -186,17 +182,21 @@
                           <span class="Card-price">
                             {% for object in price_seller_list %}
                               {% if object.product_id == product.id %}
-                                ${{ object.discount_price }}
+                                {{ object.discount_price|floatformat:"2" }}
                               {% endif %}
                             {% endfor %}
                           </span>
                         </div>
                         <div class="Card-category">
                           {% for product_tag in product.tag.all %}
-                            {% if product_tag|length == 1 %}
+                            {% if product.tag.all|length == 1 %}
                               <div class="Card-category">{{ product_tag }}</div>
                             {% else %}
-                              <div class="Card-category">{{ product_tag }},</div>
+                              {% if product_tag == product.tag.all.last %}
+                                <div class="Card-category">{{ product_tag }}</div>
+                              {% else %}
+                                <div class="Card-category">{{ product_tag }},</div>
+                              {% endif %}
                             {% endif %}
                           {% endfor %}
                         </div>
@@ -273,17 +273,21 @@
                             <span class="Card-price">
                               {% for object in price_seller_list %}
                                 {% if object.product_id == product.id %}
-                                  ${{ object.discount_price }}
+                                  {{ object.discount_price|floatformat:"2" }}
                                 {% endif %}
                               {% endfor %}
                             </span>
                           </div>
                           <div class="Card-category">
                             {% for product_tag in product.tag.all %}
-                              {% if product_tag|length == 1 %}
+                              {% if product.tag.all|length == 1 %}
                                 <div class="Card-category">{{ product_tag }}</div>
                               {% else %}
-                                <div class="Card-category">{{ product_tag }},</div>
+                                {% if product_tag == product.tag.all.last %}
+                                  <div class="Card-category">{{ product_tag }}</div>
+                                {% else %}
+                                  <div class="Card-category">{{ product_tag }},</div>
+                                {% endif %}
                               {% endif %}
                             {% endfor %}
                           </div>

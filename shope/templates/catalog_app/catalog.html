@@ -133,7 +133,7 @@
                                             <div class="Card-cost">
                                                 {% for object in price_seller_list %}
                                                     {% if object.product_id == product.id %}
-                                                        <span class="Card-price">{{ object.price|floatformat:"2" }}$</span>
+                                                        <span class="Card-price">{{ object.price|floatformat:"2" }}</span>
                                                     {% endif %}
                                                 {% endfor %}
                                             </div>

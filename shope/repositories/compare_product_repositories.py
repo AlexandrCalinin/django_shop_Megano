@@ -1,9 +1,8 @@
 from beartype import beartype
 from django.utils import timezone
-from django.db.models import QuerySet, OuterRef, Min, FloatField, Subquery
+from django.db.models import QuerySet
 
 from catalog_app.models import CompareProduct, CharacteristicType
-from core.models import Price
 from interface.compare_product_interface import ICompareProduct
 
 

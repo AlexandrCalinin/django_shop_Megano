@@ -1,11 +1,9 @@
 """ Order item repositories"""
 from beartype import beartype
 from django.db.models import QuerySet
-from django.forms.models import model_to_dict
 
 from interface.order_item_interface import IOrderItem
 from order_app.models import Order, OrderItem
-from cart_app.models import Cart
 
 
 class OrderItemRepository(IOrderItem):
