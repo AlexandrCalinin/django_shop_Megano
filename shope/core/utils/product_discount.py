@@ -114,8 +114,11 @@ class ProductDiscount:
                             sale = item.amount / item.count * sale_dct['count'] - sale_dct['sale_model']\
                                 .fixprice * sale_dct['count']
                             return_lst[key]['sale_amount'] = sale_dct['sale_model'].fixprice * sale_dct['count']
+                    self._cart_item.update(_cart_item=item, _sale=sale)
 
-        if not return_lst:
+        if not return_lst and cart_item_qs:
             for item in cart_item_qs:
                 sale = 0
+                self._cart_item.update(_cart_item=item, _sale=sale)
+
         return return_lst
