@@ -2,7 +2,7 @@
 from typing import Any
 
 from beartype import beartype
-from django.db.models import QuerySet, OuterRef, Min, Subquery, Count, F, FloatField
+from django.db.models import QuerySet, OuterRef, Min, Subquery, Count, FloatField
 from taggit.models import Tag
 
 from catalog_app.models import Product
@@ -89,4 +89,5 @@ class CatalogFilterRepository:
     @beartype
     def get_filtered_products_by_char(self, _char_id: str) -> QuerySet[Product]:
         """Получить отфильтрованные по Характеристике продукты"""
-        return self.queryset.filter(is_active=True, characteristics__characteristic_value__characteristic_type=int(_char_id))
+        return self.queryset.filter(is_active=True,
+                                    characteristics__characteristic_value__characteristic_type=int(_char_id))

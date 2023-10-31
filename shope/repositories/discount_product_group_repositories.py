@@ -5,7 +5,7 @@ from beartype.typing import Dict
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import QuerySet
 from django.utils.translation import gettext as _
-from django.db.models import DateTimeField, IntegerField, F
+from django.db.models import DateTimeField
 from django.db.models.functions import Cast
 from django.utils import timezone
 
@@ -27,17 +27,13 @@ class DiscountProductGroupRepository(IDiscountProductGroup):
     def possible_get_discount(self, _cart_item_qs: QuerySet) -> Optional[Dict]:
         """Вернуть возможность применения скидки"""
         cat_id_qs = _cart_item_qs.values('product__category__id')
-        # print('cat_id_qs - категории - товары в корзине', cat_id_qs)
         cat_id_lst = [dct['product__category__id'] for dct in cat_id_qs]
-        # print('cat_id_lst - категории - товары в корзине', cat_id_lst)
         qs_cats = Category.objects.filter(
             discountproductgroup__category__in=cat_id_lst,
             discountproductgroup__data_end__gte=today,
             discountproductgroup__data_start__lte=today
         )
-        # print('qs_cats - Все категории входящие в групповую скидку, связанную с категорией в корзине', qs_cats)
         qs = qs_cats.filter(id__in=cat_id_lst).distinct()
-        # print('qs - Уникальные категории входящие в корзину и в групповую скидку', qs)
         dct = dict()
         flag = False
         for cat in qs:

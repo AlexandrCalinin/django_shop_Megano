@@ -20,7 +20,6 @@ class CartListView(ListView):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
             context['discount_data'] = ProductDiscount().calculate_price_with_discount(cart_item_qs=self.get_queryset())
-            print('корзина', context['discount_data'])
         return context
 
 
@@ -52,11 +51,6 @@ class ChangeCountProductView(TemplateView):
                     request=request,
                     context={'discount_data': discount_data}
                 )
-
-                # qs = self.add_product_to_cart.get_list_in_cart(request)
-                # new_qs = render_to_string('includes/product-in-cart.html',
-                #                           context={'items': qs},
-                #                           request=request)
 
                 return JsonResponse({'cart': cart_edit,
                                      'count_change': count_change,

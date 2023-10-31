@@ -37,15 +37,12 @@ class ProductDiscount:
             return_dct = dct_group_sales
 
         dct_cart_sale = self._cart_sales.possible_get_discount(_cart_item_qs=cart_item_qs)
-        print(dct_cart_sale)
         if dct_cart_sale and priority > dct_cart_sale.priority:
             priority = dct_cart_sale.priority
             return_dct = {dct_cart_sale.priority: {}}
             for product_id in product_id_lst:
                 return_dct[dct_cart_sale.priority][product_id] = [dct_cart_sale, [True, _(
-                    'Discount on the shopping cart has been applied! Benefit ') + dct_cart_sale.value + ' %']]
-                # return_dct[dct_cart_sale.priority][product_id] = [dct_cart_sale, [True, _(
-                #     f'Discount on the shopping cart has been applied! Benefit {dct_cart_sale.value} %')]]
+                    'Discount on the shopping cart has been applied! Benefit ') + str(dct_cart_sale.value) + ' %']]
 
         dct_product_sale = dict()
         for product_id in product_id_lst:
@@ -54,16 +51,13 @@ class ProductDiscount:
                 sale = sales.order_by('-value').first()
                 dct_product_sale[sale.priority] = dct_product_sale.get(sale.priority, {product_id: sale})
                 dct_product_sale[sale.priority][product_id] = [sale, [True, _(
-                    'The discount on the product has been applied! Benefit ') + sale.value + ' %']]
-                # dct_product_sale[sale.priority][product_id] = [sale, [True, _(
-                #     f'The discount on the product has been applied! Benefit {sale.value} %')]]
+                    'The discount on the product has been applied! Benefit ') + str(sale.value) + ' %']]
         if dct_product_sale and priority >= min(dct_product_sale):
             priority = min(dct_product_sale)
             for product_id in product_id_lst:
                 dct_product_sale[priority][product_id] = dct_product_sale[priority].get(product_id, [None, [False, '']])
             return_dct = dct_product_sale
 
-        # print(return_dct)
         new_return_lst = []
         if return_dct:
             for key, value in list(return_dct.values())[0].items():
@@ -112,10 +106,13 @@ class ProductDiscount:
                         sale = item.amount * sale_dct['sale_model'].value / 100
                         return_lst[key]['sale_amount'] = item.amount - sale
                     elif (sale_dct['sale_model'] and sale_dct['discount']) and sale_dct['sale_model'].amount:
-                        sale = sale_dct['sale_model'].amount / len(sale_dct['sale_model'].category.all()) * sale_dct['count']
+                        sale = sale_dct['sale_model'].amount / len(
+                            sale_dct['sale_model'].category.all()) * sale_dct['count']
                         return_lst[key]['sale_amount'] = item.amount - sale
-                        if sale_dct['sale_model'] and ((sale_dct['sale_model'].fixprice * sale_dct['count']) > (item.amount - sale)):
-                            sale = item.amount / item.count * sale_dct['count'] - sale_dct['sale_model'].fixprice * sale_dct['count']
+                        if sale_dct['sale_model'] and (
+                                (sale_dct['sale_model'].fixprice * sale_dct['count']) > (item.amount - sale)):
+                            sale = item.amount / item.count * sale_dct['count'] - sale_dct['sale_model']\
+                                .fixprice * sale_dct['count']
                             return_lst[key]['sale_amount'] = sale_dct['sale_model'].fixprice * sale_dct['count']
                     self._cart_item.update(_cart_item=item, _sale=sale)
 
