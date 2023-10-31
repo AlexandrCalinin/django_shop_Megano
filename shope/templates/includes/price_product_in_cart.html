@@ -1,5 +1,6 @@
 <div class="Cart-block Cart-block_price">
 {% if discount_data %}
+
     {% for sale_dct in discount_data %}
         {% if item.product.id == sale_dct.product_id and sale_dct.discount %}
             <div class="Cart-price">
