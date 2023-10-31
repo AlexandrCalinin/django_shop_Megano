@@ -4,7 +4,6 @@ from django.utils.translation import gettext as _
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 
-# кеширование
 from django.core.cache import cache
 import inject
 
