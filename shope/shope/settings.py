@@ -9,8 +9,9 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import locale
 import os
+import ctypes
 from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv, find_dotenv
 from pathlib import Path
@@ -85,7 +86,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -141,7 +141,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+windll = ctypes.windll.kernel32
+language = locale.windows_locale[windll.GetUserDefaultUILanguage()][:2]
+if language == 'ru':
+    LANGUAGE_CODE = language
+else:
+    LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'UTC'
 
