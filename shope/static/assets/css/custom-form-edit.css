@@ -1,3 +1,7 @@
+.menu-item-custom {
+  min-width: 100px;
+}
+
 .card-heigth-auto {
   min-height: 600px;
 
