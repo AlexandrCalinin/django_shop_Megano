@@ -141,10 +141,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-windll = ctypes.windll.kernel32
-language = locale.windows_locale[windll.GetUserDefaultUILanguage()][:2]
-if language == 'ru':
-    LANGUAGE_CODE = language
+if os.name == 'nt':
+    windll = ctypes.windll.kernel32
+    language = locale.windows_locale[windll.GetUserDefaultUILanguage()][:2]
+    if language == 'ru':
+        LANGUAGE_CODE = language
+    else:
+        LANGUAGE_CODE = 'en'
+elif os.name == 'posix':
+    LANGUAGE_CODE = os.environ.get('LANG', 'en')[:2]
 else:
     LANGUAGE_CODE = 'en'
 
