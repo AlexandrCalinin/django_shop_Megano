@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-31 08:33+0000\n"
+"POT-Creation-Date: 2023-11-01 09:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,7 +27,7 @@ msgstr "Username"
 msgid "Email"
 msgstr "Email"
 
-#: auth_app/forms.py:21
+#: auth_app/forms.py:21 templates/catalog_app/catalog.html:40
 msgid "Name"
 msgstr "Name"
 
@@ -308,19 +308,19 @@ msgstr "product for comparison"
 msgid "products for comparison"
 msgstr "products for comparison"
 
-#: catalog_app/views.py:223
+#: catalog_app/views.py:225
 msgid "Too much products to the comparison!"
 msgstr "Too much products to the comparison!"
 
-#: catalog_app/views.py:226
+#: catalog_app/views.py:228
 msgid "The product was already added!"
 msgstr "The product was already added!"
 
-#: catalog_app/views.py:230
+#: catalog_app/views.py:232
 msgid "The product have no common characteristics!"
 msgstr "The product have no common characteristics!"
 
-#: catalog_app/views.py:233
+#: catalog_app/views.py:235
 msgid "The product has been added to the comparison!"
 msgstr "The product has been added to the comparison!"
 
@@ -446,7 +446,7 @@ msgstr "Discount on the shopping cart has been applied! Benefit "
 msgid "The discount on the product has been applied! Benefit "
 msgstr "The discount on the product has been applied! Benefit "
 
-#: core/views.py:85
+#: core/views.py:87
 msgid "The cache has been cleared"
 msgstr "The cache has been cleared"
 
@@ -558,11 +558,11 @@ msgstr "Discount successfully applied"
 msgid "To get a discount, add an item from the category "
 msgstr "To get a discount, add an item from the category "
 
-#: shope/settings.py:155
+#: shope/settings.py:165
 msgid "English"
 msgstr "English"
 
-#: shope/settings.py:156
+#: shope/settings.py:166
 msgid "Russian"
 msgstr "Russian"
 
@@ -571,12 +571,12 @@ msgid "Megano"
 msgstr "Megano"
 
 #: templates/auth_app/base-auth.html:54 templates/auth_app/e-mail.html:20
-#: templates/auth_app/login.html:7 templates/auth_app/registr.html:76
-#: templates/core/base.html:84
+#: templates/auth_app/login.html:7 templates/auth_app/login.html:14
+#: templates/auth_app/registr.html:76 templates/core/base.html:84
 msgid "Sign in"
 msgstr "Sign in"
 
-#: templates/auth_app/base-auth.html:55 templates/auth_app/login.html:28
+#: templates/auth_app/base-auth.html:55 templates/auth_app/login.html:18
 #: templates/auth_app/registr.html:8 templates/cart_app/cart.html:20
 msgid "Registration"
 msgstr "Registration"
@@ -655,7 +655,11 @@ msgstr ""
 "To recover your password, enter the email address you registered your "
 "account with"
 
-#: templates/auth_app/login.html:26
+#: templates/auth_app/e-mail.html:17
+msgid "Get verification code"
+msgstr "Get verification code"
+
+#: templates/auth_app/login.html:16
 msgid "Forgot your password?"
 msgstr "Forgot your password?"
 
@@ -666,6 +670,16 @@ msgstr "Password recovery (2/2)"
 #: templates/auth_app/password_reset.html:8
 msgid "Set a new password to your account"
 msgstr "Set a new password to your account"
+
+#: templates/auth_app/password_reset.html:20
+#, fuzzy
+#| msgid "New password"
+msgid "Save password"
+msgstr "Save password"
+
+#: templates/auth_app/registr.html:71 templates/core/base.html:85
+msgid "Register"
+msgstr "Register"
 
 #: templates/auth_app/registration-error.html:5
 msgid "Something went wrong during registration..."
@@ -911,6 +925,12 @@ msgstr "Sales"
 msgid "Sale detail"
 msgstr "Sale detail"
 
+#: templates/catalog_app/sale_detail.html:44
+#, fuzzy
+#| msgid "category as group of products"
+msgid "Category products"
+msgstr "category as group of products"
+
 #: templates/core/about.html:11
 msgid "About Megano"
 msgstr "About Megano"
@@ -962,10 +982,6 @@ msgstr "Why Choose Megano?"
 #: templates/core/base.html:82 templates/core/base.html:139
 msgid "Sign out"
 msgstr "Sign out"
-
-#: templates/core/base.html:85
-msgid "Register"
-msgstr "Register"
 
 #: templates/core/base.html:109
 msgid "About"

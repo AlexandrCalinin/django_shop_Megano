@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-31 08:33+0000\n"
+"POT-Creation-Date: 2023-11-01 09:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr "Имя пользователя"
 msgid "Email"
 msgstr "Почта"
 
-#: auth_app/forms.py:21
+#: auth_app/forms.py:21 templates/catalog_app/catalog.html:40
 msgid "Name"
 msgstr "Имя"
 
@@ -310,19 +310,19 @@ msgstr "продукт для сравнения"
 msgid "products for comparison"
 msgstr "продукты для сравнения"
 
-#: catalog_app/views.py:223
+#: catalog_app/views.py:225
 msgid "Too much products to the comparison!"
 msgstr "Слишком много продуктов для сравнения!"
 
-#: catalog_app/views.py:226
+#: catalog_app/views.py:228
 msgid "The product was already added!"
 msgstr "Продукт уже был добавлен!"
 
-#: catalog_app/views.py:230
+#: catalog_app/views.py:232
 msgid "The product have no common characteristics!"
 msgstr "Продукты не имеют общих характеристик!"
 
-#: catalog_app/views.py:233
+#: catalog_app/views.py:235
 msgid "The product has been added to the comparison!"
 msgstr "Продукт был добавлен в сравнение!"
 
@@ -449,7 +449,7 @@ msgstr "Скидка на корзину была применена! Выгод
 msgid "The discount on the product has been applied! Benefit "
 msgstr "Скидка на товар была применена! Выгода "
 
-#: core/views.py:85
+#: core/views.py:87
 msgid "The cache has been cleared"
 msgstr "Кжш был очищен"
 
@@ -561,11 +561,11 @@ msgstr "Скидка была успешно применена"
 msgid "To get a discount, add an item from the category "
 msgstr "Чтобы получить скидку, добавьте предмет из нужной категории "
 
-#: shope/settings.py:155
+#: shope/settings.py:165
 msgid "English"
 msgstr "Английский"
 
-#: shope/settings.py:156
+#: shope/settings.py:166
 msgid "Russian"
 msgstr "Русский"
 
@@ -574,12 +574,12 @@ msgid "Megano"
 msgstr "Мегано"
 
 #: templates/auth_app/base-auth.html:54 templates/auth_app/e-mail.html:20
-#: templates/auth_app/login.html:7 templates/auth_app/registr.html:76
-#: templates/core/base.html:84
+#: templates/auth_app/login.html:7 templates/auth_app/login.html:14
+#: templates/auth_app/registr.html:76 templates/core/base.html:84
 msgid "Sign in"
 msgstr "Войти"
 
-#: templates/auth_app/base-auth.html:55 templates/auth_app/login.html:28
+#: templates/auth_app/base-auth.html:55 templates/auth_app/login.html:18
 #: templates/auth_app/registr.html:8 templates/cart_app/cart.html:20
 msgid "Registration"
 msgstr "Регистрация"
@@ -659,7 +659,11 @@ msgstr ""
 "Чтобы сбросить пароль перейдите на почту, на которую зарегистрирован Ваш "
 "аккаунт"
 
-#: templates/auth_app/login.html:26
+#: templates/auth_app/e-mail.html:17
+msgid "Get verification code"
+msgstr "Получить проверочный код"
+
+#: templates/auth_app/login.html:16
 msgid "Forgot your password?"
 msgstr "Забыли пароль?"
 
@@ -670,6 +674,16 @@ msgstr "Восстановление пароля (2/2)"
 #: templates/auth_app/password_reset.html:8
 msgid "Set a new password to your account"
 msgstr "Установите новый пароль на Ваш аккаунт"
+
+#: templates/auth_app/password_reset.html:20
+#, fuzzy
+#| msgid "New password"
+msgid "Save password"
+msgstr "Сохранить пароль"
+
+#: templates/auth_app/registr.html:71 templates/core/base.html:85
+msgid "Register"
+msgstr "Зарегистрироваться"
 
 #: templates/auth_app/registration-error.html:5
 msgid "Something went wrong during registration..."
@@ -915,6 +929,12 @@ msgstr "Скидки"
 msgid "Sale detail"
 msgstr "Детали скидки"
 
+#: templates/catalog_app/sale_detail.html:44
+#, fuzzy
+#| msgid "category as group of products"
+msgid "Category products"
+msgstr "Категория как группа продуктов"
+
 #: templates/core/about.html:11
 msgid "About Megano"
 msgstr "О Мегано"
@@ -966,10 +986,6 @@ msgstr "Почему стоит выбрать Мегано?"
 #: templates/core/base.html:82 templates/core/base.html:139
 msgid "Sign out"
 msgstr "Выход"
-
-#: templates/core/base.html:85
-msgid "Register"
-msgstr "Регистрация"
 
 #: templates/core/base.html:109
 msgid "About"

@@ -9,19 +9,9 @@
     <div class="clear"></div>
     <form action="{% url 'auth_app:login' %}" method="post">
         {% csrf_token %}
-{#        <div class="col-md-6">#}
-{#            <div class="form-group">#}
-{#                {{ form.username }}#}
-{#            </div>#}
-{#        </div>#}
-{#        <div class="col-md-6">#}
-{#            <div class="form-group">#}
-{#                {{ form.password }}#}
-{#            </div>#}
-{#        </div>#}
         {{ form.as_p }}
         <div>
-            <input type="submit" value="Войти"/>
+            <input type="submit" value={% trans 'Sign in' %}/>
         </div>
         <a class="forgot-label" href="{% url 'auth_app:e-mail' %}">{% trans 'Forgot your password?' %}</a>
         <a class="registr" href="{% url 'auth_app:register' %}">
