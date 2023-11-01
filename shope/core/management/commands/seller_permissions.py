@@ -35,8 +35,7 @@ class Command(BaseCommand):
             group.permissions.add(permission_add_price, permission_change_price,
                                   permission_delete_price, permission_view_price, permission_view_product)
 
-            # присоединяем пользователя к группе
-            user.groups.add(group)
+            saved_group = group.save()
 
-            group.save()
-            user.save()
+            # присоединяем пользователя к группе
+            user.groups.add(saved_group)
