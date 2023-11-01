@@ -23,7 +23,7 @@ from core.forms import CacheSetupForm
 from .utils.cache_key import (
     TOP_PRODUCT_LIST_KEY,
     BANNER_LIST_KEY,
-    CATALOG_CATEGORY,
+    OFFER_DAY
 )
 
 
@@ -55,7 +55,7 @@ class BaseView(TemplateView):
                                                        get_cache_value('TOP_PRODUCT'))
         context['product_limited_list'] = list(self._products.get_product_limit_list(const=17))
         if context['product_limited_list']:
-            context['offer_day'] = cache.get_or_set(CATALOG_CATEGORY,
+            context['offer_day'] = cache.get_or_set(OFFER_DAY,
                                                     context['product_limited_list'].pop(random.randint(
                                                         0, len(context['product_limited_list']) - 1)),
                                                     get_cache_value('CATEGORY'))
