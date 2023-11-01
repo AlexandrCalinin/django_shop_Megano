@@ -1,5 +1,6 @@
 """Order views"""
 
+from decimal import Decimal
 from typing import Any
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
