@@ -161,23 +161,18 @@ class CatalogListView(ListView):
                     product_min_price, product_max_price = None, None
                 product_name = self.request.GET.get('title')
 
+                qs = self._filter.get_filtered_products(product_name=product_name,
+                                                        free_delivery=free_delivery,
+                                                        is_limited=is_limited,
+                                                        product_min_price=product_min_price,
+                                                        product_max_price=product_max_price)
+
                 if (product_name is None and free_delivery is None and is_limited is
                         None and product_min_price is None and product_max_price is None):
-                    query = cache.get_or_set(CATALOG_CATEGORY,
-                                             self._filter.get_filtered_products(product_name=product_name,
-                                                                                free_delivery=free_delivery,
-                                                                                is_limited=is_limited,
-                                                                                product_min_price=product_min_price,
-                                                                                product_max_price=product_max_price
-                                                                                ),
-                                             get_cache_value('CATEGORY')
-                                             )
+                    query = cache.get_or_set(CATALOG_CATEGORY, qs, get_cache_value('CATEGORY'))
                 else:
-                    query = self._filter.get_filtered_products(product_name=product_name,
-                                                               free_delivery=free_delivery,
-                                                               is_limited=is_limited,
-                                                               product_min_price=product_min_price,
-                                                               product_max_price=product_max_price)
+                    query = qs
+
             return query
 
         except MultiValueDictKeyError:
