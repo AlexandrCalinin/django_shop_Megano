@@ -39,4 +39,3 @@ class Command(BaseCommand):
             user.groups.add(group)
 
             group.save()
-            user.save()
