@@ -1,3 +1,7 @@
+.register {
+  width: 510px;
+}
+
 .menu-item-custom {
   min-width: 100px;
 }
@@ -90,4 +94,10 @@ table.tableSection thead {
   display: table-caption;
   table-layout: fixed;
   overflow-y: scroll;
+}
+
+@media (max-width: 960px) {
+  .register {
+    width: inherit;
+  }
 }

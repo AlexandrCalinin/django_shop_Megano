@@ -9,7 +9,7 @@
 
     </div>
     <div class="clear"></div>
-    <form action="{% url 'auth_app:register' %}" method="post">
+    <form class="register" action="{% url 'auth_app:register' %}" method="post">
         {% csrf_token %}
 
         <div class="container">

@@ -1,13 +1,5 @@
-import random
 from django.test import TestCase
 from django.urls import reverse
-from django.utils import formats
-
-from datetime import date
-
-from catalog_app.models import Product
-
-NUMBER_OF_SHOPS = 10
 
 
 class TestBaseView(TestCase):
@@ -39,5 +31,14 @@ class TestBaseView(TestCase):
     def test_count_top_products(self):
         url = reverse('home')
         response = self.client.get(url)
-        for product in Product.objects.filter(is_active=False):
-            self.assertContains(response, product.name)
+        self.assertEqual(len(response.context['product_top_list']), 0)
+
+    def test_count_limit_products(self):
+        url = reverse('home')
+        response = self.client.get(url)
+        self.assertEqual(len(response.context['product_limited_list']), 14)
+
+    def test_count_cat_products(self):
+        url = reverse('about')
+        response = self.client.get(url)
+        self.assertEqual(len(response.context['category_list']), 0)
