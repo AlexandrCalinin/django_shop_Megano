@@ -1,5 +1,5 @@
 """ Репозиторий фильтрации каталога"""
-from typing import Any
+from typing import Any, Optional
 
 from beartype import beartype
 from django.db.models import QuerySet, OuterRef, Min, Subquery, Count, FloatField
@@ -23,9 +23,11 @@ class CatalogFilterRepository:
     ).filter(min_price__gt=0).prefetch_related('discountproduct_set', 'category__discountproduct_set')
 
     @beartype
-    def get_filtered_products(self, product_name: Any,
-                              free_delivery: bool, is_limited: bool,
-                              product_min_price: Any, product_max_price: Any) -> QuerySet[Product]:
+    def get_filtered_products(self, product_name: Optional[str or None],
+                              free_delivery: Optional[bool or None],
+                              is_limited: Optional[bool or None],
+                              product_min_price: Optional[str or None],
+                              product_max_price: Optional[str or None]) -> QuerySet[Product]:
         """Получить отфильтрованные продукты"""
 
         if product_name is not None:

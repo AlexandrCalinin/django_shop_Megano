@@ -1,6 +1,6 @@
 """ Интерфейс фильтрации каталога"""
 from abc import abstractmethod
-from typing import Any
+from typing import Any, Optional
 from django.db.models import QuerySet
 
 from catalog_app.models import Product
@@ -10,9 +10,11 @@ class ICatalogFilter:
     """Класс-репозиторий фильтрации товаров"""
 
     @abstractmethod
-    def get_filtered_products(self, product_name: Any,
-                              free_delivery: bool, is_limited: bool,
-                              min_price: Any, max_price: Any) -> QuerySet[Product]:
+    def get_filtered_products(self, product_name: Optional[str or None],
+                              free_delivery: Optional[bool or None],
+                              is_limited: Optional[bool or None],
+                              product_min_price: Optional[str or None],
+                              product_max_price: Optional[str or None]) -> QuerySet[Product]:
         """Получить отфильтрованные продукты"""
         pass
 
